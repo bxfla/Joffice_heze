@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.notice.activity.NoticeDetailActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/first_notice">
+    </com.smartbus.heze.http.views.Header>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFFFFF"
+        android:textColor="@color/xiaohei"
+        android:textSize="18dp"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"/>
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1dp"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tvDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="13dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/ziti"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="13dp"
+            android:paddingLeft="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/ziti"
+            android:gravity="center"/>
+    </LinearLayout>
+    <View style="@style/HourLine"/>
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"/>
+</LinearLayout>
