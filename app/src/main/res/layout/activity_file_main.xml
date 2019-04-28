@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.fileapprove.FileMainActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/first_file">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item1" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/department_budget" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item2" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/borrow_accident" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item3" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/department_accident" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item4" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/department_file_huiqian" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll5"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item5" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/department_file_chuanyue" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll6"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:layout_gravity="center"
+                android:src="@drawable/flow_item6" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/decoment_liuzhuan" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -37,4 +37,12 @@
 
     <!--个人中心-->
     <string name="my_person">个人中心</string>
+
+    <!--文件审批-->
+    <string name="department_budget">部门预算单</string>
+    <string name="borrow_accident">事故借款单</string>
+    <string name="department_accident">部门通用借款单</string>
+    <string name="department_file_huiqian">部门文件会签单</string>
+    <string name="department_file_chuanyue">部门文件传阅</string>
+    <string name="decoment_liuzhuan">公文流转表单</string>
 </resources>

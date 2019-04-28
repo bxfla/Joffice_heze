@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.fileapprove.FileMainActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.GlideImageLoader;
@@ -164,6 +165,8 @@ public class Fragment01 extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.rb2:
+                intent = new Intent(getActivity(), FileMainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb3:
                 break;
@@ -182,5 +185,11 @@ public class Fragment01 extends Fragment {
             case R.id.rb10:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 }

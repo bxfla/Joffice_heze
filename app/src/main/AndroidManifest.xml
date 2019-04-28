@@ -24,7 +24,9 @@
         <activity android:name=".welcome.activity.LoginActivity" />
         <activity android:name=".main.activity.MainActivity" />
         <activity android:name=".main.notice.activity.NoticeDetailActivity" />
-        <activity android:name=".main.notice.activity.NoticeListActivity"></activity>
+        <activity android:name=".main.notice.activity.NoticeListActivity" />
+        <activity android:name=".fileapprove.FileMainActivity" />
+        <activity android:name=".fileapprove.activity.DepartBudgetActivity"></activity>
     </application>
 
 </manifest>
