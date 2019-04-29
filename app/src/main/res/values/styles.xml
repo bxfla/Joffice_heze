@@ -132,6 +132,15 @@
         <item name="android:background">@color/shouye</item>
     </style>
 
+    <!--timedialog-->
+    <style name="time_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
     <!--自定义linerlayout-->
     <style name="linerlayout">
         <item name="android:layout_width">match_parent</item>

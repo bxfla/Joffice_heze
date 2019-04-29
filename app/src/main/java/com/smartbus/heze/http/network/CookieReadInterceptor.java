@@ -11,7 +11,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @author: Allen.
  * @date: 2018/7/27
  * @description: 读取cookie
  */
@@ -20,7 +19,11 @@ public class CookieReadInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        builder.addHeader("Cookie", SharePreferencesUtils.getString(MyApplication.myApp, "cookiess", ""));
+        String cookieString = SharePreferencesUtils.getString(MyApplication.myApp, "cookiess", "");
+        String[] splitCookie = cookieString.split(";");
+        String[] splitSessionId = splitCookie[0].split("=");
+        cookieString = splitSessionId[1];
+        builder.addHeader("Cookie", cookieString);
         return chain.proceed(builder.build());
     }
 }

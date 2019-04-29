@@ -28,33 +28,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="部门: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etClass"
-                    style="@style/oaEditText"
-                    android:hint="请填写部门" />
-            </LinearLayout>
-
-            <View style="@style/HourLine"></View>
-
-
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="时间: *" />
+                    android:text="编报时间: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -67,9 +41,29 @@
                     style="@style/oaEditText"
                     android:layout_weight="2.5" />
             </LinearLayout>
-
             <View style="@style/HourLine"></View>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
+                    android:text="编报单位: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <TextView
+                    android:id="@+id/tvDepartment"
+                    style="@style/oaEditText"
+                    android:hint="请选择编报单位" />
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -933,7 +927,7 @@
                 android:orientation="horizontal">
                 <TextView
                     style="@style/oaTextView"
-                    android:text="用途: *"
+                    android:text="预算理由: *"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"/>
                 <View
@@ -945,7 +939,7 @@
                     android:id="@+id/etUse"
                     style="@style/textWrite"
                     android:layout_weight="2.5"
-                    android:hint="请填写用途"/>
+                    android:hint="请填写预算理由"/>
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -962,11 +956,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView17"
                     style="@style/oaTextView"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
-                    android:text="部门领导:" />
+                    android:text="财务科:" />
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
@@ -976,42 +969,13 @@
                 <EditText
                     android:id="@+id/etLeader"
                     style="@style/textWrite"
-                    android:hint="部门领导意见"
+                    android:hint="财务科意见"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvLeader"
                     style="@style/textWrite"
-                    android:hint="部门领导意见" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="资产归口部门:"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etLeader1"
-                    style="@style/textWrite"
-                    android:hint="资产归口部门领导意见"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvLeader1"
-                    style="@style/textWrite"
-                    android:hint="资产归口部门领导意见" />
+                    android:hint="财务科意见" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -1025,7 +989,6 @@
                     android:text="分管领导:"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"/>
-
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
@@ -1033,78 +996,19 @@
                     android:background="@color/shouye" />
 
                 <EditText
-                    android:id="@+id/etLeader2"
+                    android:id="@+id/etLeader1"
                     style="@style/textWrite"
                     android:hint="分管领导意见"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/tvLeader2"
+                    android:id="@+id/tvLeader1"
                     style="@style/textWrite"
                     android:hint="分管领导意见" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="采购领导意见:"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etLeader3"
-                    style="@style/textWrite"
-                    android:hint="财务领导意见"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvLeader3"
-                    style="@style/textWrite"
-                    android:hint="财务领导意见" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="财务总监意见:"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etLeader4"
-                    style="@style/textWrite"
-                    android:hint="财务领导意见"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvLeader4"
-                    style="@style/textWrite"
-                    android:hint="财务领导意见" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -1122,16 +1026,18 @@
                     android:background="@color/shouye" />
 
                 <EditText
-                    android:id="@+id/etLeader5"
+                    android:id="@+id/etLeader2"
                     style="@style/textWrite"
                     android:hint="总经理意见"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/tvLeader5"
+                    android:id="@+id/tvLeader2"
                     style="@style/textWrite"
                     android:hint="总经理意见" />
             </LinearLayout>
+            <View style="@style/HourLine"></View>
+
             <View
                 style="@style/HourLine"
                 android:layout_marginBottom="45dp"></View>

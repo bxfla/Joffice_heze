@@ -15,4 +15,9 @@ public class Constant {
     public static final int TAG_SEVEN=7;
     public static final int TAG_EIGHT=8;
     public static final int TAG_NINE=9;
+
+    //预算单
+    public final static String YSD_DEFID = "100" ;
+    public final static String YSD_FORMDEFIS = "37" ;
+
 }

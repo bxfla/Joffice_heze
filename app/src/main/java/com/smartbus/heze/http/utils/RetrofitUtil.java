@@ -1,6 +1,8 @@
 package com.smartbus.heze.http.utils;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.http.network.AllApi;
@@ -21,7 +23,7 @@ public class RetrofitUtil {
      */
     private static volatile RetrofitUtil mInstance;
     private AllApi allApi;
-
+    private static Gson gson;
     /**
      * 单例封装
      *
@@ -32,6 +34,7 @@ public class RetrofitUtil {
             synchronized (RetrofitUtil.class) {
                 if (mInstance == null) {
                     mInstance = new RetrofitUtil();
+                    gson = new GsonBuilder().setLenient().create();
                 }
             }
         }
@@ -67,6 +70,7 @@ public class RetrofitUtil {
                     .baseUrl(ApiAddress.mainApi)
                     // 设置解析转换工厂，用自己定义的
                     .addConverterFactory(GsonConverterFactory.create())
+//                    .addConverterFactory(LenientGsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
             allApi = mRetrofit.create(AllApi.class);

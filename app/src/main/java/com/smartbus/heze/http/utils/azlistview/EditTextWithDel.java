@@ -1,4 +1,4 @@
-package com.smartbus.heze.http.utils;
+package com.smartbus.heze.http.utils.azlistview;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -14,8 +14,11 @@ import com.smartbus.heze.R;
 
 
 /**
+ * @author: xiaolijuan
  * @description: 自定义带有删除功能的EditText
  * @projectName: SelectCityDome
+ * @date: 2016-03-01
+ * @time: 15:59
  */
 public class EditTextWithDel extends EditText {
     private final static String TAG = "EditTextWithDel";
