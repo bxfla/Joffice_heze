@@ -29,6 +29,9 @@
         <activity
             android:name=".fileapprove.activity.DepartBudgetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.BorrowAccidentActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".fileapprove.activity.DepartmentActivity">
         </activity>
     </application>

@@ -25,5 +25,6 @@ public class MainUtil {
     public static String loadTxt = "正在加载";
     public static String loadLogin = "正在登录";
     public static String getData = "获取数据中";
+    public static String upData = "提交数据中";
 
 }

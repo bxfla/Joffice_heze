@@ -29,7 +29,7 @@ public class UPYSDPresenter implements UPYSDContract.presenter {
 
     @Override
     public void getUPYSD(Map<String,String> map) {
-        RetrofitUtil.getInstance().initRetrofitMain().getUpysd(map).subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitSetSession().getUpysd(map).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<String>(context, MainUtil.getData) {
                     @Override

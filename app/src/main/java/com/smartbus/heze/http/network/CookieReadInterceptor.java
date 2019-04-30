@@ -1,6 +1,8 @@
 package com.smartbus.heze.http.network;
 
 
+import android.util.Log;
+
 import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.http.utils.SharePreferencesUtils;
 
@@ -23,6 +25,7 @@ public class CookieReadInterceptor implements Interceptor {
         String[] splitCookie = cookieString.split(";");
         String[] splitSessionId = splitCookie[0].split("=");
         cookieString = splitSessionId[1];
+        Log.e("session",cookieString);
         builder.addHeader("Cookie", cookieString);
         return chain.proceed(builder.build());
     }

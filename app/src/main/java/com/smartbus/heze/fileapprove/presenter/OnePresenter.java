@@ -3,7 +3,7 @@ package com.smartbus.heze.fileapprove.presenter;
 import android.content.Context;
 
 import com.smartbus.heze.fileapprove.bean.OnePerson;
-import com.smartbus.heze.fileapprove.module.YSDOneContract;
+import com.smartbus.heze.fileapprove.module.OneContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.RetrofitUtil;
@@ -16,19 +16,19 @@ import io.reactivex.schedulers.Schedulers;
  * @description:
  */
 
-public class YSDOnePresenter implements YSDOneContract.presenter {
+public class OnePresenter implements OneContract.presenter {
 
     private Context context;
-    private YSDOneContract.View view;
+    private OneContract.View view;
 
-    public YSDOnePresenter(Context context, YSDOneContract.View view) {
+    public OnePresenter(Context context, OneContract.View view) {
         this.context = context;
         this.view = view;
     }
 
     @Override
     public void getYSD(String defId) {
-        RetrofitUtil.getInstance().initRetrofitMain().getOnePerson(defId).subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitSetSession().getOnePerson(defId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<OnePerson>(context, MainUtil.getData) {
                     @Override

@@ -11,7 +11,7 @@ public class ApiAddress {
     //生成环境
     public final static String api = "http://123.232.38.10:9999/";
 
-    public final static String mainApi = "http://192.168.2.110:8080/joffice21/" ;
+    public final static String mainApi = "http://192.168.2.132:8080/joffice21/" ;
 
     /***********************首页*******************************/
     //登录

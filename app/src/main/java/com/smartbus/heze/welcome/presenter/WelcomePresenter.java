@@ -33,7 +33,7 @@ public class WelcomePresenter implements WelcomeContract.presenter {
      */
     @Override
     public void getNoticeList() {
-        RetrofitUtil.getInstance().initRetrofitMain().getNoticeList().subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitSetSession().getNoticeList().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<Notice>(context, MainUtil.getData) {
                     @Override

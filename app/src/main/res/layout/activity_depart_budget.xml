@@ -12,6 +12,7 @@
         style="@style/Header"
         app:header_title="@string/department_budget">
     </com.smartbus.heze.http.views.Header>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -41,6 +42,7 @@
                     style="@style/oaEditText"
                     android:layout_weight="2.5" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
@@ -63,11 +65,13 @@
                     style="@style/oaEditText"
                     android:hint="请选择编报单位" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,6 +120,7 @@
                             style="@style/oaEditText1"
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
+
                         <View style="@style/HourLine"></View>
 
                         <EditText
@@ -124,11 +129,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -168,6 +174,7 @@
                             style="@style/oaEditText1"
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
+
                         <View style="@style/HourLine"></View>
 
                         <TextView
@@ -176,6 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -224,6 +232,7 @@
                             style="@style/oaEditText"
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
+
                         <View style="@style/HourLine"></View>
 
                         <EditText
@@ -233,11 +242,12 @@
                             android:layout_height="45dp" />
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -277,6 +287,7 @@
                             style="@style/oaEditText"
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
+
                         <View style="@style/HourLine"></View>
 
                         <TextView
@@ -285,6 +296,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -337,6 +349,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:inputType="number|numberDecimal" />
+
                         <View style="@style/HourLine"></View>
 
                         <EditText
@@ -346,11 +359,12 @@
                             android:layout_height="45dp"
                             android:inputType="number|numberDecimal" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -394,6 +408,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:inputType="number|numberDecimal" />
+
                         <View style="@style/HourLine"></View>
 
                         <TextView
@@ -403,6 +418,7 @@
                             android:layout_height="45dp"
                             android:inputType="number|numberDecimal" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -413,16 +429,19 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center"
                             android:text="数量"
                             android:textColor="@color/black" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -475,15 +494,18 @@
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/shouye" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -493,6 +515,7 @@
                                     android:layout_height="45dp"
                                     android:hint="核定"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -501,6 +524,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -509,6 +533,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -517,6 +542,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -528,11 +554,11 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
                                 <View style="@style/HourLine"></View>
 
@@ -580,16 +606,19 @@
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/shouye" />
+
                             <LinearLayout
-                                android:visibility="gone"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -599,6 +628,7 @@
                                     android:layout_height="45dp"
                                     android:hint="核定"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -607,6 +637,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -615,6 +646,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -623,6 +655,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -634,6 +667,7 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -643,16 +677,19 @@
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center"
                             android:text="金额"
                             android:textColor="@color/black" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -705,15 +742,18 @@
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/shouye" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -723,6 +763,7 @@
                                     android:layout_height="45dp"
                                     android:hint="核定"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -731,6 +772,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -739,6 +781,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -747,6 +790,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <EditText
@@ -758,11 +802,11 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
                                 <View style="@style/HourLine"></View>
 
@@ -810,16 +854,19 @@
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/shouye" />
+
                             <LinearLayout
-                                android:visibility="gone"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -829,6 +876,7 @@
                                     android:layout_height="45dp"
                                     android:hint="核定"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -837,6 +885,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -845,6 +894,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -853,6 +903,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
+
                                 <View style="@style/HourLine"></View>
 
                                 <TextView
@@ -866,81 +917,94 @@
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
-                    android:text="合计: *"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"/>
+                    android:text="合计: *"
+                    android:textColor="@color/black" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
-                    android:background="@color/shouye"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
                 <TextView
                     android:id="@+id/tvAllNum"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:hint="合计数量"
-                    android:gravity="center"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
-                    android:background="@color/shouye"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
                 <TextView
-                    android:visibility="invisible"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
-                    android:hint="合计数量: *"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"/>
+                    android:hint="合计数量: *"
+                    android:textColor="@color/black"
+                    android:visibility="invisible" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
-                    android:background="@color/shouye"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
                 <TextView
                     android:id="@+id/tvAllMoney"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
-                    android:hint="合计数量"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"/>
+                    android:hint="合计数量"
+                    android:textColor="@color/black" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     style="@style/oaTextView"
-                    android:text="预算理由: *"
                     android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="预算理由: *" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
-                    android:background="@color/shouye"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
                 <EditText
                     android:id="@+id/etUse"
                     style="@style/textWrite"
                     android:layout_weight="2.5"
-                    android:hint="请填写预算理由"/>
+                    android:hint="请填写预算理由" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <TextView
@@ -948,6 +1012,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/shouye" />
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
@@ -960,6 +1025,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
                     android:text="财务科:" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
@@ -977,6 +1043,7 @@
                     style="@style/textWrite"
                     android:hint="财务科意见" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
@@ -986,9 +1053,10 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="分管领导:"
                     android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="分管领导:" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
@@ -1006,6 +1074,7 @@
                     style="@style/textWrite"
                     android:hint="分管领导意见" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <LinearLayout
@@ -1015,9 +1084,9 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="总经理:"
                     android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="总经理:" />
 
                 <View
                     android:layout_width="1dp"
@@ -1036,6 +1105,7 @@
                     style="@style/textWrite"
                     android:hint="总经理意见" />
             </LinearLayout>
+
             <View style="@style/HourLine"></View>
 
             <View

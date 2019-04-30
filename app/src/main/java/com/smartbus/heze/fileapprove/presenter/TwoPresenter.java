@@ -3,7 +3,7 @@ package com.smartbus.heze.fileapprove.presenter;
 import android.content.Context;
 
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
-import com.smartbus.heze.fileapprove.module.YSDTwoContract;
+import com.smartbus.heze.fileapprove.module.TwoContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.RetrofitUtil;
@@ -16,19 +16,19 @@ import io.reactivex.schedulers.Schedulers;
  * @description:
  */
 
-public class YSDTwoPresenter implements YSDTwoContract.presenter {
+public class TwoPresenter implements TwoContract.presenter {
 
     private Context context;
-    private YSDTwoContract.View view;
+    private TwoContract.View view;
 
-    public YSDTwoPresenter(Context context, YSDTwoContract.View view) {
+    public TwoPresenter(Context context, TwoContract.View view) {
         this.context = context;
         this.view = view;
     }
 
     @Override
     public void getYSDTwo(String defId,String activityName) {
-        RetrofitUtil.getInstance().initRetrofitMain().getTwoPerson(defId,activityName).subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitSetSession().getTwoPerson(defId,activityName).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<TwoPerson>(context, MainUtil.getData) {
                     @Override

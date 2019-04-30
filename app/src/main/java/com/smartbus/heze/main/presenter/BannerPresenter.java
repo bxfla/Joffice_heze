@@ -30,7 +30,7 @@ public class BannerPresenter implements BannerContract.presenter {
 
     @Override
     public void getBanner() {
-        RetrofitUtil.getInstance().initRetrofitMain().getBanner().subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitNoSession().getBanner().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<Banner>(context, MainUtil.getData) {
                     @Override

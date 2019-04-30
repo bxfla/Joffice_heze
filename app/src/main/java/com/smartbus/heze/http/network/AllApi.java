@@ -15,7 +15,6 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -68,7 +67,6 @@ public interface AllApi {
     /**
      * 提交预算单
      */
-    @Multipart
     @POST(ApiAddress.upysd)
     Observable<String> getUpysd(@QueryMap Map<String,String> params);
 

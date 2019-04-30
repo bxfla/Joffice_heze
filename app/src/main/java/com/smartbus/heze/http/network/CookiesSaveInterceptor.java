@@ -1,6 +1,8 @@
 package com.smartbus.heze.http.network;
 
 
+import android.util.Log;
+
 import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.http.utils.SharePreferencesUtils;
 
@@ -21,6 +23,7 @@ public class CookiesSaveInterceptor implements Interceptor {
         Response originalResponse = chain.proceed(chain.request());
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             String header =originalResponse.header("Set-Cookie");
+            Log.e("session",header);
             SharePreferencesUtils.setString(MyApplication.myApp,"cookiess",header);
         }
         return originalResponse;

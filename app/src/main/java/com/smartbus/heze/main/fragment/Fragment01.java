@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.FileMainActivity;
@@ -19,12 +20,10 @@ import com.smartbus.heze.http.views.ScrollForeverTextView;
 import com.smartbus.heze.main.notice.activity.NoticeDetailActivity;
 import com.smartbus.heze.main.notice.activity.NoticeListActivity;
 import com.smartbus.heze.welcome.bean.Notice;
+import com.smartbus.heze.welcome.module.WelcomeContract;
+import com.smartbus.heze.welcome.presenter.WelcomePresenter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ import butterknife.Unbinder;
  * 换乘查询
  */
 
-public class Fragment01 extends Fragment {
+public class Fragment01 extends Fragment implements WelcomeContract.View{
     View view;
     @BindView(R.id.banner)
     Banner banner;
@@ -72,6 +71,7 @@ public class Fragment01 extends Fragment {
     int num = 0;
     Intent intent;
     BaseRecyclerAdapter mAdapter;
+    private WelcomePresenter presenter;
     List<Integer> imageList = new ArrayList<>();
 
     @Override
@@ -83,7 +83,8 @@ public class Fragment01 extends Fragment {
         imageList.add(R.drawable.banner2);
         imageList.add(R.drawable.banner3);
         setBanner();
-        EventBus.getDefault().register(this);
+        presenter = new WelcomePresenter(getActivity(),this);
+        presenter.getNoticeList();
         return view;
     }
 
@@ -110,12 +111,12 @@ public class Fragment01 extends Fragment {
         unbinder.unbind();
     }
 
-    /**
-     * 接收welcomeActivity传来的notice数据
-     * @param beanList
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void receiveMessage(List<Notice.ResultBean> beanList){
+    @Override
+    public void setNoticeList(Notice bean) {
+        List<Notice.ResultBean> beanList = new ArrayList<>();
+        for (int i = 0; i < bean.getResult().size(); i++) {
+            beanList.add(bean.getResult().get(i));
+        }
         String s = "";
         for (int i = 0;i<beanList.size();i++){
             s = s+beanList.get(i).getSubject()+ "\n" + "\n" + "\n";
@@ -151,6 +152,13 @@ public class Fragment01 extends Fragment {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
+
+    //获取错误信息
+    @Override
+    public void setNoticeMessage(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+    }
+
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4,R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8, R.id.rb9
             , R.id.rb10,R.id.tvSeeItNow})
@@ -190,6 +198,6 @@ public class Fragment01 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.notifyDataSetChanged();
     }
 }

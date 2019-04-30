@@ -16,11 +16,11 @@ import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
 import com.smartbus.heze.fileapprove.module.UPYSDContract;
-import com.smartbus.heze.fileapprove.module.YSDOneContract;
-import com.smartbus.heze.fileapprove.module.YSDTwoContract;
+import com.smartbus.heze.fileapprove.module.OneContract;
+import com.smartbus.heze.fileapprove.module.TwoContract;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
-import com.smartbus.heze.fileapprove.presenter.YSDOnePresenter;
-import com.smartbus.heze.fileapprove.presenter.YSDTwoPresenter;
+import com.smartbus.heze.fileapprove.presenter.OnePresenter;
+import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -43,8 +43,8 @@ import butterknife.OnClick;
 /**
  * 各部门的预算单
  */
-public class DepartBudgetActivity extends BaseActivity implements YSDOneContract.View
-        , YSDTwoContract.View, UPYSDContract.View {
+public class DepartBudgetActivity extends BaseActivity implements OneContract.View
+        , TwoContract.View, UPYSDContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -125,8 +125,8 @@ public class DepartBudgetActivity extends BaseActivity implements YSDOneContract
     String[] nametemp = null;
     String[] codetemp = null;
     String depId = "", depName = "";
-    YSDOnePresenter ysdOnePersenter;
-    YSDTwoPresenter ysdTwoPersenter;
+    OnePresenter ysdOnePersenter;
+    TwoPresenter ysdTwoPersenter;
     UPYSDPresenter upYsdPersenter;
     Map<String, String> map = new HashMap<>();
     List<String> namelist = new ArrayList<>();
@@ -571,6 +571,9 @@ public class DepartBudgetActivity extends BaseActivity implements YSDOneContract
                 customDatePicker1.show(tvTime.getText().toString());
                 break;
             case R.id.btnUp:
+                namelist.clear();
+                codeList.clear();
+                selectList.clear();
                 if (tvDepartment.getText().toString().equals("")) {
                     Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
                     break;
@@ -595,9 +598,9 @@ public class DepartBudgetActivity extends BaseActivity implements YSDOneContract
                     Toast.makeText(this, "请填写理由", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                ysdOnePersenter = new YSDOnePresenter(this, this);
+                ysdOnePersenter = new OnePresenter(this, this);
                 ysdOnePersenter.getYSD(Constant.YSD_DEFID);
-                ysdTwoPersenter = new YSDTwoPresenter(this, this);
+                ysdTwoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this,this);
                 break;
         }
@@ -661,6 +664,7 @@ public class DepartBudgetActivity extends BaseActivity implements YSDOneContract
         }
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
+                userDepart = namelist.get(0);
                 ysdTwoPersenter.getYSDTwo(Constant.YSD_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
