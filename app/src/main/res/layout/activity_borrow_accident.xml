@@ -68,6 +68,28 @@
 
                 <TextView
                     style="@style/oaTextView"
+                    android:text="分公司: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <TextView
+                    android:id="@+id/tvDepartment"
+                    style="@style/oaEditText"
+                    android:hint="请填选择部门" />
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
                     android:text="地点: *" />
 
                 <View
@@ -102,28 +124,6 @@
                     android:id="@+id/etLuBie"
                     style="@style/oaEditText"
                     android:hint="请填写路别" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="分公司: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <TextView
-                    android:id="@+id/tvDepartment"
-                    style="@style/oaEditText"
-                    android:hint="请填选择部门" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 

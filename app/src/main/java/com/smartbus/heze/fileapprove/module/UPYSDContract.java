@@ -1,5 +1,6 @@
 package com.smartbus.heze.fileapprove.module;
 
+import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.http.base.BaseDThirdView;
 import com.smartbus.heze.http.base.BasePresenter;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 public interface UPYSDContract {
     interface View extends BaseDThirdView<presenter> {
         //预算单
-        void setUPYSD(String s);
+        void setUPYSD(BackData s);
         void setUPYSDMessage(String s);
     }
 

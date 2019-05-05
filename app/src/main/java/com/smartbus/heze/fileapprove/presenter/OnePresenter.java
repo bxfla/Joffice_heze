@@ -27,18 +27,18 @@ public class OnePresenter implements OneContract.presenter {
     }
 
     @Override
-    public void getYSD(String defId) {
+    public void getOnePerson(String defId) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getOnePerson(defId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<OnePerson>(context, MainUtil.getData) {
                     @Override
                     protected void onSuccees(OnePerson onePerson) throws Exception {
-                        view.setYSD(onePerson);
+                        view.setOnePerson(onePerson);
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        view.setYSDMessage("失败了----->" + e.getMessage());
+                        view.setOnePersonMessage("失败了----->" + e.getMessage());
                     }
                 });
     }

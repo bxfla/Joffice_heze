@@ -2,6 +2,7 @@ package com.smartbus.heze.http.network;
 
 
 import com.smartbus.heze.ApiAddress;
+import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.Department;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
@@ -62,13 +63,14 @@ public interface AllApi {
      * 获取二级审批人
      */
     @GET(ApiAddress.twoperson)
-    Observable<TwoPerson> getTwoPerson(@Query("defId") String defId,@Query("activityName") String activityName);
+    Observable<TwoPerson> getTwoPerson(@Query("defId") String defId,
+                                       @Query("activityName") String activityName);
 
     /**
      * 提交预算单
      */
     @POST(ApiAddress.upysd)
-    Observable<String> getUpysd(@QueryMap Map<String,String> params);
+    Observable<BackData> getUpysd(@QueryMap Map<String,String> params);
 
 //    /**
 //     * 获取查询线路信息

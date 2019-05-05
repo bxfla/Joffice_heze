@@ -12,15 +12,16 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
+import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
-import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.fileapprove.module.OneContract;
 import com.smartbus.heze.fileapprove.module.TwoContract;
-import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
+import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
+import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -599,7 +600,7 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
                     break;
                 }
                 ysdOnePersenter = new OnePresenter(this, this);
-                ysdOnePersenter.getYSD(Constant.YSD_DEFID);
+                ysdOnePersenter.getOnePerson(Constant.YSD_DEFID);
                 ysdTwoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this,this);
                 break;
@@ -639,6 +640,10 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
         map.put("je3",etAllMoney3.getText().toString());
         map.put("je4",etAllMoney4.getText().toString());
         map.put("je5",etAllMoney5.getText().toString());
+        map.put("hjsl1",tvAllNum.getText().toString());
+        map.put("hjsl2","");
+        map.put("hjje1",tvAllMoney.getText().toString());
+        map.put("hjje2","");
         String zbr = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
         map.put("zhibiao",zbr);
     }
@@ -657,7 +662,7 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
     }
 
     @Override
-    public void setYSD(OnePerson s) {
+    public void setOnePerson(OnePerson s) {
         for (int i = 0; i < s.getData().size(); i++) {
             String name = s.getData().get(i).getDestination();
             namelist.add(name);
@@ -665,13 +670,13 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
-                ysdTwoPersenter.getYSDTwo(Constant.YSD_DEFID, namelist.get(0));
+                ysdTwoPersenter.getTwoPerson(Constant.YSD_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
                     @Override
                     public void oneselect(final String data) {
                         userDepart = data;
-                        ysdTwoPersenter.getYSDTwo(Constant.YSD_DEFID, data);
+                        ysdTwoPersenter.getTwoPerson(Constant.YSD_DEFID, data);
                     }
 
                     @Override
@@ -696,12 +701,12 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
     }
 
     @Override
-    public void setYSDMessage(String s) {
+    public void setOnePersonMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setYSDTwo(TwoPerson s) {
+    public void setTwoPerson(TwoPerson s) {
         for (int i = 0; i < s.getData().size(); i++) {
             TwoPerson.DataBean bean = new TwoPerson.DataBean();
             bean.setUserNames(s.getData().get(i).getUserNames());
@@ -780,13 +785,16 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
     }
 
     @Override
-    public void setYSDTwoMessage(String s) {
+    public void setTwoPersonMessage(String s) {
 
     }
 
     @Override
-    public void setUPYSD(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    public void setUPYSD(BackData s) {
+       if (s.isSuccess()){
+           Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+           finish();
+       }
     }
 
     @Override

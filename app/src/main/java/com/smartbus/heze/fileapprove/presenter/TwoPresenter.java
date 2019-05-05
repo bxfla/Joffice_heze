@@ -27,18 +27,18 @@ public class TwoPresenter implements TwoContract.presenter {
     }
 
     @Override
-    public void getYSDTwo(String defId,String activityName) {
+    public void getTwoPerson(String defId,String activityName) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getTwoPerson(defId,activityName).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<TwoPerson>(context, MainUtil.getData) {
                     @Override
                     protected void onSuccees(TwoPerson twoPerson) throws Exception {
-                        view.setYSDTwo(twoPerson);
+                        view.setTwoPerson(twoPerson);
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        view.setYSDTwoMessage("失败了----->" + e.getMessage());
+                        view.setTwoPersonMessage("失败了----->" + e.getMessage());
                     }
                 });
     }

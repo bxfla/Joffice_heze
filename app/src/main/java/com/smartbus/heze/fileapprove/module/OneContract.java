@@ -11,11 +11,11 @@ import com.smartbus.heze.http.base.BasePresenter;
 public interface OneContract {
     interface View extends BaseDView<presenter> {
         //预算单
-        void setYSD(OnePerson s);
-        void setYSDMessage(String s);
+        void setOnePerson(OnePerson s);
+        void setOnePersonMessage(String s);
     }
 
     interface presenter extends BasePresenter {
-        void getYSD(String defId);
+        void getOnePerson(String defId);
     }
 }

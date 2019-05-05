@@ -24,8 +24,9 @@ public class CookieReadInterceptor implements Interceptor {
         String cookieString = SharePreferencesUtils.getString(MyApplication.myApp, "cookiess", "");
         String[] splitCookie = cookieString.split(";");
         String[] splitSessionId = splitCookie[0].split("=");
-        cookieString = splitSessionId[1];
-        Log.e("session",cookieString);
+//        cookieString = splitSessionId[1];
+        cookieString = splitCookie[0];
+        Log.e("sessionGet",cookieString);
         builder.addHeader("Cookie", cookieString);
         return chain.proceed(builder.build());
     }

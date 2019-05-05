@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.fileapprove.activity.BorrowAccidentActivity;
 import com.smartbus.heze.fileapprove.activity.DepartBudgetActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
@@ -62,6 +63,8 @@ public class FileMainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.ll2:
+                intent = new Intent(this, BorrowAccidentActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll3:
                 break;

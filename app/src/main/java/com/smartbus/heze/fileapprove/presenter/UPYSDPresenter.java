@@ -2,6 +2,7 @@ package com.smartbus.heze.fileapprove.presenter;
 
 import android.content.Context;
 
+import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
@@ -31,9 +32,9 @@ public class UPYSDPresenter implements UPYSDContract.presenter {
     public void getUPYSD(Map<String,String> map) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getUpysd(map).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserverNoEntry<String>(context, MainUtil.getData) {
+                .subscribe(new BaseObserverNoEntry<BackData>(context, MainUtil.getData) {
                     @Override
-                    protected void onSuccees(String s) throws Exception {
+                    protected void onSuccees(BackData s) throws Exception {
                         view.setUPYSD(s);
                     }
 

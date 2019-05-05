@@ -23,7 +23,7 @@ public class CookiesSaveInterceptor implements Interceptor {
         Response originalResponse = chain.proceed(chain.request());
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             String header =originalResponse.header("Set-Cookie");
-            Log.e("session",header);
+            Log.e("sessionLogin",header);
             SharePreferencesUtils.setString(MyApplication.myApp,"cookiess",header);
         }
         return originalResponse;

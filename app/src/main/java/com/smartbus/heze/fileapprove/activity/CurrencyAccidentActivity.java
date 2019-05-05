@@ -40,9 +40,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 事故科的事故借款单
+ * 通用借款单
  */
-public class BorrowAccidentActivity extends BaseActivity implements OneContract.View
+public class CurrencyAccidentActivity extends BaseActivity implements OneContract.View
         , TwoContract.View, UPYSDContract.View {
     @BindView(R.id.header)
     Header header;
@@ -94,6 +94,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     String userDepart = "";
     String userCode = "";
     String userName = "";
+    String userId = "";
     String[] nametemp = null;
     String[] codetemp = null;
     String depId = "", depName = "";
@@ -113,6 +114,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        userId = new SharedPreferencesHelper(this,"login").getData(this,"userId","");
         initDatePicker();
     }
 
@@ -201,6 +203,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
 //        map.put("je5", etAllMoney5.getText().toString());
         String zbr = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         map.put("zhibiao", zbr);
+        map.put("userId",userId);
     }
 
     @Override
