@@ -10,6 +10,8 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
+        app:header_is_right_tv_visiable="true"
+        app:header_title_right="@string/title_tips_confim"
         app:header_title="@string/department_list">
     </com.smartbus.heze.http.views.Header>
 

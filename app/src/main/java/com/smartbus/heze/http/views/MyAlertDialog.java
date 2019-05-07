@@ -33,9 +33,6 @@ public class MyAlertDialog {
         listView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 300));
         listView.setFadingEdgeLength(0);
 
-//        SimpleAdapter adapter = new SimpleAdapter(context, nameList,
-//                R.layout.alert_item, new String[]{"name"},
-//                new int[]{R.id.tv_name});
         AlertDialogAdapter adapter = new AlertDialogAdapter(context,nameList,isShow);
 
         listView.setAdapter(adapter);

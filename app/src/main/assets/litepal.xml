@@ -4,5 +4,6 @@
     <version value="1"></version>
     <list>
         <mapping class="com.smartbus.heze.fileapprove.bean.DepartmentDataBean"></mapping>
+        <mapping class="com.smartbus.heze.fileapprove.bean.WorkPersonDataBean"></mapping>
     </list>
 </litepal>

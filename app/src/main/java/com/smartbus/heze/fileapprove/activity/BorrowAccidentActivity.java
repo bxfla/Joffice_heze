@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
@@ -167,40 +166,26 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     }
 
     private void setData() {
-        map.put("defId", Constant.YSD_DEFID);
+        map.put("defId", Constant.BORROWACCIDENT_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.YSD_FORMDEFIS);
+        map.put("formDefId", Constant.BORROWACCIDENT_FORMDEFIS);
         map.put("depNameDid", depId);
         map.put("depName", depName);
-//        map.put("createDate", tvTime.getText().toString());
-//        map.put("bzly", etUse.getText().toString());
-//        map.put("xm1", etName1.getText().toString());
-//        map.put("xm2", etName2.getText().toString());
-//        map.put("xm3", etName3.getText().toString());
-//        map.put("xm4", etName4.getText().toString());
-//        map.put("xm5", etName5.getText().toString());
-//        map.put("dw1", etDepartment1.getText().toString());
-//        map.put("dw2", etDepartment2.getText().toString());
-//        map.put("dw3", etDepartment3.getText().toString());
-//        map.put("dw4", etDepartment4.getText().toString());
-//        map.put("dw5", etDepartment5.getText().toString());
-//        map.put("dj1", etMoney1.getText().toString());
-//        map.put("dj2", etMoney2.getText().toString());
-//        map.put("dj3", etMoney3.getText().toString());
-//        map.put("dj4", etMoney4.getText().toString());
-//        map.put("dj5", etMoney5.getText().toString());
-//        map.put("sl1", etNum1.getText().toString());
-//        map.put("sl2", etNum2.getText().toString());
-//        map.put("sl3", etNum3.getText().toString());
-//        map.put("sl4", etNum4.getText().toString());
-//        map.put("sl5", etNum5.getText().toString());
-//        map.put("je1", etAllMoney1.getText().toString());
-//        map.put("je2", etAllMoney2.getText().toString());
-//        map.put("je3", etAllMoney3.getText().toString());
-//        map.put("je4", etAllMoney4.getText().toString());
-//        map.put("je5", etAllMoney5.getText().toString());
-        String zbr = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
-        map.put("zhibiao", zbr);
+        map.put("jiekuanDate", tvTime.getText().toString());
+        map.put("atDate", tvTime1.getText().toString());
+        map.put("atPlace", etAddress.getText().toString());
+        map.put("lineCode", etLuBie.getText().toString());
+        map.put("carNo", etCarNo.getText().toString());
+        map.put("driverName", etDriver.getText().toString());
+        map.put("acDuty", etBlame.getText().toString());
+        map.put("atAfter", etReason.getText().toString());
+        map.put("atje", etSmallMoney.getText().toString());
+        map.put("acNumber", etNum.getText().toString());
+        map.put("jiekuanren", etName.getText().toString());
+        map.put("kezhang","");
+        map.put("fenguanjingli", "");
+        map.put("caiwujingli", "");
+        map.put("pishi", "");
     }
 
     @Override
@@ -224,6 +209,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
         }
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
+                userDepart = namelist.get(0);
                 twoPersenter.getTwoPerson(Constant.YSD_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
@@ -340,17 +326,20 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
 
     @Override
     public void setTwoPersonMessage(String s) {
-
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void setUPYSD(BackData s) {
-        Toast.makeText(this, s.getRunId(), Toast.LENGTH_SHORT).show();
+        if (s.isSuccess()){
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override
     public void setUPYSDMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.tvTime, R.id.tvTime1, R.id.tvDepartment, R.id.btnUp})
@@ -367,6 +356,12 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                 startActivityForResult(intent, Constant.TAG_ONE);
                 break;
             case R.id.btnUp:
+                namelist.clear();
+                codeList.clear();
+                nameList.clear();
+                selectList.clear();
+                namelist1.clear();
+                dataList.clear();
                 if (tvDepartment.getText().toString().equals("")) {
                     Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
                     break;
@@ -408,7 +403,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                     break;
                 }
                 onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.YSD_DEFID);
+                onePersenter.getOnePerson(Constant.BORROWACCIDENT_DEFID);
                 twoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this, this);
                 break;

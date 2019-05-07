@@ -31,4 +31,7 @@ public class ApiAddress {
     //提交预算单
     public final static String upysd = "flow/saveProcessActivity.do";
 
+    //获取内部员工
+    public final static String workperson = "system/getAppAllUserAppUser.do";
+
 }

@@ -35,7 +35,11 @@ public class UPYSDPresenter implements UPYSDContract.presenter {
                 .subscribe(new BaseObserverNoEntry<BackData>(context, MainUtil.getData) {
                     @Override
                     protected void onSuccees(BackData s) throws Exception {
-                        view.setUPYSD(s);
+                        if (s.isSuccess()){
+                            view.setUPYSD(s);
+                        }else {
+                            view.setUPYSDMessage("");
+                        }
                     }
 
                     @Override

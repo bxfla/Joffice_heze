@@ -6,6 +6,7 @@ import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.Department;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
+import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
@@ -71,6 +72,12 @@ public interface AllApi {
      */
     @POST(ApiAddress.upysd)
     Observable<BackData> getUpysd(@QueryMap Map<String,String> params);
+
+    /**
+     * 获取内部员工
+     */
+    @POST(ApiAddress.workperson)
+    Observable<WorkPerson> getWorkPerson();
 
 //    /**
 //     * 获取查询线路信息

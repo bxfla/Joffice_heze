@@ -1,9 +1,12 @@
 package com.smartbus.heze.fileapprove.activity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
+import com.smartbus.heze.fileapprove.util.FileUtils;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -24,6 +28,7 @@ import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,40 +41,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.smartbus.heze.http.base.Constant.TAG_ONE;
+import static com.smartbus.heze.http.base.Constant.TAG_TWO;
+
 /**
- * 通用借款单
+ * 文件传阅
  */
-public class CurrencyAccidentActivity extends BaseActivity implements OneContract.View
+public class FileCirculateActivity extends BaseActivity implements OneContract.View
         , TwoContract.View, UPYSDContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
     TextView tvTime;
-    @BindView(R.id.etSmallMoney)
-    EditText etSmallMoney;
-    @BindView(R.id.etName)
-    EditText etName;
-    @BindView(R.id.etReason)
-    EditText etReason;
-    @BindView(R.id.tvLeader)
-    TextView tvLeader;
-    @BindView(R.id.etLeader)
-    EditText etLeader;
-    @BindView(R.id.tvLeader1)
-    TextView tvLeader1;
-    @BindView(R.id.etLeader1)
-    EditText etLeader1;
-    @BindView(R.id.tvLeader2)
-    TextView tvLeader2;
-    @BindView(R.id.etLeader2)
-    EditText etLeader2;
-    @BindView(R.id.tvLeader3)
-    TextView tvLeader3;
-    @BindView(R.id.etLeader3)
-    EditText etLeader3;
+    @BindView(R.id.tvData)
+    TextView tvData;
     @BindView(R.id.btnUp)
     Button btnUp;
-
+    @BindView(R.id.btnPerson)
+    Button btnPerson;
     String uId = "";
     String isShow = "true";
     String userDepart = "";
@@ -86,6 +75,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     List<String> codeList = new ArrayList<>();
     List<String> nameList = new ArrayList<>();
     List<String> selectList = new ArrayList<>();
+    List<String> selectList1 = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker1;
@@ -99,7 +89,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_borrow_current;
+        return R.layout.activity_file_circulate;
     }
 
     @Override
@@ -138,9 +128,9 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
         map.put("startFlow", "true");
         map.put("formDefId", Constant.CURRENCYACCIDENT_FORMDEFIS);
         map.put("jiekuanDate", tvTime.getText().toString());
-        map.put("jiekuansy", etReason.getText().toString());
-        map.put("jiekuanje", etSmallMoney.getText().toString());
-        map.put("jiekuanren", etName.getText().toString());
+//        map.put("jiekuansy", etReason.getText().toString());
+//        map.put("jiekuanje", etSmallMoney.getText().toString());
+//        map.put("jiekuanren", etName.getText().toString());
     }
 
     @Override
@@ -153,6 +143,8 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
                 twoPersenter.getTwoPerson(Constant.CURRENCYACCIDENT_DEFID, namelist.get(0));
+//                Intent intent = new Intent(this, WorkPersonActivity.class);
+//                startActivity(intent);
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
                     @Override
@@ -213,6 +205,11 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
             }
             if (codeList.size() == 1) {
                 selectList.add(codeList.get(0));
+                if (selectList1!=null){
+                    for (int i = 0;i<selectList1.size();i++){
+                        selectList.add(selectList1.get(i));
+                    }
+                }
                 getListData();
                 setData();
                 map.put("flowAssignId", userDepart + "|" + uId);
@@ -223,6 +220,12 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                     @Override
                     public void select(List<String> data) {
                         selectList = data;
+                        selectList.add(codeList.get(0));
+                        if (selectList1!=null){
+                            for (int i = 0;i<selectList1.size();i++){
+                                selectList.add(selectList1.get(i));
+                            }
+                        }
                         getListData();
                         setData();
                         map.put("flowAssignId", userDepart + "|" + uId);
@@ -284,12 +287,26 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
-
-    @OnClick({R.id.tvTime, R.id.btnUp})
+    @OnClick({R.id.tvTime, R.id.tvData, R.id.btnUp,R.id.btnPerson})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvTime:
                 customDatePicker1.show(tvTime.getText().toString());
+                break;
+            case R.id.tvData:
+                Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
+                intentD.setType("*/*");
+                intentD.addCategory(Intent.CATEGORY_OPENABLE);
+                try {
+                    startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), TAG_TWO);
+                } catch (ActivityNotFoundException ex) {
+                    // Potentially direct the user to the Market with a Dialog
+                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.btnPerson:
+                Intent intent = new Intent(this,WorkPersonActivity.class);
+                startActivityForResult(intent,Constant.TAG_ONE);
                 break;
             case R.id.btnUp:
                 namelist.clear();
@@ -298,18 +315,6 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                 selectList.clear();
                 namelist1.clear();
                 dataList.clear();
-                if (etReason.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etSmallMoney.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etName.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 onePersenter = new OnePresenter(this, this);
                 onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
                 twoPersenter = new TwoPresenter(this, this);
@@ -317,4 +322,54 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                 break;
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case TAG_ONE:
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                try {
+                    startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), TAG_TWO);
+                } catch (ActivityNotFoundException ex) {
+                    // Potentially direct the user to the Market with a Dialog
+                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAG_ONE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        selectList1 = data.getStringArrayListExtra("bean");
+                    }
+                }
+                break;
+            case TAG_TWO:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    Log.d("XXX", "File Uri: " + uri.toString());
+                    // Get the path
+                    String path = null;
+                    try {
+                        path = FileUtils.getPath(this, uri);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("XXX", "File Path: " + path);
+                    // Get the file instance
+                    // File file = new File(path);
+                    // Initiate the upload
+                }
+                break;
+        }
+    }
+
 }

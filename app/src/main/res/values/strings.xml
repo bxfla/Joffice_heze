@@ -6,6 +6,7 @@
     <string name="welcome_text1">为内部员工办公提供有力的保障</string>
     <string name="company_name">菏泽公交集团有限公司</string>
     <string name="department_list">部门列表</string>
+    <string name="person_list">人员列表</string>
 
     <!--timeselect-->
     <string name="cancle">取消</string>

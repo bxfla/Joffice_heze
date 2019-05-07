@@ -7,7 +7,11 @@ import android.widget.LinearLayout;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.activity.BorrowAccidentActivity;
+import com.smartbus.heze.fileapprove.activity.CurrencyAccidentActivity;
 import com.smartbus.heze.fileapprove.activity.DepartBudgetActivity;
+import com.smartbus.heze.fileapprove.activity.DocumentLZActivity;
+import com.smartbus.heze.fileapprove.activity.FileCirculateActivity;
+import com.smartbus.heze.fileapprove.activity.HuiQianActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 
@@ -67,12 +71,20 @@ public class FileMainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.ll3:
+                intent = new Intent(this, CurrencyAccidentActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll4:
+                intent = new Intent(this, HuiQianActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll5:
+                intent = new Intent(this, FileCirculateActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll6:
+                intent = new Intent(this, DocumentLZActivity.class);
+                startActivity(intent);
                 break;
         }
     }

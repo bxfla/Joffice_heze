@@ -37,9 +37,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 通用借款单
+ * 公文流转
  */
-public class CurrencyAccidentActivity extends BaseActivity implements OneContract.View
+public class DocumentLZActivity extends BaseActivity implements OneContract.View
         , TwoContract.View, UPYSDContract.View {
     @BindView(R.id.header)
     Header header;

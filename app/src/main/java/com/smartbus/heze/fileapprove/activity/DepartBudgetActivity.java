@@ -574,7 +574,10 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
             case R.id.btnUp:
                 namelist.clear();
                 codeList.clear();
+                nameList.clear();
                 selectList.clear();
+                namelist1.clear();
+                dataList.clear();
                 if (tvDepartment.getText().toString().equals("")) {
                     Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
                     break;
@@ -799,7 +802,7 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
 
     @Override
     public void setUPYSDMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
 }
