@@ -1,5 +1,6 @@
 package com.smartbus.heze.oaflow.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,7 +11,6 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +25,9 @@ import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
+import com.smartbus.heze.fileapprove.activity.DepartmentActivity;
 import com.smartbus.heze.fileapprove.bean.BackData;
+import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
 import com.smartbus.heze.fileapprove.module.OneContract;
@@ -63,12 +65,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.R.attr.permission;
+import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
- * 通用请假单
+ * 通用加班单
  */
-public class UserdLeaveActivity extends BaseActivity implements OneContract.View
+public class AddWorkActivity extends BaseActivity implements OneContract.View
         , TwoContract.View, UPYSDContract.View {
     @BindView(R.id.header)
     Header header;
@@ -76,12 +79,14 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     EditText etPerson;
     @BindView(R.id.tvTime)
     TextView tvTime;
-    @BindView(R.id.spinner)
-    Spinner spinner;
+    @BindView(R.id.tvDepartment)
+    TextView tvDepartment;
     @BindView(R.id.etDays)
     EditText etDays;
     @BindView(R.id.etReason)
     EditText etReason;
+    @BindView(R.id.etAddress)
+    EditText etAddress;
     @BindView(R.id.tvStartTime)
     TextView tvStartTime;
     @BindView(R.id.spinnerAM)
@@ -119,50 +124,27 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     List<String> selectList = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1,customDatePicker2;
+    private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
-    ArrayAdapter<String> TypeAdapter;
     ArrayAdapter<String> TimeAdapter;
     List<String> listTime = new ArrayList<String>();
-    List<String> listType = new ArrayList<String>();
 
     String fileName = "";
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE" };
+            "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         initDatePicker();
-        String uaserName = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
+        String uaserName = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         etPerson.setText(uaserName);
         listTime.add("上午");
         listTime.add("下午");
         listTime.add("全天");
-
-        listType.add("事假");
-        listType.add("病假");
-        listType.add("产假");
-        listType.add("年休假");
-        listType.add("陪护假");
-        listType.add("小产假");
-        listType.add("婚假");
-        listType.add("丧假");
-        listType.add("其他");
-        TypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listType);
-        TypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(TypeAdapter);
-        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
 
         TimeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listTime);
         TimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -175,7 +157,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_userd_leave;
+        return R.layout.activity_add_work;
     }
 
     @Override
@@ -372,7 +354,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.tvStartTime, R.id.tvEndTime, R.id.tvData, R.id.btnUp})
+    @OnClick({R.id.tvStartTime, R.id.tvEndTime, R.id.tvDepartment, R.id.tvData, R.id.btnUp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvStartTime:
@@ -381,13 +363,17 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
             case R.id.tvEndTime:
                 customDatePicker2.show(tvEndTime.getText().toString());
                 break;
+            case R.id.tvDepartment:
+                Intent intent = new Intent(this, DepartmentActivity.class);
+                startActivityForResult(intent, Constant.TAG_ONE);
+                break;
             case R.id.tvData:
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     // 没有写的权限，去申请写的权限，会弹出对话框
-                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
-                }else {
+                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+                } else {
                     File file = new File(Environment.getExternalStorageDirectory().getPath());
-                    if(null==file || !file.exists()){
+                    if (null == file || !file.exists()) {
                         return;
                     }
                     Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
@@ -396,7 +382,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                     intentD.setDataAndType(Uri.fromFile(file), "file/*");
                     try {
                         startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
-                    } catch (android.content.ActivityNotFoundException ex) {
+                    } catch (ActivityNotFoundException ex) {
                         // Potentially direct the user to the Market with a Dialog
                         Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                     }
@@ -430,7 +416,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
                     startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), Constant.TAG_TWO);
-                } catch (android.content.ActivityNotFoundException ex) {
+                } catch (ActivityNotFoundException ex) {
                     // Potentially direct the user to the Market with a Dialog
                     Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                 }
@@ -442,34 +428,38 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case TAG_ONE:
+            if (resultCode == TAG_ONE ) {
+                if (data != null) {
+                    DepartmentDataBean departmentDataBean = (DepartmentDataBean) data.getSerializableExtra("department");
+                    depId = departmentDataBean.getDepId();
+                    depName = departmentDataBean.getDepName();
+                    tvDepartment.setText(depName);
+                }
+            }
+            break;
             case TAG_TWO:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
                     File file = null;
                     try {
-                        if (FileUtils.getPath(UserdLeaveActivity.this,uri)!=null){
-                            file = FileUtils.getPath(UserdLeaveActivity.this,uri);
+                        if (FileUtils.getPath(AddWorkActivity.this, uri) != null) {
+                            file = FileUtils.getPath(AddWorkActivity.this, uri);
                         }
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-//                    String[] proj = {MediaStore.Images.Media.DATA};
-//                    Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-//                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                    actualimagecursor.moveToFirst();
-//                    String img_path = actualimagecursor.getString(actual_image_column_index);
-//                    File file1 = new File(path);
-                    Log.e("XXX",file.toString());
+                    Log.e("XXX", file.toString());
                     final AsyncHttpClient client = new AsyncHttpClient();
                     final String url = ApiAddress.mainApi + ApiAddress.dataup;
-                    String userId = new SharedPreferencesHelper(MyApplication.getContext(),"login").
+                    String userId = new SharedPreferencesHelper(MyApplication.getContext(), "login").
                             getData(MyApplication.getContext(), "userId", "");
                     final RequestParams params = new RequestParams();
                     try {
                         params.put("upload", file);
                         params.put("fullname", file.getName());
                         params.put("userId", userId);
-                    }catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     ProgressDialogUtil.startLoad(this, MainUtil.upData);
@@ -504,21 +494,22 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         }
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case Constant.TAG_ONE:
-                    Toast.makeText(UserdLeaveActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddWorkActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
                     tvData.setText(fileName);
                     ProgressDialogUtil.stopLoad();
                     break;
                 case Constant.TAG_TWO:
-                    Toast.makeText(UserdLeaveActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddWorkActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
                     ProgressDialogUtil.stopLoad();
                     break;
             }
         }
     };
+
 }

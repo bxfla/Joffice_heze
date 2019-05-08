@@ -50,7 +50,15 @@
         <activity
             android:name=".fileapprove.activity.DocumentLZActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".oaflow.OaMainActivity"></activity>
+
+
+        <activity android:name=".oaflow.OaMainActivity"/>
+        <activity
+            android:name=".oaflow.activity.UserdLeaveActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".oaflow.activity.AddWorkActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
     </application>
 
 </manifest>

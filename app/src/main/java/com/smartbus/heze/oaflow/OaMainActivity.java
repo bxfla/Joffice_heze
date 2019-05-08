@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.smartbus.heze.R;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
+import com.smartbus.heze.oaflow.activity.AddWorkActivity;
 import com.smartbus.heze.oaflow.activity.UserdLeaveActivity;
 
 import butterknife.BindView;
@@ -60,6 +61,8 @@ public class OaMainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.ll8:
+                intent = new Intent(this, AddWorkActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll3:
                 break;
