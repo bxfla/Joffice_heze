@@ -13,13 +13,13 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.FileMainActivity;
-import com.smartbus.heze.fileapprove.activity.BorrowAccidentActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.GlideImageLoader;
 import com.smartbus.heze.http.views.ScrollForeverTextView;
 import com.smartbus.heze.main.notice.activity.NoticeDetailActivity;
 import com.smartbus.heze.main.notice.activity.NoticeListActivity;
+import com.smartbus.heze.oaflow.OaMainActivity;
 import com.smartbus.heze.welcome.bean.Notice;
 import com.smartbus.heze.welcome.module.WelcomeContract;
 import com.smartbus.heze.welcome.presenter.WelcomePresenter;
@@ -178,7 +178,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb3:
-                intent = new Intent(getActivity(), BorrowAccidentActivity.class);
+                intent = new Intent(getActivity(), OaMainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb4:

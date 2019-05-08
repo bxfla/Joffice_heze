@@ -1,16 +1,26 @@
 package com.smartbus.heze.fileapprove.activity;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.smartbus.heze.ApiAddress;
+import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.R;
+import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
@@ -24,10 +34,17 @@ import com.smartbus.heze.fileapprove.util.FileUtils;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
+import com.smartbus.heze.http.base.ProgressDialogUtil;
+import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.permission;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
@@ -79,6 +97,11 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker1;
+    String fileName = "";
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +147,12 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
     }
 
     private void setData() {
-        map.put("defId", Constant.CURRENCYACCIDENT_DEFID);
+        map.put("defId", Constant.FILECIR_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.CURRENCYACCIDENT_FORMDEFIS);
-        map.put("jiekuanDate", tvTime.getText().toString());
-//        map.put("jiekuansy", etReason.getText().toString());
-//        map.put("jiekuanje", etSmallMoney.getText().toString());
-//        map.put("jiekuanren", etName.getText().toString());
+        map.put("formDefId", Constant.FILECIR_FORMDEFIS);
+        map.put("destName", userDepart);
+        map.put("lrrq", tvTime.getText().toString());
+        map.put("fileId", fileName);
     }
 
     @Override
@@ -142,7 +164,7 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.CURRENCYACCIDENT_DEFID, namelist.get(0));
+                twoPersenter.getTwoPerson(Constant.FILECIR_DEFID, namelist.get(0));
 //                Intent intent = new Intent(this, WorkPersonActivity.class);
 //                startActivity(intent);
             } else {
@@ -150,7 +172,7 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
                     @Override
                     public void oneselect(final String data) {
                         userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.CURRENCYACCIDENT_DEFID, data);
+                        twoPersenter.getTwoPerson(Constant.FILECIR_DEFID, data);
                     }
 
                     @Override
@@ -294,14 +316,24 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
                 customDatePicker1.show(tvTime.getText().toString());
                 break;
             case R.id.tvData:
-                Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
-                intentD.setType("*/*");
-                intentD.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), TAG_TWO);
-                } catch (ActivityNotFoundException ex) {
-                    // Potentially direct the user to the Market with a Dialog
-                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    // 没有写的权限，去申请写的权限，会弹出对话框
+                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+                }else {
+                    File file = new File(Environment.getExternalStorageDirectory().getPath());
+                    if(null==file || !file.exists()){
+                        return;
+                    }
+                    Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
+                    intentD.addCategory(Intent.CATEGORY_OPENABLE);
+                    intentD.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intentD.setDataAndType(Uri.fromFile(file), "file/*");
+                    try {
+                        startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        // Potentially direct the user to the Market with a Dialog
+                        Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.btnPerson:
@@ -316,7 +348,7 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
                 namelist1.clear();
                 dataList.clear();
                 onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
+                onePersenter.getOnePerson(Constant.FILECIR_DEFID);
                 twoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this, this);
                 break;
@@ -326,13 +358,13 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case TAG_ONE:
+            case Constant.TAG_ONE:
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
-                    startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), TAG_TWO);
-                } catch (ActivityNotFoundException ex) {
+                    startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), Constant.TAG_TWO);
+                } catch (android.content.ActivityNotFoundException ex) {
                     // Potentially direct the user to the Market with a Dialog
                     Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                 }
@@ -353,23 +385,81 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
                 break;
             case TAG_TWO:
                 if (resultCode == RESULT_OK) {
-                    // Get the Uri of the selected file
                     Uri uri = data.getData();
-                    Log.d("XXX", "File Uri: " + uri.toString());
-                    // Get the path
-                    String path = null;
+                    File file = null;
                     try {
-                        path = FileUtils.getPath(this, uri);
+                        if (FileUtils.getPath(FileCirculateActivity.this,uri)!=null){
+                            file = FileUtils.getPath(FileCirculateActivity.this,uri);
+                        }
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                    Log.d("XXX", "File Path: " + path);
-                    // Get the file instance
-                    // File file = new File(path);
-                    // Initiate the upload
+//                    String[] proj = {MediaStore.Images.Media.DATA};
+//                    Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+//                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//                    actualimagecursor.moveToFirst();
+//                    String img_path = actualimagecursor.getString(actual_image_column_index);
+//                    File file1 = new File(path);
+                    Log.e("XXX",file.toString());
+                    final AsyncHttpClient client = new AsyncHttpClient();
+                    final String url = ApiAddress.mainApi + ApiAddress.dataup;
+                    String userId = new SharedPreferencesHelper(MyApplication.getContext(),"login").
+                            getData(MyApplication.getContext(), "userId", "");
+                    final RequestParams params = new RequestParams();
+                    try {
+                        params.put("upload", file);
+                        params.put("fullname", file.getName());
+                        params.put("userId", userId);
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ProgressDialogUtil.startLoad(this, MainUtil.upData);
+                    client.post(url, params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int arg0, String arg1) {
+                            super.onSuccess(arg0, arg1);
+                            Log.i("XXX", arg1);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(arg1.toString());
+                                fileName = jsonObject.getString("fileName");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Message message = new Message();
+                            message.what = Constant.TAG_ONE;
+                            handler.sendMessage(message);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                            super.onFailure(statusCode, headers, responseBody, error);
+                            Log.i("XXX", "XXXXX");
+                            Message message = new Message();
+                            message.what = Constant.TAG_TWO;
+                            handler.sendMessage(message);
+                        }
+                    });
                 }
                 break;
         }
     }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case Constant.TAG_ONE:
+                    Toast.makeText(FileCirculateActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
+                    tvData.setText(fileName);
+                    ProgressDialogUtil.stopLoad();
+                    break;
+                case Constant.TAG_TWO:
+                    Toast.makeText(FileCirculateActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
+                    ProgressDialogUtil.stopLoad();
+                    break;
+            }
+        }
+    };
 
 }

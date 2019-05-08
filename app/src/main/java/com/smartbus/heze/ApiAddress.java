@@ -34,4 +34,7 @@ public class ApiAddress {
     //获取内部员工
     public final static String workperson = "system/getAppAllUserAppUser.do";
 
+    //文件上传
+    public final static String dataup = "flow/upLoadImageProcessActivity.do";
+
 }

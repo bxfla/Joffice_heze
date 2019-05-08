@@ -57,4 +57,12 @@
     <string name="department_file_huiqian">部门文件会签单</string>
     <string name="department_file_chuanyue">部门文件传阅</string>
     <string name="decoment_liuzhuan">公文流转表单</string>
+
+
+    <!--流程审批-->
+    <string name="userd_leave">通用请假单</string>
+    <string name="add_work">加班登记单</string>
+    <string name="old_work">补勤登记单</string>
+    <string name="at_work">值班登记单</string>
+    <string name="change_work">调休登记单</string>
 </resources>

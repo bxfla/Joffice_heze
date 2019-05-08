@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.oaflow.OaMainActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/first_process">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item7" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/userd_leave" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll8"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item2" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/add_work" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item9" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/old_work" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item10" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/at_work" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+        <LinearLayout
+            android:id="@+id/ll5"
+            style="@style/ycLinearLayout">
+
+            <ImageView
+                style="@style/ycImageView"
+                android:src="@drawable/flow_item11" />
+
+            <TextView
+                style="@style/ycTextView"
+                android:text="@string/change_work" />
+        </LinearLayout>
+        <View style="@style/HourLine"/>
+
+    </LinearLayout>
+
+</LinearLayout>

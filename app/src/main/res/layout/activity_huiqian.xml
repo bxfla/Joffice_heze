@@ -7,7 +7,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
-        app:header_title="@string/department_budget">
+        app:header_title="@string/department_file_huiqian">
     </com.smartbus.heze.http.views.Header>
 
     <ScrollView

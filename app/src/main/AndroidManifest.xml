@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SET_PROCESS_LIMIT" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -32,7 +34,7 @@
         <activity
             android:name=".fileapprove.activity.BorrowAccidentActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".fileapprove.activity.DepartmentActivity"/>
+        <activity android:name=".fileapprove.activity.DepartmentActivity" />
         <activity
             android:name=".fileapprove.activity.CurrencyAccidentActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -45,6 +47,10 @@
         <activity
             android:name=".fileapprove.activity.FileCirculateActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.DocumentLZActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".oaflow.OaMainActivity"></activity>
     </application>
 
 </manifest>
