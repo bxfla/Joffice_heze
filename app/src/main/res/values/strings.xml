@@ -25,6 +25,7 @@
     <string name="login_password">请输入用户密码</string>
     <string name="forgrt_password">忘记密码</string>
     <string name="login_register">注册账号</string>
+    <string name="no_content">暂无对应数据</string>
 
     <!--首页-->
     <string name="first_page">首页</string>

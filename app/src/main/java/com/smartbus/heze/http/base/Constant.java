@@ -25,7 +25,7 @@ public class Constant {
     //通用借款单
     public final static String CURRENCYACCIDENT_DEFID = "88" ;
     public final static String CURRENCYACCIDENT_FORMDEFIS = "31" ;
-    //通用借款单
+    //通用会签
     public final static String HUIQIAN_DEFID = "90" ;
     public final static String HUIQIAN_FORMDEFIS = "33" ;
     //部门文件传阅

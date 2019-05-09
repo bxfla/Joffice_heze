@@ -39,4 +39,16 @@ public class SplitData {
         }
         return data;
     }
+
+    public String getStringData(String data){
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            String sData = jsonObject.getString("v");
+            return sData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

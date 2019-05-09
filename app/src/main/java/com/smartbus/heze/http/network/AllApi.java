@@ -4,10 +4,16 @@ package com.smartbus.heze.http.network;
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.Department;
+import com.smartbus.heze.fileapprove.bean.HuiQianWill;
+import com.smartbus.heze.fileapprove.bean.NoEndPerson;
+import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
+import com.smartbus.heze.fileapprove.bean.NormalPerson;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
+import com.smartbus.heze.fileapprove.bean.WillDoUp;
 import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
+import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
 
@@ -78,6 +84,46 @@ public interface AllApi {
      */
     @POST(ApiAddress.workperson)
     Observable<WorkPerson> getWorkPerson();
+
+    /**
+     * 获取待办列表
+     */
+    @GET(ApiAddress.willdolist)
+    Observable<WillDoList> getWillDoList();
+
+    /**
+     * 获取待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<HuiQianWill> getWillDoDetail(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取正常一级审核人
+     */
+    @GET(ApiAddress.normalperson)
+    Observable<NormalPerson> getNormalPerson(@Query("taskId")String taskId
+            , @Query("activityName")String activityName, @Query("isParentFlow")String isParentFlow);
+
+    /**
+     * 不包含end一级审核人
+     */
+    @GET(ApiAddress.noendperson)
+    Observable<NoEndPerson> getNoEndPerson(@Query("taskId")String taskId
+            , @Query("activityName")String activityName, @Query("isParentFlow")String isParentFlow);
+
+    /**
+     * 不包含end一级审核人
+     */
+    @GET(ApiAddress.nonextperson)
+    Observable<NoHandlerPerson> getNoHandlerPerson(@Query("taskId")String taskId);
+
+    /**
+     * 待办提交
+     */
+    @POST(ApiAddress.willdoup)
+    Observable<WillDoUp> getWillDoUp(@QueryMap Map<String,String> params);
+
 
 
 //    /**

@@ -40,7 +40,11 @@ public class LoginPresenter implements LoginContract.presenter {
                 .subscribe(new BaseObserverNoEntry<Login>(context, MainUtil.getData) {
                     @Override
                     protected void onSuccees(Login t) throws Exception {
-                        view.setLoginList(t);
+                        if (t.isSuccess()){
+                            view.setLoginList(t);
+                        }else {
+                            view.setLoginMessage("失败了----->" + "请检查账号密码");
+                        }
                     }
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {

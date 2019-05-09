@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     public void setLoginList(Login bean) {
         sharedPreferencesHelper.saveData(LoginActivity.this, "userName", username);
         sharedPreferencesHelper.saveData(LoginActivity.this, "userPwd", password);
-        sharedPreferencesHelper.saveData(LoginActivity.this, "userName1", bean.getUserId());
+        sharedPreferencesHelper.saveData(LoginActivity.this, "userName1", bean.getUsername());
         sharedPreferencesHelper.saveData(LoginActivity.this, "userId", bean.getUserId());
         intent = new Intent(this, MainActivity.class);
         startActivity(intent);

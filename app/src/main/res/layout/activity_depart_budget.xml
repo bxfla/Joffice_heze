@@ -10,8 +10,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
-        app:header_title="@string/department_budget">
-    </com.smartbus.heze.http.views.Header>
+        app:header_title="@string/department_budget"></com.smartbus.heze.http.views.Header>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -129,61 +128,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:gravity="center"
-                            android:text="产品名称"
-                            android:textColor="@color/black" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvName1"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvName2"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvName3"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvName4"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvName5"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-                    </LinearLayout>
-
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -242,61 +186,6 @@
                             android:layout_height="45dp" />
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:gravity="center"
-                            android:text="单位"
-                            android:textColor="@color/black" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvDepartment1"
-                            style="@style/oaEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvDepartment2"
-                            style="@style/oaEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvDepartment3"
-                            style="@style/oaEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvDepartment4"
-                            style="@style/oaEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvDepartment5"
-                            style="@style/oaEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp" />
-                    </LinearLayout>
-
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -359,75 +248,15 @@
                             android:layout_height="45dp"
                             android:inputType="number|numberDecimal" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:gravity="center"
-                            android:text="单价"
-                            android:textColor="@color/black" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvMoney1"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:inputType="number|numberDecimal" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvMoney2"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:inputType="number|numberDecimal" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvMoney3"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:inputType="number|numberDecimal" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvMoney4"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:inputType="number|numberDecimal" />
-
-                        <View style="@style/HourLine"></View>
-
-                        <TextView
-                            android:id="@+id/tvMoney5"
-                            style="@style/oaEditText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:inputType="number|numberDecimal" />
-                    </LinearLayout>
-
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/shouye" />
 
                     <LinearLayout
-                        android:layout_width="120dp"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -436,16 +265,9 @@
                             android:gravity="center"
                             android:text="数量"
                             android:textColor="@color/black" />
-
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <View style="@style/HourLine"></View>
@@ -455,7 +277,6 @@
                                     style="@style/oaEditText1"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:hint="原定"
                                     android:inputType="number|numberDecimal" />
 
                                 <View style="@style/HourLine"></View>
@@ -494,427 +315,79 @@
                                     android:layout_height="45dp"
                                     android:inputType="number|numberDecimal" />
                             </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/shouye" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etNum6"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="核定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etNum7"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etNum8"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etNum9"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etNum10"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum1"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="原定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum2"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum3"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum4"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum5"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/shouye" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum6"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="核定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum7"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum8"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum9"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/tvNum10"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-                        </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/shouye" />
 
                     <LinearLayout
-                        android:layout_width="120dp"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center"
                             android:text="金额"
                             android:textColor="@color/black" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                            <View style="@style/HourLine"></View>
 
-                                <View style="@style/HourLine"></View>
+                            <EditText
+                                android:id="@+id/etAllMoney1"
+                                style="@style/oaEditText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:inputType="number|numberDecimal" />
 
-                                <EditText
-                                    android:id="@+id/etAllMoney1"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="原定"
-                                    android:inputType="number|numberDecimal" />
+                            <View style="@style/HourLine"></View>
 
-                                <View style="@style/HourLine"></View>
+                            <EditText
+                                android:id="@+id/etAllMoney2"
+                                style="@style/oaEditText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:inputType="number|numberDecimal" />
 
-                                <EditText
-                                    android:id="@+id/etAllMoney2"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
+                            <View style="@style/HourLine"></View>
 
-                                <View style="@style/HourLine"></View>
+                            <EditText
+                                android:id="@+id/etAllMoney3"
+                                style="@style/oaEditText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:inputType="number|numberDecimal" />
 
-                                <EditText
-                                    android:id="@+id/etAllMoney3"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
+                            <View style="@style/HourLine"></View>
 
-                                <View style="@style/HourLine"></View>
+                            <EditText
+                                android:id="@+id/etAllMoney4"
+                                style="@style/oaEditText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:inputType="number|numberDecimal" />
 
-                                <EditText
-                                    android:id="@+id/etAllMoney4"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
+                            <View style="@style/HourLine"></View>
 
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney5"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/shouye" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney6"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="核定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney7"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney8"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney9"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <EditText
-                                    android:id="@+id/etAllMoney10"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney1"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="原定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney2"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney3"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney4"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney5"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/shouye" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney6"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:hint="核定"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney7"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney8"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney9"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-
-                                <View style="@style/HourLine"></View>
-
-                                <TextView
-                                    android:id="@+id/TvAllMoney10"
-                                    style="@style/oaEditText1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:inputType="number|numberDecimal" />
-                            </LinearLayout>
+                            <EditText
+                                android:id="@+id/etAllMoney5"
+                                style="@style/oaEditText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:inputType="number|numberDecimal" />
                         </LinearLayout>
                     </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/shouye" />
+
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -978,7 +451,6 @@
                     android:hint="合计数量"
                     android:textColor="@color/black" />
             </LinearLayout>
-
             <View style="@style/HourLine"></View>
 
             <LinearLayout
@@ -1004,7 +476,6 @@
                     android:layout_weight="2.5"
                     android:hint="请填写预算理由" />
             </LinearLayout>
-
             <View style="@style/HourLine"></View>
 
             <TextView

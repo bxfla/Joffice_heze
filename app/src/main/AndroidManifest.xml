@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.SET_PROCESS_LIMIT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <application
         android:name=".MyApplication"
@@ -50,15 +51,24 @@
         <activity
             android:name=".fileapprove.activity.DocumentLZActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
-
-        <activity android:name=".oaflow.OaMainActivity"/>
+        <activity android:name=".oaflow.OaMainActivity" />
         <activity
             android:name=".oaflow.activity.UserdLeaveActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".oaflow.activity.AddWorkActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.DepartBudgetWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.BorrowAccidentWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.HuiQianWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".TestActivity">
+        </activity>
     </application>
 
 </manifest>

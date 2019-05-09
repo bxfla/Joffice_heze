@@ -35,7 +35,6 @@ import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
 import com.smartbus.heze.fileapprove.util.FileUtils;
-import com.smartbus.heze.fileapprove.util.SplitData;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -250,7 +249,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
         map.put("urgency", et3.getText().toString());
         map.put("secret", et4.getText().toString());
         map.put("Issue", etQianFa.getText().toString());
-        map.put("sign", new SplitData().SplitUpData(etHuiQian.getText().toString()));
+        map.put("sign", "");
         map.put("delivery", etZhuSong.getText().toString());
         map.put("copy", etCaoSong.getText().toString());
         map.put("draftingDep", tvDepartment.getText().toString());

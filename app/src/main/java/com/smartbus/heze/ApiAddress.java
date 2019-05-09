@@ -37,4 +37,22 @@ public class ApiAddress {
     //文件上传
     public final static String dataup = "flow/upLoadImageProcessActivity.do";
 
+    //待办列表
+    public final static String willdolist = "flow/listTask.do";
+
+    //待办详情
+    public final static String willdodetail = "htmobile/moblieGetTask.do";
+
+    //正常一级审核人
+    public final static String normalperson = "flow/mobileOuterTransProcessActivity.do";
+
+    //没有end的一级审核人
+    public final static String noendperson = "flow/mobileUsersProcessActivity.do";
+
+    //处理完不让其他人处理的一级审核人
+    public final static String nonextperson = "flow/checkTask.do";
+
+    //待办数据提交
+    public final static String willdoup = "flow/nextProcessActivity.do";
+
 }
