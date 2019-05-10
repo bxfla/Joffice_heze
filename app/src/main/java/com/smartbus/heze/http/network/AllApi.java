@@ -3,6 +3,8 @@ package com.smartbus.heze.http.network;
 
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.fileapprove.bean.BackData;
+import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
+import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
 import com.smartbus.heze.fileapprove.bean.Department;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
@@ -92,10 +94,24 @@ public interface AllApi {
     Observable<WillDoList> getWillDoList();
 
     /**
-     * 获取待办详情
+     * 获取会签待办详情
      */
     @GET(ApiAddress.willdodetail)
     Observable<HuiQianWill> getWillDoDetail(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取部门预算待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<DepartBudgetWill> getWillDepartBudget(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取事故借款单待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<BorrowAccidentWill> getWillBorrowAccident(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
     /**

@@ -1,9 +1,12 @@
 package com.smartbus.heze.fileapprove.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,29 +15,31 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
-import com.smartbus.heze.fileapprove.bean.BackData;
-import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
-import com.smartbus.heze.fileapprove.bean.OnePerson;
-import com.smartbus.heze.fileapprove.bean.TwoPerson;
-import com.smartbus.heze.fileapprove.module.OneContract;
-import com.smartbus.heze.fileapprove.module.TwoContract;
-import com.smartbus.heze.fileapprove.module.UPYSDContract;
-import com.smartbus.heze.fileapprove.presenter.OnePresenter;
-import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
-import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
+import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
+import com.smartbus.heze.fileapprove.bean.NoEndPerson;
+import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
+import com.smartbus.heze.fileapprove.bean.NormalPerson;
+import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.DepartBudgetWillContract;
+import com.smartbus.heze.fileapprove.module.NoEndContract;
+import com.smartbus.heze.fileapprove.module.NoHandlerContract;
+import com.smartbus.heze.fileapprove.module.NormalContract;
+import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.DepartBudgetWillPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
+import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
+import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
+import com.smartbus.heze.fileapprove.util.SplitData;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
-import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -44,8 +49,8 @@ import butterknife.OnClick;
 /**
  * 各部门的预算单待办
  */
-public class DepartBudgetWillActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View {
+public class DepartBudgetWillActivity extends BaseActivity implements DepartBudgetWillContract.View
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -115,39 +120,40 @@ public class DepartBudgetWillActivity extends BaseActivity implements OneContrac
     EditText etLeader1;
     @BindView(R.id.etLeader2)
     EditText etLeader2;
+    @BindView(R.id.tvLeader)
+    TextView tvLeader;
+    @BindView(R.id.tvLeader1)
+    TextView tvLeader1;
+    @BindView(R.id.tvLeader2)
+    TextView tvLeader2;
     @BindView(R.id.btnUp)
     Button btnUp;
 
-    String uId = "";
-    String isShow = "true";
-    String userDepart = "";
-    String userCode = "";
-    String userName = "";
-    String[] nametemp = null;
-    String[] codetemp = null;
-    String depId = "", depName = "";
-    OnePresenter ysdOnePersenter;
-    TwoPresenter ysdTwoPersenter;
-    UPYSDPresenter upYsdPersenter;
-    Map<String, String> map = new HashMap<>();
-    List<String> namelist = new ArrayList<>();
-    List<String> codeList = new ArrayList<>();
-    List<String> nameList = new ArrayList<>();
+    String destType = "";
+    String leaderCode = "";
+    String leaderName = "";
+    String destName, uId,signaName;
+    String activityName, taskId;
+    String[] bigNametemp = null;
+    String[] bigCodetemp = null;
+    NormalPresenter normalPresenter;
+    NoEndPresenter noEndPersenter;
+    NoHandlerPresenter noHandlerPresenter;
+    WillDoPresenter willDoPresenter;
+    DepartBudgetWillPresenter departBudgetWillPresenter;
     List<String> selectList = new ArrayList<>();
-    List<String> namelist1 = new ArrayList<>();
-    List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1;
+    List<String> namelist = new ArrayList<>();
+    Map<String, String> map = new HashMap<>();
+    List<DepartBudgetWill.TransBean> destTypeList = new ArrayList<>();
+
     int allNum1 = 0, allNum2 = 0, allNum3 = 0, allNum4 = 0, allNum5 = 0;
     double moneyS1 = 0.0, moneyS2 = 0.0, moneyS3 = 0.0, moneyS4 = 0.0, moneyS5 = 0.0;
     double AllMoney1 = 0.0, AllMoney2 = 0.0, AllMoney3 = 0.0, AllMoney4 = 0.0, AllMoney5 = 0.0;
-
-    String activityName = "",taskId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        initDatePicker();
         etAllMoney1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -529,6 +535,13 @@ public class DepartBudgetWillActivity extends BaseActivity implements OneContrac
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
         taskId = intent.getStringExtra("taskId");
+        normalPresenter = new NormalPresenter(this, this);
+        noEndPersenter = new NoEndPresenter(this, this);
+        noHandlerPresenter = new NoHandlerPresenter(this, this);
+        willDoPresenter = new WillDoPresenter(this, this);
+        Log.e("sessionLogin ", taskId + "-" + activityName);
+        departBudgetWillPresenter = new DepartBudgetWillPresenter(this, this);
+        departBudgetWillPresenter.getDepartBudgetWill(activityName, taskId, Constant.HUIQIAN_DEFID);
     }
 
     @Override
@@ -546,233 +559,259 @@ public class DepartBudgetWillActivity extends BaseActivity implements OneContrac
 
     }
 
-    /**
-     * 选择时间
-     */
-    private void initDatePicker() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-        String now = sdf.format(new Date());
-        tvTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
-            @Override
-            public void handle(String time) {
-                // 回调接口，获得选中的时间
-                tvTime.setText(time.split(" ")[0]);
-            }
-            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
-        }, "2000-01-01 00:00", "2030-01-01 00:00");
-        // 不显示时和分
-        customDatePicker1.showSpecificTime(false);
-        // 不允许循环滚动
-        customDatePicker1.setIsLoop(false);
-    }
-
-    @OnClick({R.id.tvTime, R.id.btnUp, R.id.tvDepartment})
+    @OnClick({R.id.btnUp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tvDepartment:
-                Intent intent = new Intent(this, DepartmentActivity.class);
-                startActivityForResult(intent, Constant.TAG_ONE);
-                break;
-            case R.id.tvTime:
-                customDatePicker1.show(tvTime.getText().toString());
-                break;
             case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
-                if (tvDepartment.getText().toString().equals("")) {
-                    Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
-                    break;
+                if (etLeader.getVisibility() == View.VISIBLE
+                        ||etLeader1.getVisibility() == View.VISIBLE
+                        ||etLeader2.getVisibility() == View.VISIBLE) {
+                    if (etLeader.getText().toString().equals("")
+                            ||etLeader1.getText().toString().equals("")
+                            ||etLeader2.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (destTypeList.size() != 0) {
+                            if (destTypeList.size() == 1) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        destType = destTypeList.get(0).getDestType();
+                                        destName = destTypeList.get(0).getDestination();
+                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                                        } else if (destType.indexOf("end") == -1) {
+                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                                        } else {
+                                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                                        }
+                                        signaName = destTypeList.get(0).getName();
+                                    }
+                                }).start();
+                            } else {
+                                for (int i = 0; i < destTypeList.size(); i++) {
+                                    namelist.add(destTypeList.get(i).getDestination());
+                                }
+                                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
+                                    @Override
+                                    public void oneselect(final String data) {
+                                        destName = data;
+                                        for (int i = 0; i < destTypeList.size(); i++) {
+                                            if (destName.equals(destTypeList.get(i).getDestination())) {
+                                                signaName = destTypeList.get(i).getName();
+                                                destType = destTypeList.get(i).getDestType();
+                                            }
+                                        }
+                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                                        } else if (destType.indexOf("end") == -1) {
+                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                                        } else {
+                                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void select(List<String> list) {
+
+                                    }
+
+                                    @Override
+                                    public void confirm() {
+
+                                    }
+
+                                    @Override
+                                    public void cancel() {
+
+                                    }
+                                });
+                            }
+                        } else {
+                            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-                if (etName1.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写项目名称", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etDepartment1.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写单位", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etMoney1.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写项目单价", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etName1.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写数量", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etUse.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写理由", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                ysdOnePersenter = new OnePresenter(this, this);
-                ysdOnePersenter.getOnePerson(Constant.YSD_DEFID);
-                ysdTwoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this,this);
                 break;
         }
     }
 
-    private void setData(){
-        map.put("defId",Constant.YSD_DEFID);
-        map.put("startFlow","true");
-        map.put("formDefId",Constant.YSD_FORMDEFIS);
-        map.put("depNameDid",depId);
-        map.put("depName",depName);
-        map.put("createDate",tvTime.getText().toString());
-        map.put("bzly",etUse.getText().toString());
-        map.put("xm1",etName1.getText().toString());
-        map.put("xm2",etName2.getText().toString());
-        map.put("xm3",etName3.getText().toString());
-        map.put("xm4",etName4.getText().toString());
-        map.put("xm5",etName5.getText().toString());
-        map.put("dw1",etDepartment1.getText().toString());
-        map.put("dw2",etDepartment2.getText().toString());
-        map.put("dw3",etDepartment3.getText().toString());
-        map.put("dw4",etDepartment4.getText().toString());
-        map.put("dw5",etDepartment5.getText().toString());
-        map.put("dj1",etMoney1.getText().toString());
-        map.put("dj2",etMoney2.getText().toString());
-        map.put("dj3",etMoney3.getText().toString());
-        map.put("dj4",etMoney4.getText().toString());
-        map.put("dj5",etMoney5.getText().toString());
-        map.put("sl1",etNum1.getText().toString());
-        map.put("sl2",etNum2.getText().toString());
-        map.put("sl3",etNum3.getText().toString());
-        map.put("sl4",etNum4.getText().toString());
-        map.put("sl5",etNum5.getText().toString());
-        map.put("je1",etAllMoney1.getText().toString());
-        map.put("je2",etAllMoney2.getText().toString());
-        map.put("je3",etAllMoney3.getText().toString());
-        map.put("je4",etAllMoney4.getText().toString());
-        map.put("je5",etAllMoney5.getText().toString());
-        map.put("hjsl1",tvAllNum.getText().toString());
-        map.put("hjsl2","");
-        map.put("hjje1",tvAllMoney.getText().toString());
-        map.put("hjje2","");
-        String zbr = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
-        map.put("zhibiao",zbr);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.TAG_ONE && requestCode == Constant.TAG_ONE) {
-            if (data != null) {
-                DepartmentDataBean departmentDataBean = (DepartmentDataBean) data.getSerializableExtra("department");
-                depId = departmentDataBean.getDepId();
-                depName = departmentDataBean.getDepName();
-                tvDepartment.setText(depName);
-            }
-        }
-    }
-
-    @Override
-    public void setOnePerson(OnePerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            String name = s.getData().get(i).getDestination();
-            namelist.add(name);
-        }
-        if (namelist.size() != 0) {
-            if (namelist.size() == 1) {
-                userDepart = namelist.get(0);
-                ysdTwoPersenter.getTwoPerson(Constant.YSD_DEFID, namelist.get(0));
-            } else {
-                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                    @Override
-                    public void oneselect(final String data) {
-                        userDepart = data;
-                        ysdTwoPersenter.getTwoPerson(Constant.YSD_DEFID, data);
-                    }
-
-                    @Override
-                    public void select(List<String> list) {
-
-                    }
-
-                    @Override
-                    public void confirm() {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
-            }
+    private void setData() {
+        map.put("defId", Constant.YSD_DEFID);
+        map.put("startFlow", "true");
+        map.put("formDefId", Constant.YSD_FORMDEFIS);
+        map.put("depName", tvDepartment.getText().toString());
+        map.put("createDate", tvTime.getText().toString());
+        map.put("bzly", etUse.getText().toString());
+        map.put("xm1", etName1.getText().toString());
+        map.put("xm2", etName2.getText().toString());
+        map.put("xm3", etName3.getText().toString());
+        map.put("xm4", etName4.getText().toString());
+        map.put("xm5", etName5.getText().toString());
+        map.put("dw1", etDepartment1.getText().toString());
+        map.put("dw2", etDepartment2.getText().toString());
+        map.put("dw3", etDepartment3.getText().toString());
+        map.put("dw4", etDepartment4.getText().toString());
+        map.put("dw5", etDepartment5.getText().toString());
+        map.put("dj1", etMoney1.getText().toString());
+        map.put("dj2", etMoney2.getText().toString());
+        map.put("dj3", etMoney3.getText().toString());
+        map.put("dj4", etMoney4.getText().toString());
+        map.put("dj5", etMoney5.getText().toString());
+        map.put("sl1", etNum1.getText().toString());
+        map.put("sl2", etNum2.getText().toString());
+        map.put("sl3", etNum3.getText().toString());
+        map.put("sl4", etNum4.getText().toString());
+        map.put("sl5", etNum5.getText().toString());
+        map.put("je1", etAllMoney1.getText().toString());
+        map.put("je2", etAllMoney2.getText().toString());
+        map.put("je3", etAllMoney3.getText().toString());
+        map.put("je4", etAllMoney4.getText().toString());
+        map.put("je5", etAllMoney5.getText().toString());
+        map.put("hjsl1", tvAllNum.getText().toString());
+        map.put("hjsl2", "");
+        map.put("hjje1", tvAllMoney.getText().toString());
+        map.put("hjje2", "");
+        String zbr = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
+        map.put("zhibiao", zbr);
+        if (tvLeader.getVisibility() == View.VISIBLE) {
+            map.put("cwk", new SplitData().SplitUpData(tvLeader.getText().toString()));
         } else {
-            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
+            map.put("cwk", new SplitData().SplitUpData(etLeader.getText().toString()));
+            map.put("comments", etLeader.getText().toString());
+        }
+        if (tvLeader1.getVisibility() == View.VISIBLE) {
+            map.put("fgyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+        } else {
+            map.put("fgyj", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("comments", etLeader1.getText().toString());
+        }
+        if (tvLeader2.getVisibility() == View.VISIBLE) {
+            map.put("keshifuzer", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+        } else {
+            map.put("keshifuzer", new SplitData().SplitUpData(etLeader2.getText().toString()));
+            map.put("comments", etLeader2.getText().toString());
         }
     }
 
     @Override
-    public void setOnePersonMessage(String s) {
+    public void setDepartBudgetWill(DepartBudgetWill s) {
+
+    }
+
+    @Override
+    public void setDepartBudgetWillMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setTwoPerson(TwoPerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            TwoPerson.DataBean bean = new TwoPerson.DataBean();
-            bean.setUserNames(s.getData().get(i).getUserNames());
-            bean.setUserCodes(s.getData().get(i).getUserCodes());
-            dataList.add(bean);
+    public void setNormalPerson(NormalPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
         }
-        if (dataList.size() == 1) {
-            TwoPerson.DataBean bean1 = dataList.get(0);
-            userCode = bean1.getUserCodes();
-            userName = bean1.getUserNames();
-            nametemp = userName.split(",");
-            codetemp = userCode.split(",");
-            if (codetemp != null) {
-                for (String s1 : codetemp) {
-                    codeList.add(s1);
+    }
+
+    @Override
+    public void setNormalPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setNoEndPerson(NoEndPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
+        }
+    }
+
+    @Override
+    public void setNoEndPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setNoHandlerPerson(NoHandlerPerson s) {
+        setData();
+        map.put("flowAssignId", destName + "|" + uId);
+    }
+
+    @Override
+    public void setNoHandlerPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setWillDo(WillDoUp s) {
+
+    }
+
+    @Override
+    public void setWillDoMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog3 = alertDialogBuilder.create();
+//                alertDialogBuilder.setTitle("java EE 常用框架");
+        // 参数介绍
+        // 第一个参数：弹出框的信息集合，一般为字符串集合
+        // 第二个参数：被默认选中的，一个布尔类型的数组
+        // 第三个参数：勾选事件监听
+        final boolean[] checkedItems = new boolean[bigNametemp.length + 1];
+        for (int i = 0; i < bigNametemp.length; i++) {
+            checkedItems[i] = false;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle("选择时间")//标题栏
+                .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        // dialog：不常使用，弹出框接口
+                        // which：勾选或取消的是第几个
+                        // isChecked：是否勾选
+                        if (isChecked) {
+                            // 选中
+                            checkedItems[which] = isChecked;
+                        } else {
+                            // 取消选中
+                            checkedItems[which] = isChecked;
+                        }
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                //TODO 业务逻辑代码
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        selectList.add(bigCodetemp[i]);
+                    }
                 }
-            }
-            if (nametemp != null) {
-                for (String s1 : nametemp) {
-                    nameList.add(s1);
-                }
-            }
-            if (codeList.size() == 1) {
-                selectList.add(codeList.get(0));
                 getListData();
                 setData();
-                map.put("flowAssignId",userDepart+"|"+uId);
-                upYsdPersenter.getUPYSD(map);
-            } else {
-                MyAlertDialog.MyListAlertDialog(isShow, codeList, nameList, namelist1, this, new AlertDialogCallBackP() {
-
-                    @Override
-                    public void select(List<String> data) {
-                        selectList = data;
-                        getListData();
-                        setData();
-                        map.put("flowAssignId",userDepart+"|"+uId);
-                        upYsdPersenter.getUPYSD(map);
-                    }
-
-                    @Override
-                    public void oneselect(String s) {
-
-                    }
-
-                    @Override
-                    public void confirm() {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
+                // 关闭提示框
+                alertDialog3.dismiss();
+                map.put("flowAssignId", destName + "|" + uId);
+                willDoPresenter.getWillDo(map);
             }
-        }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO 业务逻辑代码
+
+                // 关闭提示框
+                alertDialog3.dismiss();
+            }
+        }).show();
     }
 
     private String getListData() {
@@ -791,24 +830,6 @@ public class DepartBudgetWillActivity extends BaseActivity implements OneContrac
             uId = selectList.get(0) + "," + uId;
         }
         return uId;
-    }
-
-    @Override
-    public void setTwoPersonMessage(String s) {
-
-    }
-
-    @Override
-    public void setUPYSD(BackData s) {
-       if (s.isSuccess()){
-           Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-           finish();
-       }
-    }
-
-    @Override
-    public void setUPYSDMessage(String s) {
-        Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
 }

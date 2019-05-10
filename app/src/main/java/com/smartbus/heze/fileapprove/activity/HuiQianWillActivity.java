@@ -130,9 +130,6 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     String leaderName = "";
     String[] bigNametemp = null;
     String[] bigCodetemp = null;
-    List<String> departmentList = new ArrayList<>();
-    List<String> nameList = new ArrayList<>();
-    List<String> codeList = new ArrayList<>();
     List<String> selectList = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
     List<HuiQianWill.TransBean> destTypeList = new ArrayList<>();
@@ -537,7 +534,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
             map.put("comments", tvHuiQian.getText().toString());
         } else {
             map.put("sign", new SplitData().SplitUpData(etHuiQian.getText().toString()));
-            map.put("comments", tvHuiQian.getText().toString());
+            map.put("comments", etHuiQian.getText().toString());
         }
     }
 
