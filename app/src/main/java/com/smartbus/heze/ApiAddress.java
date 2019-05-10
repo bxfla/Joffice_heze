@@ -55,4 +55,10 @@ public class ApiAddress {
     //待办数据提交
     public final static String willdoup = "flow/nextProcessActivity.do";
 
+    //文件
+    public static final String  filedata = "flow/getFileProcessActivity.do";
+
+    //下载文件
+    public static final String  downloadfile = mainApi+"attachFiles/";
+
 }

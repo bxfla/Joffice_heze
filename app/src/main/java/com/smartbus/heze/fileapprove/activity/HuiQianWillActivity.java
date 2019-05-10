@@ -1,17 +1,30 @@
 package com.smartbus.heze.fileapprove.activity;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.app.DownloadManager.Request;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
+import com.smartbus.heze.fileapprove.bean.FileData;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
@@ -27,10 +40,12 @@ import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
 import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
 import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
+import com.smartbus.heze.fileapprove.util.DBHandler;
 import com.smartbus.heze.fileapprove.util.SplitData;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
+import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
@@ -45,6 +60,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.smartbus.heze.http.base.Constant.TAG_NINE;
+import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
  * 会签发文待办
@@ -98,6 +116,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     String uId;
     String hqMove = "";
     String mainId;
+    String dataRes;
     String destType = "";
     String destName, signaName;
     String activityName, taskId;
@@ -117,6 +136,10 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     List<String> selectList = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
     List<HuiQianWill.TransBean> destTypeList = new ArrayList<>();
+
+    private DownloadManager downloadManager = null;
+    private long downloadId = 0;
+    private DownloadCompleteReceiver receiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +176,61 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvData:
+                List<String> dataList = new ArrayList<>();
+                if (!tvData.getText().toString().equals("")) {
+                    dataList = new SplitData().stringSpiltList(tvData.getText().toString());
+                    if (dataList.size() == 1) {
+                        String id = new SplitData().stringSpilt(dataList.get(0));
+                        final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DBHandler dbA = new DBHandler();
+                                dataRes = dbA.OAQingJiaMyDetail(url);
+                                if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                    handler.sendEmptyMessage(TAG_TWO);
+                                } else {
+                                    handler.sendEmptyMessage(TAG_NINE);
+                                }
+                            }
+                        }).start();
+                    } else if (dataList.size() > 1) {
+                        MyAlertDialog.MyListAlertDialog(this, dataList, new AlertDialogCallBackP() {
+                            @Override
+                            public void oneselect(final String data1) {
+                                String id = new SplitData().stringSpilt(data1);
+                                final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DBHandler dbA = new DBHandler();
+                                        dataRes = dbA.OAQingJiaMyDetail(url);
+                                        if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                            handler.sendEmptyMessage(TAG_TWO);
+                                        } else {
+                                            handler.sendEmptyMessage(TAG_NINE);
+                                        }
+                                    }
+                                }).start();
+                            }
+
+                            @Override
+                            public void select(List<String> list) {
+
+                            }
+
+                            @Override
+                            public void confirm() {
+
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+                    }
+                }
                 break;
             case R.id.btnUp:
                 if (etHuiQian.getVisibility() == View.VISIBLE) {
@@ -327,7 +405,9 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
      */
     @Override
     public void setNoHandlerPerson(NoHandlerPerson s) {
-
+        setData();
+        map.put("flowAssignId", destName + "|" + uId);
+        willDoPresenter.getWillDo(map);
     }
 
     @Override
@@ -459,6 +539,81 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
             map.put("sign", new SplitData().SplitUpData(etHuiQian.getText().toString()));
             map.put("comments", tvHuiQian.getText().toString());
         }
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TAG_TWO:
+                    Toast.makeText(HuiQianWillActivity.this, "操作数据失败", Toast.LENGTH_SHORT).show();
+                    ProgressDialogUtil.stopLoad();
+                    break;
+                case TAG_NINE:
+                    Gson gson2 = new Gson();
+                    FileData file = gson2.fromJson(dataRes, FileData.class);
+                    String filePath = file.getData().getFilePath();
+                    String url = ApiAddress.downloadfile+filePath;
+                    ProgressDialogUtil.startLoad(HuiQianWillActivity.this,"文件下载中");
+                    downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                    // 动态注册广播接收器
+                    receiver = new DownloadCompleteReceiver();
+                    IntentFilter intentFilter = new IntentFilter(
+                            DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+                    registerReceiver(receiver, intentFilter);
+
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                    request.setTitle("下载文件");
+                    // 保存的文件名
+                    request.setDescription(filePath);
+                    // 存储的位置
+                    request.setDestinationInExternalFilesDir(HuiQianWillActivity.this,
+                            Environment.DIRECTORY_DOWNLOADS, filePath);
+                    // 默认显示出来
+                    request.setNotificationVisibility(Request.VISIBILITY_VISIBLE);
+                    // 下载结束后显示出来
+                    request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    downloadId = downloadManager.enqueue(request);
+                    break;
+            }
+        }
+    };
+
+    // 自定义广播内部类
+    class DownloadCompleteReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 获得广播的频道来进行判断是否下载完毕
+            if (intent.getAction().equals(
+                    DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
+                long loadId = intent.getLongExtra(
+                        DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                if (loadId == downloadId) {
+                    ProgressDialogUtil.stopLoad();
+                    // 内容根据需求来写（如：下载完成后跳转到下载的记录）
+                    Intent intent2 = new Intent();
+                    // 跳转到下载记录的界面
+                    intent2.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+                    startActivity(intent2);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //下载完之后就解绑了
+        unregisterReceiver(receiver);
     }
 
 }

@@ -8,7 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/5/6.
@@ -50,5 +53,18 @@ public class SplitData {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public List<String> stringSpiltList(String data){
+        List<String> dataList = new ArrayList<>();
+        String [] temp = null;
+        temp = data.split(",");
+        dataList = Arrays.asList(temp);
+        return dataList;
+    }
+
+    public String stringSpilt(String data1){
+        String id = data1.substring(0, data1.indexOf("|"));
+        return id;
     }
 }

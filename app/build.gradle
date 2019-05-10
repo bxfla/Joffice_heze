@@ -25,8 +25,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // Retrofit库
+
     // gson解析，可以自行替换
+
     // 日志的拦截器，也可以自行选择
+
     //加载对话框
     compile files('libs/pinyin4j-2.5.0.jar')
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
@@ -50,4 +53,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile files('libs/httpclient-4.0.1.jar')
 }

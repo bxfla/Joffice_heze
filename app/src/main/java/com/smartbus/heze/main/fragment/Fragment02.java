@@ -46,7 +46,6 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
     BaseRecyclerAdapter adapter;
     List<WillDoList.ResultBean> beanList = new ArrayList<>();
     WillDoListPresenter willDoListPresenter;
-    Intent intent;
     Unbinder unbinder;
 
     @Override
@@ -55,7 +54,6 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
         view = inflater.inflate(R.layout.fragment02, container, false);
         unbinder = ButterKnife.bind(this, view);
         willDoListPresenter = new WillDoListPresenter(getActivity(), this);
-        willDoListPresenter.getWillDoList();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
         return view;
@@ -133,5 +131,12 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        beanList.clear();
+        willDoListPresenter.getWillDoList();
     }
 }

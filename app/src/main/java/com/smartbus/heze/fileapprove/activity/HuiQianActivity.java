@@ -329,7 +329,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                         @Override
                         public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
                             super.onFailure(statusCode, headers, responseBody, error);
-                            Log.i("XXX", "XXXXX");
+                            Log.i("XXX", error.getMessage().toString());
                             Message message = new Message();
                             message.what = Constant.TAG_TWO;
                             handler.sendMessage(message);
