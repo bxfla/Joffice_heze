@@ -4,24 +4,24 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 通用借款单实体
+ * 公文流转
  * Created by Administrator on 2019/5/8.
  */
 
-public class CurrencyAccidentWill implements Serializable {
+public class DocumentLZWill implements Serializable {
 
 
     /**
      * success : true
-     * taskId : 9010016
-     * pkValue : 3
-     * formRights : {'kezhang':'2','jiekuanDate':'1','jiekuanje':'1','ldps':'1','jiekuanren':'1','jiekuansy':'1','fenguanlingdao':'1','caiwujingli':'1'}
-     * mainform : [{"jiekuansy":"借款事由","kezhang":null,"mainId":3,"ldps":null,"jiekuanje":"20","caiwujingli":null,"runId":32357,"$type$":"WF_loanBill","jiekuanren":"借款人","fenguanlingdao":null,"jiekuanDate":"2019-05-13"}]
-     * formDefId : 31
+     * taskId : 9020139
+     * pkValue : 5
+     * formRights : {'nibanyj':'2','wenjianNo':'1','fawenjig':'1','title':'1','shouwenRq':'1','chengbanjg':'1','ldyj':'1','fawennum':'1'}
+     * mainform : [{"chengbanjg":"","title":"标题","ldyj":"","fawenjig":"安全科","wenjianNo":"编号","nibanyj":"","mainId":5,"runId":32374,"$type$":"WF_documentCirculation","shouwenRq":"2019-05-13","fawennum":"分数"}]
+     * formDefId : 35
      * preTaskName :
      * isSignTask : false
-     * trans : [{"destType":"task","destination":"分管经理","name":"to 分管经理","source":"科长"}]
-     * runId : 32357
+     * trans : [{"destType":"task","destination":"总经理","name":"to 总经理","source":"办公室"}]
+     * runId : 32374
      */
 
     private boolean success;
@@ -117,45 +117,77 @@ public class CurrencyAccidentWill implements Serializable {
 
     public static class MainformBean {
         /**
-         * jiekuansy : 借款事由
-         * kezhang : null
-         * mainId : 3
-         * ldps : null
-         * jiekuanje : 20
-         * caiwujingli : null
-         * runId : 32357
-         * $type$ : WF_loanBill
-         * jiekuanren : 借款人
-         * fenguanlingdao : null
-         * jiekuanDate : 2019-05-13
+         * chengbanjg :
+         * title : 标题
+         * ldyj :
+         * fawenjig : 安全科
+         * wenjianNo : 编号
+         * nibanyj :
+         * mainId : 5
+         * runId : 32374
+         * $type$ : WF_documentCirculation
+         * shouwenRq : 2019-05-13
+         * fawennum : 分数
          */
 
-        private String jiekuansy;
-        private String kezhang;
+        private String chengbanjg;
+        private String title;
+        private String ldyj;
+        private String fawenjig;
+        private String wenjianNo;
+        private String nibanyj;
         private int mainId;
-        private String ldps;
-        private String jiekuanje;
-        private String caiwujingli;
         private int runId;
         private String $type$;
-        private String jiekuanren;
-        private String fenguanlingdao;
-        private String jiekuanDate;
+        private String shouwenRq;
+        private String fawennum;
 
-        public String getJiekuansy() {
-            return jiekuansy;
+        public String getChengbanjg() {
+            return chengbanjg;
         }
 
-        public void setJiekuansy(String jiekuansy) {
-            this.jiekuansy = jiekuansy;
+        public void setChengbanjg(String chengbanjg) {
+            this.chengbanjg = chengbanjg;
         }
 
-        public String getKezhang() {
-            return kezhang;
+        public String getTitle() {
+            return title;
         }
 
-        public void setKezhang(String kezhang) {
-            this.kezhang = kezhang;
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getLdyj() {
+            return ldyj;
+        }
+
+        public void setLdyj(String ldyj) {
+            this.ldyj = ldyj;
+        }
+
+        public String getFawenjig() {
+            return fawenjig;
+        }
+
+        public void setFawenjig(String fawenjig) {
+            this.fawenjig = fawenjig;
+        }
+
+        public String getWenjianNo() {
+            return wenjianNo;
+        }
+
+        public void setWenjianNo(String wenjianNo) {
+            this.wenjianNo = wenjianNo;
+        }
+
+        public String getNibanyj() {
+            return nibanyj;
+        }
+
+        public void setNibanyj(String nibanyj) {
+            this.nibanyj = nibanyj;
         }
 
         public int getMainId() {
@@ -164,30 +196,6 @@ public class CurrencyAccidentWill implements Serializable {
 
         public void setMainId(int mainId) {
             this.mainId = mainId;
-        }
-
-        public String getLdps() {
-            return ldps;
-        }
-
-        public void setLdps(String ldps) {
-            this.ldps = ldps;
-        }
-
-        public String getJiekuanje() {
-            return jiekuanje;
-        }
-
-        public void setJiekuanje(String jiekuanje) {
-            this.jiekuanje = jiekuanje;
-        }
-
-        public String getCaiwujingli() {
-            return caiwujingli;
-        }
-
-        public void setCaiwujingli(String caiwujingli) {
-            this.caiwujingli = caiwujingli;
         }
 
         public int getRunId() {
@@ -206,37 +214,29 @@ public class CurrencyAccidentWill implements Serializable {
             this.$type$ = $type$;
         }
 
-        public String getJiekuanren() {
-            return jiekuanren;
+        public String getShouwenRq() {
+            return shouwenRq;
         }
 
-        public void setJiekuanren(String jiekuanren) {
-            this.jiekuanren = jiekuanren;
+        public void setShouwenRq(String shouwenRq) {
+            this.shouwenRq = shouwenRq;
         }
 
-        public String getFenguanlingdao() {
-            return fenguanlingdao;
+        public String getFawennum() {
+            return fawennum;
         }
 
-        public void setFenguanlingdao(String fenguanlingdao) {
-            this.fenguanlingdao = fenguanlingdao;
-        }
-
-        public String getJiekuanDate() {
-            return jiekuanDate;
-        }
-
-        public void setJiekuanDate(String jiekuanDate) {
-            this.jiekuanDate = jiekuanDate;
+        public void setFawennum(String fawennum) {
+            this.fawennum = fawennum;
         }
     }
 
     public static class TransBean {
         /**
          * destType : task
-         * destination : 分管经理
-         * name : to 分管经理
-         * source : 科长
+         * destination : 总经理
+         * name : to 总经理
+         * source : 办公室
          */
 
         private String destType;

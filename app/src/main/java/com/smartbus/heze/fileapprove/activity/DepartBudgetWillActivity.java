@@ -678,22 +678,30 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         map.put("hjsl2", "");
         map.put("hjje1", tvAllMoney.getText().toString());
         map.put("hjje2", "");
+        map.put("signalName", signaName);
+        map.put("destName", destName);
         String zbr = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         map.put("zhibiao", zbr);
         if (tvLeader.getVisibility() == View.VISIBLE) {
-            map.put("cwk", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            if (!tvLeader.getText().toString().equals("")){
+                map.put("cwk", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            }
         } else {
             map.put("cwk", new SplitData().SplitUpData(etLeader.getText().toString()));
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            map.put("fgyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            if (!tvLeader1.getText().toString().equals("")){
+                map.put("fgyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            }
         } else {
             map.put("fgyj", new SplitData().SplitUpData(etLeader1.getText().toString()));
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
-            map.put("keshifuzer", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+            if (!tvLeader2.getText().toString().equals("")){
+                map.put("keshifuzer", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+            }
         } else {
             map.put("keshifuzer", new SplitData().SplitUpData(etLeader2.getText().toString()));
             map.put("comments", etLeader2.getText().toString());
@@ -838,6 +846,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
     public void setNoHandlerPerson(NoHandlerPerson s) {
         setData();
         map.put("flowAssignId", destName + "|" + uId);
+        willDoPresenter.getWillDo(map);
     }
 
     @Override
@@ -847,7 +856,10 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
 
     @Override
     public void setWillDo(WillDoUp s) {
-
+        if (s.isSuccess()){
+            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

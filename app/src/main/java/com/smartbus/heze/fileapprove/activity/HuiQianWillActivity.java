@@ -529,9 +529,12 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
         map.put("content", tvContent.getText().toString());
         map.put("mainId", mainId);
         map.put("taskId", taskId);
+        map.put("signalName", signaName);
+        map.put("destName", destName);
         if (tvHuiQian.getVisibility() == View.VISIBLE) {
-            map.put("sign", new SplitData().SplitUpData(tvHuiQian.getText().toString()));
-            map.put("comments", tvHuiQian.getText().toString());
+            if (!tvHuiQian.getText().toString().equals("")){
+                map.put("sign", new SplitData().SplitUpData(tvHuiQian.getText().toString()));
+            }
         } else {
             map.put("sign", new SplitData().SplitUpData(etHuiQian.getText().toString()));
             map.put("comments", etHuiQian.getText().toString());

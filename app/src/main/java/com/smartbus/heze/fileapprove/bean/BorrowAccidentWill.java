@@ -12,15 +12,15 @@ public class BorrowAccidentWill implements Serializable {
 
     /**
      * success : true
-     * taskId : 8920028
-     * pkValue : 6
-     * formRights : {'themeWord':'1','draft':'1','title':'1','proofreading':'1','nuclear ':'1','secret':'1','hao2':'1','Issue':'1','content':'1','draftingDep':'1','copy':'1','hao1':'1','printing':'1','nums':'1','delivery':'1','file':'1','urgency':'1'}
-     * mainform : [{"hao2":"啊","nuclear":null,"hao1":"哦","proofreading":"1次","printing":"1","runId":32024,"$type$":"WF_dispatch","themeWord":"侧","urgency":"嗯","sign":"[{\"ui\":\"1\",\"un\":\"1\",\"c\":\"2019-05-08 10:19\",\"v\":\"李\"}]","content":"内容","draft":"唐","Issue":"火","title":"标题","nums":"8","draftingDep":"办公室","file":"15072|IMG_20190605_114959.jpg","mainId":6,"secret":"嗯","delivery":"哦","copy":"汽"}]
-     * formDefId : 33
+     * taskId : 9000023
+     * pkValue : 11
+     * formRights : {'caiwujingli':'1','carNo':'1','driverName':'1','acDuty':'1','lineCode':'1','atDate':'1','acNumber':'1','atAfter':'1','kezhang':'2','depName':'1','pishi':'1','atje':'1','jiekuanren':'1','atPlace':'1','fenguanjingli':'1'}
+     * mainform : [{"atje":"20","lineCode":"路别","acDuty":"责任","fenguanjingli":"","depName":"安全科","caiwujingli":"","runId":32350,"$type$":"WF_accidentLoanSlip","jiekuanren":"借款人","kezhang":"","carNo":"车牌号","atDate":"2019-05-13","pishi":"","mainId":11,"acNumber":"2","atAfter":"经过","driverName":"驾驶员","atPlace":"济南"}]
+     * formDefId : 30
      * preTaskName :
      * isSignTask : false
-     * trans : [{"destType":"task","destination":"总经理","name":"to 总经理","source":"分管领导"}]
-     * runId : 32024
+     * trans : [{"destType":"task","destination":"分管经理","name":"to 分管经理","source":"科长"}]
+     * runId : 32350
      */
 
     private boolean success;
@@ -116,89 +116,91 @@ public class BorrowAccidentWill implements Serializable {
 
     public static class MainformBean {
         /**
-         * hao2 : 啊
-         * nuclear : null
-         * hao1 : 哦
-         * proofreading : 1次
-         * printing : 1
-         * runId : 32024
-         * $type$ : WF_dispatch
-         * themeWord : 侧
-         * urgency : 嗯
-         * sign : [{"ui":"1","un":"1","c":"2019-05-08 10:19","v":"李"}]
-         * content : 内容
-         * draft : 唐
-         * Issue : 火
-         * title : 标题
-         * nums : 8
-         * draftingDep : 办公室
-         * file : 15072|IMG_20190605_114959.jpg
-         * mainId : 6
-         * secret : 嗯
-         * delivery : 哦
-         * copy : 汽
+         * atje : 20
+         * lineCode : 路别
+         * acDuty : 责任
+         * fenguanjingli :
+         * depName : 安全科
+         * caiwujingli :
+         * runId : 32350
+         * $type$ : WF_accidentLoanSlip
+         * jiekuanren : 借款人
+         * kezhang :
+         * carNo : 车牌号
+         * atDate : 2019-05-13
+         * pishi :
+         * mainId : 11
+         * acNumber : 2
+         * atAfter : 经过
+         * driverName : 驾驶员
+         * atPlace : 济南
          */
 
-        private String hao2;
-        private String nuclear;
-        private String hao1;
-        private String proofreading;
-        private String printing;
+        private String atje;
+        private String lineCode;
+        private String acDuty;
+        private String fenguanjingli;
+        private String depName;
+        private String caiwujingli;
         private int runId;
         private String $type$;
-        private String themeWord;
-        private String urgency;
-        private String sign;
-        private String content;
-        private String draft;
-        private String Issue;
-        private String title;
-        private String nums;
-        private String draftingDep;
-        private String file;
+        private String jiekuanren;
+        private String kezhang;
+        private String carNo;
+        private String atDate;
+        private String pishi;
         private int mainId;
-        private String secret;
-        private String delivery;
-        private String copy;
+        private String acNumber;
+        private String atAfter;
+        private String driverName;
+        private String atPlace;
 
-        public String getHao2() {
-            return hao2;
+        public String getAtje() {
+            return atje;
         }
 
-        public void setHao2(String hao2) {
-            this.hao2 = hao2;
+        public void setAtje(String atje) {
+            this.atje = atje;
         }
 
-        public String getNuclear() {
-            return nuclear;
+        public String getLineCode() {
+            return lineCode;
         }
 
-        public void setNuclear(String nuclear) {
-            this.nuclear = nuclear;
+        public void setLineCode(String lineCode) {
+            this.lineCode = lineCode;
         }
 
-        public String getHao1() {
-            return hao1;
+        public String getAcDuty() {
+            return acDuty;
         }
 
-        public void setHao1(String hao1) {
-            this.hao1 = hao1;
+        public void setAcDuty(String acDuty) {
+            this.acDuty = acDuty;
         }
 
-        public String getProofreading() {
-            return proofreading;
+        public String getFenguanjingli() {
+            return fenguanjingli;
         }
 
-        public void setProofreading(String proofreading) {
-            this.proofreading = proofreading;
+        public void setFenguanjingli(String fenguanjingli) {
+            this.fenguanjingli = fenguanjingli;
         }
 
-        public String getPrinting() {
-            return printing;
+        public String getDepName() {
+            return depName;
         }
 
-        public void setPrinting(String printing) {
-            this.printing = printing;
+        public void setDepName(String depName) {
+            this.depName = depName;
+        }
+
+        public String getCaiwujingli() {
+            return caiwujingli;
+        }
+
+        public void setCaiwujingli(String caiwujingli) {
+            this.caiwujingli = caiwujingli;
         }
 
         public int getRunId() {
@@ -217,84 +219,44 @@ public class BorrowAccidentWill implements Serializable {
             this.$type$ = $type$;
         }
 
-        public String getThemeWord() {
-            return themeWord;
+        public String getJiekuanren() {
+            return jiekuanren;
         }
 
-        public void setThemeWord(String themeWord) {
-            this.themeWord = themeWord;
+        public void setJiekuanren(String jiekuanren) {
+            this.jiekuanren = jiekuanren;
         }
 
-        public String getUrgency() {
-            return urgency;
+        public String getKezhang() {
+            return kezhang;
         }
 
-        public void setUrgency(String urgency) {
-            this.urgency = urgency;
+        public void setKezhang(String kezhang) {
+            this.kezhang = kezhang;
         }
 
-        public String getSign() {
-            return sign;
+        public String getCarNo() {
+            return carNo;
         }
 
-        public void setSign(String sign) {
-            this.sign = sign;
+        public void setCarNo(String carNo) {
+            this.carNo = carNo;
         }
 
-        public String getContent() {
-            return content;
+        public String getAtDate() {
+            return atDate;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setAtDate(String atDate) {
+            this.atDate = atDate;
         }
 
-        public String getDraft() {
-            return draft;
+        public String getPishi() {
+            return pishi;
         }
 
-        public void setDraft(String draft) {
-            this.draft = draft;
-        }
-
-        public String getIssue() {
-            return Issue;
-        }
-
-        public void setIssue(String Issue) {
-            this.Issue = Issue;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getNums() {
-            return nums;
-        }
-
-        public void setNums(String nums) {
-            this.nums = nums;
-        }
-
-        public String getDraftingDep() {
-            return draftingDep;
-        }
-
-        public void setDraftingDep(String draftingDep) {
-            this.draftingDep = draftingDep;
-        }
-
-        public String getFile() {
-            return file;
-        }
-
-        public void setFile(String file) {
-            this.file = file;
+        public void setPishi(String pishi) {
+            this.pishi = pishi;
         }
 
         public int getMainId() {
@@ -305,37 +267,45 @@ public class BorrowAccidentWill implements Serializable {
             this.mainId = mainId;
         }
 
-        public String getSecret() {
-            return secret;
+        public String getAcNumber() {
+            return acNumber;
         }
 
-        public void setSecret(String secret) {
-            this.secret = secret;
+        public void setAcNumber(String acNumber) {
+            this.acNumber = acNumber;
         }
 
-        public String getDelivery() {
-            return delivery;
+        public String getAtAfter() {
+            return atAfter;
         }
 
-        public void setDelivery(String delivery) {
-            this.delivery = delivery;
+        public void setAtAfter(String atAfter) {
+            this.atAfter = atAfter;
         }
 
-        public String getCopy() {
-            return copy;
+        public String getDriverName() {
+            return driverName;
         }
 
-        public void setCopy(String copy) {
-            this.copy = copy;
+        public void setDriverName(String driverName) {
+            this.driverName = driverName;
+        }
+
+        public String getAtPlace() {
+            return atPlace;
+        }
+
+        public void setAtPlace(String atPlace) {
+            this.atPlace = atPlace;
         }
     }
 
     public static class TransBean {
         /**
          * destType : task
-         * destination : 总经理
-         * name : to 总经理
-         * source : 分管领导
+         * destination : 分管经理
+         * name : to 分管经理
+         * source : 科长
          */
 
         private String destType;

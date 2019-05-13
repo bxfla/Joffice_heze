@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.fileapprove.activity.BorrowAccidentWillActivity;
 import com.smartbus.heze.fileapprove.activity.CurrencyAccidentWillActivity;
 import com.smartbus.heze.fileapprove.activity.DepartBudgetWillActivity;
 import com.smartbus.heze.fileapprove.activity.DocumentLZWillActivity;
@@ -84,7 +85,7 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
                                 startActivity(intent);
                             }
                             if (o.getFormDefId().equals(Constant.BORROWACCIDENT_FORMDEFIS)){
-                                Intent intent = new Intent(getActivity(), DepartBudgetWillActivity.class);
+                                Intent intent = new Intent(getActivity(), BorrowAccidentWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);

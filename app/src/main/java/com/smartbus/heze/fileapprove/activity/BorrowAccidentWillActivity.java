@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
-import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
@@ -34,6 +33,9 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,6 +97,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     @BindView(R.id.btnUp)
     Button btnUp;
 
+    String mainId = "";
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
@@ -110,7 +113,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     List<String> selectList = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
-    List<DepartBudgetWill.TransBean> destTypeList = new ArrayList<>();
+    List<BorrowAccidentWill.TransBean> destTypeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +128,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
         borrowAccidentWillPresenter = new BorrowAccidentWillPresenter(this, this);
-        borrowAccidentWillPresenter.getBorrowAccidentWill(activityName, taskId, Constant.HUIQIAN_DEFID);
+        borrowAccidentWillPresenter.getBorrowAccidentWill(activityName, taskId, Constant.BORROWACCIDENT_DEFID);
     }
 
     @Override
@@ -147,10 +150,12 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     public void onViewClicked() {
         if (etLeader.getVisibility() == View.VISIBLE
                 ||etLeader1.getVisibility() == View.VISIBLE
-                ||etLeader2.getVisibility() == View.VISIBLE) {
+                ||etLeader2.getVisibility() == View.VISIBLE
+                ||etLeader3.getVisibility() == View.VISIBLE) {
             if (etLeader.getText().toString().equals("")
-                    ||etLeader1.getText().toString().equals("")
-                    ||etLeader2.getText().toString().equals("")) {
+                    &&etLeader1.getText().toString().equals("")
+                    &&etLeader2.getText().toString().equals("")
+                    &&etLeader3.getText().toString().equals("")) {
                 Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
             } else {
                 if (destTypeList.size() != 0) {
@@ -232,26 +237,38 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         map.put("atje", tvSmallMoney.getText().toString());
         map.put("acNumber", tvNum.getText().toString());
         map.put("jiekuanren", tvName.getText().toString());
+        map.put("mainId", mainId);
+        map.put("taskId", taskId);
+        map.put("signalName", signaName);
+        map.put("destName", destName);
         if (tvLeader.getVisibility() == View.VISIBLE) {
-            map.put("kezhang", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            if (!tvLeader.getText().toString().equals("")){
+                map.put("kezhang", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            }
         } else {
             map.put("kezhang", new SplitData().SplitUpData(etLeader.getText().toString()));
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            map.put("fenguanlingdao", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            if (!tvLeader1.getText().toString().equals("")){
+                map.put("fenguanjingli", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            }
         } else {
-            map.put("fenguanlingdao", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("fenguanjingli", new SplitData().SplitUpData(etLeader1.getText().toString()));
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
-            map.put("caiwujingli", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+            if (!tvLeader2.getText().toString().equals("")){
+                map.put("caiwujingli", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+            }
         } else {
             map.put("caiwujingli", new SplitData().SplitUpData(etLeader2.getText().toString()));
             map.put("comments", etLeader2.getText().toString());
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
-            map.put("ldps", new SplitData().SplitUpData(tvLeader3.getText().toString()));
+            if (!tvLeader3.getText().toString().equals("")){
+                map.put("ldps", new SplitData().SplitUpData(tvLeader3.getText().toString()));
+            }
         } else {
             map.put("ldps", new SplitData().SplitUpData(etLeader3.getText().toString()));
             map.put("comments", etLeader3.getText().toString());
@@ -260,7 +277,93 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
 
     @Override
     public void setBorrowAccidentWill(BorrowAccidentWill s) {
+        if (s != null) {
+            tvTime.setText(s.getMainform().get(0).getAtDate().toString());
+            tvTime1.setText(s.getMainform().get(0).getAtDate().toString());
+            tvDepartment.setText(s.getMainform().get(0).getDepName().toString());
+            tvAddress.setText(s.getMainform().get(0).getAtPlace().toString());
+            tvLuBie.setText(s.getMainform().get(0).getLineCode().toString());
+            tvCarNo.setText(s.getMainform().get(0).getCarNo());
+            tvDriver.setText(s.getMainform().get(0).getDepName().toString());
+            tvBlame.setText(s.getMainform().get(0).getAcDuty().toString());
+            tvReason.setText(s.getMainform().get(0).getAtAfter());
+            tvSmallMoney.setText(s.getMainform().get(0).getAtje().toString());
+            tvName.setText(s.getMainform().get(0).getJiekuanren());
+            tvNum.setText(s.getMainform().get(0).getAcDuty());
+            mainId = String.valueOf(s.getMainform().get(0).getMainId());
+            String leader = s.getMainform().get(0).getKezhang();
+            String leader1 = s.getMainform().get(0).getFenguanjingli();
+            String leader2 = s.getMainform().get(0).getCaiwujingli();
+            String leader3 = s.getMainform().get(0).getPishi();
+            String move = s.getFormRights();
+            try {
+                JSONObject jsonObject = new JSONObject(move);
+                String kzMove = jsonObject.getString("kezhang");
+                String fgMove = jsonObject.getString("fenguanjingli");
+                String cwMove = jsonObject.getString("caiwujingli");
+                String psMove = jsonObject.getString("pishi");
+                if (kzMove.equals("2")) {
+                    tvLeader.setVisibility(View.GONE);
+                    etLeader.setVisibility(View.VISIBLE);
+                    if (leader != null && leader.length() != 0) {
+                        etLeader.setText(new SplitData().getStringData(leader));
+                    }
+                } else {
+                    tvLeader.setVisibility(View.VISIBLE);
+                    etLeader.setVisibility(View.GONE);
+                    if (leader != null && leader.length() != 0) {
+                        tvLeader.setText(new SplitData().getStringData(leader));
+                    }
+                }
 
+                if (fgMove.equals("2")) {
+                    tvLeader1.setVisibility(View.GONE);
+                    etLeader1.setVisibility(View.VISIBLE);
+                    if (leader1 != null && leader1.length() != 0) {
+                        etLeader1.setText(new SplitData().getStringData(leader1));
+                    }
+                } else {
+                    tvLeader1.setVisibility(View.VISIBLE);
+                    etLeader1.setVisibility(View.GONE);
+                    if (leader1 != null && leader1.length() != 0) {
+                        tvLeader1.setText(new SplitData().getStringData(leader1));
+                    }
+                }
+
+                if (cwMove.equals("2")) {
+                    tvLeader2.setVisibility(View.GONE);
+                    etLeader2.setVisibility(View.VISIBLE);
+                    if (leader2 != null && leader2.length() != 0) {
+                        etLeader2.setText(new SplitData().getStringData(leader2));
+                    }
+                } else {
+                    tvLeader2.setVisibility(View.VISIBLE);
+                    etLeader2.setVisibility(View.GONE);
+                    if (leader2 != null && leader2.length() != 0) {
+                        tvLeader2.setText(new SplitData().getStringData(leader2));
+                    }
+                }
+
+                if (psMove.equals("2")) {
+                    tvLeader3.setVisibility(View.GONE);
+                    etLeader3.setVisibility(View.VISIBLE);
+                    if (leader3 != null && leader3.length() != 0) {
+                        etLeader3.setText(new SplitData().getStringData(leader3));
+                    }
+                } else {
+                    tvLeader3.setVisibility(View.VISIBLE);
+                    etLeader3.setVisibility(View.GONE);
+                    if (leader3 != null && leader3.length() != 0) {
+                        tvLeader3.setText(new SplitData().getStringData(leader3));
+                    }
+                }
+                for (int i = 0; i < s.getTrans().size(); i++) {
+                    destTypeList.add(s.getTrans().get(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -304,6 +407,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     public void setNoHandlerPerson(NoHandlerPerson s) {
         setData();
         map.put("flowAssignId", destName + "|" + uId);
+        willDoPresenter.getWillDo(map);
     }
 
     @Override
@@ -313,7 +417,10 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
 
     @Override
     public void setWillDo(WillDoUp s) {
-
+        if (s.isSuccess()){
+            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

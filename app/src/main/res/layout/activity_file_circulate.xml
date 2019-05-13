@@ -73,6 +73,7 @@
 
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnPerson"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -86,8 +87,7 @@
                 android:id="@+id/btnUp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="45dp"
+                android:layout_margin="45dp"
                 android:background="@drawable/linearlayout_colore_radius"
                 android:gravity="center"
                 android:text="提交"

@@ -67,6 +67,15 @@
         <activity
             android:name=".fileapprove.activity.HuiQianWillActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.CurrencyAccidentWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.FileCirculateWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.DocumentLZWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.RCJCActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 

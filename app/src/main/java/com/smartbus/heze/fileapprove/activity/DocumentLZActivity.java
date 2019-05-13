@@ -58,8 +58,6 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
     EditText etNum;
     @BindView(R.id.etTitle)
     EditText etTitle;
-    @BindView(R.id.etXBYJ)
-    EditText etXBYJ;
     @BindView(R.id.etLeader)
     EditText etLeader;
     @BindView(R.id.tvLeader)

@@ -7,6 +7,7 @@ import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
 import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
 import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
 import com.smartbus.heze.fileapprove.bean.Department;
+import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
 import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
@@ -114,6 +115,13 @@ public interface AllApi {
      */
     @GET(ApiAddress.willdodetail)
     Observable<BorrowAccidentWill> getWillBorrowAccident(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取公文流转待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<DocumentLZWill> getWillDocumentLZ(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
     /**
