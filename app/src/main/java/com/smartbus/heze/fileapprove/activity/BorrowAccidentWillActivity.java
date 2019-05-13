@@ -239,9 +239,9 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            map.put("fenguanjingli", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            map.put("fenguanlingdao", new SplitData().SplitUpData(tvLeader1.getText().toString()));
         } else {
-            map.put("fenguanjingli", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("fenguanlingdao", new SplitData().SplitUpData(etLeader1.getText().toString()));
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
@@ -251,9 +251,9 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             map.put("comments", etLeader2.getText().toString());
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
-            map.put("pishi", new SplitData().SplitUpData(tvLeader3.getText().toString()));
+            map.put("ldps", new SplitData().SplitUpData(tvLeader3.getText().toString()));
         } else {
-            map.put("pishi", new SplitData().SplitUpData(etLeader3.getText().toString()));
+            map.put("ldps", new SplitData().SplitUpData(etLeader3.getText().toString()));
             map.put("comments", etLeader3.getText().toString());
         }
     }

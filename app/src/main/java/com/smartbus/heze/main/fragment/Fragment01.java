@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.RCJCActivity;
 import com.smartbus.heze.fileapprove.FileMainActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -188,6 +189,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
             case R.id.rb6:
                 break;
             case R.id.rb7:
+                intent = new Intent(getActivity(), RCJCActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb8:
                 break;

@@ -4,8 +4,10 @@ package com.smartbus.heze.http.network;
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
+import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
 import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
 import com.smartbus.heze.fileapprove.bean.Department;
+import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
@@ -112,6 +114,20 @@ public interface AllApi {
      */
     @GET(ApiAddress.willdodetail)
     Observable<BorrowAccidentWill> getWillBorrowAccident(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取通用借款单待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<CurrencyAccidentWill> getWillCurrencyAccident(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取部门文件传阅待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<FileCirculateWill> getFileCirculate(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
     /**

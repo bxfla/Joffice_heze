@@ -37,6 +37,9 @@ import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,6 +132,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
     @BindView(R.id.btnUp)
     Button btnUp;
 
+    String mainId = "";
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
@@ -567,8 +571,8 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
                         ||etLeader1.getVisibility() == View.VISIBLE
                         ||etLeader2.getVisibility() == View.VISIBLE) {
                     if (etLeader.getText().toString().equals("")
-                            ||etLeader1.getText().toString().equals("")
-                            ||etLeader2.getText().toString().equals("")) {
+                            &&etLeader1.getText().toString().equals("")
+                            &&etLeader2.getText().toString().equals("")) {
                         Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
                     } else {
                         if (destTypeList.size() != 0) {
@@ -669,6 +673,8 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         map.put("je4", etAllMoney4.getText().toString());
         map.put("je5", etAllMoney5.getText().toString());
         map.put("hjsl1", tvAllNum.getText().toString());
+        map.put("mainId", mainId);
+        map.put("taskId", taskId);
         map.put("hjsl2", "");
         map.put("hjje1", tvAllMoney.getText().toString());
         map.put("hjje2", "");
@@ -696,7 +702,99 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
 
     @Override
     public void setDepartBudgetWill(DepartBudgetWill s) {
+        etUse.setText(s.getMainform().get(0).getBzly().toString());
+        etName1.setText(s.getMainform().get(0).getXm1().toString());
+        etName2.setText(s.getMainform().get(0).getXm2().toString());
+        etName3.setText(s.getMainform().get(0).getXm3().toString());
+        etName4.setText(s.getMainform().get(0).getXm4().toString());
+        etName5.setText(s.getMainform().get(0).getXm5().toString());
 
+        etDepartment1.setText(s.getMainform().get(0).getDw1().toString());
+        etDepartment2.setText(s.getMainform().get(0).getDw2().toString());
+        etDepartment3.setText(s.getMainform().get(0).getDw3().toString());
+        etDepartment4.setText(s.getMainform().get(0).getDw4().toString());
+        etDepartment5.setText(s.getMainform().get(0).getDw5().toString());
+
+        etMoney1.setText(s.getMainform().get(0).getDj1().toString());
+        etMoney2.setText(s.getMainform().get(0).getDj2().toString());
+        etMoney3.setText(s.getMainform().get(0).getDj3().toString());
+        etMoney4.setText(s.getMainform().get(0).getDj4().toString());
+        etMoney5.setText(s.getMainform().get(0).getDj5().toString());
+
+        etNum1.setText(s.getMainform().get(0).getSl1().toString());
+        etNum2.setText(s.getMainform().get(0).getSl2().toString());
+        etNum3.setText(s.getMainform().get(0).getSl3().toString());
+        etNum4.setText(s.getMainform().get(0).getSl4().toString());
+        etNum5.setText(s.getMainform().get(0).getSl5().toString());
+
+        etAllMoney1.setText(s.getMainform().get(0).getJe1().toString());
+        etAllMoney2.setText(s.getMainform().get(0).getJe2().toString());
+        etAllMoney3.setText(s.getMainform().get(0).getJe3().toString());
+        etAllMoney4.setText(s.getMainform().get(0).getJe4().toString());
+        etAllMoney5.setText(s.getMainform().get(0).getJe5().toString());
+
+        tvAllNum.setText(s.getMainform().get(0).getHjsl1());
+        tvAllMoney.setText(s.getMainform().get(0).getHjje1());
+        tvDepartment.setText(s.getMainform().get(0).getDepName());
+        tvTime.setText(s.getMainform().get(0).getCreateDate());
+        mainId = String.valueOf(s.getMainform().get(0).getMainId());
+        String leader = s.getMainform().get(0).getCwk();
+        String leader1 = s.getMainform().get(0).getFgyj();
+        String leader2 = s.getMainform().get(0).getZjly();
+        String move = s.getFormRights();
+        try {
+            JSONObject jsonObject = new JSONObject(move);
+            String cwMove = jsonObject.getString("cwk");
+            String fgMove = jsonObject.getString("fgyj");
+            String zjlMove = jsonObject.getString("zjly");
+            if (cwMove.equals("2")) {
+                tvLeader.setVisibility(View.GONE);
+                etLeader.setVisibility(View.VISIBLE);
+                if (leader != null && leader.length() != 0) {
+                    etLeader.setText(new SplitData().getStringData(leader));
+                }
+            } else {
+                tvLeader.setVisibility(View.VISIBLE);
+                etLeader.setVisibility(View.GONE);
+                if (leader != null && leader.length() != 0) {
+                    tvLeader.setText(new SplitData().getStringData(leader));
+                }
+            }
+
+            if (fgMove.equals("2")) {
+                tvLeader1.setVisibility(View.GONE);
+                etLeader1.setVisibility(View.VISIBLE);
+                if (leader1 != null && leader1.length() != 0) {
+                    etLeader1.setText(new SplitData().getStringData(leader1));
+                }
+            } else {
+                tvLeader1.setVisibility(View.VISIBLE);
+                etLeader1.setVisibility(View.GONE);
+                if (leader1 != null && leader1.length() != 0) {
+                    tvLeader1.setText(new SplitData().getStringData(leader1));
+                }
+            }
+
+            if (zjlMove.equals("2")) {
+                tvLeader2.setVisibility(View.GONE);
+                etLeader2.setVisibility(View.VISIBLE);
+                if (leader2 != null && leader2.length() != 0) {
+                    etLeader2.setText(new SplitData().getStringData(leader2));
+                }
+            } else {
+                tvLeader2.setVisibility(View.VISIBLE);
+                etLeader2.setVisibility(View.GONE);
+                if (leader2 != null && leader2.length() != 0) {
+                    tvLeader2.setText(new SplitData().getStringData(leader2));
+                }
+            }
+
+            for (int i = 0; i < s.getTrans().size(); i++) {
+                destTypeList.add(s.getTrans().get(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

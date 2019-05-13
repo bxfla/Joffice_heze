@@ -1,46 +1,49 @@
 package com.smartbus.heze.fileapprove.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.fileapprove.bean.BackData;
-import com.smartbus.heze.fileapprove.bean.OnePerson;
-import com.smartbus.heze.fileapprove.bean.TwoPerson;
-import com.smartbus.heze.fileapprove.module.OneContract;
-import com.smartbus.heze.fileapprove.module.TwoContract;
-import com.smartbus.heze.fileapprove.module.UPYSDContract;
-import com.smartbus.heze.fileapprove.presenter.OnePresenter;
-import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
-import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
-import com.smartbus.heze.http.base.AlertDialogCallBackP;
+import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
+import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
+import com.smartbus.heze.fileapprove.bean.NoEndPerson;
+import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
+import com.smartbus.heze.fileapprove.bean.NormalPerson;
+import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.CurrencyAccidentWillContract;
+import com.smartbus.heze.fileapprove.module.NoEndContract;
+import com.smartbus.heze.fileapprove.module.NoHandlerContract;
+import com.smartbus.heze.fileapprove.module.NormalContract;
+import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.CurrencyAccidentWillPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
+import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
+import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
-import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
-import com.smartbus.heze.http.views.MyAlertDialog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 通用借款单
  */
-public class CurrencyAccidentWillActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View {
+public class CurrencyAccidentWillActivity extends BaseActivity implements CurrencyAccidentWillContract.View
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View{
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -70,31 +73,37 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements OneCon
     @BindView(R.id.btnUp)
     Button btnUp;
 
-    String uId = "";
-    String isShow = "true";
-    String userDepart = "";
-    String userCode = "";
-    String userName = "";
-    String[] nametemp = null;
-    String[] codetemp = null;
-    String depId = "", depName = "";
-    OnePresenter onePersenter;
-    TwoPresenter twoPersenter;
-    UPYSDPresenter upYsdPersenter;
-    Map<String, String> map = new HashMap<>();
-    List<String> namelist = new ArrayList<>();
-    List<String> codeList = new ArrayList<>();
-    List<String> nameList = new ArrayList<>();
+    String destType = "";
+    String leaderCode = "";
+    String leaderName = "";
+    String destName, uId,signaName;
+    String activityName, taskId;
+    String[] bigNametemp = null;
+    String[] bigCodetemp = null;
+    NormalPresenter normalPresenter;
+    NoEndPresenter noEndPersenter;
+    NoHandlerPresenter noHandlerPresenter;
+    WillDoPresenter willDoPresenter;
+    CurrencyAccidentWillPresenter currencyAccidentWillPresenter;
     List<String> selectList = new ArrayList<>();
-    List<String> namelist1 = new ArrayList<>();
-    List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1;
+    List<String> namelist = new ArrayList<>();
+    Map<String, String> map = new HashMap<>();
+    List<DepartBudgetWill.TransBean> destTypeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        initDatePicker();
+        Intent intent = getIntent();
+        activityName = intent.getStringExtra("activityName");
+        taskId = intent.getStringExtra("taskId");
+        normalPresenter = new NormalPresenter(this, this);
+        noEndPersenter = new NoEndPresenter(this, this);
+        noHandlerPresenter = new NoHandlerPresenter(this, this);
+        willDoPresenter = new WillDoPresenter(this, this);
+        Log.e("sessionLogin ", taskId + "-" + activityName);
+        currencyAccidentWillPresenter = new CurrencyAccidentWillPresenter(this, this);
+        currencyAccidentWillPresenter.getCurrencyAccidentWill(activityName, taskId, Constant.HUIQIAN_DEFID);
     }
 
     @Override
@@ -112,26 +121,6 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements OneCon
 
     }
 
-    /**
-     * 选择时间
-     */
-    private void initDatePicker() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-        String now = sdf.format(new Date());
-        tvTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
-            @Override
-            public void handle(String time) {
-                // 回调接口，获得选中的时间
-                tvTime.setText(time.split(" ")[0]);
-            }
-            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
-        }, "2000-01-01 00:00", "2030-01-01 00:00");
-        // 不显示时和分
-        customDatePicker1.showSpecificTime(false);
-        // 不允许循环滚动
-        customDatePicker1.setIsLoop(false);
-    }
 
     private void setData() {
         map.put("defId", Constant.CURRENCYACCIDENT_DEFID);
@@ -144,108 +133,123 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements OneCon
     }
 
     @Override
-    public void setOnePerson(OnePerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            String name = s.getData().get(i).getDestination();
-            namelist.add(name);
-        }
-        if (namelist.size() != 0) {
-            if (namelist.size() == 1) {
-                userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.CURRENCYACCIDENT_DEFID, namelist.get(0));
-            } else {
-                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                    @Override
-                    public void oneselect(final String data) {
-                        userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.CURRENCYACCIDENT_DEFID, data);
-                    }
+    public void setCurrencyAccidentWill(CurrencyAccidentWill s) {
 
-                    @Override
-                    public void select(List<String> list) {
+    }
 
-                    }
+    @Override
+    public void setCurrencyAccidentWillMessage(String s) {
 
-                    @Override
-                    public void confirm() {
+    }
 
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
-            }
-        } else {
-            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
+    @Override
+    public void setNormalPerson(NormalPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
         }
     }
 
     @Override
-    public void setOnePersonMessage(String s) {
+    public void setNormalPersonMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setTwoPerson(TwoPerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            TwoPerson.DataBean bean = new TwoPerson.DataBean();
-            bean.setUserNames(s.getData().get(i).getUserNames());
-            bean.setUserCodes(s.getData().get(i).getUserCodes());
-            dataList.add(bean);
+    public void setNoEndPerson(NoEndPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
         }
-        if (dataList.size() == 1) {
-            TwoPerson.DataBean bean1 = dataList.get(0);
-            userCode = bean1.getUserCodes();
-            userName = bean1.getUserNames();
-            nametemp = userName.split(",");
-            codetemp = userCode.split(",");
-            if (codetemp != null) {
-                for (String s1 : codetemp) {
-                    codeList.add(s1);
+    }
+
+    @Override
+    public void setNoEndPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setNoHandlerPerson(NoHandlerPerson s) {
+        setData();
+        map.put("flowAssignId", destName + "|" + uId);
+    }
+
+    @Override
+    public void setNoHandlerPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setWillDo(WillDoUp s) {
+
+    }
+
+    @Override
+    public void setWillDoMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog3 = alertDialogBuilder.create();
+//                alertDialogBuilder.setTitle("java EE 常用框架");
+        // 参数介绍
+        // 第一个参数：弹出框的信息集合，一般为字符串集合
+        // 第二个参数：被默认选中的，一个布尔类型的数组
+        // 第三个参数：勾选事件监听
+        final boolean[] checkedItems = new boolean[bigNametemp.length + 1];
+        for (int i = 0; i < bigNametemp.length; i++) {
+            checkedItems[i] = false;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle("选择时间")//标题栏
+                .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        // dialog：不常使用，弹出框接口
+                        // which：勾选或取消的是第几个
+                        // isChecked：是否勾选
+                        if (isChecked) {
+                            // 选中
+                            checkedItems[which] = isChecked;
+                        } else {
+                            // 取消选中
+                            checkedItems[which] = isChecked;
+                        }
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                //TODO 业务逻辑代码
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        selectList.add(bigCodetemp[i]);
+                    }
                 }
-            }
-            if (nametemp != null) {
-                for (String s1 : nametemp) {
-                    nameList.add(s1);
-                }
-            }
-            if (codeList.size() == 1) {
-                selectList.add(codeList.get(0));
                 getListData();
                 setData();
-                map.put("flowAssignId", userDepart + "|" + uId);
-                upYsdPersenter.getUPYSD(map);
-            } else {
-                MyAlertDialog.MyListAlertDialog(isShow, codeList, nameList, namelist1, this, new AlertDialogCallBackP() {
-
-                    @Override
-                    public void select(List<String> data) {
-                        selectList = data;
-                        getListData();
-                        setData();
-                        map.put("flowAssignId", userDepart + "|" + uId);
-                        upYsdPersenter.getUPYSD(map);
-                    }
-
-                    @Override
-                    public void oneselect(String s) {
-
-                    }
-
-                    @Override
-                    public void confirm() {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
+                // 关闭提示框
+                alertDialog3.dismiss();
+                map.put("flowAssignId", destName + "|" + uId);
+                willDoPresenter.getWillDo(map);
             }
-        }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO 业务逻辑代码
+
+                // 关闭提示框
+                alertDialog3.dismiss();
+            }
+        }).show();
     }
 
     private String getListData() {
@@ -264,57 +268,5 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements OneCon
             uId = selectList.get(0) + "," + uId;
         }
         return uId;
-    }
-
-    @Override
-    public void setTwoPersonMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void setUPYSD(BackData s) {
-        if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
-
-    @Override
-    public void setUPYSDMessage(String s) {
-        Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
-    }
-
-
-    @OnClick({R.id.tvTime, R.id.btnUp})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tvTime:
-                customDatePicker1.show(tvTime.getText().toString());
-                break;
-            case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
-                if (etReason.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etSmallMoney.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etName.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
-                twoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this, this);
-                break;
-        }
     }
 }

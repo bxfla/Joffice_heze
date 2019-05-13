@@ -1,72 +1,72 @@
 package com.smartbus.heze.fileapprove.activity;
 
+import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.app.DownloadManager.Request;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import com.google.gson.Gson;
 import com.smartbus.heze.ApiAddress;
-import com.smartbus.heze.MyApplication;
 import com.smartbus.heze.R;
-import com.smartbus.heze.SharedPreferencesHelper;
-import com.smartbus.heze.fileapprove.bean.BackData;
-import com.smartbus.heze.fileapprove.bean.OnePerson;
-import com.smartbus.heze.fileapprove.bean.TwoPerson;
-import com.smartbus.heze.fileapprove.module.OneContract;
-import com.smartbus.heze.fileapprove.module.TwoContract;
-import com.smartbus.heze.fileapprove.module.UPYSDContract;
-import com.smartbus.heze.fileapprove.presenter.OnePresenter;
-import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
-import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
-import com.smartbus.heze.fileapprove.util.FileUtils;
+import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
+import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
+import com.smartbus.heze.fileapprove.bean.FileData;
+import com.smartbus.heze.fileapprove.bean.NoEndPerson;
+import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
+import com.smartbus.heze.fileapprove.bean.NormalPerson;
+import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.FileCirculateWillContract;
+import com.smartbus.heze.fileapprove.module.NoEndContract;
+import com.smartbus.heze.fileapprove.module.NoHandlerContract;
+import com.smartbus.heze.fileapprove.module.NormalContract;
+import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.FileCirculateWillPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
+import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
+import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
+import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
+import com.smartbus.heze.fileapprove.util.DBHandler;
+import com.smartbus.heze.fileapprove.util.SplitData;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.base.ProgressDialogUtil;
-import com.smartbus.heze.http.utils.MainUtil;
-import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.R.attr.permission;
+import static com.smartbus.heze.http.base.Constant.TAG_NINE;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
- * 文件传阅
+ * 文件传阅待办详情
  */
-public class FileCirculateWillActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View {
+public class FileCirculateWillActivity extends BaseActivity implements FileCirculateWillContract.View
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -77,37 +77,44 @@ public class FileCirculateWillActivity extends BaseActivity implements OneContra
     Button btnUp;
     @BindView(R.id.btnPerson)
     Button btnPerson;
-    String uId = "";
-    String isShow = "true";
-    String userDepart = "";
-    String userCode = "";
-    String userName = "";
-    String[] nametemp = null;
-    String[] codetemp = null;
-    String depId = "", depName = "";
-    OnePresenter onePersenter;
-    TwoPresenter twoPersenter;
-    UPYSDPresenter upYsdPersenter;
-    Map<String, String> map = new HashMap<>();
-    List<String> namelist = new ArrayList<>();
-    List<String> codeList = new ArrayList<>();
-    List<String> nameList = new ArrayList<>();
+
+    String dataRes;
+    String destType = "";
+    String leaderCode = "";
+    String leaderName = "";
+    String destName, uId, signaName;
+    String activityName, taskId;
+    String[] bigNametemp = null;
+    String[] bigCodetemp = null;
+    NormalPresenter normalPresenter;
+    NoEndPresenter noEndPersenter;
+    NoHandlerPresenter noHandlerPresenter;
+    WillDoPresenter willDoPresenter;
+    FileCirculateWillPresenter fileCirculateWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> selectList1 = new ArrayList<>();
-    List<String> namelist1 = new ArrayList<>();
-    List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1;
-    String fileName = "";
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE" };
+    List<String> namelist = new ArrayList<>();
+    Map<String, String> map = new HashMap<>();
+    List<DepartBudgetWill.TransBean> destTypeList = new ArrayList<>();
+
+    private DownloadManager downloadManager = null;
+    private long downloadId = 0;
+    private DownloadCompleteReceiver receiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        initDatePicker();
+        Intent intent = getIntent();
+        activityName = intent.getStringExtra("activityName");
+        taskId = intent.getStringExtra("taskId");
+        normalPresenter = new NormalPresenter(this, this);
+        noEndPersenter = new NoEndPresenter(this, this);
+        noHandlerPresenter = new NoHandlerPresenter(this, this);
+        willDoPresenter = new WillDoPresenter(this, this);
+        Log.e("sessionLogin ", taskId + "-" + activityName);
+        fileCirculateWillPresenter = new FileCirculateWillPresenter(this, this);
+        fileCirculateWillPresenter.getFileCirculateWill(activityName, taskId, Constant.HUIQIAN_DEFID);
     }
 
     @Override
@@ -125,152 +132,216 @@ public class FileCirculateWillActivity extends BaseActivity implements OneContra
 
     }
 
-    /**
-     * 选择时间
-     */
-    private void initDatePicker() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-        String now = sdf.format(new Date());
-        tvTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
-            @Override
-            public void handle(String time) {
-                // 回调接口，获得选中的时间
-                tvTime.setText(time.split(" ")[0]);
-            }
-            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
-        }, "2000-01-01 00:00", "2030-01-01 00:00");
-        // 不显示时和分
-        customDatePicker1.showSpecificTime(false);
-        // 不允许循环滚动
-        customDatePicker1.setIsLoop(false);
-    }
-
     private void setData() {
         map.put("defId", Constant.FILECIR_DEFID);
         map.put("startFlow", "true");
         map.put("formDefId", Constant.FILECIR_FORMDEFIS);
-        map.put("destName", userDepart);
+//        map.put("destName", userDepart);
         map.put("lrrq", tvTime.getText().toString());
-        map.put("fileId", fileName);
+//        map.put("fileId", fileName);
+    }
+
+    @OnClick({R.id.tvData, R.id.btnPerson, R.id.btnUp})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tvData:
+                List<String> dataList = new ArrayList<>();
+                if (!tvData.getText().toString().equals("")) {
+                    dataList = new SplitData().stringSpiltList(tvData.getText().toString());
+                    if (dataList.size() == 1) {
+                        String id = new SplitData().stringSpilt(dataList.get(0));
+                        final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DBHandler dbA = new DBHandler();
+                                dataRes = dbA.OAQingJiaMyDetail(url);
+                                if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                    handler.sendEmptyMessage(TAG_TWO);
+                                } else {
+                                    handler.sendEmptyMessage(TAG_NINE);
+                                }
+                            }
+                        }).start();
+                    } else if (dataList.size() > 1) {
+                        MyAlertDialog.MyListAlertDialog(this, dataList, new AlertDialogCallBackP() {
+                            @Override
+                            public void oneselect(final String data1) {
+                                String id = new SplitData().stringSpilt(data1);
+                                final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DBHandler dbA = new DBHandler();
+                                        dataRes = dbA.OAQingJiaMyDetail(url);
+                                        if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                            handler.sendEmptyMessage(TAG_TWO);
+                                        } else {
+                                            handler.sendEmptyMessage(TAG_NINE);
+                                        }
+                                    }
+                                }).start();
+                            }
+
+                            @Override
+                            public void select(List<String> list) {
+
+                            }
+
+                            @Override
+                            public void confirm() {
+
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+                    }
+                }
+                break;
+            case R.id.btnPerson:
+                Intent intent = new Intent(this,WorkPersonActivity.class);
+                startActivityForResult(intent, TAG_ONE);
+                break;
+            case R.id.btnUp:
+                break;
+        }
     }
 
     @Override
-    public void setOnePerson(OnePerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            String name = s.getData().get(i).getDestination();
-            namelist.add(name);
-        }
-        if (namelist.size() != 0) {
-            if (namelist.size() == 1) {
-                userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.FILECIR_DEFID, namelist.get(0));
-//                Intent intent = new Intent(this, WorkPersonActivity.class);
-//                startActivity(intent);
-            } else {
-                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                    @Override
-                    public void oneselect(final String data) {
-                        userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.FILECIR_DEFID, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAG_ONE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        selectList1 = data.getStringArrayListExtra("bean");
                     }
-
-                    @Override
-                    public void select(List<String> list) {
-
-                    }
-
-                    @Override
-                    public void confirm() {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
-            }
-        } else {
-            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
     @Override
-    public void setOnePersonMessage(String s) {
+    public void setFileCirculateWill(FileCirculateWill s) {
+
+    }
+
+    @Override
+    public void setFileCirculateWillMessage(String s) {
+
+    }
+
+    @Override
+    public void setNormalPerson(NormalPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
+        }
+    }
+
+    @Override
+    public void setNormalPersonMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setTwoPerson(TwoPerson s) {
-        for (int i = 0; i < s.getData().size(); i++) {
-            TwoPerson.DataBean bean = new TwoPerson.DataBean();
-            bean.setUserNames(s.getData().get(i).getUserNames());
-            bean.setUserCodes(s.getData().get(i).getUserCodes());
-            dataList.add(bean);
+    public void setNoEndPerson(NoEndPerson s) {
+        if (s.getData() != null) {
+            leaderName = s.getData().get(0).getUserNames();
+            leaderCode = s.getData().get(0).getUserCodes();
+            bigNametemp = leaderName.split(",");
+            bigCodetemp = leaderCode.split(",");
+            setDialog();
         }
-        if (dataList.size() == 1) {
-            TwoPerson.DataBean bean1 = dataList.get(0);
-            userCode = bean1.getUserCodes();
-            userName = bean1.getUserNames();
-            nametemp = userName.split(",");
-            codetemp = userCode.split(",");
-            if (codetemp != null) {
-                for (String s1 : codetemp) {
-                    codeList.add(s1);
-                }
-            }
-            if (nametemp != null) {
-                for (String s1 : nametemp) {
-                    nameList.add(s1);
-                }
-            }
-            if (codeList.size() == 1) {
-                selectList.add(codeList.get(0));
-                if (selectList1!=null){
-                    for (int i = 0;i<selectList1.size();i++){
-                        selectList.add(selectList1.get(i));
+    }
+
+    @Override
+    public void setNoEndPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setNoHandlerPerson(NoHandlerPerson s) {
+        setData();
+        map.put("flowAssignId", destName + "|" + uId);
+    }
+
+    @Override
+    public void setNoHandlerPersonMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setWillDo(WillDoUp s) {
+
+    }
+
+    @Override
+    public void setWillDoMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog3 = alertDialogBuilder.create();
+//                alertDialogBuilder.setTitle("java EE 常用框架");
+        // 参数介绍
+        // 第一个参数：弹出框的信息集合，一般为字符串集合
+        // 第二个参数：被默认选中的，一个布尔类型的数组
+        // 第三个参数：勾选事件监听
+        final boolean[] checkedItems = new boolean[bigNametemp.length + 1];
+        for (int i = 0; i < bigNametemp.length; i++) {
+            checkedItems[i] = false;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle("选择时间")//标题栏
+                .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        // dialog：不常使用，弹出框接口
+                        // which：勾选或取消的是第几个
+                        // isChecked：是否勾选
+                        if (isChecked) {
+                            // 选中
+                            checkedItems[which] = isChecked;
+                        } else {
+                            // 取消选中
+                            checkedItems[which] = isChecked;
+                        }
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                //TODO 业务逻辑代码
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        selectList.add(bigCodetemp[i]);
                     }
                 }
                 getListData();
                 setData();
-                map.put("flowAssignId", userDepart + "|" + uId);
-                upYsdPersenter.getUPYSD(map);
-            } else {
-                MyAlertDialog.MyListAlertDialog(isShow, codeList, nameList, namelist1, this, new AlertDialogCallBackP() {
-
-                    @Override
-                    public void select(List<String> data) {
-                        selectList = data;
-                        selectList.add(codeList.get(0));
-                        if (selectList1!=null){
-                            for (int i = 0;i<selectList1.size();i++){
-                                selectList.add(selectList1.get(i));
-                            }
-                        }
-                        getListData();
-                        setData();
-                        map.put("flowAssignId", userDepart + "|" + uId);
-                        upYsdPersenter.getUPYSD(map);
-                    }
-
-                    @Override
-                    public void oneselect(String s) {
-
-                    }
-
-                    @Override
-                    public void confirm() {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
+                // 关闭提示框
+                alertDialog3.dismiss();
+                map.put("flowAssignId", destName + "|" + uId);
+                willDoPresenter.getWillDo(map);
             }
-        }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO 业务逻辑代码
+
+                // 关闭提示框
+                alertDialog3.dismiss();
+            }
+        }).show();
     }
 
     private String getListData() {
@@ -291,175 +362,78 @@ public class FileCirculateWillActivity extends BaseActivity implements OneContra
         return uId;
     }
 
-    @Override
-    public void setTwoPersonMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void setUPYSD(BackData s) {
-        if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
-
-    @Override
-    public void setUPYSDMessage(String s) {
-        Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick({R.id.tvTime, R.id.tvData, R.id.btnUp,R.id.btnPerson})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tvTime:
-                customDatePicker1.show(tvTime.getText().toString());
-                break;
-            case R.id.tvData:
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    // 没有写的权限，去申请写的权限，会弹出对话框
-                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
-                }else {
-                    File file = new File(Environment.getExternalStorageDirectory().getPath());
-                    if(null==file || !file.exists()){
-                        return;
-                    }
-                    Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
-                    intentD.addCategory(Intent.CATEGORY_OPENABLE);
-                    intentD.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intentD.setDataAndType(Uri.fromFile(file), "file/*");
-                    try {
-                        startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        // Potentially direct the user to the Market with a Dialog
-                        Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-            case R.id.btnPerson:
-                Intent intent = new Intent(this,WorkPersonActivity.class);
-                startActivityForResult(intent,Constant.TAG_ONE);
-                break;
-            case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
-                onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.FILECIR_DEFID);
-                twoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this, this);
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case Constant.TAG_ONE:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), Constant.TAG_TWO);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    // Potentially direct the user to the Market with a Dialog
-                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case TAG_ONE:
-                if (resultCode == TAG_ONE) {
-                    if (data != null) {
-                        selectList1 = data.getStringArrayListExtra("bean");
-                    }
-                }
-                break;
-            case TAG_TWO:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    File file = null;
-                    try {
-                        if (FileUtils.getPath(FileCirculateWillActivity.this,uri)!=null){
-                            file = FileUtils.getPath(FileCirculateWillActivity.this,uri);
-                        }
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-//                    String[] proj = {MediaStore.Images.Media.DATA};
-//                    Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-//                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                    actualimagecursor.moveToFirst();
-//                    String img_path = actualimagecursor.getString(actual_image_column_index);
-//                    File file1 = new File(path);
-                    Log.e("XXX",file.toString());
-                    final AsyncHttpClient client = new AsyncHttpClient();
-                    final String url = ApiAddress.mainApi + ApiAddress.dataup;
-                    String userId = new SharedPreferencesHelper(MyApplication.getContext(),"login").
-                            getData(MyApplication.getContext(), "userId", "");
-                    final RequestParams params = new RequestParams();
-                    try {
-                        params.put("upload", file);
-                        params.put("fullname", file.getName());
-                        params.put("userId", userId);
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ProgressDialogUtil.startLoad(this, MainUtil.upData);
-                    client.post(url, params, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int arg0, String arg1) {
-                            super.onSuccess(arg0, arg1);
-                            Log.i("XXX", arg1);
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(arg1.toString());
-                                fileName = jsonObject.getString("fileName");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            Message message = new Message();
-                            message.what = Constant.TAG_ONE;
-                            handler.sendMessage(message);
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
-                            super.onFailure(statusCode, headers, responseBody, error);
-                            Log.i("XXX", "XXXXX");
-                            Message message = new Message();
-                            message.what = Constant.TAG_TWO;
-                            handler.sendMessage(message);
-                        }
-                    });
-                }
-                break;
-        }
-    }
-    private Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case Constant.TAG_ONE:
-                    Toast.makeText(FileCirculateWillActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
-                    tvData.setText(fileName);
+            switch (msg.what) {
+                case TAG_TWO:
+                    Toast.makeText(FileCirculateWillActivity.this, "操作数据失败", Toast.LENGTH_SHORT).show();
                     ProgressDialogUtil.stopLoad();
                     break;
-                case Constant.TAG_TWO:
-                    Toast.makeText(FileCirculateWillActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
-                    ProgressDialogUtil.stopLoad();
+                case TAG_NINE:
+                    Gson gson2 = new Gson();
+                    FileData file = gson2.fromJson(dataRes, FileData.class);
+                    String filePath = file.getData().getFilePath();
+                    String url = ApiAddress.downloadfile+filePath;
+                    ProgressDialogUtil.startLoad(FileCirculateWillActivity.this,"文件下载中");
+                    downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                    // 动态注册广播接收器
+                    receiver = new DownloadCompleteReceiver();
+                    IntentFilter intentFilter = new IntentFilter(
+                            DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+                    registerReceiver(receiver, intentFilter);
+
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                    request.setTitle("下载文件");
+                    // 保存的文件名
+                    request.setDescription(filePath);
+                    // 存储的位置
+                    request.setDestinationInExternalFilesDir(FileCirculateWillActivity.this,
+                            Environment.DIRECTORY_DOWNLOADS, filePath);
+                    // 默认显示出来
+                    request.setNotificationVisibility(Request.VISIBILITY_VISIBLE);
+                    // 下载结束后显示出来
+                    request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    downloadId = downloadManager.enqueue(request);
                     break;
             }
         }
     };
 
+    // 自定义广播内部类
+    class DownloadCompleteReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 获得广播的频道来进行判断是否下载完毕
+            if (intent.getAction().equals(
+                    DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
+                long loadId = intent.getLongExtra(
+                        DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                if (loadId == downloadId) {
+                    ProgressDialogUtil.stopLoad();
+                    // 内容根据需求来写（如：下载完成后跳转到下载的记录）
+                    Intent intent2 = new Intent();
+                    // 跳转到下载记录的界面
+                    intent2.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+                    startActivity(intent2);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //下载完之后就解绑了
+        unregisterReceiver(receiver);
+    }
 }
