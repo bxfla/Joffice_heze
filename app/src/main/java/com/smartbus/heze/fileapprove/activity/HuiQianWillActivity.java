@@ -114,6 +114,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     Button btnUp;
 
     String uId;
+    String huiqian;
     String hqMove = "";
     String mainId;
     String dataRes;
@@ -234,68 +235,74 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
                     if (etHuiQian.getText().toString().equals("")) {
                         Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (destTypeList.size() != 0) {
-                            if (destTypeList.size() == 1) {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        destType = destTypeList.get(0).getDestType();
-                                        destName = destTypeList.get(0).getDestination();
-                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                                        } else if (destType.indexOf("end") == -1) {
-                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                        } else {
-                                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                                        }
-                                        signaName = destTypeList.get(0).getName();
-                                    }
-                                }).start();
-                            } else {
-                                for (int i = 0; i < destTypeList.size(); i++) {
-                                    namelist.add(destTypeList.get(i).getDestination());
-                                }
-                                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                                    @Override
-                                    public void oneselect(final String data) {
-                                        destName = data;
-                                        for (int i = 0; i < destTypeList.size(); i++) {
-                                            if (destName.equals(destTypeList.get(i).getDestination())) {
-                                                signaName = destTypeList.get(i).getName();
-                                                destType = destTypeList.get(i).getDestType();
-                                            }
-                                        }
-                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                                        } else if (destType.indexOf("end") == -1) {
-                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                        } else {
-                                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void select(List<String> list) {
-
-                                    }
-
-                                    @Override
-                                    public void confirm() {
-
-                                    }
-
-                                    @Override
-                                    public void cancel() {
-
-                                    }
-                                });
-                            }
-                        } else {
-                            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
-                        }
+                        getSomeData();
                     }
+                }else {
+                    getSomeData();
                 }
                 break;
+        }
+    }
+
+    public void getSomeData(){
+        if (destTypeList.size() != 0) {
+            if (destTypeList.size() == 1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        destType = destTypeList.get(0).getDestType();
+                        destName = destTypeList.get(0).getDestination();
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                        signaName = destTypeList.get(0).getName();
+                    }
+                }).start();
+            } else {
+                for (int i = 0; i < destTypeList.size(); i++) {
+                    namelist.add(destTypeList.get(i).getDestination());
+                }
+                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
+                    @Override
+                    public void oneselect(final String data) {
+                        destName = data;
+                        for (int i = 0; i < destTypeList.size(); i++) {
+                            if (destName.equals(destTypeList.get(i).getDestination())) {
+                                signaName = destTypeList.get(i).getName();
+                                destType = destTypeList.get(i).getDestType();
+                            }
+                        }
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                    }
+
+                    @Override
+                    public void select(List<String> list) {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -319,7 +326,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
             tvYinShua.setText(s.getMainform().get(0).getPrinting());
             tvJiaoDui.setText(s.getMainform().get(0).getProofreading());
             tvFenShu.setText(s.getMainform().get(0).getNums());
-            String huiqian = s.getMainform().get(0).getSign();
+            huiqian = s.getMainform().get(0).getSign();
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
 
             String move = s.getFormRights();
@@ -536,7 +543,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
                 map.put("sign", new SplitData().SplitUpData(tvHuiQian.getText().toString()));
             }
         } else {
-            map.put("sign", new SplitData().SplitUpData(etHuiQian.getText().toString()));
+            map.put("sign", new SplitData().SplitUpData1(etHuiQian.getText().toString(),huiqian));
             map.put("comments", etHuiQian.getText().toString());
         }
     }
@@ -613,7 +620,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
     protected void onDestroy() {
         super.onDestroy();
         //下载完之后就解绑了
-        unregisterReceiver(receiver);
+//        unregisterReceiver(receiver);
     }
 
 }
