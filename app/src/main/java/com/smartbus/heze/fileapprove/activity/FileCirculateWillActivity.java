@@ -275,7 +275,7 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
                     }else {
                         setData();
                         getListData();
-                        map.put("flowAssignId", destName + "|" + uId);
+//                        map.put("flowAssignId", destName + "|" + uId);
                         willDoPresenter.getWillDo(map);
                     }
                 }
@@ -350,7 +350,7 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
     public void setNoHandlerPerson(NoHandlerPerson s) {
         setData();
         getListData();
-        map.put("flowAssignId", null);
+//        map.put("flowAssignId", null);
         willDoPresenter.getWillDo(map);
     }
 
