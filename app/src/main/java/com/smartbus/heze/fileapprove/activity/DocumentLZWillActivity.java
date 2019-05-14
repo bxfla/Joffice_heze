@@ -219,7 +219,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     private void setData() {
         map.put("defId", Constant.DOCUMENTLZ_DEFID);
         map.put("startFlow", "true");
-        map.put("shouwenRq", Constant.DOCUMENTLZ_FORMDEFIS);
+        map.put("formDefId", Constant.DOCUMENTLZ_FORMDEFIS);
         map.put("shouwenRq", tvTime.getText().toString());
         map.put("fawenjig", tvDepartment.getText().toString());
         map.put("wenjianNo", etBianHao.getText().toString());
@@ -228,6 +228,30 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         map.put("taskId", taskId);
         map.put("signalName", signaName);
         map.put("destName", destName);
+        if (tvLeader.getVisibility() == View.VISIBLE) {
+            if (!tvLeader.getText().toString().equals("")){
+                map.put("nibanyj", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            }
+        } else {
+            map.put("nibanyj", new SplitData().SplitUpData(etLeader.getText().toString()));
+            map.put("comments", etLeader.getText().toString());
+        }
+        if (tvLeader1.getVisibility() == View.VISIBLE) {
+            if (!tvLeader1.getText().toString().equals("")){
+                map.put("ldyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            }
+        } else {
+            map.put("ldyj", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("comments", etLeader1.getText().toString());
+        }
+        if (tvLeader2.getVisibility() == View.VISIBLE) {
+            if (!tvLeader2.getText().toString().equals("")){
+                map.put("chengbanjg",tvLeader2.getText().toString());
+            }
+        } else {
+            map.put("chengbanjg", etLeader2.getText().toString());
+            map.put("comments", etLeader2.getText().toString());
+        }
     }
 
     private String getListData() {
@@ -274,7 +298,6 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         return uId;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -298,16 +321,16 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             etNum.setText(s.getMainform().get(0).getFawennum().toString());
             etTitle.setText(s.getMainform().get(0).getTitle().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
-            String leader = s.getMainform().get(0).getLdyj();
-            String leader1 = s.getMainform().get(0).getChengbanjg();
-            String leader2 = s.getMainform().get(0).getNibanyj();
+            String leader = s.getMainform().get(0).getNibanyj();
+            String leader1 = s.getMainform().get(0).getLdyj();
+            String leader2 = s.getMainform().get(0).getChengbanjg();
             String move = s.getFormRights();
             try {
                 JSONObject jsonObject = new JSONObject(move);
+                String nbMove = jsonObject.getString("nibanyj");
                 String ldMove = jsonObject.getString("ldyj");
                 String jgMove = jsonObject.getString("chengbanjg");
-                String nbMove = jsonObject.getString("nibanyj");
-                if (ldMove.equals("2")) {
+                if (nbMove.equals("2")) {
                     tvLeader.setVisibility(View.GONE);
                     etLeader.setVisibility(View.VISIBLE);
                     if (leader != null && leader.length() != 0) {
@@ -321,7 +344,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                     }
                 }
 
-                if (jgMove.equals("2")) {
+                if (ldMove.equals("2")) {
                     tvLeader1.setVisibility(View.GONE);
                     etLeader1.setVisibility(View.VISIBLE);
                     if (leader1 != null && leader1.length() != 0) {
@@ -335,17 +358,17 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                     }
                 }
 
-                if (nbMove.equals("2")) {
+                if (jgMove.equals("2")) {
                     tvLeader2.setVisibility(View.GONE);
                     etLeader2.setVisibility(View.VISIBLE);
                     if (leader2 != null && leader2.length() != 0) {
-                        etLeader2.setText(new SplitData().getStringData(leader2));
+                        etLeader2.setText(leader2);
                     }
                 } else {
                     tvLeader2.setVisibility(View.VISIBLE);
                     etLeader2.setVisibility(View.GONE);
                     if (leader2 != null && leader2.length() != 0) {
-                        tvLeader2.setText(new SplitData().getStringData(leader2));
+                        tvLeader2.setText(leader2);
                     }
                 }
 
@@ -399,7 +422,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     public void setNoHandlerPerson(NoHandlerPerson s) {
         setData();
         getListData();
-        map.put("flowAssignId", null);
+//        map.put("flowAssignId", null);
         willDoPresenter.getWillDo(map);
     }
 

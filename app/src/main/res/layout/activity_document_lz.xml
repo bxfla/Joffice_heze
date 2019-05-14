@@ -158,17 +158,16 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
                 <TextView
-                    android:id="@+id/tvLeader2"
+                    android:id="@+id/tvLeader"
                     style="@style/textWrite"
                     android:hint="请填写拟办意见" />
                 <EditText
                     android:visibility="gone"
-                    android:id="@+id/etLeader2"
+                    android:id="@+id/etLeader"
                     style="@style/textWrite"
                     android:hint="请填写拟办意见" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,20 +184,19 @@
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
+                <TextView
+                    android:id="@+id/tvLeader1"
+                    style="@style/textWrite"
+                    android:hint="领导批示意见" />
 
                 <EditText
-                    android:id="@+id/etLeader"
+                    android:id="@+id/etLeader1"
                     style="@style/textWrite"
                     android:hint="领导批示意见"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tvLeader"
-                    style="@style/textWrite"
-                    android:hint="领导批示意见" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,26 +207,24 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
                     android:text="承办结果:" />
-
                 <View
                     android:layout_width="1dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
+                <TextView
+                    android:id="@+id/tvLeader2"
+                    style="@style/textWrite"
+                    android:hint="请填写承办结果" />
 
                 <EditText
-                    android:id="@+id/etLeader1"
+                    android:id="@+id/etLeader2"
                     style="@style/textWrite"
                     android:hint="请填写承办结果"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tvLeader1"
-                    style="@style/textWrite"
-                    android:hint="请填写承办结果" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
-
 
             <Button
                 android:visibility="gone"
