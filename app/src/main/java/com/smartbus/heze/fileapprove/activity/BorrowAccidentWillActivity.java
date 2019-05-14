@@ -27,7 +27,6 @@ import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
 import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
 import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
-import com.smartbus.heze.fileapprove.util.SplitData;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -158,66 +157,72 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
                     &&etLeader3.getText().toString().equals("")) {
                 Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
             } else {
-                if (destTypeList.size() != 0) {
-                    if (destTypeList.size() == 1) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                destType = destTypeList.get(0).getDestType();
-                                destName = destTypeList.get(0).getDestination();
-                                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                    normalPresenter.getNormalPerson(taskId, destName, "false");
-                                } else if (destType.indexOf("end") == -1) {
-                                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                } else {
-                                    noHandlerPresenter.getNoHandlerPerson(taskId);
-                                }
-                                signaName = destTypeList.get(0).getName();
-                            }
-                        }).start();
-                    } else {
-                        for (int i = 0; i < destTypeList.size(); i++) {
-                            namelist.add(destTypeList.get(i).getDestination());
-                        }
-                        MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                            @Override
-                            public void oneselect(final String data) {
-                                destName = data;
-                                for (int i = 0; i < destTypeList.size(); i++) {
-                                    if (destName.equals(destTypeList.get(i).getDestination())) {
-                                        signaName = destTypeList.get(i).getName();
-                                        destType = destTypeList.get(i).getDestType();
-                                    }
-                                }
-                                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                    normalPresenter.getNormalPerson(taskId, destName, "false");
-                                } else if (destType.indexOf("end") == -1) {
-                                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                } else {
-                                    noHandlerPresenter.getNoHandlerPerson(taskId);
-                                }
-                            }
-
-                            @Override
-                            public void select(List<String> list) {
-
-                            }
-
-                            @Override
-                            public void confirm() {
-
-                            }
-
-                            @Override
-                            public void cancel() {
-
-                            }
-                        });
-                    }
-                } else {
-                    Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
-                }
+                getSomeData();
             }
+        }else {
+            getSomeData();
+        }
+    }
+
+    public void getSomeData(){
+        if (destTypeList.size() != 0) {
+            if (destTypeList.size() == 1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        destType = destTypeList.get(0).getDestType();
+                        destName = destTypeList.get(0).getDestination();
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                        signaName = destTypeList.get(0).getName();
+                    }
+                }).start();
+            } else {
+                for (int i = 0; i < destTypeList.size(); i++) {
+                    namelist.add(destTypeList.get(i).getDestination());
+                }
+                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
+                    @Override
+                    public void oneselect(final String data) {
+                        destName = data;
+                        for (int i = 0; i < destTypeList.size(); i++) {
+                            if (destName.equals(destTypeList.get(i).getDestination())) {
+                                signaName = destTypeList.get(i).getName();
+                                destType = destTypeList.get(i).getDestType();
+                            }
+                        }
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                    }
+
+                    @Override
+                    public void select(List<String> list) {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -243,34 +248,34 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         map.put("destName", destName);
         if (tvLeader.getVisibility() == View.VISIBLE) {
             if (!tvLeader.getText().toString().equals("")){
-                map.put("kezhang", new SplitData().SplitUpData(tvLeader.getText().toString()));
+                map.put("kezhang", tvLeader.getText().toString());
             }
         } else {
-            map.put("kezhang", new SplitData().SplitUpData(etLeader.getText().toString()));
+            map.put("kezhang", etLeader.getText().toString());
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
             if (!tvLeader1.getText().toString().equals("")){
-                map.put("fenguanjingli", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+                map.put("fenguanjingli", tvLeader1.getText().toString());
             }
         } else {
-            map.put("fenguanjingli", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("fenguanjingli", etLeader1.getText().toString());
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
             if (!tvLeader2.getText().toString().equals("")){
-                map.put("caiwujingli", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+                map.put("caiwujingli",tvLeader2.getText().toString());
             }
         } else {
-            map.put("caiwujingli", new SplitData().SplitUpData(etLeader2.getText().toString()));
+            map.put("caiwujingli", etLeader2.getText().toString());
             map.put("comments", etLeader2.getText().toString());
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
             if (!tvLeader3.getText().toString().equals("")){
-                map.put("ldps", new SplitData().SplitUpData(tvLeader3.getText().toString()));
+                map.put("ldps", tvLeader3.getText().toString());
             }
         } else {
-            map.put("ldps", new SplitData().SplitUpData(etLeader3.getText().toString()));
+            map.put("ldps", etLeader3.getText().toString());
             map.put("comments", etLeader3.getText().toString());
         }
     }
@@ -306,13 +311,13 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
                     tvLeader.setVisibility(View.GONE);
                     etLeader.setVisibility(View.VISIBLE);
                     if (leader != null && leader.length() != 0) {
-                        etLeader.setText(new SplitData().getStringData(leader));
+                        etLeader.setText(leader);
                     }
                 } else {
                     tvLeader.setVisibility(View.VISIBLE);
                     etLeader.setVisibility(View.GONE);
                     if (leader != null && leader.length() != 0) {
-                        tvLeader.setText(new SplitData().getStringData(leader));
+                        tvLeader.setText(leader);
                     }
                 }
 
@@ -320,13 +325,13 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
                     tvLeader1.setVisibility(View.GONE);
                     etLeader1.setVisibility(View.VISIBLE);
                     if (leader1 != null && leader1.length() != 0) {
-                        etLeader1.setText(new SplitData().getStringData(leader1));
+                        etLeader1.setText(leader1);
                     }
                 } else {
                     tvLeader1.setVisibility(View.VISIBLE);
                     etLeader1.setVisibility(View.GONE);
                     if (leader1 != null && leader1.length() != 0) {
-                        tvLeader1.setText(new SplitData().getStringData(leader1));
+                        tvLeader1.setText(leader1);
                     }
                 }
 
@@ -334,13 +339,13 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
                     tvLeader2.setVisibility(View.GONE);
                     etLeader2.setVisibility(View.VISIBLE);
                     if (leader2 != null && leader2.length() != 0) {
-                        etLeader2.setText(new SplitData().getStringData(leader2));
+                        etLeader2.setText(leader2);
                     }
                 } else {
                     tvLeader2.setVisibility(View.VISIBLE);
                     etLeader2.setVisibility(View.GONE);
                     if (leader2 != null && leader2.length() != 0) {
-                        tvLeader2.setText(new SplitData().getStringData(leader2));
+                        tvLeader2.setText(leader2);
                     }
                 }
 
@@ -348,13 +353,13 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
                     tvLeader3.setVisibility(View.GONE);
                     etLeader3.setVisibility(View.VISIBLE);
                     if (leader3 != null && leader3.length() != 0) {
-                        etLeader3.setText(new SplitData().getStringData(leader3));
+                        etLeader3.setText(leader3);
                     }
                 } else {
                     tvLeader3.setVisibility(View.VISIBLE);
                     etLeader3.setVisibility(View.GONE);
                     if (leader3 != null && leader3.length() != 0) {
-                        tvLeader3.setText(new SplitData().getStringData(leader3));
+                        tvLeader3.setText(leader3);
                     }
                 }
                 for (int i = 0; i < s.getTrans().size(); i++) {

@@ -575,68 +575,74 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
                             &&etLeader2.getText().toString().equals("")) {
                         Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (destTypeList.size() != 0) {
-                            if (destTypeList.size() == 1) {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        destType = destTypeList.get(0).getDestType();
-                                        destName = destTypeList.get(0).getDestination();
-                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                                        } else if (destType.indexOf("end") == -1) {
-                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                        } else {
-                                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                                        }
-                                        signaName = destTypeList.get(0).getName();
-                                    }
-                                }).start();
-                            } else {
-                                for (int i = 0; i < destTypeList.size(); i++) {
-                                    namelist.add(destTypeList.get(i).getDestination());
-                                }
-                                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
-                                    @Override
-                                    public void oneselect(final String data) {
-                                        destName = data;
-                                        for (int i = 0; i < destTypeList.size(); i++) {
-                                            if (destName.equals(destTypeList.get(i).getDestination())) {
-                                                signaName = destTypeList.get(i).getName();
-                                                destType = destTypeList.get(i).getDestType();
-                                            }
-                                        }
-                                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                                        } else if (destType.indexOf("end") == -1) {
-                                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                        } else {
-                                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void select(List<String> list) {
-
-                                    }
-
-                                    @Override
-                                    public void confirm() {
-
-                                    }
-
-                                    @Override
-                                    public void cancel() {
-
-                                    }
-                                });
-                            }
-                        } else {
-                            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
-                        }
+                        getSomeData();
                     }
+                }else {
+                    getSomeData();
                 }
                 break;
+        }
+    }
+
+    public void getSomeData(){
+        if (destTypeList.size() != 0) {
+            if (destTypeList.size() == 1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        destType = destTypeList.get(0).getDestType();
+                        destName = destTypeList.get(0).getDestination();
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                        signaName = destTypeList.get(0).getName();
+                    }
+                }).start();
+            } else {
+                for (int i = 0; i < destTypeList.size(); i++) {
+                    namelist.add(destTypeList.get(i).getDestination());
+                }
+                MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
+                    @Override
+                    public void oneselect(final String data) {
+                        destName = data;
+                        for (int i = 0; i < destTypeList.size(); i++) {
+                            if (destName.equals(destTypeList.get(i).getDestination())) {
+                                signaName = destTypeList.get(i).getName();
+                                destType = destTypeList.get(i).getDestType();
+                            }
+                        }
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                    }
+
+                    @Override
+                    public void select(List<String> list) {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(this, "审批人为空", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -684,10 +690,10 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         map.put("zhibiao", zbr);
         if (tvLeader.getVisibility() == View.VISIBLE) {
             if (!tvLeader.getText().toString().equals("")){
-                map.put("cwk", new SplitData().SplitUpData(tvLeader.getText().toString()));
+                map.put("cwk", tvLeader.getText().toString());
             }
         } else {
-            map.put("cwk", new SplitData().SplitUpData(etLeader.getText().toString()));
+            map.put("cwk", etLeader.getText().toString());
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
@@ -700,10 +706,10 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
             if (!tvLeader2.getText().toString().equals("")){
-                map.put("keshifuzer", new SplitData().SplitUpData(tvLeader2.getText().toString()));
+                map.put("jlyj", new SplitData().SplitUpData(tvLeader2.getText().toString()));
             }
         } else {
-            map.put("keshifuzer", new SplitData().SplitUpData(etLeader2.getText().toString()));
+            map.put("jlyj", new SplitData().SplitUpData(etLeader2.getText().toString()));
             map.put("comments", etLeader2.getText().toString());
         }
     }
@@ -748,13 +754,13 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         mainId = String.valueOf(s.getMainform().get(0).getMainId());
         String leader = s.getMainform().get(0).getCwk();
         String leader1 = s.getMainform().get(0).getFgyj();
-        String leader2 = s.getMainform().get(0).getZjly();
+        String leader2 = s.getMainform().get(0).getJlyj();
         String move = s.getFormRights();
         try {
             JSONObject jsonObject = new JSONObject(move);
             String cwMove = jsonObject.getString("cwk");
             String fgMove = jsonObject.getString("fgyj");
-            String zjlMove = jsonObject.getString("zjly");
+            String zjlMove = jsonObject.getString("jlyj");
             if (cwMove.equals("2")) {
                 tvLeader.setVisibility(View.GONE);
                 etLeader.setVisibility(View.VISIBLE);
@@ -765,7 +771,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
                 tvLeader.setVisibility(View.VISIBLE);
                 etLeader.setVisibility(View.GONE);
                 if (leader != null && leader.length() != 0) {
-                    tvLeader.setText(new SplitData().getStringData(leader));
+                    tvLeader.setText(leader);
                 }
             }
 
