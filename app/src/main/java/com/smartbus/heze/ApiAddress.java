@@ -34,6 +34,9 @@ public class ApiAddress {
     //获取内部员工
     public final static String workperson = "system/getAppAllUserAppUser.do";
 
+    //获取内部人员  包含
+    public final static String workoneperson = "hrm/profileListEmpProfile.do?iswork=1";
+
     //文件上传
     public final static String dataup = "flow/upLoadImageProcessActivity.do";
 
@@ -60,5 +63,8 @@ public class ApiAddress {
 
     //下载文件
     public static final String  downloadfile = mainApi+"attachFiles/";
+
+    //流程录入
+    public static final String  userdleave = "hrm/mobileSaveLeaveDays.do";
 
 }

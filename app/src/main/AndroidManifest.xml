@@ -76,6 +76,10 @@
         <activity
             android:name=".fileapprove.activity.DocumentLZWillActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.activity.WorkOnePersonActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <activity android:name=".checkup.RCJCActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 

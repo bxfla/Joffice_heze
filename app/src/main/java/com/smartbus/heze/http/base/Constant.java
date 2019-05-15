@@ -35,4 +35,8 @@ public class Constant {
     public final static String DOCUMENTLZ_DEFID = "99" ;
     public final static String DOCUMENTLZ_FORMDEFIS = "35" ;
 
+    //公用请假
+    public final static String USERDLEAVE_DEFID = "74" ;
+    public final static String USERDLEAVE_FORMDEFIS = "13" ;
+
 }

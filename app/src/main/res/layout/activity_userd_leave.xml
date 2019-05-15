@@ -35,8 +35,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etPerson"
+                <TextView
+                    android:id="@+id/tvPerson"
                     style="@style/oaEditText" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -48,7 +48,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="填单日期: *" />
+                    android:text="部门: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -57,7 +57,7 @@
                     android:background="@color/shouye" />
 
                 <TextView
-                    android:id="@+id/tvTime"
+                    android:id="@+id/tvDepartment"
                     style="@style/oaEditText" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -82,53 +82,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2.5" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="天数: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etDays"
-                    style="@style/oaEditText"
-                    android:hint="请填写请假天数"
-                    android:inputType="number|numberDecimal" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="事由: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etReason"
-                    style="@style/textWrite"
-                    android:hint="请填写请假事由" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -209,6 +162,51 @@
 
                 <TextView
                     style="@style/oaTextView"
+                    android:text="天数: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <EditText
+                    android:id="@+id/etDays"
+                    style="@style/oaEditText" />
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="事由:" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <EditText
+                    android:id="@+id/etReason"
+                    style="@style/textWrite"
+                    android:hint="请填写请假事由" />
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
                     android:text="附件:" />
 
                 <View
@@ -222,6 +220,7 @@
                     style="@style/oaEditText"
                     android:hint="点击选择附件" />
             </LinearLayout>
+            <View style="@style/HourLine"></View>
 
 
             <TextView
@@ -296,12 +295,22 @@
             <View
                 style="@style/HourLine"
                 android:layout_marginBottom="45dp"></View>
+            <Button
+                android:id="@+id/btnFirst"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="45dp"
+                android:background="@drawable/linearlayout_colore_radius"
+                android:gravity="center"
+                android:text="录入"
+                android:textColor="@color/whith" />
 
             <Button
                 android:id="@+id/btnUp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="45dp"
+                android:enabled="false"
                 android:background="@drawable/linearlayout_colore_radius"
                 android:gravity="center"
                 android:text="提交"

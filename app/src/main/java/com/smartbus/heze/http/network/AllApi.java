@@ -10,12 +10,14 @@ import com.smartbus.heze.fileapprove.bean.Department;
 import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
 import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
+import com.smartbus.heze.fileapprove.bean.InitBackData;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
 import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.bean.WorkOnePerson;
 import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.main.bean.WillDoList;
@@ -91,6 +93,12 @@ public interface AllApi {
     Observable<WorkPerson> getWorkPerson();
 
     /**
+     * 获取内部人员  包含profileId
+     */
+    @POST(ApiAddress.workoneperson)
+    Observable<WorkOnePerson> getWorkOnePerson();
+
+    /**
      * 获取待办列表
      */
     @GET(ApiAddress.willdolist)
@@ -164,7 +172,11 @@ public interface AllApi {
     @POST(ApiAddress.willdoup)
     Observable<WillDoUp> getWillDoUp(@QueryMap Map<String,String> params);
 
-
+    /**
+     * 提交流程录入
+     */
+    @POST(ApiAddress.userdleave)
+    Observable<InitBackData> getUserdLeave(@QueryMap Map<String,String> params);
 
 //    /**
 //     * 获取查询线路信息
