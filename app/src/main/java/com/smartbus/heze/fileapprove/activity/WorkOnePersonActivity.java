@@ -133,6 +133,8 @@ public class WorkOnePersonActivity extends BaseActivity implements WorkOnePerson
                 intent.putStringArrayListExtra("beanId", (ArrayList<String>) backListId);
                 intent.putExtra("department", bean.getDepName());
                 intent.putExtra("departmentId", bean.getDepId());
+                intent.putExtra("mnemonicCard", bean.getMnemonicCard());
+                intent.putExtra("ecard", bean.geteCard());
                 setResult(Constant.TAG_ONE, intent);
                 finish(); //结束当前的activity的生命周期
             }

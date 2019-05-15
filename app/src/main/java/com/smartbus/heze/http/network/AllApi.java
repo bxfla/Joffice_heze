@@ -21,6 +21,7 @@ import com.smartbus.heze.fileapprove.bean.WorkOnePerson;
 import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.main.bean.WillDoList;
+import com.smartbus.heze.oaflow.bean.CheckType;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
 
@@ -81,10 +82,22 @@ public interface AllApi {
                                        @Query("activityName") String activityName);
 
     /**
-     * 提交预算单
+     * 提交请假预算单
      */
     @POST(ApiAddress.upysd)
     Observable<BackData> getUpysd(@QueryMap Map<String,String> params);
+
+    /**
+     * 提交加班单
+     */
+    @POST(ApiAddress.upaddwork)
+    Observable<BackData> getUpAddWork(@QueryMap Map<String,String> params);
+
+    /**
+     * 提交补勤单
+     */
+    @POST(ApiAddress.upoldwork)
+    Observable<BackData> getUpOldWork(@QueryMap Map<String,String> params);
 
     /**
      * 获取内部员工
@@ -173,10 +186,34 @@ public interface AllApi {
     Observable<WillDoUp> getWillDoUp(@QueryMap Map<String,String> params);
 
     /**
-     * 提交流程录入
+     * 提交请假流程录入
      */
     @POST(ApiAddress.userdleave)
     Observable<InitBackData> getUserdLeave(@QueryMap Map<String,String> params);
+
+    /**
+     * 提交加班流程录入
+     */
+    @POST(ApiAddress.addwork)
+    Observable<InitBackData> getAddWork(@QueryMap Map<String,String> params);
+
+    /**
+     * 提交补勤流程录入
+     */
+    @POST(ApiAddress.oldwork)
+    Observable<InitBackData> getOldWork(@QueryMap Map<String,String> params);
+
+    /**
+     * 修改发布状态
+     */
+    @GET(ApiAddress.checktype)
+    Observable<CheckType> getCheckType(@Query("runId")String runId, @Query("vocationId")String vocationId);
+
+    /**
+     * 修改加班发布状态
+     */
+    @GET(ApiAddress.addworkchecktype)
+    Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
 
 //    /**
 //     * 获取查询线路信息

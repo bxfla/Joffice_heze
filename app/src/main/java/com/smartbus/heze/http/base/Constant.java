@@ -39,4 +39,8 @@ public class Constant {
     public final static String USERDLEAVE_DEFID = "74" ;
     public final static String USERDLEAVE_FORMDEFIS = "13" ;
 
+    //公用加班
+    public final static String ADDWORK_DEFID = "58" ;
+    public final static String ADDWORK_FORMDEFIS = "19" ;
+
 }

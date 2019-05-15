@@ -27,7 +27,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="申请: *" />
+                    android:text="申请人: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -35,8 +35,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etPerson"
+                <TextView
+                    android:id="@+id/tvPerson"
                     style="@style/oaEditText" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -126,6 +126,30 @@
 
                 <EditText
                     android:id="@+id/etReason"
+                    style="@style/textWrite"
+                    android:hint="请填写加班内容" />
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="加班类型: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <Spinner
+                    android:id="@+id/spinner"
                     style="@style/textWrite"
                     android:hint="请填写加班内容" />
             </LinearLayout>
@@ -320,6 +344,15 @@
                 style="@style/HourLine"
                 android:layout_marginBottom="45dp"></View>
 
+            <Button
+                android:id="@+id/btnFirst"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="45dp"
+                android:background="@drawable/linearlayout_colore_radius"
+                android:gravity="center"
+                android:text="录入"
+                android:textColor="@color/whith" />
             <Button
                 android:id="@+id/btnUp"
                 android:layout_width="match_parent"

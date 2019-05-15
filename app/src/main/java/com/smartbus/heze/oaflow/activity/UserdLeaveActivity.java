@@ -50,6 +50,9 @@ import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
+import com.smartbus.heze.oaflow.module.CheckTypeContract;
+import com.smartbus.heze.oaflow.presenter.CheckTypePresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +81,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_TWO;
  * 通用请假单
  */
 public class UserdLeaveActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View, UserdLeaveContract.View {
+        , TwoContract.View, UPYSDContract.View, UserdLeaveContract.View,CheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
@@ -120,6 +123,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     TwoPresenter twoPersenter;
     UserdLeavePresenter userdLeavePresenter;
     UPYSDPresenter upYsdPersenter;
+    CheckTypePresenter checkTypePresenter;
     Map<String, String> map = new HashMap<>();
     Map<String, String> firstmap = new HashMap<>();
     List<String> namelist = new ArrayList<>();
@@ -147,6 +151,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         userdLeavePresenter = new UserdLeavePresenter(this, this);
+        checkTypePresenter = new CheckTypePresenter(this,this);
         initDatePicker();
         String uaserName = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         listTime.add("上午");
@@ -341,7 +346,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());
-       simpleDateFormat.format(date);
+        simpleDateFormat.format(date);
         map.put("TianDanRiQi", simpleDateFormat.format(date));
         map.put("depId", depId);
         map.put("beginDate", tvStartTime.getText().toString());
@@ -603,14 +608,27 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     @Override
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-            finish();
+            String s1 = String.valueOf(s.getRunId());
+            checkTypePresenter.getCheckType(String.valueOf(s.getRunId()),vocationId);
         }
     }
 
     @Override
     public void setUPYSDMessage(String s) {
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setCheckType(CheckType s) {
+        if (s.isSuccess()){
+            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void setCheckTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private Handler handler = new Handler() {
