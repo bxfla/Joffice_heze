@@ -35,8 +35,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etPerson"
+                <TextView
+                    android:id="@+id/tvPerson"
                     style="@style/oaEditText" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -48,7 +48,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="申请日期: *" />
+                    android:text="部门: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -57,7 +57,7 @@
                     android:background="@color/shouye" />
 
                 <TextView
-                    android:id="@+id/tvTime"
+                    android:id="@+id/tvDepartment"
                     style="@style/oaEditText" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -69,7 +69,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="开始时间: *" />
+                    android:text="月份: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -91,7 +91,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="结束时间: *" />
+                    android:text="日期: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -101,6 +101,28 @@
 
                 <TextView
                     android:id="@+id/tvEndTime"
+                    style="@style/oaEditText" />
+
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
+                    android:text="类型: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <Spinner
+                    android:id="@+id/spinner"
                     style="@style/oaEditText" />
 
             </LinearLayout>
@@ -131,6 +153,7 @@
             <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -201,7 +224,15 @@
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
-
+            <Button
+                android:id="@+id/btnFirst"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="45dp"
+                android:background="@drawable/linearlayout_colore_radius"
+                android:gravity="center"
+                android:text="录入"
+                android:textColor="@color/whith" />
             <Button
                 android:id="@+id/btnUp"
                 android:layout_width="match_parent"

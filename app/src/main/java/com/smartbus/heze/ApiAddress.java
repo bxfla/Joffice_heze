@@ -75,11 +75,18 @@ public class ApiAddress {
     //修改发布状态
     public static final String  checktype = "hrm/updateLeaveDays.do";
     //修改加班发布状态
-    public static final String  addworkchecktype = "hrm/updateAddClassInfo.do";
+    public static final String  addworkchecktype = "hrm/updateLeaveDays.do";
+    //修改补勤发布状态
+    public static final String  oldworkchecktype = "hrm/updateFillAttendance.do";
 
     //加班录入
-    public static final String  oldwork = "hrm/mobileSaveAddClassInfo.do";
+    public static final String  oldwork = "hrm/mobileSaveFillAttendance.do";
     //提交加班
     public final static String upoldwork = "hrm/updateAddClassInfo.do";
+
+    //值班录入
+    public static final String  atwork = "hrm/mobileSaveFillAttendance.do";
+    //修改加班发布状态
+    public static final String  atworkchecktype = "hrm/updateLeaveDays.do";
 
 }

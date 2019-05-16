@@ -9,6 +9,8 @@ import com.smartbus.heze.R;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.oaflow.activity.AddWorkActivity;
+import com.smartbus.heze.oaflow.activity.AtWorkActivity;
+import com.smartbus.heze.oaflow.activity.OldWorkActivity;
 import com.smartbus.heze.oaflow.activity.UserdLeaveActivity;
 
 import butterknife.BindView;
@@ -65,8 +67,12 @@ public class OaMainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.ll3:
+                intent = new Intent(this, OldWorkActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll4:
+                intent = new Intent(this, AtWorkActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll5:
                 break;

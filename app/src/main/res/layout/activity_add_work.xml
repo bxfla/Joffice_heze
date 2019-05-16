@@ -250,6 +250,7 @@
             <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">

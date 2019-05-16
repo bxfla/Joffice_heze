@@ -8,7 +8,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
-        app:header_title="@string/userd_leave">
+        app:header_title="@string/at_work">
     </com.smartbus.heze.http.views.Header>
 
     <ScrollView
@@ -27,7 +27,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="请假人: *" />
+                    android:text="申请人: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -69,6 +69,28 @@
 
                 <TextView
                     style="@style/oaTextView"
+                    android:text="日期: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <TextView
+                    android:id="@+id/tvEndTime"
+                    style="@style/oaEditText" />
+
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
                     android:text="类型: *" />
 
                 <View
@@ -79,100 +101,8 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2.5" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="开始时间: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:background="@color/shouye" />
-
-                <TextView
-                    android:id="@+id/tvStartTime"
-                    style="@style/oaEditText"
-                    android:layout_weight="1.5" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/shouye" />
-
-                <Spinner
-                    android:id="@+id/spinnerAM"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"></Spinner>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="结束时间: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:background="@color/shouye" />
-
-                <TextView
-                    android:id="@+id/tvEndTime"
-                    style="@style/oaEditText"
-                    android:layout_weight="1.5" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/shouye" />
-
-                <Spinner
-                    android:id="@+id/spinnerPM"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="天数: *" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etDays"
                     style="@style/oaEditText" />
+
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -185,7 +115,7 @@
                     style="@style/oaTextView"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
-                    android:text="事由:" />
+                    android:text="说明: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -196,7 +126,7 @@
                 <EditText
                     android:id="@+id/etReason"
                     style="@style/textWrite"
-                    android:hint="请填写请假事由" />
+                    android:hint="请填写补勤说明" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -221,7 +151,6 @@
                     style="@style/oaEditText"
                     android:hint="点击选择附件" />
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
 
             <TextView
@@ -273,29 +202,6 @@
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="总经理:" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <TextView
-                    android:id="@+id/etLeader2"
-                    style="@style/oaEditText"
-                    android:hint="总经理签名" />
-            </LinearLayout>
-            <View
-                style="@style/HourLine"
-                android:layout_marginBottom="45dp"></View>
             <Button
                 android:id="@+id/btnFirst"
                 android:layout_width="match_parent"
@@ -305,13 +211,11 @@
                 android:gravity="center"
                 android:text="录入"
                 android:textColor="@color/whith" />
-
             <Button
                 android:id="@+id/btnUp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="45dp"
-                android:enabled="false"
                 android:background="@drawable/linearlayout_colore_radius"
                 android:gravity="center"
                 android:text="提交"

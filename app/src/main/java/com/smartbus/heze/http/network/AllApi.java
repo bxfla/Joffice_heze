@@ -204,6 +204,12 @@ public interface AllApi {
     Observable<InitBackData> getOldWork(@QueryMap Map<String,String> params);
 
     /**
+     * 提交值班流程录入
+     */
+    @POST(ApiAddress.atwork)
+    Observable<InitBackData> getAtWork(@QueryMap Map<String,String> params);
+
+    /**
      * 修改发布状态
      */
     @GET(ApiAddress.checktype)
@@ -213,8 +219,19 @@ public interface AllApi {
      * 修改加班发布状态
      */
     @GET(ApiAddress.addworkchecktype)
-    Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
+    Observable<CheckType> getAddCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
 
+    /**
+     * 修改加班发布状态
+     */
+    @GET(ApiAddress.atworkchecktype)
+    Observable<CheckType> getAtCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
+
+    /**
+     * 修改加班发布状态
+     */
+    @GET(ApiAddress.oldworkchecktype)
+    Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("id")String vocationId);
 //    /**
 //     * 获取查询线路信息
 //     */
