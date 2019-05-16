@@ -23,6 +23,7 @@ import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.oaflow.bean.AddWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
+import com.smartbus.heze.oaflow.bean.OldWorkWill;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
@@ -248,6 +249,13 @@ public interface AllApi {
      */
     @GET(ApiAddress.willdodetail)
     Observable<AddWorkWill> getWillAddWork(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取补勤待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<OldWorkWill> getWillOldWork(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
 }
