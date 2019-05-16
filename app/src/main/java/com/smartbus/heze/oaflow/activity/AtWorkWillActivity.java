@@ -29,12 +29,12 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.AtWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
-import com.smartbus.heze.oaflow.bean.OldWorkWill;
-import com.smartbus.heze.oaflow.module.OldCheckTypeContract;
-import com.smartbus.heze.oaflow.module.OldWorkWillContract;
-import com.smartbus.heze.oaflow.presenter.OldWorkCheckTypePresenter;
-import com.smartbus.heze.oaflow.presenter.OldWorkWillPresenter;
+import com.smartbus.heze.oaflow.module.AtCheckTypeContract;
+import com.smartbus.heze.oaflow.module.AtWorkWillContract;
+import com.smartbus.heze.oaflow.presenter.AtWorkCheckTypePresenter;
+import com.smartbus.heze.oaflow.presenter.AtWorkWillPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,25 +49,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 补勤待办
+ * 值班待办
  */
-public class OldWorkWillActivity extends BaseActivity implements OldWorkWillContract.View
+public class AtWorkWillActivity extends BaseActivity implements AtWorkWillContract.View
         , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
-        , OldCheckTypeContract.View {
+        , AtCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
     TextView tvPerson;
     @BindView(R.id.tvDepartment)
     TextView tvDepartment;
-    @BindView(R.id.tvStartTime)
-    TextView tvStartTime;
     @BindView(R.id.tvEndTime)
     TextView tvEndTime;
     @BindView(R.id.tvType)
     TextView tvType;
-    @BindView(R.id.etReason)
-    TextView etReason;
+    @BindView(R.id.tvReason)
+    TextView tvReason;
     @BindView(R.id.tvData)
     TextView tvData;
     @BindView(R.id.tvLeader)
@@ -95,19 +93,18 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     NoEndPresenter noEndPersenter;
     NoHandlerPresenter noHandlerPresenter;
     WillDoPresenter willDoPresenter;
-    OldWorkCheckTypePresenter checkTypePresenter;
-    OldWorkWillPresenter oldWorkWillPresenter;
+    AtWorkCheckTypePresenter checkTypePresenter;
+    AtWorkWillPresenter atWorkWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
-    List<OldWorkWill.TransBean> destTypeList = new ArrayList<>();
-
+    List<AtWorkWill.TransBean> destTypeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        checkTypePresenter = new OldWorkCheckTypePresenter(this, this);
+        checkTypePresenter = new AtWorkCheckTypePresenter(this, this);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
         taskId = intent.getStringExtra("taskId");
@@ -116,13 +113,13 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
         noHandlerPresenter = new NoHandlerPresenter(this, this);
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
-        oldWorkWillPresenter = new OldWorkWillPresenter(this, this);
-        oldWorkWillPresenter.getOldWorkWill(activityName, taskId, Constant.OLDWORK_DEFID);
+        atWorkWillPresenter = new AtWorkWillPresenter(this, this);
+        atWorkWillPresenter.getAtWorkWill(activityName, taskId, Constant.ATWORK_DEFID);
     }
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_will_old_work;
+        return R.layout.activity_will_at_work;
     }
 
     @Override
@@ -213,14 +210,13 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     }
 
     private void setData() {
-        map.put("defId", Constant.OLDWORK_DEFID);
+        map.put("defId", Constant.ATWORK_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.OLDWORK_FORMDEFIS);
+        map.put("formDefId", Constant.ATWORK_FORMDEFIS);
         map.put("userName", tvPerson.getText().toString());
-        map.put("createTime", tvStartTime.getText().toString());
         map.put("fillDate", tvEndTime.getText().toString());
         map.put("dayType", tvType.getText().toString());
-        map.put("memo", etReason.getText().toString());
+        map.put("memo", tvReason.getText().toString());
         map.put("mainId", mainId);
         map.put("taskId", taskId);
         map.put("signalName", signaName);
@@ -244,13 +240,13 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     }
 
     @Override
-    public void setOldWorkWill(OldWorkWill s) {
+    public void setAtWorkWill(AtWorkWill s) {
         if (s != null) {
-            tvPerson.setText(s.getMainform().get(0).getUserName().toString());
-            tvStartTime.setText(s.getMainform().get(0).getCreateTime().toString());
+           tvPerson.setText(s.getMainform().get(0).getUserName().toString());
+//            tvStartTime.setText(s.getMainform().get(0).getCreateTime().toString());
             tvEndTime.setText(s.getMainform().get(0).getFillDate().toString());
             tvType.setText(s.getMainform().get(0).getDayType());
-            etReason.setText(s.getMainform().get(0).getMemo().toString());
+            tvReason.setText(s.getMainform().get(0).getMemo().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String dataUrl_save = s.getMainform().get(0).getDataUrl_save().toString();
             String[] strarray = dataUrl_save.split("[=]");
@@ -300,7 +296,7 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     }
 
     @Override
-    public void setOldWorkWillMessage(String s) {
+    public void setAtWorkWillMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
