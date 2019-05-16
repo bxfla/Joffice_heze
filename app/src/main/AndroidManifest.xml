@@ -85,7 +85,9 @@
         <activity
             android:name=".oaflow.activity.AtWorkActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
+        <activity
+            android:name=".oaflow.activity.CheckWorkActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.RCJCActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 

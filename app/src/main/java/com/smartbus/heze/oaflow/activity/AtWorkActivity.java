@@ -187,13 +187,17 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
     }
 
     private void setData() {
-        map.put("defId", Constant.OLDWORK_DEFID);
+        map.put("defId", Constant.ATWORK_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.OLDWORK_FORMDEFIS);
+        map.put("formDefId", Constant.ATWORK_FORMDEFIS);
         map.put("memo", etReason.getText().toString());
         map.put("dayType", spinner.getSelectedItem().toString());
         map.put("createTime", tvEndTime.getText().toString());
         map.put("userName", tvPerson.getText().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+        Date curDate =  new Date(System.currentTimeMillis());
+        String str = formatter.format(curDate);
+        map.put("fillDate", str);
         map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 
@@ -229,20 +233,24 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
                 startActivityForResult(intent, TAG_ONE);
                 break;
             case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
-                if (etReason.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
-                    break;
+                if (selectTag.equals("2")){
+                    namelist.clear();
+                    codeList.clear();
+                    nameList.clear();
+                    selectList.clear();
+                    namelist1.clear();
+                    dataList.clear();
+                    if (etReason.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    onePersenter = new OnePresenter(this, this);
+                    onePersenter.getOnePerson(Constant.ATWORK_DEFID);
+                    twoPersenter = new TwoPresenter(this, this);
+                    upYsdPersenter = new UPYSDPresenter(this, this);
+                }else {
+                    Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
                 }
-                onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.OLDWORK_DEFID);
-                twoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this, this);
                 break;
         }
     }
@@ -358,13 +366,13 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.OLDWORK_DEFID, namelist.get(0));
+                twoPersenter.getTwoPerson(Constant.ATWORK_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
                     @Override
                     public void oneselect(final String data) {
                         userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.OLDWORK_DEFID, data);
+                        twoPersenter.getTwoPerson(Constant.ATWORK_DEFID, data);
                     }
 
                     @Override

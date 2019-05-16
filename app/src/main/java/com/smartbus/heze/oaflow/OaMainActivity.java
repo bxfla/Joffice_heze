@@ -10,6 +10,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.oaflow.activity.AddWorkActivity;
 import com.smartbus.heze.oaflow.activity.AtWorkActivity;
+import com.smartbus.heze.oaflow.activity.CheckWorkActivity;
 import com.smartbus.heze.oaflow.activity.OldWorkActivity;
 import com.smartbus.heze.oaflow.activity.UserdLeaveActivity;
 
@@ -75,6 +76,8 @@ public class OaMainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.ll5:
+                intent = new Intent(this, CheckWorkActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -1,14 +1,10 @@
 package com.smartbus.heze.oaflow.activity;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,10 +44,10 @@ import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 import com.smartbus.heze.oaflow.bean.CheckType;
-import com.smartbus.heze.oaflow.module.AddWorkContract;
-import com.smartbus.heze.oaflow.module.AddCheckTypeContract;
-import com.smartbus.heze.oaflow.presenter.AddWorkPresenter;
-import com.smartbus.heze.oaflow.presenter.AddWorkCheckTypePresenter;
+import com.smartbus.heze.oaflow.module.CheckCheckTypeContract;
+import com.smartbus.heze.oaflow.module.CheckWorkContract;
+import com.smartbus.heze.oaflow.presenter.CheckWorkCheckTypePresenter;
+import com.smartbus.heze.oaflow.presenter.CheckWorkPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,46 +67,36 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.R.attr.permission;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_THERE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
- * 通用加班单
+ * 通用调休单
  */
-public class AddWorkActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View, AddWorkContract.View, AddCheckTypeContract.View {
+public class CheckWorkActivity extends BaseActivity implements OneContract.View
+        , TwoContract.View, UPYSDContract.View, CheckWorkContract.View, CheckCheckTypeContract.View {
+
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
     TextView tvPerson;
-    @BindView(R.id.tvTime)
-    TextView tvTime;
     @BindView(R.id.tvDepartment)
     TextView tvDepartment;
-    @BindView(R.id.etDays)
-    EditText etDays;
-    @BindView(R.id.etReason)
-    EditText etReason;
-    @BindView(R.id.etAddress)
-    EditText etAddress;
-    @BindView(R.id.tvStartTime)
-    TextView tvStartTime;
-    @BindView(R.id.spinnerAM)
-    Spinner spinnerAM;
     @BindView(R.id.tvEndTime)
     TextView tvEndTime;
-    @BindView(R.id.spinnerPM)
-    Spinner spinnerPM;
+    @BindView(R.id.spinner)
+    Spinner spinner;
+    @BindView(R.id.etReason)
+    EditText etReason;
     @BindView(R.id.tvData)
     TextView tvData;
     @BindView(R.id.etLeader)
     TextView etLeader;
     @BindView(R.id.etLeader1)
     TextView etLeader1;
-    @BindView(R.id.etLeader2)
-    TextView etLeader2;
+    @BindView(R.id.btnFirst)
+    Button btnFirst;
     @BindView(R.id.btnUp)
     Button btnUp;
 
@@ -131,8 +117,8 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     OnePresenter onePersenter;
     TwoPresenter twoPersenter;
     UPYSDPresenter upYsdPersenter;
-    AddWorkCheckTypePresenter checkTypePresenter;
-    AddWorkPresenter addWorkPresenter;
+    CheckWorkPresenter checkWorkPresenter;
+    CheckWorkCheckTypePresenter checkWorkCheckTypePresenter;
     Map<String, String> map = new HashMap<>();
     Map<String, String> firstmap = new HashMap<>();
     List<String> namelist = new ArrayList<>();
@@ -140,17 +126,9 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     List<String> nameList = new ArrayList<>();
     List<String> selectList = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
-    List<String> listType = new ArrayList<String>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    @BindView(R.id.spinner)
-    Spinner spinner;
-    @BindView(R.id.btnFirst)
-    Button btnFirst;
-    private CustomDatePickerDay customDatePicker1, customDatePicker2;
-
-    ArrayAdapter<String> TimeAdapter;
+    private CustomDatePickerDay customDatePicker2;
     List<String> listTime = new ArrayList<String>();
-
     String fileName = "";
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -162,30 +140,20 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         initDatePicker();
-        addWorkPresenter = new AddWorkPresenter(this, this);
-        checkTypePresenter = new AddWorkCheckTypePresenter(this,this);
-        listType.add("假日加班");
-        listType.add("普通加班");
-        ArrayAdapter TypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listType);
-        TypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(TypeAdapter);
-
+        header.setTvTitle(getResources().getString(R.string.change_work));
+        checkWorkPresenter = new CheckWorkPresenter(this,this);
+        checkWorkCheckTypePresenter = new CheckWorkCheckTypePresenter(this,this);
         listTime.add("上午");
         listTime.add("下午");
         listTime.add("全天");
-
-        TimeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listTime);
-        TimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAM.setAdapter(TimeAdapter);
-
-        TimeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listTime);
-        TimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPM.setAdapter(TimeAdapter);
+        ArrayAdapter TypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listTime);
+        TypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(TypeAdapter);
     }
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_add_work;
+        return R.layout.activity_at_work;
     }
 
     @Override
@@ -204,21 +172,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     private void initDatePicker() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
-        tvTime.setText(now.split(" ")[0]);
-        tvStartTime.setText(now.split(" ")[0]);
         tvEndTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
-            @Override
-            public void handle(String time) {
-                // 回调接口，获得选中的时间
-                tvStartTime.setText(time.split(" ")[0]);
-            }
-            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
-        }, "2000-01-01 00:00", "2030-01-01 00:00");
-        // 不显示时和分
-        customDatePicker1.showSpecificTime(false);
-        // 不允许循环滚动
-        customDatePicker1.setIsLoop(false);
         customDatePicker2 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
             @Override
             public void handle(String time) {
@@ -234,105 +188,50 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     }
 
     private void setData() {
-        map.put("defId", Constant.ADDWORK_DEFID);
+        map.put("defId", Constant.CHECKWORK_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.ADDWORK_FORMDEFIS);
-        map.put("jiekuanDate", tvTime.getText().toString());
-        map.put("jiekuansy", etReason.getText().toString());
-        map.put("applyName", tvPerson.getText().toString());
-        map.put("applyCode", ecard);
-        map.put("applyMnemonicCode", mnemonicCard);
-        map.put("depName", depName);
-        map.put("depId", depId);
-        map.put("applyDate", tvTime.getText().toString());
-        map.put("addClassDate", tvStartTime.getText().toString());
-        map.put("endClassDate", tvEndTime.getText().toString());
-        map.put("addClassType", spinner.getSelectedItem().toString());
-        map.put("addClassCounts", etDays.getText().toString());
-        map.put("addClassContent", etReason.getText().toString());
-        map.put("addClassPlace", etAddress.getText().toString());
+        map.put("formDefId", Constant.CHECKWORK_FORMDEFIS);
+        map.put("memo", etReason.getText().toString());
+        map.put("dayType", spinner.getSelectedItem().toString());
+        map.put("createTime", tvEndTime.getText().toString());
+        map.put("userName", tvPerson.getText().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+        Date curDate =  new Date(System.currentTimeMillis());
+        String str = formatter.format(curDate);
+        map.put("fillDate", str);
         map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 
     private void setDataFirst() {
-        firstmap.put("applyName", tvPerson.getText().toString());
-        firstmap.put("applyCode", ecard);
-        firstmap.put("applyMnemonicCode", mnemonicCard);
-        firstmap.put("depName", depName);
+        firstmap.put("userCode", ecard);
         firstmap.put("depId", depId);
-        firstmap.put("applyDate", tvTime.getText().toString());
-        firstmap.put("addClassDate", tvStartTime.getText().toString());
-        firstmap.put("endClassDate", tvEndTime.getText().toString());
-
-        firstmap.put("addClassType", spinner.getSelectedItem().toString());
-        firstmap.put("addClassDays", etDays.getText().toString());
-        firstmap.put("addClassContent", etReason.getText().toString());
-        firstmap.put("addClassPlace", etAddress.getText().toString());
+        firstmap.put("userName", tvPerson.getText().toString());
+        firstmap.put("fillDate", tvEndTime.getText().toString());
+        firstmap.put("dayType", spinner.getSelectedItem().toString());
+        firstmap.put("memo ", etReason.getText().toString());
     }
 
-    @OnClick({R.id.tvStartTime, R.id.tvEndTime, R.id.tvDepartment, R.id.tvData, R.id.btnUp
-            , R.id.btnFirst, R.id.tvPerson})
+    @OnClick({R.id.tvPerson, R.id.tvDepartment, R.id.tvEndTime, R.id.btnFirst, R.id.btnUp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvPerson:
                 intent = new Intent(this, WorkOnePersonActivity.class);
                 startActivityForResult(intent, TAG_THERE);
-                break;
+            break;
             case R.id.btnFirst:
                 if (tvPerson.getText().toString().equals("")) {
-                    Toast.makeText(this, "请选择加班人", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (tvEndTime.getText().toString().equals("")
-                        || tvStartTime.getText().toString().equals("")) {
-                    Toast.makeText(this, "请选择时间", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etDays.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写请假天数", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (etReason.getText().toString().equals("") || etAddress.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写地点和内容", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (tvStartTime.getText().toString().equals("") || tvEndTime.getText().toString().equals("")) {
-                    Toast.makeText(this, "请时间不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 setDataFirst();
-                addWorkPresenter.getAddWork(firstmap);
-                break;
-            case R.id.tvStartTime:
-                customDatePicker1.show(tvStartTime.getText().toString());
+                checkWorkPresenter.getCheckWork(firstmap);
                 break;
             case R.id.tvEndTime:
                 customDatePicker2.show(tvEndTime.getText().toString());
                 break;
             case R.id.tvDepartment:
-                Intent intent = new Intent(this, DepartmentActivity.class);
-                startActivityForResult(intent, Constant.TAG_ONE);
-                break;
-            case R.id.tvData:
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    // 没有写的权限，去申请写的权限，会弹出对话框
-                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
-                } else {
-                    File file = new File(Environment.getExternalStorageDirectory().getPath());
-                    if (null == file || !file.exists()) {
-                        return;
-                    }
-                    Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
-                    intentD.addCategory(Intent.CATEGORY_OPENABLE);
-                    intentD.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intentD.setDataAndType(Uri.fromFile(file), "file/*");
-                    try {
-                        startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
-                    } catch (ActivityNotFoundException ex) {
-                        // Potentially direct the user to the Market with a Dialog
-                        Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                intent = new Intent(this, DepartmentActivity.class);
+                startActivityForResult(intent, TAG_ONE);
                 break;
             case R.id.btnUp:
                 if (selectTag.equals("2")){
@@ -347,28 +246,11 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);
-                    onePersenter.getOnePerson(Constant.ADDWORK_DEFID);
+                    onePersenter.getOnePerson(Constant.CHECKWORK_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
                     upYsdPersenter = new UPYSDPresenter(this, this);
                 }else {
                     Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case Constant.TAG_ONE:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), Constant.TAG_TWO);
-                } catch (ActivityNotFoundException ex) {
-                    // Potentially direct the user to the Market with a Dialog
-                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -393,8 +275,8 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                     Uri uri = data.getData();
                     File file = null;
                     try {
-                        if (FileUtils.getPath(AddWorkActivity.this, uri) != null) {
-                            file = FileUtils.getPath(AddWorkActivity.this, uri);
+                        if (FileUtils.getPath(CheckWorkActivity.this, uri) != null) {
+                            file = FileUtils.getPath(CheckWorkActivity.this, uri);
                         }
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
@@ -426,7 +308,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                                 e.printStackTrace();
                             }
                             Message message = new Message();
-                            message.what = Constant.TAG_ONE;
+                            message.what = TAG_ONE;
                             handler.sendMessage(message);
                         }
 
@@ -435,7 +317,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                             super.onFailure(statusCode, headers, responseBody, error);
                             Log.i("XXX", "XXXXX");
                             Message message = new Message();
-                            message.what = Constant.TAG_TWO;
+                            message.what = TAG_TWO;
                             handler.sendMessage(message);
                         }
                     });
@@ -460,7 +342,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     }
 
     @Override
-    public void setAddWork(InitBackData s) {
+    public void setCheckWork(InitBackData s) {
         if (s.isSuccess()) {
             vocationId = s.getVocationId();
             selectTag = "2";
@@ -472,7 +354,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     }
 
     @Override
-    public void setAddWorkMessage(String s) {
+    public void setCheckWorkMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
@@ -485,13 +367,13 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.ADDWORK_DEFID, namelist.get(0));
+                twoPersenter.getTwoPerson(Constant.CHECKWORK_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
                     @Override
                     public void oneselect(final String data) {
                         userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.ADDWORK_DEFID, data);
+                        twoPersenter.getTwoPerson(Constant.CHECKWORK_DEFID, data);
                     }
 
                     @Override
@@ -608,7 +490,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
             String s1 = String.valueOf(s.getRunId());
-            checkTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId);
+            checkWorkCheckTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId);
         }
     }
 
@@ -635,13 +517,13 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case Constant.TAG_ONE:
-                    Toast.makeText(AddWorkActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
+                case TAG_ONE:
+                    Toast.makeText(CheckWorkActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
                     tvData.setText(fileName);
                     ProgressDialogUtil.stopLoad();
                     break;
-                case Constant.TAG_TWO:
-                    Toast.makeText(AddWorkActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
+                case TAG_TWO:
+                    Toast.makeText(CheckWorkActivity.this, "文件上传失败", Toast.LENGTH_SHORT).show();
                     ProgressDialogUtil.stopLoad();
                     break;
             }

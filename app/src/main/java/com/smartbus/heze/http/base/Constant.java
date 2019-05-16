@@ -47,4 +47,12 @@ public class Constant {
     public final static String OLDWORK_DEFID = "60" ;
     public final static String OLDWORK_FORMDEFIS = "26" ;
 
+    //公用值班
+    public final static String ATWORK_DEFID = "64" ;
+    public final static String ATWORK_FORMDEFIS = "28" ;
+
+    //公用值班
+    public final static String CHECKWORK_DEFID = "75" ;
+    public final static String CHECKWORK_FORMDEFIS = "24" ;
+
 }

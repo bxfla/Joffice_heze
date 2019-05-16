@@ -85,8 +85,13 @@ public class ApiAddress {
     public final static String upoldwork = "hrm/updateAddClassInfo.do";
 
     //值班录入
-    public static final String  atwork = "hrm/mobileSaveFillAttendance.do";
-    //修改加班发布状态
-    public static final String  atworkchecktype = "hrm/updateLeaveDays.do";
+    public static final String  atwork = "hrm/mobileSaveFillOnDuty.do";
+    //修改值班发布状态
+    public static final String  atworkchecktype = "hrm/updateFillOnDuty.do";
+
+    //值班录入
+    public static final String  checkwork = "hrm/mobileSaveFillOff.do";
+    //修改值班发布状态
+    public static final String  checkworkchecktype = "hrm/updateFillOff.do";
 
 }

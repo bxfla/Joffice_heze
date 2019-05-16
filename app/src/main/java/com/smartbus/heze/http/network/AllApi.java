@@ -210,6 +210,12 @@ public interface AllApi {
     Observable<InitBackData> getAtWork(@QueryMap Map<String,String> params);
 
     /**
+     * 提交调休流程录入
+     */
+    @POST(ApiAddress.checkwork)
+    Observable<InitBackData> getCheckWork(@QueryMap Map<String,String> params);
+
+    /**
      * 修改发布状态
      */
     @GET(ApiAddress.checktype)
@@ -225,10 +231,16 @@ public interface AllApi {
      * 修改加班发布状态
      */
     @GET(ApiAddress.atworkchecktype)
-    Observable<CheckType> getAtCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
+    Observable<CheckType> getAtCheckType(@Query("runId")String runId, @Query("id")String vocationId);
 
     /**
-     * 修改加班发布状态
+     * 修改调休发布状态
+     */
+    @GET(ApiAddress.checkworkchecktype)
+    Observable<CheckType> getCheckCheckType(@Query("runId")String runId, @Query("id")String vocationId);
+
+    /**
+     * 修改补勤发布状态
      */
     @GET(ApiAddress.oldworkchecktype)
     Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("id")String vocationId);
