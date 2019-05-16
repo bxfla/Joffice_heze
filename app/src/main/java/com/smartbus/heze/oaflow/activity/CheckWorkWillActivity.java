@@ -31,10 +31,10 @@ import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 import com.smartbus.heze.oaflow.bean.AtWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
-import com.smartbus.heze.oaflow.module.CheckCheckTypeContract;
-import com.smartbus.heze.oaflow.module.CheckWorkWillContract;
-import com.smartbus.heze.oaflow.presenter.CheckWorkCheckTypePresenter;
-import com.smartbus.heze.oaflow.presenter.CheckWorkWillPresenter;
+import com.smartbus.heze.oaflow.module.AtCheckTypeContract;
+import com.smartbus.heze.oaflow.module.AtWorkWillContract;
+import com.smartbus.heze.oaflow.presenter.AtWorkCheckTypePresenter;
+import com.smartbus.heze.oaflow.presenter.AtWorkWillPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,9 +51,9 @@ import butterknife.OnClick;
 /**
  * 值班待办
  */
-public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillContract.View
+public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillContract.View
         , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
-        , CheckCheckTypeContract.View {
+        , AtCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
@@ -93,8 +93,8 @@ public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillCon
     NoEndPresenter noEndPersenter;
     NoHandlerPresenter noHandlerPresenter;
     WillDoPresenter willDoPresenter;
-    CheckWorkCheckTypePresenter checkTypePresenter;
-    CheckWorkWillPresenter atWorkWillPresenter;
+    AtWorkCheckTypePresenter checkTypePresenter;
+    AtWorkWillPresenter atWorkWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
@@ -104,7 +104,7 @@ public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        checkTypePresenter = new CheckWorkCheckTypePresenter(this, this);
+        checkTypePresenter = new AtWorkCheckTypePresenter(this, this);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
         taskId = intent.getStringExtra("taskId");
@@ -113,8 +113,8 @@ public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillCon
         noHandlerPresenter = new NoHandlerPresenter(this, this);
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
-        atWorkWillPresenter = new CheckWorkWillPresenter(this, this);
-        atWorkWillPresenter.getCheckWorkWill(activityName, taskId, Constant.CHECKWORK_DEFID);
+        atWorkWillPresenter = new AtWorkWillPresenter(this, this);
+        atWorkWillPresenter.getAtWorkWill(activityName, taskId, Constant.ATWORK_DEFID);
     }
 
     @Override
@@ -240,7 +240,7 @@ public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillCon
     }
 
     @Override
-    public void setCheckWorkWill(AtWorkWill s) {
+    public void setAtWorkWill(AtWorkWill s) {
         if (s != null) {
            tvPerson.setText(s.getMainform().get(0).getUserName().toString());
 //            tvStartTime.setText(s.getMainform().get(0).getCreateTime().toString());
@@ -296,7 +296,7 @@ public class AtWorkWillActivity extends BaseActivity implements CheckWorkWillCon
     }
 
     @Override
-    public void setCheckWorkWillMessage(String s) {
+    public void setAtWorkWillMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 

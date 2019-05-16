@@ -100,6 +100,9 @@
         <activity
             android:name=".oaflow.activity.AtWorkWillActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".oaflow.activity.CheckWorkWillActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.RCJCActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
