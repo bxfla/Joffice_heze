@@ -21,6 +21,7 @@ import com.smartbus.heze.fileapprove.bean.WorkOnePerson;
 import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.main.bean.WillDoList;
+import com.smartbus.heze.oaflow.bean.AddWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.welcome.bean.Login;
@@ -217,7 +218,7 @@ public interface AllApi {
     Observable<CheckType> getAddCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
 
     /**
-     * 修改加班发布状态
+     * 修改补勤发布状态
      */
     @GET(ApiAddress.atworkchecktype)
     Observable<CheckType> getAtCheckType(@Query("runId")String runId, @Query("id")String vocationId);
@@ -240,6 +241,13 @@ public interface AllApi {
      */
     @GET(ApiAddress.willdodetail)
     Observable<UserdLeaveWill> getWillUserdLeave(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 获取加班待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<AddWorkWill> getWillAddWork(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
 }

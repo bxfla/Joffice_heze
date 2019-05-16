@@ -24,6 +24,7 @@ import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.main.module.WillDoListContract;
 import com.smartbus.heze.main.presenter.WillDoListPresenter;
+import com.smartbus.heze.oaflow.activity.AddWorkWillActivity;
 import com.smartbus.heze.oaflow.activity.UserdLeaveWillActivity;
 
 import java.util.ArrayList;
@@ -117,6 +118,12 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
                             }
                             if (o.getFormDefId().equals(Constant.USERDLEAVE_FORMDEFIS)){
                                 Intent intent = new Intent(getActivity(), UserdLeaveWillActivity.class);
+                                intent.putExtra("activityName", o.getActivityName());
+                                intent.putExtra("taskId", o.getTaskId());
+                                startActivity(intent);
+                            }
+                            if (o.getFormDefId().equals(Constant.ADDWORK_FORMDEFIS)){
+                                Intent intent = new Intent(getActivity(), AddWorkWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);

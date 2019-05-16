@@ -251,6 +251,9 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
         map.put("addClassCounts", etDays.getText().toString());
         map.put("addClassContent", etReason.getText().toString());
         map.put("addClassPlace", etAddress.getText().toString());
+        map.put("bumenjingli", "");
+        map.put("fenguanjingli", "");
+        map.put("zongjingli", "");
         map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 

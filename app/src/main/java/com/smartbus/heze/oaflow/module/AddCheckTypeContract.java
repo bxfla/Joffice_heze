@@ -1,6 +1,6 @@
 package com.smartbus.heze.oaflow.module;
 
-import com.smartbus.heze.http.base.BaseDFiveView;
+import com.smartbus.heze.http.base.BaseDSixView;
 import com.smartbus.heze.http.base.BasePresenter;
 import com.smartbus.heze.oaflow.bean.CheckType;
 
@@ -9,7 +9,7 @@ import com.smartbus.heze.oaflow.bean.CheckType;
  */
 
 public interface AddCheckTypeContract {
-    interface View extends BaseDFiveView<presenter> {
+    interface View extends BaseDSixView<presenter> {
         //预算单
         void setCheckType(CheckType s);
         void setCheckTypeMessage(String s);
