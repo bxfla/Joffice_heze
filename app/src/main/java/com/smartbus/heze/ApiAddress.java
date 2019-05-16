@@ -30,8 +30,6 @@ public class ApiAddress {
 
     //提交预算单
     public final static String upysd = "flow/saveProcessActivity.do";
-    //提交加班
-    public final static String upaddwork = "hrm/updateAddClassInfo.do";
 
     //获取内部员工
     public final static String workperson = "system/getAppAllUserAppUser.do";
@@ -81,8 +79,6 @@ public class ApiAddress {
 
     //加班录入
     public static final String  oldwork = "hrm/mobileSaveFillAttendance.do";
-    //提交加班
-    public final static String upoldwork = "hrm/updateAddClassInfo.do";
 
     //值班录入
     public static final String  atwork = "hrm/mobileSaveFillOnDuty.do";

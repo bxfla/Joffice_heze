@@ -289,7 +289,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);
-                    onePersenter.getOnePerson(Constant.ATWORK_DEFID);
+                    onePersenter.getOnePerson(Constant.USERDLEAVE_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
                     upYsdPersenter = new UPYSDPresenter(this, this);
                 }else {

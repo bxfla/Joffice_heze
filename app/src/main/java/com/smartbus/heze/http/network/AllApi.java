@@ -22,6 +22,7 @@ import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
 import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.oaflow.bean.CheckType;
+import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
 
@@ -86,18 +87,6 @@ public interface AllApi {
      */
     @POST(ApiAddress.upysd)
     Observable<BackData> getUpysd(@QueryMap Map<String,String> params);
-
-    /**
-     * 提交加班单
-     */
-    @POST(ApiAddress.upaddwork)
-    Observable<BackData> getUpAddWork(@QueryMap Map<String,String> params);
-
-    /**
-     * 提交补勤单
-     */
-    @POST(ApiAddress.upoldwork)
-    Observable<BackData> getUpOldWork(@QueryMap Map<String,String> params);
 
     /**
      * 获取内部员工
@@ -244,10 +233,13 @@ public interface AllApi {
      */
     @GET(ApiAddress.oldworkchecktype)
     Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("id")String vocationId);
-//    /**
-//     * 获取查询线路信息
-//     */
-//    @HTTP(method = "DELETE",path = ApiAddress.lineBean,hasBody = true)
-//    Observable<LineBean> getLineBean(@Body Map<String, String> maps);
+
+
+    /**
+     * 获取请假待办详情
+     */
+    @GET(ApiAddress.willdodetail)
+    Observable<UserdLeaveWill> getWillUserdLeave(@Query("activityName")String activityName
+            , @Query("taskId")String taskId, @Query("defId")String defId);
 
 }
