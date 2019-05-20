@@ -104,8 +104,11 @@ public class TestAdapter extends BaseExpandableListAdapter {
         TextView tv_child = (TextView) convertView.findViewById(R.id.textView);
         RadioButton rb1 = (RadioButton) convertView.findViewById(R.id.rb1);
         RadioButton rb2 = (RadioButton) convertView.findViewById(R.id.rb2);
-        EditText et = (EditText) convertView.findViewById(R.id.editText);
-
+        final EditText et = (EditText) convertView.findViewById(R.id.editText);
+//        HashMap map = new HashMap();
+//        map.put("groupPosition",groupPosition);
+//        map.put("childPosition",childPosition);
+//        et.setTag(map);
         //iv_child.setImageResource(resId);
         tv_child.setText(childList.get(groupPosition).get(childPosition).getText());
         et.addTextChangedListener(new TextWatcher() {
@@ -120,12 +123,17 @@ public class TestAdapter extends BaseExpandableListAdapter {
 
             @Override
             public void afterTextChanged(Editable s) {
-                List<TestBean> beanList = childList.get(groupPosition);
-                TestBean bean = beanList.get(childPosition);
-                bean.setNum(s.toString());
-                beanList.set(childPosition,bean);
-                childList.set(groupPosition,beanList);
-            }
+//                HashMap map = (HashMap) et.getTag();
+//                int groupPosition1 = (int) map.get("groupPosition");
+//                int childPosition1 = (int) map.get("childPosition");
+//                if (groupPosition1==groupPosition&&childPosition1==childPosition){
+                    List<TestBean> beanList = childList.get(groupPosition);
+                    TestBean bean = beanList.get(childPosition);
+                    bean.setNum(s.toString());
+                    beanList.set(childPosition,bean);
+                    childList.set(groupPosition,beanList);
+                }
+//            }
         });
 
         return convertView;

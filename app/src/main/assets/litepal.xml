@@ -6,5 +6,6 @@
         <mapping class="com.smartbus.heze.fileapprove.bean.DepartmentDataBean"></mapping>
         <mapping class="com.smartbus.heze.fileapprove.bean.WorkPersonDataBean"></mapping>
         <mapping class="com.smartbus.heze.fileapprove.bean.WorkOnePersonDataBean"></mapping>
+        <mapping class="com.smartbus.heze.checkup.bean.LineCodeData"></mapping>
     </list>
 </litepal>

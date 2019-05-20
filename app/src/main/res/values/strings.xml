@@ -66,4 +66,7 @@
     <string name="old_work">补勤登记单</string>
     <string name="at_work">值班登记单</string>
     <string name="change_work">调休登记单</string>
+
+    <!--稽查-->
+    <string name="line_code">线路编号</string>
 </resources>

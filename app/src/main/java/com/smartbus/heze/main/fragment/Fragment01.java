@@ -12,7 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.checkup.RCJCActivity;
+import com.smartbus.heze.checkup.activity.RCJCActivity;
 import com.smartbus.heze.fileapprove.FileMainActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;

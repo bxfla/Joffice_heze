@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".welcome.activity.LoginActivity" />
-        <activity android:name=".main.activity.MainActivity"/>
+        <activity android:name=".main.activity.MainActivity" />
         <activity android:name=".main.notice.activity.NoticeDetailActivity" />
         <activity android:name=".main.notice.activity.NoticeListActivity" />
         <activity android:name=".fileapprove.FileMainActivity" />
@@ -103,12 +103,11 @@
         <activity
             android:name=".oaflow.activity.CheckWorkWillActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.RCJCActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-
-        <activity android:name=".TestActivity">
-
-        </activity>
+        <activity
+            android:name=".checkup.activity.RCJCActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".checkup.activitydata.LineCodeActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.smartbus.heze.http.network;
 
 
 import com.smartbus.heze.ApiAddress;
+import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
 import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
@@ -265,5 +266,12 @@ public interface AllApi {
     @GET(ApiAddress.willdodetail)
     Observable<AtWorkWill> getWillAtWork(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
+
+
+    /**
+     * 稽查获取线路编号
+     */
+    @GET(ApiAddress.linecode)
+    Observable<LineCode> getLineCode();
 
 }

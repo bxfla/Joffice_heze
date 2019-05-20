@@ -8,8 +8,8 @@ package com.smartbus.heze;
 
 public class ApiAddress {
 
-    public final static String mainApi = "http://192.168.2.132:8080/joffice21/" ;
-//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.132:8080/joffice21/" ;
+    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
 
     /***********************首页*******************************/
     //登录
@@ -89,5 +89,8 @@ public class ApiAddress {
     public static final String  checkwork = "hrm/mobileSaveFillOff.do";
     //修改值班发布状态
     public static final String  checkworkchecktype = "hrm/updateFillOff.do";
+
+    //稽查获取线路编号
+    public static final String  linecode = "system/getLineStoreAllLineInfo.do?_dc=1558314543022";
 
 }
