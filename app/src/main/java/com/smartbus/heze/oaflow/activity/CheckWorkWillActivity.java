@@ -104,6 +104,7 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvTitle(getResources().getString(R.string.change_work));
         checkTypePresenter = new AtWorkCheckTypePresenter(this, this);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
