@@ -2,6 +2,7 @@ package com.smartbus.heze.http.network;
 
 
 import com.smartbus.heze.ApiAddress;
+import com.smartbus.heze.checkup.bean.CarCode;
 import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -273,5 +274,11 @@ public interface AllApi {
      */
     @GET(ApiAddress.linecode)
     Observable<LineCode> getLineCode();
+
+    /**
+     * 稽查获取车辆编号
+     */
+    @GET(ApiAddress.carcode)
+    Observable<CarCode> getCarCode();
 
 }

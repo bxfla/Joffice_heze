@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
+import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -88,8 +90,14 @@ public class RCJCActivity extends BaseActivity {
                 startActivityForResult(intent, Constant.TAG_ONE);
                 break;
             case R.id.imCarCode:
+                intent = new Intent(this, CarCodeActivity.class);
+                intent.putExtra("tag","carCode");
+                startActivityForResult(intent, Constant.TAG_TWO);
                 break;
             case R.id.imCarNo:
+                intent = new Intent(this, CarCodeActivity.class);
+                intent.putExtra("tag","carNo");
+                startActivityForResult(intent, Constant.TAG_TWO);
                 break;
             case R.id.imPersonCode:
                 break;
@@ -114,6 +122,13 @@ public class RCJCActivity extends BaseActivity {
                 if (resultCode==Constant.TAG_ONE){
                     LineCodeData lineCodeData = (LineCodeData) data.getSerializableExtra("lineCode");
                     etLine.setText(lineCodeData.getLineCode());
+                }
+                break;
+            case Constant.TAG_TWO:
+                if (resultCode==Constant.TAG_TWO){
+                    CarCodeData carCodeData = (CarCodeData) data.getSerializableExtra("carCode");
+                    etCarCode.setText(carCodeData.getBusCode());
+                    etCarNo.setText(carCodeData.getCarNo());
                 }
                 break;
         }

@@ -92,5 +92,7 @@ public class ApiAddress {
 
     //稽查获取线路编号
     public static final String  linecode = "system/getLineStoreAllLineInfo.do?_dc=1558314543022";
+    //稽查获取车辆编号
+    public static final String  carcode = "admin/getBusBydepCar.do?_dc=1558323024913";
 
 }

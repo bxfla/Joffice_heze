@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.checkup.bean.LineCode;
-import com.smartbus.heze.checkup.bean.LineCodeData;
-import com.smartbus.heze.checkup.module.LineCodeContract;
-import com.smartbus.heze.checkup.presenter.LineCodePresenter;
+import com.smartbus.heze.checkup.bean.CarCode;
+import com.smartbus.heze.checkup.bean.CarCodeData;
+import com.smartbus.heze.checkup.module.CarCodeContract;
+import com.smartbus.heze.checkup.presenter.CarCodePresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
@@ -31,31 +31,33 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LineCodeActivity extends BaseActivity implements LineCodeContract.View {
+public class CarCodeActivity extends BaseActivity implements CarCodeContract.View {
 
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    BaseRecyclerAdapter adapter;
-    LineCodePresenter lineCodePresenter;
-    List<LineCodeData> beanListData = new ArrayList<>();
     @BindView(R.id.et_search)
     EditTextWithDel etSearch;
+
+    String tag;
+    BaseRecyclerAdapter adapter;
+    CarCodePresenter carCodePresenter;
+    List<CarCodeData> beanListData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        tag = getIntent().getStringExtra("tag");
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        lineCodePresenter = new LineCodePresenter(this, this);
-        beanListData = DataSupport.findAll(LineCodeData.class);
+        carCodePresenter = new CarCodePresenter(this, this);
+        beanListData = DataSupport.findAll(CarCodeData.class);
         if (beanListData.size() != 0) {
             setAdapter(beanListData);
         } else {
-            lineCodePresenter.getLineCode();
+            carCodePresenter.getCarCode();
         }
 
         //根据输入框输入值的改变来过滤搜索
@@ -84,13 +86,13 @@ public class LineCodeActivity extends BaseActivity implements LineCodeContract.V
      * @param filterStr
      */
     private void filterData(String filterStr) {
-        List<LineCodeData> mSortList = new ArrayList<>();
+        List<CarCodeData> mSortList = new ArrayList<>();
         if (TextUtils.isEmpty(filterStr)) {
             mSortList = beanListData;
         } else {
             mSortList.clear();
-            for (LineCodeData sortModel : beanListData) {
-                String name = sortModel.getLineCode();
+            for (CarCodeData sortModel : beanListData) {
+                String name = sortModel.getBusCode();
                 if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
                     mSortList.add(sortModel);
                 }
@@ -120,32 +122,44 @@ public class LineCodeActivity extends BaseActivity implements LineCodeContract.V
      * @param s
      */
     @Override
-    public void setLineCode(LineCode s) {
+    public void setCarCode(CarCode s) {
         if (s != null) {
             for (int i = 0; i < s.getData().size(); i++) {
-                LineCodeData bean = new LineCodeData();
+                CarCodeData bean = new CarCodeData();
                 beanListData.add(bean);
-                bean.setLineCode(s.getData().get(i).getLineCode());
-                bean.setLineInfoId(s.getData().get(i).getLineInfoId());
-                bean.setLineName(s.getData().get(i).getLineName());
+                bean.getCarId(s.getData().get(i).getCarId());
+                bean.setBusCode(s.getData().get(i).getBusCode());
+                bean.setCarNo(s.getData().get(i).getCarNo());
+                bean.setCarType(s.getData().get(i).getCarType());
+                bean.setDepName(s.getData().get(i).getDepName());
+                bean.setDepId(s.getData().get(i).getDepId());
                 bean.save();
             }
         }
         setAdapter(beanListData);
     }
 
+    @Override
+    public void setCarCodeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
 
-    private void setAdapter(List<LineCodeData> mSortList) {
-        adapter = new BaseRecyclerAdapter<LineCodeData>(this, R.layout.adapter_easy_item, mSortList) {
+    private void setAdapter(List<CarCodeData> mSortList) {
+        adapter = new BaseRecyclerAdapter<CarCodeData>(this, R.layout.adapter_easy_item, mSortList) {
             @Override
-            public void convert(BaseViewHolder holder, final LineCodeData o) {
-                holder.setText(R.id.textView, o.getLineCode());
+            public void convert(BaseViewHolder holder, final CarCodeData o) {
+                if (tag.equals("carCode")){
+                    holder.setText(R.id.textView, o.getBusCode());
+                }else if (tag.equals("carNo")){
+                    holder.setText(R.id.textView, o.getCarNo());
+                }
+
                 holder.setOnClickListener(R.id.textView, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent();
-                        intent.putExtra("lineCode", o);
-                        setResult(Constant.TAG_ONE, intent);
+                        intent.putExtra("carCode", o);
+                        setResult(Constant.TAG_TWO, intent);
                         finish(); //结束当前的activity的生命周期
                     }
                 });
@@ -155,8 +169,4 @@ public class LineCodeActivity extends BaseActivity implements LineCodeContract.V
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void setLineCodeMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
 }
