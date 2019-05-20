@@ -48,6 +48,7 @@ public class LineCodeActivity extends BaseActivity implements LineCodeContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvTitle(getResources().getString(R.string.line_code));
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         lineCodePresenter = new LineCodePresenter(this, this);

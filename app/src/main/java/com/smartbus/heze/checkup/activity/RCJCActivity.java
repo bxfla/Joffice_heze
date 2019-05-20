@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
+import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
+import com.smartbus.heze.checkup.bean.UserCodeData;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
@@ -100,8 +102,14 @@ public class RCJCActivity extends BaseActivity {
                 startActivityForResult(intent, Constant.TAG_TWO);
                 break;
             case R.id.imPersonCode:
+                intent = new Intent(this, UserCodeActivity.class);
+                intent.putExtra("tag","userCode");
+                startActivityForResult(intent, Constant.TAG_THERE);
                 break;
             case R.id.imPersonName:
+                intent = new Intent(this, UserCodeActivity.class);
+                intent.putExtra("tag","userName");
+                startActivityForResult(intent, Constant.TAG_THERE);
                 break;
             case R.id.imRummager:
                 break;
@@ -129,6 +137,13 @@ public class RCJCActivity extends BaseActivity {
                     CarCodeData carCodeData = (CarCodeData) data.getSerializableExtra("carCode");
                     etCarCode.setText(carCodeData.getBusCode());
                     etCarNo.setText(carCodeData.getCarNo());
+                }
+                break;
+            case Constant.TAG_THERE:
+                if (resultCode==Constant.TAG_THERE){
+                    UserCodeData userCodeData = (UserCodeData) data.getSerializableExtra("userCode");
+                    etPersonCode.setText(userCodeData.getUserCode());
+                    etPersonName.setText(userCodeData.getFullname());
                 }
                 break;
         }

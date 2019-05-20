@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.checkup.bean.CarCode;
-import com.smartbus.heze.checkup.bean.CarCodeData;
-import com.smartbus.heze.checkup.module.CarCodeContract;
-import com.smartbus.heze.checkup.presenter.CarCodePresenter;
+import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.checkup.bean.UserCodeData;
+import com.smartbus.heze.checkup.module.UserCodeContract;
+import com.smartbus.heze.checkup.presenter.UserCodePresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CarCodeActivity extends BaseActivity implements CarCodeContract.View {
+public class UserCodeActivity extends BaseActivity implements UserCodeContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -42,23 +42,23 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
 
     String tag;
     BaseRecyclerAdapter adapter;
-    CarCodePresenter carCodePresenter;
-    List<CarCodeData> beanListData = new ArrayList<>();
+    UserCodePresenter userCodePresenter;
+    List<UserCodeData> beanListData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.car_code));
+        header.setTvTitle(getResources().getString(R.string.user_code));
         tag = getIntent().getStringExtra("tag");
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        carCodePresenter = new CarCodePresenter(this, this);
-        beanListData = DataSupport.findAll(CarCodeData.class);
+        userCodePresenter = new UserCodePresenter(this, this);
+        beanListData = DataSupport.findAll(UserCodeData.class);
         if (beanListData.size() != 0) {
             setAdapter(beanListData);
         } else {
-            carCodePresenter.getCarCode();
+            userCodePresenter.getUserCode();
         }
 
         //根据输入框输入值的改变来过滤搜索
@@ -87,13 +87,13 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
      * @param filterStr
      */
     private void filterData(String filterStr) {
-        List<CarCodeData> mSortList = new ArrayList<>();
+        List<UserCodeData> mSortList = new ArrayList<>();
         if (TextUtils.isEmpty(filterStr)) {
             mSortList = beanListData;
         } else {
             mSortList.clear();
-            for (CarCodeData sortModel : beanListData) {
-                String name = sortModel.getBusCode();
+            for (UserCodeData sortModel : beanListData) {
+                String name = sortModel.getUserCode();
                 if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
                     mSortList.add(sortModel);
                 }
@@ -117,50 +117,22 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
 
     }
 
-    /**
-     * 获取线路编号
-     *
-     * @param s
-     */
-    @Override
-    public void setCarCode(CarCode s) {
-        if (s != null) {
-            for (int i = 0; i < s.getData().size(); i++) {
-                CarCodeData bean = new CarCodeData();
-                beanListData.add(bean);
-                bean.getCarId(s.getData().get(i).getCarId());
-                bean.setBusCode(s.getData().get(i).getBusCode());
-                bean.setCarNo(s.getData().get(i).getCarNo());
-                bean.setCarType(s.getData().get(i).getCarType());
-                bean.setDepName(s.getData().get(i).getDepName());
-                bean.setDepId(s.getData().get(i).getDepId());
-                bean.save();
-            }
-        }
-        setAdapter(beanListData);
-    }
-
-    @Override
-    public void setCarCodeMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    private void setAdapter(List<CarCodeData> mSortList) {
-        adapter = new BaseRecyclerAdapter<CarCodeData>(this, R.layout.adapter_easy_item, mSortList) {
+    private void setAdapter(List<UserCodeData> mSortList) {
+        adapter = new BaseRecyclerAdapter<UserCodeData>(this, R.layout.adapter_easy_item, mSortList) {
             @Override
-            public void convert(BaseViewHolder holder, final CarCodeData o) {
-                if (tag.equals("carCode")){
-                    holder.setText(R.id.textView, o.getBusCode());
-                }else if (tag.equals("carNo")){
-                    holder.setText(R.id.textView, o.getCarNo());
+            public void convert(BaseViewHolder holder, final UserCodeData o) {
+                if (tag.equals("userCode")){
+                    holder.setText(R.id.textView, o.getUserCode());
+                }else if (tag.equals("userName")){
+                    holder.setText(R.id.textView, o.getFullname());
                 }
 
                 holder.setOnClickListener(R.id.textView, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent();
-                        intent.putExtra("carCode", o);
-                        setResult(Constant.TAG_TWO, intent);
+                        intent.putExtra("userCode", o);
+                        setResult(Constant.TAG_THERE, intent);
                         finish(); //结束当前的activity的生命周期
                     }
                 });
@@ -170,4 +142,31 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * 获取员工编号
+     * @param s
+     */
+    @Override
+    public void setUserCode(UserCode s) {
+        if (s != null) {
+            for (int i = 0; i < s.getData().size(); i++) {
+                UserCodeData bean = new UserCodeData();
+                beanListData.add(bean);
+                bean.setSex(s.getData().get(i).getSex());
+                bean.setIdCard(s.getData().get(i).getIdCard());
+                bean.setUserCode(s.getData().get(i).getUserCode());
+                bean.setECard(s.getData().get(i).getECard());
+                bean.setDepName(s.getData().get(i).getDepName());
+                bean.setDepId(s.getData().get(i).getDepId());
+                bean.setFullname(s.getData().get(i).getFullname());
+                bean.save();
+            }
+        }
+        setAdapter(beanListData);
+    }
+
+   @Override
+    public void setUserCodeMessage(String s) {
+       Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
 }
