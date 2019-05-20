@@ -3,6 +3,7 @@ package com.smartbus.heze.http.network;
 
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.checkup.bean.CarCode;
+import com.smartbus.heze.checkup.bean.CheckPerson;
 import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
@@ -287,5 +288,11 @@ public interface AllApi {
      */
     @GET(ApiAddress.usercode)
     Observable<UserCode> getUserCode();
+
+    /**
+     * 稽查获取检查人
+     */
+    @GET(ApiAddress.checkperson)
+    Observable<CheckPerson> getCheckPerson();
 
 }

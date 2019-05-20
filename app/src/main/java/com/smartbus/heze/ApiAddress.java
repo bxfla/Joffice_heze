@@ -96,5 +96,7 @@ public class ApiAddress {
     public static final String  carcode = "admin/getBusBydepCar.do?_dc=1558323024913";
     //稽查获取人员编号
     public static final String  usercode = "hrm/profileByPosDepEmpProfile.do";
+    //稽查获取检查人
+    public static final String  checkperson = "hrm/profileDepListEmpProfile.do?_dc=1558332277819";
 
 }

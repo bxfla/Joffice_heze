@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
+import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
 import com.smartbus.heze.checkup.bean.CarCodeData;
@@ -17,7 +18,12 @@ import com.smartbus.heze.checkup.bean.LineCodeData;
 import com.smartbus.heze.checkup.bean.UserCodeData;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
+import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,11 +68,33 @@ public class RCJCActivity extends BaseActivity {
     @BindView(R.id.btnUp)
     Button btnUp;
     Intent intent;
-
+    private CustomDatePickerDay customDatePicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        initDatePicker();
+    }
+
+    /**
+     * 选择时间
+     */
+    private void initDatePicker() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+        String now = sdf.format(new Date());
+        tvTime.setText(now.split(" ")[0]);
+        customDatePicker = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
+            @Override
+            public void handle(String time) {
+                // 回调接口，获得选中的时间
+                tvTime.setText(time.split(" ")[0]);
+            }
+            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
+        }, "2000-01-01 00:00", "2030-01-01 00:00");
+        // 不显示时和分
+        customDatePicker.showSpecificTime(false);
+        // 不允许循环滚动
+        customDatePicker.setIsLoop(false);
     }
 
     @Override
@@ -112,6 +140,8 @@ public class RCJCActivity extends BaseActivity {
                 startActivityForResult(intent, Constant.TAG_THERE);
                 break;
             case R.id.imRummager:
+                intent = new Intent(this, CheckPersonActivity.class);
+                startActivityForResult(intent, Constant.TAG_FOUR);
                 break;
             case R.id.tvClassTime:
                 break;
@@ -144,6 +174,11 @@ public class RCJCActivity extends BaseActivity {
                     UserCodeData userCodeData = (UserCodeData) data.getSerializableExtra("userCode");
                     etPersonCode.setText(userCodeData.getUserCode());
                     etPersonName.setText(userCodeData.getFullname());
+                }
+            case Constant.TAG_FOUR:
+                if (resultCode==Constant.TAG_FOUR){
+                    String selectName = data.getStringExtra("name");
+                    etRummager.setText(selectName);
                 }
                 break;
         }

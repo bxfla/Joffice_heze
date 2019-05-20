@@ -9,5 +9,6 @@
         <mapping class="com.smartbus.heze.checkup.bean.LineCodeData"></mapping>
         <mapping class="com.smartbus.heze.checkup.bean.CarCodeData"></mapping>
         <mapping class="com.smartbus.heze.checkup.bean.UserCodeData"></mapping>
+        <mapping class="com.smartbus.heze.checkup.bean.CheckPersonData"></mapping>
     </list>
 </litepal>

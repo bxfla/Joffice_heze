@@ -10,6 +10,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
+        app:header_title_right="@string/title_tips_confim"
         app:header_title="@string/line_code">
     </com.smartbus.heze.http.views.Header>
 

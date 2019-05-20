@@ -112,6 +112,8 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".checkup.activitydata.UserCodeActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".checkup.activitydata.CheckPersonActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
     </application>
 
 </manifest>
