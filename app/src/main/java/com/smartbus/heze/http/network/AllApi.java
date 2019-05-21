@@ -6,6 +6,7 @@ import com.smartbus.heze.checkup.bean.CarCode;
 import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.CheckPerson;
 import com.smartbus.heze.checkup.bean.LineCode;
+import com.smartbus.heze.checkup.bean.SafeItem;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
@@ -319,5 +320,28 @@ public interface AllApi {
             ,@Field("jckrichangJc.note")String note
             ,@Field("jckrichangJc.vehicleClass")String vehicleClass
             ,@Field("jckrichangJc.positionDate")String positionDate);
+
+    /**
+     * 稽查获取安全检查项
+     */
+    @GET(ApiAddress.safeitem)
+    Observable<SafeItem> getSafeItem();
+
+    /**
+     * 安全稽查检查项提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.updatasafe)
+    Observable<UpData> getUpData(@Field("data")String data,@Field("scoreData")String scoreData
+            ,@Field("anquansheshiJc.kaoheDate")String kaoheDate
+            ,@Field("anquansheshiJc.lineCode")String lineCode
+            ,@Field("anquansheshiJc.carNo")String carNo
+            ,@Field("anquansheshiJc.busCode")String busCode
+            ,@Field("anquansheshiJc.depId")String depId
+            ,@Field("anquansheshiJc.depName")String depName
+            ,@Field("anquansheshiJc.driverName")String driVerName
+            ,@Field("anquansheshiJc.driverId")String driverId
+            ,@Field("anquansheshiJc.examiner")String examiner
+            ,@Field("anquansheshiJc.note")String note);
 
 }

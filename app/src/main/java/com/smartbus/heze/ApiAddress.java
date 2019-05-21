@@ -98,8 +98,13 @@ public class ApiAddress {
     public static final String  usercode = "hrm/profileByPosDepEmpProfile.do";
     //稽查获取检查人
     public static final String  checkperson = "hrm/profileDepListEmpProfile.do?_dc=1558332277819";
-    //稽查获取检查人
+    //稽查获取检查项
     public static final String  checkitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4485&&flag=1&_dc=1558335251824";
     //日常稽查数据提交
     public static final String  updatarcjc = "starkh/savePhoneJckrichangJc.do";
+
+    //稽查获取安全检查项
+    public static final String  safeitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4451&_dc=1558421560835";
+    //安全稽查数据提交
+    public static final String  updatasafe = "busmanager/savePhoneAnquansheshiJc.do";
 }

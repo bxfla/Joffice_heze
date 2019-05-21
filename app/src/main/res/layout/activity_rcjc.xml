@@ -296,6 +296,7 @@
                 <View style="@style/HourLine"></View>
 
                 <LinearLayout
+                    android:id="@+id/llType"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal">
@@ -320,6 +321,7 @@
                 <View style="@style/HourLine"></View>
 
                 <LinearLayout
+                    android:id="@+id/llTime"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal">

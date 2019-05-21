@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activity.RCJCActivity;
+import com.smartbus.heze.checkup.activity.SafeActivity;
 import com.smartbus.heze.fileapprove.FileMainActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -185,6 +186,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
             case R.id.rb4:
                 break;
             case R.id.rb5:
+                intent = new Intent(getActivity(), SafeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb6:
                 break;

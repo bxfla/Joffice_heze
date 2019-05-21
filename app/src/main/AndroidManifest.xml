@@ -106,6 +106,9 @@
         <activity
             android:name=".checkup.activity.RCJCActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".checkup.activity.SafeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.activitydata.LineCodeActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".checkup.activitydata.CarCodeActivity"
