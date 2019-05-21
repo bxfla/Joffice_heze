@@ -1,14 +1,19 @@
 package com.smartbus.heze.main.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.http.base.AlertDialogCallBack;
+import com.smartbus.heze.http.base.AlertDialogUtil;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.main.fragment.Fragment01;
@@ -36,13 +41,63 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private Fragment01 fragment01;
     private Fragment02 fragment02;
     private Fragment03 fragment03;
-
     private FragmentManager manager;
+
+    AlertDialogUtil alertDialogUtil;
+    private static boolean isExit = false;
+
+    //推出程序
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+
+    //推出程序
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            alertDialogUtil.showDialog("您确定要退出程序吗", new AlertDialogCallBack() {
+
+                @Override
+                public int getData(int s) {
+                    return 0;
+                }
+
+                @Override
+                public void confirm() {
+                    finish();
+                }
+
+                @Override
+                public void cancel() {
+
+                }
+            });
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        alertDialogUtil = new AlertDialogUtil(this);
         //默认选中第一个
         RadioButton btn = (RadioButton) radioGroup.getChildAt(0);
         btn.setChecked(true);

@@ -46,9 +46,9 @@
             android:textColor="@color/xiaohei" />
     </LinearLayout>
 
-    <View style="@style/HourLine" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/studyArchives"
         style="@style/linerlayout"
         android:background="@color/whith">
