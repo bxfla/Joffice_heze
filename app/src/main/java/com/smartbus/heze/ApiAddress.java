@@ -8,8 +8,8 @@ package com.smartbus.heze;
 
 public class ApiAddress {
 
-//    public final static String mainApi = "http://192.168.2.132:8080/joffice21/" ;
-    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+    public final static String mainApi = "http://192.168.2.184:8080/joffice21/" ;
+//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
 
     /***********************首页*******************************/
     //登录
@@ -98,5 +98,8 @@ public class ApiAddress {
     public static final String  usercode = "hrm/profileByPosDepEmpProfile.do";
     //稽查获取检查人
     public static final String  checkperson = "hrm/profileDepListEmpProfile.do?_dc=1558332277819";
-
+    //稽查获取检查人
+    public static final String  checkitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4485&&flag=1&_dc=1558335251824";
+    //日常稽查数据提交
+    public static final String  updatarcjc = "starkh/savePhoneJckrichangJc.do";
 }

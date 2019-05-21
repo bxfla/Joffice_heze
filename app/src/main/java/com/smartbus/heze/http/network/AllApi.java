@@ -3,8 +3,10 @@ package com.smartbus.heze.http.network;
 
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.checkup.bean.CarCode;
+import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.CheckPerson;
 import com.smartbus.heze.checkup.bean.LineCode;
+import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -44,8 +46,6 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
- * @author: Allen.
- * @date: 2018/7/25
  * @description:
  */
 
@@ -294,5 +294,28 @@ public interface AllApi {
      */
     @GET(ApiAddress.checkperson)
     Observable<CheckPerson> getCheckPerson();
+
+    /**
+     * 稽查获取检查项
+     */
+    @GET(ApiAddress.checkitem)
+    Observable<CheckItem> getCheckItem();
+
+    /**
+     * 日常稽查检查项提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.updatarcjc)
+    Observable<UpData> getUpData(@Field("data")String data,@Field("scoreData")String scoreData
+                                 ,@Field("jckrichangJc.kaoheDate")String kaoheDate
+                                ,@Field("jckrichangJc.lineCode")String lineCode
+            ,@Field("jckrichangJc.carNo")String carNo
+            ,@Field("jckrichangJc.busCode")String busCode
+            ,@Field("jckrichangJc.depId")String depId
+            ,@Field("jckrichangJc.depName")String depName
+            ,@Field("jckrichangJc.driverName")String driVerName
+            ,@Field("jckrichangJc.driverId")String driverId
+            ,@Field("jckrichangJc.examiner")String examiner
+            ,@Field("jckrichangJc.note")String note);
 
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.smartbus.heze.http.views.RichTextView;
@@ -73,6 +74,15 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setImageResource(int viewId, int resId) {
         ImageView view = getView(viewId);
         view.setImageResource(resId);
+        return this;
+    }
+
+    /**
+     * 给Radionbutton设置cgeck方法
+     */
+    public BaseViewHolder setCheck(int viewId) {
+        RadioButton rb = getView(viewId);
+        rb.setChecked(true);
         return this;
     }
 

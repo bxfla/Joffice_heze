@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.smartbus.heze.checkup.RCJCActivity">
+    tools:context=".checkup.activity.RCJCActivity">
 
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
@@ -21,31 +21,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <LinearLayout
+                android:id="@+id/ll1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:textColor="@color/black">
                 <TextView
-                    style="@style/oaTextView"
-                    android:text="线路编号:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:background="@color/shouye"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="基本数据"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="10dp"
+                    android:background="@color/shouye"
+                    android:src="@drawable/ic_down_data"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etLine"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入线路或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="线路编号:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -53,40 +64,40 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imLine"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etLine"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入线路或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imLine"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="车号:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                <View style="@style/HourLine"></View>
 
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etCarCode"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入车号或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="车号:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -94,40 +105,40 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imCarCode"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etCarCode"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入车号或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imCarCode"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="车牌号:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                <View style="@style/HourLine"></View>
 
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etCarNo"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入车牌号或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="车牌号:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -135,40 +146,40 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imCarNo"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etCarNo"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入车牌号或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imCarNo"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="员工编号:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                <View style="@style/HourLine"></View>
 
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etPersonCode"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入编号或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="员工编号:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -176,40 +187,40 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imPersonCode"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etPersonCode"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入编号或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imPersonCode"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="员工姓名:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                <View style="@style/HourLine"></View>
 
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etPersonName"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入姓名或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="员工姓名:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -217,40 +228,40 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imPersonName"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etPersonName"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入姓名或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imPersonName"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="检查人:*" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                <View style="@style/HourLine"></View>
 
                 <LinearLayout
-                    style="@style/oaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etRummager"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp"
-                        android:hint="输入检查人或右侧选择" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="检查人:*" />
 
                     <View
                         android:layout_width="1dp"
@@ -258,125 +269,167 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/shouye" />
 
-                    <ImageView
-                        android:id="@+id/imRummager"
-                        style="@style/TextView"
-                        android:layout_weight="0.5"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/time_select" />
+                    <LinearLayout
+                        style="@style/oaEditText"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etRummager"
+                            style="@style/oaEditText"
+                            android:layout_marginRight="10dp"
+                            android:hint="输入检查人或右侧选择" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/shouye" />
+
+                        <ImageView
+                            android:id="@+id/imRummager"
+                            style="@style/TextView"
+                            android:layout_weight="0.5"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/time_select" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="准驾车型:*" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="准驾车型:*" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etCarType"
-                    style="@style/oaEditText"
-                    android:layout_marginRight="10dp"
-                    android:hint="输入线路或右侧选择"
-                    android:paddingLeft="15dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/etCarType"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp"
+                        android:hint="输入线路或右侧选择"
+                        android:paddingLeft="15dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="上岗日期: *" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="上岗日期: *" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
 
-                <TextView
-                    android:id="@+id/tvClassTime"
-                    style="@style/oaEditText" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
+                    <TextView
+                        android:id="@+id/tvClassTime"
+                        style="@style/oaEditText" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="检查日期: *" />
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="检查日期: *" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
 
-                <TextView
-                    android:id="@+id/tvTime"
-                    style="@style/oaEditText" />
-            </LinearLayout>
-            <View style="@style/HourLine"></View>
+                    <TextView
+                        android:id="@+id/tvTime"
+                        style="@style/oaEditText" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/oaTextView"
-                    android:text="备注" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/shouye" />
-
-                <EditText
-                    android:id="@+id/etRemarks"
-                    style="@style/oaEditText"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="90dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="请输入备注" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="备注" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+
+                    <EditText
+                        android:id="@+id/etRemarks"
+                        style="@style/oaEditText"
+                        android:layout_height="90dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="请输入备注" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/ll2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/shouye"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:text="检查项"
-                android:textSize="17dp"
-                android:textColor="@color/black"/>
-
-            <Button
-                android:id="@+id/btnUp"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:textColor="@color/black">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:background="@color/shouye"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="检查项"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="10dp"
+                    android:background="@color/shouye"
+                    android:src="@drawable/ic_down_data"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll4"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="50dp"
-                android:background="@drawable/linearlayout_colore_radius"
-                android:gravity="center"
-                android:text="提交"
-                android:textColor="@color/whith" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="800dp">
+                </android.support.v7.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/btnUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="50dp"
+                    android:background="@drawable/linearlayout_colore_radius"
+                    android:gravity="center"
+                    android:text="提交"
+                    android:textColor="@color/whith" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
