@@ -122,7 +122,7 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
             @Override
             public void convert(BaseViewHolder holder, final UserCodeData o) {
                 if (tag.equals("userCode")){
-                    holder.setText(R.id.textView, o.getUserCode());
+                    holder.setText(R.id.textView, o.getECard());
                 }else if (tag.equals("userName")){
                     holder.setText(R.id.textView, o.getFullname());
                 }
@@ -151,7 +151,6 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
         if (s != null) {
             for (int i = 0; i < s.getData().size(); i++) {
                 UserCodeData bean = new UserCodeData();
-                beanListData.add(bean);
                 bean.setSex(s.getData().get(i).getSex());
                 bean.setIdCard(s.getData().get(i).getIdCard());
                 bean.setUserCode(s.getData().get(i).getUserCode());
@@ -159,6 +158,9 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
                 bean.setDepName(s.getData().get(i).getDepName());
                 bean.setDepId(s.getData().get(i).getDepId());
                 bean.setFullname(s.getData().get(i).getFullname());
+                bean.setPositionDate(s.getData().get(i).getPositionDate());
+                bean.setVehicleClass(s.getData().get(i).getVehicleClass());
+                beanListData.add(bean);
                 bean.save();
             }
         }

@@ -316,6 +316,8 @@ public interface AllApi {
             ,@Field("jckrichangJc.driverName")String driVerName
             ,@Field("jckrichangJc.driverId")String driverId
             ,@Field("jckrichangJc.examiner")String examiner
-            ,@Field("jckrichangJc.note")String note);
+            ,@Field("jckrichangJc.note")String note
+            ,@Field("jckrichangJc.vehicleClass")String vehicleClass
+            ,@Field("jckrichangJc.positionDate")String positionDate);
 
 }

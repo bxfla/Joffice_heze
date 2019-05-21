@@ -17,6 +17,7 @@ public interface UpDataContract {
 
     interface presenter extends BasePresenter {
         void getUpData(String data,String scoreData,String kaoheDate, String lineCode, String carNo, String busCode
-                , String depId, String depName, String driVerName, String driverId, String examiner, String note);
+                , String depId, String depName, String driVerName, String driverId, String examiner, String note
+                , String type, String time);
     }
 }

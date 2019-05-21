@@ -39,7 +39,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -214,7 +213,8 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
                 upDataPresenter.getUpData(jsonArrayData.toString(),jsonArrayfkData.toString(),
                         tvTime.getText().toString(),etLine.getText().toString(),etCarNo.getText().toString()
                         ,etCarCode.getText().toString(),depId,depName,etPersonName.getText().toString()
-                        ,etPersonCode.getText().toString(),etRummager.getText().toString(),etRemarks.getText().toString());
+                        ,etPersonCode.getText().toString(),etRummager.getText().toString(),etRemarks.getText().toString()
+                        ,etCarType.getText().toString(),tvClassTime.getText().toString());
                 break;
             case R.id.ll1:
                 if (ll3.getVisibility() == View.VISIBLE) {
@@ -235,40 +235,6 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
                 }
                 break;
         }
-    }
-
-    private HashMap handlerData() {
-        HashMap map = new HashMap();
-        try {
-            JSONArray jsonArrayData = new JSONArray();
-            JSONArray jsonArrayfkData = new JSONArray();
-            for (int i = 0; i < beanList.size(); i++) {
-                JSONObject jsonObjectType = new JSONObject();
-                JSONObject jsonObjectMoney = new JSONObject();
-                jsonObjectType.put(beanList.get(i).getProjectName(),beanList.get(i).getState());
-                jsonObjectMoney.put(beanList.get(i).getProjectName(),beanList.get(i).getFkje());
-                jsonArrayData.put(jsonObjectType);
-                jsonArrayfkData.put(jsonObjectMoney);
-            }
-            map.put("data", jsonArrayData.toString());
-            map.put("scoreData", jsonArrayfkData.toString());
-
-            map.put("depId", depId);
-            map.put("depName", depName);
-            map.put("kaoheDate", tvTime.getText().toString());
-            map.put("busCode", etCarCode.getText().toString());
-            map.put("driverId", etPersonCode.getText().toString());
-//            map.put("jckrichangJc.positionDate", positionDate);
-            map.put("examiner", etRummager.getText().toString());
-            map.put("lineCode", etLine.getText().toString());
-            map.put("carNo", etCarNo.getText().toString());
-            map.put("driverName", etPersonName.getText().toString());
-            map.put("note", etRemarks.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "数据拼接错误", Toast.LENGTH_SHORT).show();
-        }
-        return map;
     }
 
     @Override
@@ -293,9 +259,11 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
             case Constant.TAG_THERE:
                 if (resultCode == Constant.TAG_THERE) {
                     UserCodeData userCodeData = (UserCodeData) data.getSerializableExtra("userCode");
-                    etPersonCode.setText(userCodeData.getUserCode());
+                    etPersonCode.setText(userCodeData.getECard());
                     etPersonName.setText(userCodeData.getFullname());
                     positionDate = userCodeData.getPositionDate();
+                    etCarType.setText(userCodeData.getVehicleClass());
+                    tvClassTime.setText(userCodeData.getPositionDate());
                 }
             case Constant.TAG_FOUR:
                 if (resultCode == Constant.TAG_FOUR) {
