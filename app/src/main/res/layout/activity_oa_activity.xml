@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.main.activity.ProcessActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/first_process">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb1"
+                android:text="@string/first_file" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb2"
+                android:text="@string/first_process" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

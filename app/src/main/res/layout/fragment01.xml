@@ -71,13 +71,13 @@
                         android:id="@+id/rb2"
                         style="@style/RadionButton"
                         android:drawableTop="@drawable/rb2"
-                        android:text="@string/first_file" />
+                        android:text="@string/first_process" />
 
                     <RadioButton
                         android:id="@+id/rb3"
                         style="@style/RadionButton"
                         android:drawableTop="@drawable/rb3"
-                        android:text="@string/first_process" />
+                        android:text="@string/first_oa" />
 
                     <RadioButton
                         android:id="@+id/rb4"

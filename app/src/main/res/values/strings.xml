@@ -31,8 +31,9 @@
     <string name="first_page">首页</string>
     <string name="first_notice">公告</string>
     <string name="new_notice">最新公告</string>
+    <string name="first_oa">OA传递单</string>
     <string name="first_file">文件审批</string>
-    <string name="first_process">流程审批</string>
+    <string name="first_process">审批流程</string>
     <string name="first_xunjian">车辆巡检</string>
     <string name="first_anquan">安全检查</string>
     <string name="first_shigu">事故处理</string>

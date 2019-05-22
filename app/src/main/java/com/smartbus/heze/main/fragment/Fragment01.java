@@ -16,11 +16,11 @@ import com.smartbus.heze.checkup.activity.CarCheckActivity;
 import com.smartbus.heze.checkup.activity.HealthActivity;
 import com.smartbus.heze.checkup.activity.RCJCActivity;
 import com.smartbus.heze.checkup.activity.SafeActivity;
-import com.smartbus.heze.fileapprove.FileMainActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.GlideImageLoader;
 import com.smartbus.heze.http.views.ScrollForeverTextView;
+import com.smartbus.heze.main.activity.ProcessActivity;
 import com.smartbus.heze.main.notice.activity.NoticeDetailActivity;
 import com.smartbus.heze.main.notice.activity.NoticeListActivity;
 import com.smartbus.heze.oaflow.OaMainActivity;
@@ -178,7 +178,9 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb2:
-                intent = new Intent(getActivity(), FileMainActivity.class);
+//                intent = new Intent(getActivity(), FileMainActivity.class);
+//                startActivity(intent);
+                intent = new Intent(getActivity(), ProcessActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb3:

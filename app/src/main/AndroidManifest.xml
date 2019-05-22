@@ -115,14 +115,19 @@
         <activity
             android:name=".checkup.activity.HealthActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activitydata.LineCodeActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".checkup.activitydata.CarCodeActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".checkup.activitydata.UserCodeActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".checkup.activitydata.CheckPersonActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity
+            android:name=".checkup.activitydata.LineCodeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".checkup.activitydata.CarCodeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".checkup.activitydata.UserCodeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".checkup.activitydata.CheckPersonActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".main.activity.ProcessActivity"></activity>
     </application>
 
 </manifest>
