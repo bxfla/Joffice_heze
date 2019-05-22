@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activity.CarCheckActivity;
+import com.smartbus.heze.checkup.activity.HealthActivity;
 import com.smartbus.heze.checkup.activity.RCJCActivity;
 import com.smartbus.heze.checkup.activity.SafeActivity;
 import com.smartbus.heze.fileapprove.FileMainActivity;
@@ -197,6 +198,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb7:
+                intent = new Intent(getActivity(), HealthActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb8:
                 break;

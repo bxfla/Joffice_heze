@@ -107,14 +107,14 @@
                     <RadioButton
                         android:id="@+id/rb7"
                         style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb6"
-                        android:text="@string/first_shigu" />
+                        android:drawableTop="@drawable/rb9"
+                        android:text="@string/first_dianjian" />
 
                     <RadioButton
                         android:id="@+id/rb8"
                         style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb9"
-                        android:text="@string/first_dianjian" />
+                        android:drawableTop="@drawable/rb6"
+                        android:text="@string/first_shigu" />
 
                     <RadioButton
                         android:id="@+id/rb9"

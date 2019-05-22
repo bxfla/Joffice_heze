@@ -6,6 +6,7 @@ import com.smartbus.heze.checkup.bean.CarCheckItem;
 import com.smartbus.heze.checkup.bean.CarCode;
 import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.CheckPerson;
+import com.smartbus.heze.checkup.bean.HealthItem;
 import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.checkup.bean.SafeItem;
 import com.smartbus.heze.checkup.bean.UpData;
@@ -368,5 +369,28 @@ public interface AllApi {
             ,@Field("diancherichangJc.examiner")String examiner
             ,@Field("diancherichangJc.note")String note
             ,@Field("categoryCode")String categoryCode);
+
+    /**
+     * 稽查卫生检查项
+     */
+    @GET(ApiAddress.healthitem)
+    Observable<HealthItem> getHealthItem();
+    /**
+     * 稽查卫生检查项提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.updatagealth)
+    Observable<UpData> getHealthUpData(@Field("data")String data,@Field("scoreData")String scoreData
+            ,@Field("kaoheDate")String kaoheDate
+            ,@Field("lineCode")String lineCode
+            ,@Field("carNo")String carNo
+            ,@Field("busCode")String busCode
+            ,@Field("depId")String depId
+            ,@Field("depName")String depName
+            ,@Field("driverName")String driVerName
+            ,@Field("driverId")String driverId
+            ,@Field("examiner")String examiner
+            ,@Field("note")String note
+            ,@Field("positionDate")String positionDate);
 
 }

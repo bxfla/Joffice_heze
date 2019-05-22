@@ -112,4 +112,9 @@ public class ApiAddress {
     public static final String  carcheckitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4476&&flag=1&_dc=1558487740645";
     //安全稽查数据提交
     public static final String  updatacarcheck = "repair/savePhoneDiancherichangJc.do";
+
+    //车辆卫生检查项
+    public static final String  healthitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4468,4467&_dc=1558495007715";
+    //安全稽查数据提交
+    public static final String  updatagealth = "starkh/savePhoneVehicleCarJc.do";
 }
