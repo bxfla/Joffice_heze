@@ -9,10 +9,6 @@ import java.io.Serializable;
  */
 
 public class DepartmentDataBean extends DataSupport implements Serializable{
-    /**
-     * depId : 479
-     * depName : 小车班
-     */
 
     private String depId;
     private String depName;

@@ -35,6 +35,7 @@ import com.smartbus.heze.oaflow.bean.AtWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
 import com.smartbus.heze.oaflow.bean.OldWorkWill;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
+import com.smartbus.heze.oasheet.bean.OANO;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
 
@@ -392,5 +393,12 @@ public interface AllApi {
             ,@Field("examiner")String examiner
             ,@Field("note")String note
             ,@Field("positionDate")String positionDate);
+
+
+    /**
+     * 获取单号
+     */
+    @GET(ApiAddress.getoano)
+    Observable<OANO> getOaNo(@Query("alias")String alias);
 
 }

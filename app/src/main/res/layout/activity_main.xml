@@ -40,6 +40,11 @@
             android:id="@+id/rb3"
             style="@style/RadionButton"
             android:drawableTop="@drawable/tab_03_bg"
+            android:text="@string/oa_will_do"/>
+        <RadioButton
+            android:id="@+id/rb4"
+            style="@style/RadionButton"
+            android:drawableTop="@drawable/tab_04_bg"
             android:text="@string/my_person"/>
     </RadioGroup>
 

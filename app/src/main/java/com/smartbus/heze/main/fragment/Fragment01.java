@@ -23,7 +23,7 @@ import com.smartbus.heze.http.views.ScrollForeverTextView;
 import com.smartbus.heze.main.activity.ProcessActivity;
 import com.smartbus.heze.main.notice.activity.NoticeDetailActivity;
 import com.smartbus.heze.main.notice.activity.NoticeListActivity;
-import com.smartbus.heze.oaflow.OaMainActivity;
+import com.smartbus.heze.oasheet.OAPublishActivity;
 import com.smartbus.heze.welcome.bean.Notice;
 import com.smartbus.heze.welcome.module.WelcomeContract;
 import com.smartbus.heze.welcome.presenter.WelcomePresenter;
@@ -178,13 +178,11 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb2:
-//                intent = new Intent(getActivity(), FileMainActivity.class);
-//                startActivity(intent);
                 intent = new Intent(getActivity(), ProcessActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb3:
-                intent = new Intent(getActivity(), OaMainActivity.class);
+                intent = new Intent(getActivity(), OAPublishActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb4:

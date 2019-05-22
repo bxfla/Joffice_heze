@@ -19,6 +19,7 @@ import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.main.fragment.Fragment01;
 import com.smartbus.heze.main.fragment.Fragment02;
 import com.smartbus.heze.main.fragment.Fragment03;
+import com.smartbus.heze.main.fragment.Fragment04;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +36,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     RadioButton rb2;
     @BindView(R.id.rb3)
     RadioButton rb3;
+    @BindView(R.id.rb4)
+    RadioButton rb4;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
 
     private Fragment01 fragment01;
     private Fragment02 fragment02;
     private Fragment03 fragment03;
+    private Fragment04 fragment04;
     private FragmentManager manager;
 
     AlertDialogUtil alertDialogUtil;
@@ -136,7 +140,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (checkedId){
-            //线路查询
             case R.id.rb1:
                 FragmentTransaction ft1 = manager.beginTransaction();
                 hideAll(ft1);
@@ -148,8 +151,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 }
                 ft1.commit();
                 break;
-            //公交换乘
-            case R.id.rb2://联系人
+            case R.id.rb2:
                 FragmentTransaction ft2 = manager.beginTransaction();
                 hideAll(ft2);
                 if (fragment02 ==null){
@@ -160,8 +162,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 }
                 ft2.commit();
                 break;
-            //站点查询
-            case R.id.rb3: //发现
+            case R.id.rb3:
                 FragmentTransaction ft3 = manager.beginTransaction();
                 hideAll(ft3);
                 if (fragment03 ==null){
@@ -171,6 +172,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     ft3.show(fragment03);
                 }
                 ft3.commit();
+                break;
+            case R.id.rb4:
+                FragmentTransaction ft4 = manager.beginTransaction();
+                hideAll(ft4);
+                if (fragment04 ==null){
+                    fragment04 = new Fragment04();
+                    ft4.add(R.id.frame_layout, fragment04);
+                }else {
+                    ft4.show(fragment04);
+                }
+                ft4.commit();
                 break;
         }
     }
@@ -191,6 +203,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
         if (fragment03 !=null){
             ft.hide(fragment03);
+        }
+        if (fragment04 !=null){
+            ft.hide(fragment04);
         }
     }
 }

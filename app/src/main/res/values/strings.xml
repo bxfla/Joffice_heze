@@ -49,6 +49,9 @@
     <!--待办-->
     <string name="will_do">待办</string>
 
+    <!--oa待办-->
+    <string name="oa_will_do">OA待办</string>
+
     <!--个人中心-->
     <string name="my_person">个人中心</string>
 
@@ -73,4 +76,8 @@
     <string name="user_code">员工编号</string>
     <string name="car_code">车辆编号</string>
     <string name="check_person">检查人员</string>
+
+
+    <!--oa传递单-->
+    <string name="oa_publish">OA传递单</string>
 </resources>

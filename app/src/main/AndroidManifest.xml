@@ -127,7 +127,13 @@
         <activity
             android:name=".checkup.activitydata.CheckPersonActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".main.activity.ProcessActivity"></activity>
+        <activity android:name=".main.activity.ProcessActivity" />
+
+        <activity android:name=".fileapprove.activity.DepartmentMoreActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".oasheet.OAPublishActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
     </application>
 
 </manifest>
