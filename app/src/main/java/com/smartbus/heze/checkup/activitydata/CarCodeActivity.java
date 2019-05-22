@@ -134,6 +134,7 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
                 bean.setCarType(s.getData().get(i).getCarType());
                 bean.setDepName(s.getData().get(i).getDepName());
                 bean.setDepId(s.getData().get(i).getDepId());
+                bean.setMaterialType(s.getData().get(i).getMaterialType());
                 bean.save();
             }
         }
