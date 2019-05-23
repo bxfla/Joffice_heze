@@ -7,8 +7,8 @@ package com.smartbus.heze;
  */
 
 public class ApiAddress {
-    //public final static String mainApi = "http://192.168.2.184:8080/joffice21/" ;
-    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+    public final static String mainApi = "http://192.168.2.184:8080/joffice21/" ;
+    //public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
 
     /***********************首页*******************************/
     //登录
@@ -119,5 +119,13 @@ public class ApiAddress {
 
 
     //oa获取单号
-    public static final String  getoano = "system/genNumberSerialNumber.do";
+    public static final String  getoano = "system/genNumberPhoneSerialNumber.do";
+    //oa单发布
+    public static final String  oaup = "system/savePhoneWorkTransferSheet.do";
+    //oa处理前图片上传
+    public static final String  upimagebef = "system/uploadImageBeforeCLWorkTransferSheet.do";
+    //oa处理后图片上传
+    public static final String  upimageold = "system/uploadImageAfterCLWorkTransferSheet.do";
+    //oa未审核列表
+    public static final String  willlist = "system/listWorkTransferSheet.do";
 }

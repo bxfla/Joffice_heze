@@ -8,9 +8,10 @@ import java.io.Serializable;
 
 public class OANO implements Serializable {
 
+
     /**
      * success : true
-     * number : GZCD2019052200039
+     * number : GZCD2019052300034
      */
 
     private boolean success;

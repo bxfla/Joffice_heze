@@ -29,6 +29,7 @@ import com.smartbus.heze.fileapprove.bean.WillDoUp;
 import com.smartbus.heze.fileapprove.bean.WorkOnePerson;
 import com.smartbus.heze.fileapprove.bean.WorkPerson;
 import com.smartbus.heze.main.bean.Banner;
+import com.smartbus.heze.main.bean.OaWillDo;
 import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.oaflow.bean.AddWorkWill;
 import com.smartbus.heze.oaflow.bean.AtWorkWill;
@@ -396,9 +397,27 @@ public interface AllApi {
 
 
     /**
-     * 获取单号
+     * 获取OA单号
      */
     @GET(ApiAddress.getoano)
     Observable<OANO> getOaNo(@Query("alias")String alias);
+
+    /**
+     * OA单发布
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.oaup)
+    Observable<UpData> getUpOa(@Field("flag") String flag,@Field("workCode")String no,@Field("clDep")String overDepName
+            ,@Field("clDepId")String overDepId,@Field("csDep")String sendDepName,@Field("csDepId")String sendDepId
+            ,@Field("clRen")String sendPerson,@Field("fqDate")String upDate,@Field("fqsj")String upTime
+            ,@Field("jzDate")String endTime,@Field("title")String title,@Field("type")String type
+            ,@Field("content")String content,@Field("jlPhoto")String fileName);
+
+    /**
+     * 获取OA未审核列表
+     */
+    @GET(ApiAddress.willlist)
+    Observable<OaWillDo> getOaWillDo(@Query("Q_shStatus_S_EQ")String Q_shStatus_S_EQ
+            ,@Query("start")int start,@Query("limit")int limit);
 
 }

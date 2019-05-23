@@ -51,6 +51,7 @@ public class DepartmentMoreActivity extends BaseActivity implements DepartmentCo
     DepartmentDataBean selectDepartment = new DepartmentDataBean();
     DepartmentMoreAdapter departmentAdapter;
     List<String> backList = new ArrayList<>();
+    List<String> backList1 = new ArrayList<>();
     List<DepartmentDataBean> departmentList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +126,10 @@ public class DepartmentMoreActivity extends BaseActivity implements DepartmentCo
             public void myTextViewClient(DepartmentDataBean bean,String s) {
                 if (s.equals("add")){
                     backList.add(bean.getDepName());
+                    backList1.add(bean.getDepId());
                 }else if (s.equals("remove")){
                     backList.remove(bean.getDepName());
+                    backList1.remove(bean.getDepId());
                 }
 //                Intent intent = new Intent();
 //                intent.putExtra("department", bean);
@@ -173,6 +176,7 @@ public class DepartmentMoreActivity extends BaseActivity implements DepartmentCo
     protected void rightClient() {
         Intent intent = new Intent();
         intent.putStringArrayListExtra("bean", (ArrayList<String>) backList);
+        intent.putStringArrayListExtra("beanId", (ArrayList<String>) backList1);
         setResult(Constant.TAG_ONE, intent);
         finish(); //结束当前的activity的生命周期
     }
