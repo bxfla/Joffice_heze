@@ -417,7 +417,16 @@ public interface AllApi {
      * 获取OA未审核列表
      */
     @GET(ApiAddress.willlist)
-    Observable<OaWillDo> getOaWillDo(@Query("Q_shStatus_S_EQ")String Q_shStatus_S_EQ
+    Observable<OaWillDo> getOaWillDo(@Query("Q_status_S_EQ")String Q_status_S_EQ
+            ,@Query("Q_shStatus_S_EQ")String Q_shStatus_S_EQ
             ,@Query("start")int start,@Query("limit")int limit);
+
+    /**
+     * OA单解决提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.oaup)
+    Observable<UpData> getUpOaDetail(@Field("flag") String flag,@Field("status")String status
+            ,@Field("clResult")String clResult,@Field("clPhoto")String clPhoto,@Field("workId")String workId);
 
 }

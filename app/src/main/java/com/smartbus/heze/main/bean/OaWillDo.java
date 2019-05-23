@@ -43,7 +43,7 @@ public class OaWillDo implements Serializable {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable{
         /**
          * version : null
          * orgId : null

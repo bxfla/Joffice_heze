@@ -29,8 +29,8 @@ public class OaWillListPresenter implements OaWillListContract.presenter {
     }
 
     @Override
-    public void getOaWillList(String type,int start,int limit) {
-        RetrofitUtil.getInstance().initRetrofitNoSession().getOaWillDo(type,start,limit).subscribeOn(Schedulers.io())
+    public void getOaWillList(String type,String type1,int start,int limit) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getOaWillDo(type,type1,start,limit).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<OaWillDo>(context, MainUtil.getData) {
                     @Override

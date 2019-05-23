@@ -127,5 +127,5 @@ public class ApiAddress {
     //oa处理后图片上传
     public static final String  upimageold = "system/uploadImageAfterCLWorkTransferSheet.do";
     //oa未审核列表
-    public static final String  willlist = "system/listWorkTransferSheet.do";
+    public static final String  willlist = "system/getListPhoneWorkTransferSheet.do";
 }

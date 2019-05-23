@@ -10,6 +10,7 @@
         android:layout_height="45dp"
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
+        android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="17dp"/>
 

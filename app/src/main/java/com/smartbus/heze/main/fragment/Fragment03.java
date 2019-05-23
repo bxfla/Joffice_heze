@@ -1,5 +1,6 @@
 package com.smartbus.heze.main.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.main.bean.OaWillDo;
 import com.smartbus.heze.main.module.OaWillListContract;
 import com.smartbus.heze.main.presenter.OaWillListPresenter;
+import com.smartbus.heze.oasheet.OaDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     int start = 0;
     int limit = 25;
     String type = "0";
+    String type1 = "0";
     Unbinder unbinder;
     BaseRecyclerAdapter baseAdapter;
     OaWillListPresenter oaWillListPresenter;
@@ -48,10 +51,31 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment03, container, false);
         unbinder = ButterKnife.bind(this, view);
-        oaWillListPresenter = new OaWillListPresenter(getActivity(), this);
-        oaWillListPresenter.getOaWillList(type, start, limit);
-        setClient();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        beanList.clear();
+        baseAdapter = new BaseRecyclerAdapter<OaWillDo.ResultBean>(getActivity(), R.layout.adapter_easy_item, beanList) {
+            @Override
+            public void convert(BaseViewHolder holder, final OaWillDo.ResultBean resultBean) {
+                holder.setText(R.id.textView, resultBean.getContent());
+                holder.setOnClickListener(R.id.textView, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), OaDetailActivity.class);
+                        intent.putExtra("bean",resultBean);
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(baseAdapter);
+        oaWillListPresenter = new OaWillListPresenter(getActivity(), this);
+        oaWillListPresenter.getOaWillList(type,type1, start, limit);
+        setClient();
     }
 
     /**
@@ -64,14 +88,14 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                 beanList.clear();
                 start = 0;
                 limit = 20;
-                oaWillListPresenter.getOaWillList(type, start, limit);
+                oaWillListPresenter.getOaWillList(type,type1, start, limit);
             }
 
             @Override
             public void onLoadMore() {
                 start = limit;
                 limit += 25;
-                oaWillListPresenter.getOaWillList(type, start, limit);
+                oaWillListPresenter.getOaWillList(type,type1, start, limit);
             }
         });
     }
@@ -87,6 +111,7 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
         for (int i = 0; i < oaWillList.getResult().size(); i++) {
             beanList.add(oaWillList.getResult().get(i));
         }
+        baseAdapter.notifyDataSetChanged();
         if (oaWillList.getResult().size() == 0 && beanList.size() == 0) {
             if (recyclerView != null) {
                 recyclerView.setVisibility(View.GONE);
@@ -110,14 +135,6 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                 recyclerView.complete();
             }
         }
-        baseAdapter = new BaseRecyclerAdapter<OaWillDo.ResultBean>(getActivity(), R.layout.adapter_easy_item, beanList) {
-            @Override
-            public void convert(BaseViewHolder holder, OaWillDo.ResultBean resultBean) {
-                holder.setText(R.id.textView, resultBean.getContent());
-            }
-        };
-        recyclerView.setAdapter(baseAdapter);
-        baseAdapter.notifyDataSetChanged();
     }
 
     @Override
