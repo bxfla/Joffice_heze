@@ -8,6 +8,8 @@ import com.smartbus.heze.checkup.bean.CarCheckItem;
 import com.smartbus.heze.checkup.bean.CarCode;
 import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.CheckPerson;
+import com.smartbus.heze.checkup.bean.HealthHistory;
+import com.smartbus.heze.checkup.bean.HealthHistoryItem;
 import com.smartbus.heze.checkup.bean.HealthItem;
 import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.checkup.bean.RCJCHistory;
@@ -421,6 +423,20 @@ public interface AllApi {
      */
     @GET(ApiAddress.healthitem)
     Observable<HealthItem> getHealthItem();
+
+    /**
+     * 稽查卫生检查记录
+     */
+    @GET(ApiAddress.healthhistory)
+    Observable<HealthHistory> getHealthHistory(@Query("startDate")String startDate
+            , @Query("endDate")String endDate
+            , @Query("carNo")String carNo);
+
+    /**
+     * 车辆巡检检查记录检查项
+     */
+    @GET(ApiAddress.healthhistory)
+    Observable<HealthHistoryItem> getHealthHistoryItem(@Query("id")String id);
     /**
      * 稽查卫生检查项提交
      */

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.activity_history.HealthHistoryActivity;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
@@ -110,6 +111,7 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvTitle(getResources().getString(R.string.first_dianjian));
         llType.setVisibility(View.GONE);
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -152,7 +154,8 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
 
     @Override
     protected void rightClient() {
-
+        intent = new Intent(this, HealthHistoryActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,

@@ -152,6 +152,10 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.activity_history.RCJCHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".checkup.activity_history.HealthHistoryActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".checkup.activity_history.HealthHistoryDetActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
     </application>
 
 </manifest>
