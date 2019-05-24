@@ -314,7 +314,6 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
 
     /**
      * 数据提交
-     *
      * @param s
      */
     @Override

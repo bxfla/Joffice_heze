@@ -11,6 +11,7 @@ import com.smartbus.heze.checkup.bean.CheckPerson;
 import com.smartbus.heze.checkup.bean.HealthItem;
 import com.smartbus.heze.checkup.bean.LineCode;
 import com.smartbus.heze.checkup.bean.SafeItem;
+import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.fileapprove.bean.BackData;
@@ -332,6 +333,19 @@ public interface AllApi {
      */
     @GET(ApiAddress.safeitem)
     Observable<SafeItem> getSafeItem();
+
+    /**
+     * 车辆巡检检查记录
+     */
+    @GET(ApiAddress.saferhistory)
+    Observable<SaferHistory> getSaferHistory(@Query("startDate")String startDate
+            , @Query("endDate")String endDate
+            , @Query("carNo")String carNo);
+    /**
+     * 车辆巡检检查记录检查项
+     */
+    @GET(ApiAddress.saferhistory)
+    Observable<CarCheckHistoryItem> getSaferHistoryItem(@Query("id")String id);
 
     /**
      * 安全稽查检查项提交

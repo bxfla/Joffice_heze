@@ -144,6 +144,10 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".checkup.activity_history.CarCheckHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".checkup.activity_history.SaferHistoryActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".checkup.activity_history.SaferHistoryDetActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
     </application>
 
 </manifest>

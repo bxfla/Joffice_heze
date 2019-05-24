@@ -104,6 +104,8 @@ public class ApiAddress {
 
     //稽查获取安全检查项
     public static final String  safeitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4451&_dc=1558421560835";
+    //车辆安全记录
+    public static final String  saferhistory = "busmanager/getListByPhoneAnquansheshiJc.do";
     //安全稽查数据提交
     public static final String  updatasafe = "busmanager/savePhoneAnquansheshiJc.do";
 
