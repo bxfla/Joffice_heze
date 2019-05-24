@@ -121,9 +121,7 @@ public class ApiAddress {
     //车辆卫生检查项
     public static final String  healthitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4468,4467&_dc=1558495007715";
     //车辆卫生记录
-    public static final String  healthhistory = "busmanager/getListByPhoneAnquansheshiJc.do";
-    //车辆安全扣分项记录
-    public static final String  healthhistoryitem = "busmanager/getListByPhoneAnquansheshiJc.do";
+    public static final String  healthhistory = "starkh/getListPhoneVehicleCarJc.do";
     //安全稽查数据提交
     public static final String  updatagealth = "starkh/savePhoneVehicleCarJc.do";
 

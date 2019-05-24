@@ -10,7 +10,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
-        app:header_title="@string/first_richang">
+        app:header_title="@string/xunjian_history">
     </com.smartbus.heze.http.views.Header>
     <EditText
         android:layout_width="wrap_content"
