@@ -10,6 +10,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
+        app:header_title_right="@string/xunjian_history"
         app:header_title="@string/first_richang">
     </com.smartbus.heze.http.views.Header>
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.activity_history.CarCheckHistoryActivity;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
@@ -118,7 +119,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
         initDatePicker();
         llTime.setVisibility(View.GONE);
         llType.setVisibility(View.GONE);
-        header.setTvTitle(getResources().getString(R.string.first_anquan));
+        header.setTvTitle(getResources().getString(R.string.first_xunjian));
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         carCheckItemPresenter = new CarCheckItemPresenter(this, this);
@@ -158,7 +159,8 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
 
     @Override
     protected void rightClient() {
-
+        intent = new Intent(this, CarCheckHistoryActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,

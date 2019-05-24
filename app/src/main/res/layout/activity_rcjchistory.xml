@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".checkup.activity.RCJCActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/first_richang">
+    </com.smartbus.heze.http.views.Header>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="线路编号:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvLine"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="车号:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvCarCode"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="车牌号:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvCarNo"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="员工编号:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvPersonCode"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="员工姓名:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvPersonName"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="检查人:*" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+                    <TextView
+                        android:id="@+id/tvRummager"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:textColor="@color/black">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:background="@color/shouye"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="检查项"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="10dp"
+                    android:background="@color/shouye"
+                    android:src="@drawable/ic_down_data"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="800dp">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -109,6 +109,8 @@ public class ApiAddress {
 
     //车辆巡检检查项
     public static final String  carcheckitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4476&&flag=1&_dc=1558487740645";
+    //车辆巡检记录
+    public static final String  carcheckhistory = "repair/getListByPhoneDiancherichangJc.do";
     //安全稽查数据提交
     public static final String  updatacarcheck = "repair/savePhoneDiancherichangJc.do";
 

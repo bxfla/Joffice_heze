@@ -35,6 +35,7 @@
     <string name="first_file">文件审批</string>
     <string name="first_process">审批流程</string>
     <string name="first_xunjian">车辆巡检</string>
+    <string name="xunjian_history">巡检记录</string>
     <string name="first_anquan">安全检查</string>
     <string name="first_shigu">事故处理</string>
     <string name="first_richang">日常稽查</string>

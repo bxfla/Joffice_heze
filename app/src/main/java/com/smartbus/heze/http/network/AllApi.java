@@ -2,6 +2,8 @@ package com.smartbus.heze.http.network;
 
 
 import com.smartbus.heze.ApiAddress;
+import com.smartbus.heze.checkup.bean.CarCheckHistory;
+import com.smartbus.heze.checkup.bean.CarCheckHistoryItem;
 import com.smartbus.heze.checkup.bean.CarCheckItem;
 import com.smartbus.heze.checkup.bean.CarCode;
 import com.smartbus.heze.checkup.bean.CheckItem;
@@ -354,6 +356,18 @@ public interface AllApi {
      */
     @GET(ApiAddress.carcheckitem)
     Observable<CarCheckItem> getCarCheckItem(@Query("categoryCode")String categoryCode,@Query("flag")String flag);
+    /**
+     * 车辆巡检检查记录
+     */
+    @GET(ApiAddress.carcheckhistory)
+    Observable<CarCheckHistory> getCarCheckHistory(@Query("startDate")String startDate
+            , @Query("endDate")String endDate
+            , @Query("carNo")String carNo);
+    /**
+     * 车辆巡检检查记录检查项
+     */
+    @GET(ApiAddress.carcheckhistory)
+    Observable<CarCheckHistoryItem> getCarCheckHistoryItem(@Query("id")String id);
     /**
      * 车辆巡检检查项提交
      */
