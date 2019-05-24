@@ -101,6 +101,8 @@ public class ApiAddress {
     public static final String  checkitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4485&&flag=1&_dc=1558335251824";
     //日常稽查数据提交
     public static final String  updatarcjc = "starkh/savePhoneJckrichangJc.do";
+    //日常稽查记录
+    public static final String  rcjchistory = "starkh/getListPhoneJckrichangJc.do";
 
     //稽查获取安全检查项
     public static final String  safeitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4451&_dc=1558421560835";

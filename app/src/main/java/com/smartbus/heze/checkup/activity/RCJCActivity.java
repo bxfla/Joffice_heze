@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.activity_history.RCJCHistoryActivity;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
@@ -149,7 +150,8 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
 
     @Override
     protected void rightClient() {
-
+        intent = new Intent(this, RCJCHistoryActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,

@@ -2,7 +2,7 @@ package com.smartbus.heze.checkup.presenter;
 
 import android.content.Context;
 
-import com.smartbus.heze.checkup.bean.SafeItem;
+import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.module.SafeItemContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
@@ -30,9 +30,9 @@ public class SafeItemPresenter implements SafeItemContract.presenter {
     public void getSafeItem() {
         RetrofitUtil.getInstance().initRetrofitSetSession().getSafeItem().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserverNoEntry<SafeItem>(context, MainUtil.getData) {
+                .subscribe(new BaseObserverNoEntry<SafeHistoryItem>(context, MainUtil.getData) {
                     @Override
-                    protected void onSuccees(SafeItem s) throws Exception {
+                    protected void onSuccees(SafeHistoryItem s) throws Exception {
                         view.setSafeItem(s);
                     }
 

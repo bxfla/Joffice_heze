@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.checkup.bean.SafeItem;
+import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SafeAdapter extends RecyclerView.Adapter<SafeAdapter.ViewHolder> {
     Context context;
-    List<SafeItem.ResultBean> beanList = new ArrayList<>();
+    List<SafeHistoryItem.ResultBean> beanList = new ArrayList<>();
     public GetItemPosition getItemPosition;
 
     public interface GetItemPosition {
@@ -32,7 +32,7 @@ public class SafeAdapter extends RecyclerView.Adapter<SafeAdapter.ViewHolder> {
         this.getItemPosition = getItemPosition;
     }
 
-    public SafeAdapter(Context context, List<SafeItem.ResultBean> anquanList) {
+    public SafeAdapter(Context context, List<SafeHistoryItem.ResultBean> anquanList) {
         this.context = context;
         beanList = anquanList;
     }

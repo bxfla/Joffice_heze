@@ -21,7 +21,7 @@ import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
 import com.smartbus.heze.checkup.adapter.SafeAdapter;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
-import com.smartbus.heze.checkup.bean.SafeItem;
+import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCodeData;
 import com.smartbus.heze.checkup.module.SafeItemContract;
@@ -110,7 +110,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     SafeItemPresenter safeItemPresenter;
     SafeUpDataPresenter safeUpDataPresenter;
     private CustomDatePickerDay customDatePicker;
-    List<SafeItem.ResultBean> beanList = new ArrayList<>();
+    List<SafeHistoryItem.ResultBean> beanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,7 +286,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     }
 
     @Override
-    public void setSafeItem(SafeItem s) {
+    public void setSafeItem(SafeHistoryItem s) {
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
@@ -322,7 +322,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
 
     @Override
     public void getPosition(int position, String money, String tag) {
-        SafeItem.ResultBean bean = new SafeItem.ResultBean();
+        SafeHistoryItem.ResultBean bean = new SafeHistoryItem.ResultBean();
         bean.setProjectId(beanList.get(position).getProjectId());
         bean.setProjectName(beanList.get(position).getProjectName());
         bean.setScore(Double.parseDouble(money));

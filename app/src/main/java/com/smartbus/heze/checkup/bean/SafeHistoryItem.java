@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Administrator on 2019/5/21.
  */
 
-public class SafeItem implements Serializable {
+public class SafeHistoryItem implements Serializable {
 
     /**
      * success : true

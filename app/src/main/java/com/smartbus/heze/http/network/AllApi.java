@@ -10,7 +10,9 @@ import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.CheckPerson;
 import com.smartbus.heze.checkup.bean.HealthItem;
 import com.smartbus.heze.checkup.bean.LineCode;
-import com.smartbus.heze.checkup.bean.SafeItem;
+import com.smartbus.heze.checkup.bean.RCJCHistory;
+import com.smartbus.heze.checkup.bean.RCJCHistoryItem;
+import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
@@ -310,6 +312,20 @@ public interface AllApi {
     Observable<CheckItem> getCheckItem();
 
     /**
+     * 日常稽查检查记录
+     */
+    @GET(ApiAddress.rcjchistory)
+    Observable<RCJCHistory> getRCJCHistory(@Query("startDate")String startDate
+            , @Query("endDate")String endDate
+            , @Query("carNo")String carNo);
+
+    /**
+     * 车辆巡检检查记录检查项
+     */
+    @GET(ApiAddress.rcjchistory)
+    Observable<RCJCHistoryItem> getRCJCHistoryItem(@Query("id")String id);
+
+    /**
      * 日常稽查检查项提交
      */
     @FormUrlEncoded
@@ -332,7 +348,7 @@ public interface AllApi {
      * 稽查获取安全检查项
      */
     @GET(ApiAddress.safeitem)
-    Observable<SafeItem> getSafeItem();
+    Observable<SafeHistoryItem> getSafeItem();
 
     /**
      * 车辆巡检检查记录
