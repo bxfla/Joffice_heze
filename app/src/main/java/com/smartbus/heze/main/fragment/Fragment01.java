@@ -16,6 +16,7 @@ import com.smartbus.heze.checkup.activity.CarCheckActivity;
 import com.smartbus.heze.checkup.activity.HealthActivity;
 import com.smartbus.heze.checkup.activity.RCJCActivity;
 import com.smartbus.heze.checkup.activity.SafeActivity;
+import com.smartbus.heze.fault.FaultUpActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.GlideImageLoader;
@@ -40,7 +41,6 @@ import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2019/4/12.
- * 换乘查询
  */
 
 public class Fragment01 extends Fragment implements WelcomeContract.View{
@@ -202,6 +202,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb8:
+                intent = new Intent(getActivity(), FaultUpActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb9:
                 break;

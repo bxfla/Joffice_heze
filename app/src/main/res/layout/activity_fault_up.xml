@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.fault.FaultUpActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title_right="@string/commit"
+        app:header_title="@string/first_shigu">
+    </com.smartbus.heze.http.views.Header>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:background="@color/shouye"
+                android:gravity="center_vertical"
+                android:paddingLeft="4dp"
+                android:text="基本数据"
+                android:textSize="17dp"
+                android:textColor="@color/black"/>
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故编号:*" />
+                    <View style="@style/VerticalLine"/>
+                    <TextView
+                        android:id="@+id/tvNo"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故日期:*" />
+                    <View style="@style/VerticalLine"/>
+                    <TextView
+                        android:id="@+id/tvDate"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="车牌号码:*" />
+                    <View style="@style/VerticalLine"/>
+                    <TextView
+                        android:id="@+id/tvCarNo"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="线路编号:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etLineNo"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="驾驶员:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etDriver"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <View style="@style/HourLine"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="驾驶员编号:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etDriverCode"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="从业时间:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etWorkDate"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="年龄:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etAge"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="性别:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSex"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="驾驶证类型:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etCarType"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="本职岗位时间:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etWorkNowTime"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="安全里程:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSafeMonth"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:textColor="@color/black">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:background="@color/shouye"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="基本数据"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="10dp"
+                    android:background="@color/shouye"
+                    android:src="@drawable/ic_down_data"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="天气情况:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerWeather"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="地点类别:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerAddressType"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故类型:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerSGType"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故责任:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerSGZR"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故性质:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerSGXZ"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="事故类别:*" />
+                    <View style="@style/VerticalLine"/>
+                    <Spinner
+                        android:id="@+id/spinnerSGLB"
+                        style="@style/oaEditText"/>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="伤亡人员数:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSWRS"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="死亡人员数:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSIWRS"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:layout_height="50dp"
+                        android:text="事故地点:" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSGAddress"
+                        style="@style/oaEditText"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:layout_height="50dp"
+                        android:text="事故原因:" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etSGReason"
+                        style="@style/oaEditText"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="安全里程清零:" />
+                    <View style="@style/VerticalLine"/>
+                    <RadioGroup
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:id="@+id/rb1"
+                            style="@style/oaEditText"
+                            android:text="是"
+                            android:layout_marginRight="10dp"  />
+                        <RadioButton
+                            android:id="@+id/rb2"
+                            style="@style/oaEditText"
+                            android:text="否"
+                            android:layout_marginRight="10dp"  />
+                    </RadioGroup>
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imAdd01"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/add_myphoto"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+                <ImageView
+                    android:id="@+id/imAdd02"
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/add_myphoto"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+                <ImageView
+                    android:id="@+id/imAdd03"
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="130dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/add_myphoto"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -125,7 +125,6 @@ public class ApiAddress {
     //安全稽查数据提交
     public static final String  updatagealth = "starkh/savePhoneVehicleCarJc.do";
 
-
     //oa获取单号
     public static final String  getoano = "system/genNumberPhoneSerialNumber.do";
     //oa单发布
@@ -136,4 +135,11 @@ public class ApiAddress {
     public static final String  upimageold = "system/uploadImageAfterCLWorkTransferSheet.do";
     //oa未审核列表
     public static final String  willlist = "system/getListPhoneWorkTransferSheet.do";
+
+    //事故关联数据
+    public final static String aboutdata = "admin/getBusLineAllNewCar.do";
+    //事故数据提交
+    public final static String faultupdata = "busmanager/savePhoneAccidentBasicInformation.do";
+    //事故处理前图片上传
+    public static final String  faultupimage = "busmanager/upLoadImageAccidentBasicInformation.do";
 }

@@ -140,22 +140,32 @@
         <activity
             android:name=".oasheet.OaDetailActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.CarCheckHistoryActivity"
+        <activity
+            android:name=".checkup.activity_history.CarCheckHistoryActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.CarCheckHistoryDetActivity"
+        <activity
+            android:name=".checkup.activity_history.CarCheckHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.SaferHistoryActivity"
+        <activity
+            android:name=".checkup.activity_history.SaferHistoryActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.SaferHistoryDetActivity"
+        <activity
+            android:name=".checkup.activity_history.SaferHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.RCJCHistoryActivity"
+        <activity
+            android:name=".checkup.activity_history.RCJCHistoryActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.RCJCHistoryDetActivity"
+        <activity
+            android:name=".checkup.activity_history.RCJCHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.HealthHistoryActivity"
+        <activity
+            android:name=".checkup.activity_history.HealthHistoryActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".checkup.activity_history.HealthHistoryDetActivity"
+        <activity
+            android:name=".checkup.activity_history.HealthHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".fault.FaultUpActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
     </application>
 
 </manifest>

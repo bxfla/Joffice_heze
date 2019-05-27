@@ -18,6 +18,7 @@ import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
 import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
@@ -488,5 +489,39 @@ public interface AllApi {
     @POST(ApiAddress.oaup)
     Observable<UpData> getUpOaDetail(@Field("flag") String flag,@Field("status")String status
             ,@Field("clResult")String clResult,@Field("clPhoto")String clPhoto,@Field("workId")String workId);
+
+    /**
+     * 事故关联数据
+     */
+    @GET(ApiAddress.aboutdata)
+    Observable<AboutData> getAboutData(@Query("busCode")String busCode
+            , @Query("rq")String rq, @Query("sj")String sj);
+
+    /**
+     * 事故关联数据提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.faultupdata)
+    Observable<UpData> getUpData(@Field("FormUrlEncoded")String FormUrlEncoded
+            , @Field("atAtDate")String atAtDate
+            , @Field("atTime")String atTime
+            , @Field("busCode")String busCode
+            , @Field("carNo")String carNo
+            , @Field("lineCode")String lineCode
+            , @Field("weather")String weather
+            , @Field("acPlaceCategory")String acPlaceCategory
+            , @Field("atType")String atType
+            , @Field("atLiability")String atLiability
+            , @Field("acNature")String acNature
+            , @Field("atCategory")String atCategory
+            , @Field("userCode")String userCode
+            , @Field("injuredPeople")String injuredPeople
+            , @Field("deathPeople")String deathPeople
+            , @Field("atPlace")String atPlace
+            , @Field("atReason")String atReason
+            , @Field("depId")String depId
+            , @Field("depName")String depName
+            , @Field("atPhoto")String atPhoto
+            , @Field("mileType")String mileType);
 
 }
