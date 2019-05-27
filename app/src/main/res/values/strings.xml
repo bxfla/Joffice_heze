@@ -81,4 +81,11 @@
 
     <!--oa传递单-->
     <string name="oa_publish">OA传递单</string>
+
+    <!--考试模块-->
+    <string name="exam_list">考试模块</string>
+    <string name="learn_data">学习资料</string>
+    <string name="online_exam">在线考试</string>
+    <string name="found_exam">成绩查询</string>
+
 </resources>

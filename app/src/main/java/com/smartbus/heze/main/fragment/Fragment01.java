@@ -16,6 +16,7 @@ import com.smartbus.heze.checkup.activity.CarCheckActivity;
 import com.smartbus.heze.checkup.activity.HealthActivity;
 import com.smartbus.heze.checkup.activity.RCJCActivity;
 import com.smartbus.heze.checkup.activity.SafeActivity;
+import com.smartbus.heze.exam.ExamListActivity;
 import com.smartbus.heze.fault.FaultUpActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -164,7 +165,6 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }
 
-
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4,R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8, R.id.rb9
             , R.id.rb10,R.id.tvSeeItNow})
     public void onViewClicked(View view) {
@@ -206,6 +206,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb9:
+                intent = new Intent(getActivity(), ExamListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb10:
                 break;
