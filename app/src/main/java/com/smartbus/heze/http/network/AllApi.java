@@ -20,6 +20,7 @@ import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
+import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -539,4 +540,12 @@ public interface AllApi {
      */
     @GET(ApiAddress.examdataright)
     Observable<LearnRight> getLearnRight(@Query("fileType")String fileType);
+
+    /**
+     * 获取在线考试列表
+     */
+    @GET(ApiAddress.onlinelist)
+    Observable<OnLineList> getOnLineList(@Query("examinationType") String examinationType
+                                ,@Query("startType") String startType
+                                ,@Query("userName") String userName);
 }

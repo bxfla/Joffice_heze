@@ -119,4 +119,6 @@ public class ApiAddress {
     public static final String  examdataleft = "system/treePhoneGlobalType.do";
     //考试资料右侧
     public static final String  examdataright = "system/listAllByPhoneFileAttach.do";
+    //在线考试列表
+    public static final String  onlinelist = "staffzone/listExaminationManagement.do";
 }
