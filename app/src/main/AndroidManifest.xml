@@ -170,7 +170,9 @@
         <activity
             android:name=".exam.ExamListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".exam.activity.LearningActivity" />
+        <activity android:name=".exam.activity.LearningLeftActivity"/>
+        <activity android:name=".exam.activity.LearningRightActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".exam.activity.OnLineActivity" />
         <activity android:name=".exam.activity.FoundActivity"></activity>
     </application>

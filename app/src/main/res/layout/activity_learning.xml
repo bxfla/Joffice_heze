@@ -5,12 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.smartbus.heze.exam.activity.LearningActivity">
+    tools:context="com.smartbus.heze.exam.activity.LearningLeftActivity">
 
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
         app:header_title="@string/learn_data">
     </com.smartbus.heze.http.views.Header>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

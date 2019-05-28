@@ -18,6 +18,8 @@ import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.exam.bean.LearnLeft;
+import com.smartbus.heze.exam.bean.LearnRight;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -524,4 +526,17 @@ public interface AllApi {
             , @Field("atPhoto")String atPhoto
             , @Field("mileType")String mileType);
 
+
+
+    /**
+     * 学习资料左侧
+     */
+    @GET(ApiAddress.examdataleft)
+    Observable<LearnLeft> getLearnLeft();
+
+    /**
+     * 学习资料右侧
+     */
+    @GET(ApiAddress.examdataright)
+    Observable<LearnRight> getLearnRight(@Query("fileType")String fileType);
 }
