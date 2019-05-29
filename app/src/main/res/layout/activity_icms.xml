@@ -17,6 +17,29 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="没收日期:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
         <TextView
             style="@style/oaTextView"
             android:text="驾驶员:*" />
@@ -51,34 +74,11 @@
             android:layout_gravity="center_vertical"
             android:background="@color/shouye" />
 
-        <EditText
-            android:id="@+id/etLine"
+        <TextView
+            android:id="@+id/tvLine"
             style="@style/oaEditText"
             android:layout_marginRight="10dp"
             android:hint="输入线路或右侧选择"
-            android:paddingLeft="15dp" />
-    </LinearLayout>
-    <View style="@style/HourLine"></View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/oaTextView"
-            android:text="没收日期:*" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/shouye" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            style="@style/oaEditText"
-            android:layout_marginRight="10dp"
             android:paddingLeft="15dp" />
     </LinearLayout>
     <View style="@style/HourLine"></View>
@@ -122,7 +122,7 @@
             android:background="@color/shouye" />
 
         <EditText
-            android:id="@+id/etCarNo"
+            android:id="@+id/etIcNo"
             style="@style/oaEditText"
             android:layout_marginRight="10dp"
             android:hint="输入卡号"

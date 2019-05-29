@@ -5,8 +5,9 @@ package com.smartbus.heze;
  */
 
 public class ApiAddress {
-//    public final static String mainApi = "http://192.168.2.106:8080/joffice21/" ;
-    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+    public final static String mainApi = "http://192.168.2.106:8080/joffice21/" ;
+//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.117:8080/joffice21/" ;
 
     /***********************首页*******************************/
     //登录
@@ -125,4 +126,7 @@ public class ApiAddress {
     public static final String  onlinedata = "staffzone/startPhoneExaminationManagement.do";
     //在线考试交卷
     public static final String  onlineup = "staffzone/endPhoneExaminationManagement.do";
+
+    //Ic卡没收根据司机关联线路
+    public static final String  icaboutline = "starkh/getDriverCodeLineDriverLine.do";
 }

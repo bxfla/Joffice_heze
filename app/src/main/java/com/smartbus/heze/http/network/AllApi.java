@@ -50,6 +50,7 @@ import com.smartbus.heze.oaflow.bean.CheckType;
 import com.smartbus.heze.oaflow.bean.OldWorkWill;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.oasheet.bean.OANO;
+import com.smartbus.heze.other.bean.IcAboutLine;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
 
@@ -562,8 +563,16 @@ public interface AllApi {
     /**
      * 获取在线考试交卷数据
      */
-    @GET(ApiAddress.onlineup)
-    Observable<OnLineUp> getOnLineUp(@Query("userName") String userName
-            , @Query("type") String type
-            , @Query("data") String answer);
+    @FormUrlEncoded
+    @POST(ApiAddress.onlineup)
+    Observable<OnLineUp> getOnLineUp(@Field("userName") String userName
+            , @Field("type") String type
+            , @Field("data") String answer);
+
+
+    /**
+     * Ic卡没收根据司机关联线路
+     */
+    @GET(ApiAddress.icaboutline)
+    Observable<IcAboutLine> getIcAboutLine(@Query("driverCode")String driverCode);
 }
