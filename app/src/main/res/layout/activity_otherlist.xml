@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.other.OtherListActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/other_list">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb6"
+                android:text="@string/ic_moshou" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb9"
+                android:text="@string/sw_shangbao" />
+
+            <RadioButton
+                android:id="@+id/rb3"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb2"
+                android:text="@string/ab_shijian" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb4"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb3"
+                android:text="@string/gg_kehu" />
+
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/rb9"
+                android:text="@string/first_process" />
+
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/rb2"
+                android:text="@string/first_process" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

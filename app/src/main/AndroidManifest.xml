@@ -27,18 +27,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".welcome.activity.LoginActivity" />
-        <activity android:name=".main.activity.MainActivity" />
-        <activity android:name=".main.notice.activity.NoticeDetailActivity" />
-        <activity android:name=".main.notice.activity.NoticeListActivity" />
-        <activity android:name=".fileapprove.FileMainActivity" />
+        <activity
+            android:name=".welcome.activity.LoginActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".main.activity.MainActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".main.notice.activity.NoticeDetailActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".main.notice.activity.NoticeListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".fileapprove.FileMainActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".fileapprove.activity.DepartBudgetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".fileapprove.activity.BorrowAccidentActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".fileapprove.activity.DepartmentActivity" />
+        <activity
+            android:name=".fileapprove.activity.DepartmentActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".fileapprove.activity.CurrencyAccidentActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -54,7 +66,9 @@
         <activity
             android:name=".fileapprove.activity.DocumentLZActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".oaflow.OaMainActivity" />
+        <activity
+            android:name=".oaflow.OaMainActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".oaflow.activity.UserdLeaveActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -130,7 +144,9 @@
         <activity
             android:name=".checkup.activitydata.CheckPersonActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".main.activity.ProcessActivity" />
+        <activity
+            android:name=".main.activity.ProcessActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".fileapprove.activity.DepartmentMoreActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -170,13 +186,25 @@
         <activity
             android:name=".exam.ExamListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".exam.activity.LearningLeftActivity" />
+        <activity
+            android:name=".exam.activity.LearningLeftActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".exam.activity.LearningRightActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".exam.activity.OnLineListActivity" />
-        <activity android:name=".exam.activity.FoundActivity" />
-        <activity android:name=".exam.activity.OnLineActivity" />
+        <activity
+            android:name=".exam.activity.OnLineListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".exam.activity.FoundActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".exam.activity.OnLineActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".other.OtherListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".other.activity.ICMSActivity"></activity>
     </application>
 
 </manifest>

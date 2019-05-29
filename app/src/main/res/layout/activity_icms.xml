@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.other.activity.ICMSActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/ic_moshou">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:text="驾驶员:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <TextView
+            android:id="@+id/tvDriver"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:hint="输入驾驶员或右侧选择"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="线路:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etLine"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:hint="输入线路或右侧选择"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="没收日期:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="IC卡状态:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <Spinner
+            android:id="@+id/spinnerTag"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="卡号:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etCarNo"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:hint="输入卡号"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="IC卡种类:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <Spinner
+            android:id="@+id/spinnerType"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:hint="输入线路或右侧选择"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="奖励金额:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <Spinner
+            android:id="@+id/spinnerMoney"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:hint="输入线路或右侧选择"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="没收原因:*" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <Spinner
+            android:id="@+id/spinnerReason"
+            style="@style/oaEditText"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <Button
+        android:id="@+id/btnUp"
+        style="@style/Button"
+        android:text="@string/commit"/>
+
+</LinearLayout>

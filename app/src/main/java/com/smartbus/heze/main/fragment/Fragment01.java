@@ -26,6 +26,7 @@ import com.smartbus.heze.main.activity.ProcessActivity;
 import com.smartbus.heze.main.notice.activity.NoticeDetailActivity;
 import com.smartbus.heze.main.notice.activity.NoticeListActivity;
 import com.smartbus.heze.oasheet.OAPublishActivity;
+import com.smartbus.heze.other.OtherListActivity;
 import com.smartbus.heze.welcome.bean.Notice;
 import com.smartbus.heze.welcome.module.WelcomeContract;
 import com.smartbus.heze.welcome.presenter.WelcomePresenter;
@@ -210,6 +211,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                 startActivity(intent);
                 break;
             case R.id.rb10:
+                intent = new Intent(getActivity(), OtherListActivity.class);
+                startActivity(intent);
                 break;
         }
     }
