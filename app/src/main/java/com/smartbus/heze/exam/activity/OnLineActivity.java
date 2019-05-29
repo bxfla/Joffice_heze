@@ -134,26 +134,27 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
     @Override
     public void getPosition(List<ExaminationData.DataBean> upList) {
         this.answerList = upList;
-        new AlertDialogUtil(this).showDialog("确定交卷吗", new AlertDialogCallBack() {
-            @Override
-            public int getData(int s) {
-                return 0;
-            }
-
-            @Override
-            public void confirm() {
-                onLineAdapter.upData();
-                String userName = new SharedPreferencesHelper(OnLineActivity.this,"login").getData(OnLineActivity.this,"userName","");
-                Gson gson = new Gson();
-                String json = gson.toJson(answerList);
-                onLineUpPresenter.getOnLineUp(userName,"0",json);
-            }
-
-            @Override
-            public void cancel() {
-
-            }
-        });
+//        onLineAdapter.upData();
+        String userName = new SharedPreferencesHelper(OnLineActivity.this,"login").getData(OnLineActivity.this,"userName","");
+        Gson gson = new Gson();
+        String json = gson.toJson(answerList);
+        onLineUpPresenter.getOnLineUp(userName,"0",json);
+//        new AlertDialogUtil(this).showDialog("确定交卷吗", new AlertDialogCallBack() {
+//            @Override
+//            public int getData(int s) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public void confirm() {
+//
+//            }
+//
+//            @Override
+//            public void cancel() {
+//
+//            }
+//        });
     }
 
     /**
