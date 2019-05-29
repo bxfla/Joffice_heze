@@ -18,9 +18,11 @@ import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
 import com.smartbus.heze.exam.bean.OnLineList;
+import com.smartbus.heze.exam.bean.OnLineUp;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -548,4 +550,20 @@ public interface AllApi {
     Observable<OnLineList> getOnLineList(@Query("examinationType") String examinationType
                                 ,@Query("startType") String startType
                                 ,@Query("userName") String userName);
+
+    /**
+     * 获取在线考试试题
+     */
+    @GET(ApiAddress.onlinedata)
+    Observable<ExaminationData> getExaminationData(@Query("id") String id
+            , @Query("type") String type
+            , @Query("userName") String userName);
+
+    /**
+     * 获取在线考试交卷数据
+     */
+    @GET(ApiAddress.onlineup)
+    Observable<OnLineUp> getOnLineUp(@Query("userName") String userName
+            , @Query("type") String type
+            , @Query("data") String[] data);
 }

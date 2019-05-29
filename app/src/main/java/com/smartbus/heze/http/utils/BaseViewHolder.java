@@ -78,6 +78,16 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 给Radionbutton设置隐藏控件方法
+     */
+    public BaseViewHolder setGone(int viewId) {
+        RadioButton rb = getView(viewId);
+        rb.setVisibility(View.GONE);
+        return this;
+    }
+
+
+    /**
      * 给Radionbutton设置cgeck方法
      */
     public BaseViewHolder setCheck(int viewId) {

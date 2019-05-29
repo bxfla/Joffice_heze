@@ -8,7 +8,7 @@ import android.widget.RadioButton;
 import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.FoundActivity;
 import com.smartbus.heze.exam.activity.LearningLeftActivity;
-import com.smartbus.heze.exam.activity.OnLineActivity;
+import com.smartbus.heze.exam.activity.OnLineListActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 
@@ -58,7 +58,7 @@ public class ExamListActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.rb2:
-                intent = new Intent(this, OnLineActivity.class);
+                intent = new Intent(this, OnLineListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb3:

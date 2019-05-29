@@ -121,4 +121,8 @@ public class ApiAddress {
     public static final String  examdataright = "system/listAllByPhoneFileAttach.do";
     //在线考试列表
     public static final String  onlinelist = "staffzone/listExaminationManagement.do";
+    //在线考试试题
+    public static final String  onlinedata = "staffzone/startPhoneExaminationManagement.do";
+    //在线考试交卷
+    public static final String  onlineup = "staffzone/endPhoneExaminationManagement.do";
 }

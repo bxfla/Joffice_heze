@@ -10,13 +10,66 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
+        android:visibility="gone"
         app:header_title="@string/online_exam">
     </com.smartbus.heze.http.views.Header>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <RelativeLayout
+        android:background="@color/color_bg_selected"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:text="交卷"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dip" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+        <TextView
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/vote_submit_relative"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/header">
+
+        <com.smartbus.heze.http.views.VoteSubmitViewPager
+            android:id="@+id/vote_submit_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/vote_submit_linear_dot"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal" />
+    </RelativeLayout>
 
 </LinearLayout>

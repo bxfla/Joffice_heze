@@ -229,4 +229,9 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="menu_bottom_text">
+        <item name="android:textColor">@color/menu_bottom_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
