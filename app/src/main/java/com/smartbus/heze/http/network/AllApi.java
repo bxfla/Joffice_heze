@@ -565,5 +565,5 @@ public interface AllApi {
     @GET(ApiAddress.onlineup)
     Observable<OnLineUp> getOnLineUp(@Query("userName") String userName
             , @Query("type") String type
-            , @Query("data") String[] data);
+            , @Query("data") String answer);
 }

@@ -16,6 +16,6 @@ public interface OnLineUpContract {
     }
 
     interface presenter extends BasePresenter {
-        void getOnLineUp(String userName, String type, String[] data);
+        void getOnLineUp(String userName, String type, String answer);
     }
 }

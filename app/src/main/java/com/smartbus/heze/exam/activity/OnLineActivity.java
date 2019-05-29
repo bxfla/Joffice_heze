@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.exam.adapter.OnLineAdapter;
@@ -31,7 +32,6 @@ import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.VoteSubmitViewPager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,7 +63,7 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
     int second = 0;
     boolean isPause = false;
     int isFirst;
-    HashMap<String,ExaminationData.DataBean> hasMap = new HashMap<>();
+    List<ExaminationData.DataBean> answerList = new ArrayList<>();
     String examinationId, examinationTime, examinationName;
     OnLineAdapter onLineAdapter;
     OnLineUpPresenter onLineUpPresenter;
@@ -115,7 +115,9 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
             public void confirm() {
                 onLineAdapter.upData();
                 String userName = new SharedPreferencesHelper(OnLineActivity.this,"login").getData(OnLineActivity.this,"userName","");
-                onLineUpPresenter.getOnLineUp(userName,"0",hasMap);
+                Gson gson = new Gson();
+                String json = gson.toJson(answerList);
+                onLineUpPresenter.getOnLineUp(userName,"0",json);
             }
 
             @Override
@@ -130,8 +132,8 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
      * @param upList
      */
     @Override
-    public void getPosition(HashMap<String,ExaminationData.DataBean> hasMap) {
-        this.hasMap = hasMap;
+    public void getPosition(List<ExaminationData.DataBean> upList) {
+        this.answerList = upList;
     }
 
     /**

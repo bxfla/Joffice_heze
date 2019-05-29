@@ -41,7 +41,7 @@ public class OnLineAdapter extends PagerAdapter {
     String answer;
 
     public interface GetItemPosition {
-        void getPosition(HashMap<String,ExaminationData.DataBean> hasMap);
+        void getPosition(List<ExaminationData.DataBean> upList);
     }
 
     public void setOnInnerItemOnClickListener(GetItemPosition getItemPosition) {
@@ -193,9 +193,8 @@ public class OnLineAdapter extends PagerAdapter {
     public void upData() {
         for (int i = 0;i<upList.size();i++){
             Log.e("XXX",upList.get(i).getData());
-            hasMap.put(String.valueOf(i),upList.get(i));
         }
-        getItemPosition.getPosition(hasMap);
+        getItemPosition.getPosition(upList);
 //        String answer = beanList.toString();
 //        Intent intent = new Intent(mContext, OnLineResultActivity.class);
 //        Bundle bundle = new Bundle();

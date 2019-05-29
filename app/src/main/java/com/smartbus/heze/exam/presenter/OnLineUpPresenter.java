@@ -2,14 +2,11 @@ package com.smartbus.heze.exam.presenter;
 
 import android.content.Context;
 
-import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.OnLineUp;
 import com.smartbus.heze.exam.module.OnLineUpContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.RetrofitUtil;
-
-import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,8 +27,8 @@ public class OnLineUpPresenter implements OnLineUpContract.presenter {
     }
 
     @Override
-    public void getOnLineUp(String userName, String type, HashMap<String,ExaminationData.DataBean> hasMap) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getOnLineUp(userName,type,hasMap).subscribeOn(Schedulers.io())
+    public void getOnLineUp(String userName, String type, String answer) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getOnLineUp(userName,type,answer).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<OnLineUp>(context, MainUtil.getData) {
                     @Override
