@@ -1,12 +1,11 @@
 package com.smartbus.heze.oasheet;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,12 +45,17 @@ import com.smartbus.heze.oasheet.module.NoContract;
 import com.smartbus.heze.oasheet.module.UpOaContract;
 import com.smartbus.heze.oasheet.presenter.NoPresenter;
 import com.smartbus.heze.oasheet.presenter.UpOaPresenter;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,7 +73,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_THERE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
-public class OAPublishActivity extends BaseActivity implements NoContract.View,UpOaContract.View {
+public class OAPublishActivity extends BaseActivity implements NoContract.View, UpOaContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -118,12 +122,12 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
 
     Intent intent;
     String fileName = "";
-    private Uri imageUri;
+    String dirPath = "temp";
     public static File tempFile;
     NoPresenter noPresenter;
     UpOaPresenter upOapresenter;
     String overDepId = "", overDepName = "";
-    String sendDepId = "",sendDepName = "";
+    String sendDepId = "", sendDepName = "";
     String sendPerson = "";
     ArrayAdapter<String> titleAdapter;
     ArrayAdapter<String> typeAdapter;
@@ -155,7 +159,7 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnertype.setAdapter(typeAdapter);
         noPresenter = new NoPresenter(this, this);
-        upOapresenter = new UpOaPresenter(this,this);
+        upOapresenter = new UpOaPresenter(this, this);
         noPresenter.getNo("gongzuochuandidanbia");
     }
 
@@ -198,11 +202,11 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
             @Override
             public void handle(String time) {
                 String startTime = tvStartTime.getText().toString();
-                boolean type = isDate2Bigger(startTime.split(" ")[0],time.split(" ")[0]);
+                boolean type = isDate2Bigger(startTime.split(" ")[0], time.split(" ")[0]);
                 // 回调接口，获得选中的时间
-                if (type){
+                if (type) {
                     tvEndTime.setText(time.split(" ")[0]);
-                }else {
+                } else {
                     Toast.makeText(OAPublishActivity.this, "请输入正确时间", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -215,7 +219,7 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
     }
 
     @OnClick({R.id.tvStartTime, R.id.tvEndTime, R.id.tvOverDepart, R.id.tvSendDepart, R.id.tvPerson
-            , R.id.btnUp,R.id.imageViewAdd01, R.id.imageViewAdd2})
+            , R.id.btnUp, R.id.imageViewAdd01, R.id.imageViewAdd2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvStartTime:
@@ -251,40 +255,62 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
                 String endTime = tvEndTime.getText().toString();
                 String title = spinnertitle.getSelectedItem().toString();
                 String type = spinnertype.getSelectedItem().toString();
-                if (type.equals("A")){
+                if (type.equals("A")) {
                     type = "0";
-                }else if (type.equals("B")){
+                } else if (type.equals("B")) {
                     type = "1";
-                }else if (type.equals("C")){
+                } else if (type.equals("C")) {
                     type = "2";
                 }
                 String content = etContent.getText().toString();
                 String flag = "0";
-                    upOapresenter.getUpOa(flag,no, overDepName ,overDepId,sendDepName,sendDepId,sendPerson
-                            ,upDate,upTime,endTime,title,type,content,fileName);
+                upOapresenter.getUpOa(flag, no, overDepName, overDepId, sendDepName, sendDepId, sendPerson
+                        , upDate, upTime, endTime, title, type, content, fileName);
                 break;
             case R.id.imageViewAdd01:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                     ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                    , Manifest.permission.CAMERA
+                                    , Manifest.permission.READ_EXTERNAL_STORAGE},
                             MY_PERMISSIONS_MY_UP_IMAGE);
-                }  else {
-                    openCamera(this);
+                } else {
+                    Matisse.from(OAPublishActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(1)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.smartbus.heze.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.5f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
                 }
                 break;
             case R.id.imageViewAdd2:
                 break;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_MY_UP_IMAGE:
-                if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera(this);
+                if (grantResults.length == 3 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+//                    openCamera(this);
+                    Matisse.from(OAPublishActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(1)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.smartbus.heze.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.5f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
                 } else {
                     Toast.makeText(this, "权限被拒绝，请手动开启", Toast.LENGTH_SHORT).show();
                 }
@@ -292,44 +318,9 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
         }
     }
 
-    public void openCamera(Activity activity) {
-        //獲取系統版本
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        // 激活相机
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 判断存储卡是否可以用，可用进行存储
-        if (hasSdcard()) {
-            SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-                    "yyyy_MM_dd_HH_mm_ss");
-            String filename = timeStampFormat.format(new Date());
-            tempFile = new File(Environment.getExternalStorageDirectory(),
-                    filename + ".jpg");
-            if (currentapiVersion < 24) {
-                // 从文件中创建uri
-                imageUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            } else {
-                //兼容android7.0 使用共享文件的形式
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
-                //检查是否有存储权限，以免崩溃
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            }
-        }
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-        activity.startActivityForResult(intent, TAG_FOUR);
-    }
-
     /**
-* 判断sdcard是否被挂载
-*/
+     * 判断sdcard是否被挂载
+     */
     public static boolean hasSdcard() {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
@@ -354,11 +345,11 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
                     List<String> selectName = data.getStringArrayListExtra("bean");
                     List<String> selectId = data.getStringArrayListExtra("beanId");
                     sendDepName = selectName.toString();
-                    sendDepName = sendDepName.toString().replace("[","");
-                    sendDepName = sendDepName.toString().replace("]","");
+                    sendDepName = sendDepName.toString().replace("[", "");
+                    sendDepName = sendDepName.toString().replace("]", "");
                     sendDepId = selectId.toString();
-                    sendDepId = sendDepId.toString().replace("[","");
-                    sendDepId = sendDepId.toString().replace("]","");
+                    sendDepId = sendDepId.toString().replace("[", "");
+                    sendDepId = sendDepId.toString().replace("]", "");
                     tvSendDepart.setText(sendDepName);
                 }
                 break;
@@ -366,36 +357,88 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
                 if (data != null) {
                     List<String> selectPersonList = data.getStringArrayListExtra("bean");
                     sendPerson = selectPersonList.toString();
-                    sendPerson = sendPerson.toString().replace("[","");
-                    sendPerson = sendPerson.toString().replace("]","");
+                    sendPerson = sendPerson.toString().replace("[", "");
+                    sendPerson = sendPerson.toString().replace("]", "");
                     tvPerson.setText(sendPerson);
                 }
                 break;
             case TAG_FOUR:
-                Bitmap bitmap = null;
-                try {
-                    bitmap = BitmapFactory.decodeStream(getContentResolver()
-                            .openInputStream(imageUri));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+//                Bitmap bitmap = null;
+//                try {
+//                    bitmap = BitmapFactory.decodeStream(getContentResolver()
+//                            .openInputStream(imageUri));
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                imageViewAdd2.setImageBitmap(bitmap);
+//                upImage();
+                if (resultCode == RESULT_OK) {
+                    List<Uri> result1 = new ArrayList<>();
+                    result1 = Matisse.obtainResult(data);
+                    BitmapFactory.Options opts = new BitmapFactory.Options();//获取缩略图显示到屏幕上
+                    opts.inSampleSize = 2;
+                    Bitmap cbitmap01 = null;
+                    try {
+                        cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result1.get(0));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Matrix matrix = new Matrix();
+                    matrix.setScale(0.2f, 0.2f);
+                    Bitmap bm = Bitmap.createBitmap(cbitmap01, 0, 0, cbitmap01.getWidth(),
+                            cbitmap01.getHeight(), matrix, true);
+                    imageViewAdd01.setImageBitmap(bm);
+                    saveImageToSD(bm, "temp");
                 }
-                imageViewAdd2.setImageBitmap(bitmap);
-                upImage();
                 break;
         }
+    }
+    /**
+     * 图片保存到本地
+     *
+     * @param cbitmap01
+     * @param dirPath
+     */
+    private void saveImageToSD(Bitmap cbitmap01, String dirPath) {
+        //新建文件夹用于存放裁剪后的图片
+        tempFile = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
+        if (!tempFile.exists()) {
+            tempFile.mkdir();
+        }
+
+        //新建文件存储裁剪后的图片
+        File img = new File(tempFile.getAbsolutePath() + "/" + "signin" + ".png");
+        try {
+            //打开文件输出流
+            FileOutputStream fos = new FileOutputStream(img);
+            //将bitmap压缩后写入输出流(参数依次为图片格式、图片质量和输出流)
+            cbitmap01.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            //刷新输出流
+            fos.flush();
+            //关闭输出流
+            fos.close();
+            //返回File类型的Uri
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        upImage();
     }
 
     /**
      * 上传图片
      */
     private void upImage() {
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "signin" + ".png");
+        String filepath = "signin" + ".png";
         final AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(60000);
         final String url = ApiAddress.mainApi + ApiAddress.upimagebef;
         final RequestParams params = new RequestParams();
         try {
-            params.put("upload", tempFile);
-            params.put("fullname", tempFile.getName());
+            params.put("upload", file);
+            params.put("fullname", filepath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -430,6 +473,7 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
 
     /**
      * 比较两个日期的大小，日期格式为yyyy-MM-dd
+     *
      * @param str1 the first date
      * @param str2 the second date
      * @return true <br/>false
@@ -467,15 +511,17 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
 
     /**
      * oa数据提交
+     *
      * @param s
      */
     @Override
     public void setUpOa(UpData s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "上传数据成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
+
     @Override
     public void setUpOaMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
