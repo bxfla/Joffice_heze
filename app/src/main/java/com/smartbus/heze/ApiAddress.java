@@ -126,6 +126,8 @@ public class ApiAddress {
     public static final String  onlinedata = "staffzone/startPhoneExaminationManagement.do";
     //在线考试交卷
     public static final String  onlineup = "staffzone/endPhoneExaminationManagement.do";
+    //获取考试成绩
+    public static final String  getscore = "staffzone/ListPhonePerformanceManagement.do";
 
     //Ic卡没收根据司机关联线路
     public static final String  icaboutline = "starkh/getDriverCodeLineDriverLine.do";

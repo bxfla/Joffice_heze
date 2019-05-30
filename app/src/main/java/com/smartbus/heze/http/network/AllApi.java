@@ -23,6 +23,7 @@ import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.bean.OnLineUp;
+import com.smartbus.heze.exam.bean.Score;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -575,4 +576,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.icaboutline)
     Observable<IcAboutLine> getIcAboutLine(@Query("driverCode")String driverCode);
+
+    /**
+     * 获取在线考试成绩
+     */
+    @GET(ApiAddress.getscore)
+    Observable<Score> getScore(@Query("userName") String userName);
 }
