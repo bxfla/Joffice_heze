@@ -130,5 +130,9 @@ public class ApiAddress {
     public static final String  getscore = "staffzone/ListPhonePerformanceManagement.do";
 
     //Ic卡没收根据司机关联线路
-    public static final String  icaboutline = "starkh/getDriverCodeLineDriverLine.do";
+    public static final String  icaboutline = "starkh/getLineDriverLine.do";
+    //Ic卡获取类别
+    public static final String  cartype = "system/getIcTypeDictionary.do";
+    //Ic卡没收提交
+    public static final String  upcardata = "helpmgr/saveIcPhoneIcCardConfiscate.do";
 }

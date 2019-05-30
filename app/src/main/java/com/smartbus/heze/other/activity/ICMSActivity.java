@@ -3,6 +3,7 @@ package com.smartbus.heze.other.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -10,19 +11,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.bean.LineCodeData;
+import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.fileapprove.activity.WorkOnePersonActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
+import com.smartbus.heze.other.bean.CarType;
 import com.smartbus.heze.other.bean.IcAboutLine;
+import com.smartbus.heze.other.module.CarTypeContract;
 import com.smartbus.heze.other.module.IcAboutLineContract;
+import com.smartbus.heze.other.module.UpICMSContract;
+import com.smartbus.heze.other.presenter.CarTypePresenter;
 import com.smartbus.heze.other.presenter.IcAboutLinePresenter;
+import com.smartbus.heze.other.presenter.UpICMSPresenter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -32,7 +42,8 @@ import butterknife.OnClick;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
-public class ICMSActivity extends BaseActivity implements IcAboutLineContract.View{
+public class ICMSActivity extends BaseActivity implements IcAboutLineContract.View
+        ,CarTypeContract.View,UpICMSContract.View{
 
     @BindView(R.id.header)
     Header header;
@@ -57,6 +68,13 @@ public class ICMSActivity extends BaseActivity implements IcAboutLineContract.Vi
 
     Intent intent;
     String eCard = "";
+    List<String> listType = new ArrayList<String>();
+    List<CarType.DataBean> beanList = new ArrayList<>();
+    List<String> listMoney = new ArrayList<String>();
+    List<String> listReason = new ArrayList<String>();
+    List<String> listTag = new ArrayList<String>();
+    CarTypePresenter carTypePresenter;
+    UpICMSPresenter upICMSPresenter;
     IcAboutLinePresenter icAboutLinePresenter;
     private CustomDatePickerDay customDatePicker;
 
@@ -64,7 +82,27 @@ public class ICMSActivity extends BaseActivity implements IcAboutLineContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        listMoney.add("10");
+        listMoney.add("30");
+        ArrayAdapter moneyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listMoney);
+        moneyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerMoney.setAdapter(moneyAdapter);
+
+        listReason.add("无照片");
+        listReason.add("冒用");
+        ArrayAdapter reasonAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listReason);
+        reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerReason.setAdapter(reasonAdapter);
+
+        listTag.add("有卡");
+        listTag.add("无卡");
+        ArrayAdapter tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listTag);
+        tagAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTag.setAdapter(tagAdapter);
         initDatePicker();
+        carTypePresenter = new CarTypePresenter(this,this);
+        carTypePresenter.getCarType();
+        upICMSPresenter = new UpICMSPresenter(this,this);
         icAboutLinePresenter = new IcAboutLinePresenter(this,this);
     }
 
@@ -119,6 +157,16 @@ public class ICMSActivity extends BaseActivity implements IcAboutLineContract.Vi
                 customDatePicker.show(tvDate.getText().toString());
                 break;
             case R.id.btnUp:
+                if (tvDriver.getText().toString().equals("")||tvLine.getText().toString().equals("")){
+                    Toast.makeText(this, "请填写驾驶员和线路", Toast.LENGTH_SHORT).show();
+                }else {
+                    String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
+                    upICMSPresenter.getUpICMS(userName,tvDriver.getText().toString(),eCard
+                            ,tvLine.getText().toString(),etIcNo.getText().toString()
+                            ,spinnerType.getSelectedItem().toString(),spinnerMoney.getSelectedItem().toString()
+                            ,spinnerReason.getSelectedItem().toString(),tvDate.getText().toString()
+                            ,spinnerTag.getSelectedItem().toString());
+                }
                 break;
         }
     }
@@ -154,6 +202,37 @@ public class ICMSActivity extends BaseActivity implements IcAboutLineContract.Vi
 
     @Override
     public void setIcAboutLineMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setCarType(CarType carType) {
+        if (carType.isSuccess()){
+            for (int i = 0;i<carType.getData().size();i++){
+                beanList.add(carType.getData().get(i));
+                listType.add(carType.getData().get(i).getItemValue());
+            }
+            ArrayAdapter typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listType);
+            typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerType.setAdapter(typeAdapter);
+        }
+    }
+
+    @Override
+    public void setCarTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setUpICMS(UpData upData) {
+        if (upData.isSuccess()){
+            Toast.makeText(this, "提交数据成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void setUpICMSMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

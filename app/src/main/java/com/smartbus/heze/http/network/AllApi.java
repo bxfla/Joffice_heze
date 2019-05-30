@@ -51,6 +51,7 @@ import com.smartbus.heze.oaflow.bean.CheckType;
 import com.smartbus.heze.oaflow.bean.OldWorkWill;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.oasheet.bean.OANO;
+import com.smartbus.heze.other.bean.CarType;
 import com.smartbus.heze.other.bean.IcAboutLine;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
@@ -582,4 +583,21 @@ public interface AllApi {
      */
     @GET(ApiAddress.getscore)
     Observable<Score> getScore(@Query("userName") String userName);
+
+    /**
+     * 获取卡类别
+     */
+    @GET(ApiAddress.cartype)
+    Observable<CarType> getCarType();
+
+    /**
+     * 提交没收卡数据
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.upcardata)
+    Observable<UpData> getUpData(@Field("useName")String userName,@Field("driverName") String driverName
+            ,@Field("driverCode") String driverCode,@Field("lineCode") String lineCode
+            ,@Field("cardId") String cardId,@Field("cardType") String cardType
+            ,@Field("money") String money,@Field("reasons") String reasons
+           ,@Field("date") String date,@Field("memo") String memo);
 }
