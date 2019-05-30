@@ -53,6 +53,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -196,8 +197,14 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
         customDatePicker2 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
             @Override
             public void handle(String time) {
+                String startTime = tvStartTime.getText().toString();
+                boolean type = isDate2Bigger(startTime.split(" ")[0],time.split(" ")[0]);
                 // 回调接口，获得选中的时间
-                tvEndTime.setText(time.split(" ")[0]);
+                if (type){
+                    tvEndTime.setText(time.split(" ")[0]);
+                }else {
+                    Toast.makeText(OAPublishActivity.this, "请输入正确时间", Toast.LENGTH_SHORT).show();
+                }
             }
             // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         }, "2000-01-01 00:00", "2030-01-01 00:00");
@@ -419,6 +426,31 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View,U
                 handler.sendMessage(message);
             }
         });
+    }
+
+    /**
+     * 比较两个日期的大小，日期格式为yyyy-MM-dd
+     * @param str1 the first date
+     * @param str2 the second date
+     * @return true <br/>false
+     */
+    public static boolean isDate2Bigger(String str1, String str2) {
+        boolean isBigger = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dt1 = null;
+        Date dt2 = null;
+        try {
+            dt1 = sdf.parse(str1);
+            dt2 = sdf.parse(str2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (dt1.getTime() > dt2.getTime()) {
+            isBigger = false;
+        } else if (dt1.getTime() <= dt2.getTime()) {
+            isBigger = true;
+        }
+        return isBigger;
     }
 
     @Override
