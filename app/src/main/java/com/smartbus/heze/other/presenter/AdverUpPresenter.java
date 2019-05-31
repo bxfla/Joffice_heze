@@ -6,7 +6,7 @@ import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.RetrofitUtil;
-import com.smartbus.heze.other.module.SaferUpContract;
+import com.smartbus.heze.other.module.AdverUpContract;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -18,31 +18,30 @@ import io.reactivex.schedulers.Schedulers;
  * @description:
  */
 
-public class SaferUpPresenter implements SaferUpContract.presenter {
+public class AdverUpPresenter implements AdverUpContract.presenter {
 
     private Context context;
-    private SaferUpContract.View view;
+    private AdverUpContract.View view;
 
-    public SaferUpPresenter(Context context, SaferUpContract.View view) {
+    public AdverUpPresenter(Context context, AdverUpContract.View view) {
         this.context = context;
         this.view = view;
     }
 
     @Override
-    public void getSaferUp(String userName, String apPlace,String apType,String apDate
-            , String apReason,String apPhoto) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getSaferUpData(userName,apPlace,apType
-                ,apDate,apReason,apPhoto).subscribeOn(Schedulers.io())
+    public void AdverUp(String company, String contacts, String number, String address, String memo) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getAdverUpData(company,contacts,number
+                ,address,memo).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<UpData>(context, MainUtil.getData) {
                     @Override
                     protected void onSuccees(UpData t) throws Exception {
-                        view.setSaferUp(t);
+                        view.setAdverUp(t);
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        view.setSaferUpMessage("失败了----->" + e.getMessage());
+                        view.setAdverUpMessage("失败了----->" + e.getMessage());
                     }
                 });
     }

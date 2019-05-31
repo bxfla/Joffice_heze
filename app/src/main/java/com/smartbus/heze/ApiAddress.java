@@ -140,4 +140,7 @@ public class ApiAddress {
     public static final String  saferimageup = "helpmgr/upLoadImageSecurityMgr.do";
     //安保数据上传
     public static final String  saferup = "helpmgr/savePhoneSecurityMgr.do";
+
+    //广告数据上传
+    public static final String  adverup = "helpmgr/savePhoneAdvertiserMsg.do";
 }

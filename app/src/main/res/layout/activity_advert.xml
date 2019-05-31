@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.other.activity.AdvertActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/gg_kehu">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="广告商公司: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etComp"
+            style="@style/oaEditText"
+            android:hint="请填写广告商公司"/>
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="广告商联系人: " />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etPerson"
+            style="@style/oaEditText"
+            android:hint="请填写广告商联系人"/>
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="广告商电话: " />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            style="@style/oaEditText"
+            android:hint="请填写广告商联系电话"/>
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="广告商地址: " />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            style="@style/oaEditText"
+            android:hint="请填写广告商公司地址"/>
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/oaTextView"
+            android:text="备注: " />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etBeiZhu"
+            style="@style/oaEditText"
+            android:hint="请填写备注"/>
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <Button
+        android:id="@+id/btnUp"
+        style="@style/Button"
+        android:text="@string/commit"/>
+
+</LinearLayout>

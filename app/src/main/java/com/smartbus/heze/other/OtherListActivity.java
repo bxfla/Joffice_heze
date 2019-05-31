@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import com.smartbus.heze.R;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
+import com.smartbus.heze.other.activity.AdvertActivity;
 import com.smartbus.heze.other.activity.ICMSActivity;
 import com.smartbus.heze.other.activity.SaferActivity;
 
@@ -65,6 +66,8 @@ public class OtherListActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.rb4:
+                intent = new Intent(this,AdvertActivity.class);
+                startActivity(intent);
                 break;
         }
     }

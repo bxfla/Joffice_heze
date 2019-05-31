@@ -609,4 +609,13 @@ public interface AllApi {
     Observable<UpData> getSaferUpData(@Field("useName")String userName,@Field("apPlace") String apPlace
             ,@Field("apType") String apType,@Field("apDate") String apDate
             ,@Field("apReason") String apReason,@Field("apPhoto") String apPhoto);
+
+    /**
+     * 广告数据提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.adverup)
+    Observable<UpData> getAdverUpData(@Field("company")String company,@Field("contacts") String contacts
+            ,@Field("number") String number,@Field("address") String address
+            ,@Field("memo") String memo);
 }
