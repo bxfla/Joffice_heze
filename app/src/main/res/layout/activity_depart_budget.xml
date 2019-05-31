@@ -85,7 +85,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center"
-                            android:text="产品名称"
+                            android:text="项目"
                             android:textColor="@color/black" />
 
                         <View style="@style/HourLine"></View>

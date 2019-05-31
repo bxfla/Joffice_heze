@@ -300,7 +300,7 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
     @Override
     public void setFileCirculateWill(FileCirculateWill s) {
         if (s != null) {
-            tvTime.setText(s.getMainform().get(0).getLrrq().toString());
+            tvTime.setText(s.getMainform().get(0).getLrrq().toString().split(" ")[0]);
             tvData.setText(s.getMainform().get(0).getFileId().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             for (int i = 0; i < s.getTrans().size(); i++) {

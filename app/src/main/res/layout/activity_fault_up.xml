@@ -39,20 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/oaTextView"
-                        android:text="事故编号:*" />
-                    <View style="@style/VerticalLine"/>
-                    <TextView
-                        android:id="@+id/tvNo"
-                        style="@style/oaEditText"
-                        android:layout_marginRight="10dp" />
-                </LinearLayout>
-                <View style="@style/HourLine"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,8 +78,8 @@
                         style="@style/oaTextView"
                         android:text="线路编号:*" />
                     <View style="@style/VerticalLine"/>
-                    <EditText
-                        android:id="@+id/etLineNo"
+                    <TextView
+                        android:id="@+id/tvLineNo"
                         style="@style/oaEditText"
                         android:layout_marginRight="10dp" />
                 </LinearLayout>
@@ -123,8 +109,8 @@
                         style="@style/oaTextView"
                         android:text="驾驶员编号:*" />
                     <View style="@style/VerticalLine"/>
-                    <EditText
-                        android:id="@+id/etDriverCode"
+                    <TextView
+                        android:id="@+id/tvDriverCode"
                         style="@style/oaEditText"
                         android:layout_marginRight="10dp" />
                 </LinearLayout>

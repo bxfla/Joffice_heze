@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -34,21 +35,22 @@ import com.loopj.android.http.RequestParams;
 import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
+import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.bean.CarCodeData;
+import com.smartbus.heze.checkup.bean.LineCodeData;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fault.module.AboutDataContract;
 import com.smartbus.heze.fault.module.UpDataContract;
 import com.smartbus.heze.fault.presenter.AboutDataPresenter;
 import com.smartbus.heze.fault.presenter.UpDataPresenter;
+import com.smartbus.heze.fileapprove.activity.WorkOnePersonActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
-import com.smartbus.heze.oasheet.bean.OANO;
-import com.smartbus.heze.oasheet.module.NoContract;
 import com.smartbus.heze.oasheet.presenter.NoPresenter;
 
 import org.json.JSONException;
@@ -68,26 +70,24 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.smartbus.heze.http.base.Constant.TAG_FOUR;
+import static com.smartbus.heze.http.base.Constant.TAG_ONE;
 
-public class FaultUpActivity extends BaseActivity implements NoContract.View
-        ,AboutDataContract.View,UpDataContract.View{
+public class FaultUpActivity extends BaseActivity implements AboutDataContract.View, UpDataContract.View {
 
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tv1)
     TextView tv1;
-    @BindView(R.id.tvNo)
-    TextView tvNo;
     @BindView(R.id.tvDate)
     TextView tvDate;
     @BindView(R.id.tvCarNo)
     TextView tvCarNo;
-    @BindView(R.id.etLineNo)
-    EditText etLineNo;
+    @BindView(R.id.tvLineNo)
+    TextView tvLineNo;
+    @BindView(R.id.tvDriverCode)
+    TextView tvDriverCode;
     @BindView(R.id.etDriver)
     EditText etDriver;
-    @BindView(R.id.etDriverCode)
-    EditText etDriverCode;
     @BindView(R.id.etWorkDate)
     EditText etWorkDate;
     @BindView(R.id.etAge)
@@ -224,10 +224,8 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
         sglbAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSGLB.setAdapter(sglbAdapter);
 
-        noPresenter = new NoPresenter(this, this);
-        abboutDataPresenter = new AboutDataPresenter(this,this);
-        upDataPresenter = new UpDataPresenter(this,this);
-        noPresenter.getNo("shigubianhao");
+        abboutDataPresenter = new AboutDataPresenter(this, this);
+        upDataPresenter = new UpDataPresenter(this, this);
     }
 
     @Override
@@ -242,31 +240,31 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
 
     @Override
     protected void rightClient() {
-        if (tvCarNo.getText().toString().equals("")){
+        if (tvCarNo.getText().toString().equals("")) {
             Toast.makeText(this, "请选择车牌号", Toast.LENGTH_SHORT).show();
-        }else {
-            if (!fileName1.equals("")&&fileName2.equals("")&&fileName3.equals("")){
+        } else {
+            if (!fileName1.equals("") && fileName2.equals("") && fileName3.equals("")) {
                 atPhoto = fileName1;
             }
-            if (!fileName2.equals("")&&fileName3.equals("")){
-                atPhoto = fileName1+","+fileName2;
+            if (!fileName2.equals("") && fileName3.equals("")) {
+                atPhoto = fileName1 + "," + fileName2;
             }
-            if (!fileName3.equals("")){
-                atPhoto = fileName1+","+fileName2+","+fileName3;
+            if (!fileName3.equals("")) {
+                atPhoto = fileName1 + "," + fileName2 + "," + fileName3;
             }
             String mileType = "";
-            if (rb1.isChecked()){
+            if (rb1.isChecked()) {
                 mileType = "0";
-            }else  if (rb2.isChecked()){
+            } else if (rb2.isChecked()) {
                 mileType = "1";
             }
             String date = tvDate.getText().toString();
-            upDataPresenter.getUpData(tvNo.getText().toString(),date.split(" ")[0],date.split(" ")[1],busCode,tvCarNo.getText().toString()
-                    ,etLineNo.getText().toString(),spinnerWeather.getSelectedItem().toString(),spinnerAddressType.getSelectedItem().toString()
-                    ,spinnerSGType.getSelectedItem().toString(),spinnerSGZR.getSelectedItem().toString(),spinnerSGXZ.getSelectedItem().toString()
-                    ,spinnerSGLB.getSelectedItem().toString(),etDriverCode.getText().toString(),etSWRS.getText().toString()
-                    ,etSIWRS.getText().toString(),etSGAddress.getText().toString(),etSGReason.getText().toString()
-                    ,depNameId,depName,atPhoto,mileType);
+            upDataPresenter.getUpData("", date.split(" ")[0], date.split(" ")[1], busCode, tvCarNo.getText().toString()
+                    , tvLineNo.getText().toString(), spinnerWeather.getSelectedItem().toString(), spinnerAddressType.getSelectedItem().toString()
+                    , spinnerSGType.getSelectedItem().toString(), spinnerSGZR.getSelectedItem().toString(), spinnerSGXZ.getSelectedItem().toString()
+                    , spinnerSGLB.getSelectedItem().toString(), tvDriverCode.getText().toString(), etSWRS.getText().toString()
+                    , etSIWRS.getText().toString(), etSGAddress.getText().toString(), etSGReason.getText().toString()
+                    , depNameId, depName, atPhoto, mileType);
         }
     }
 
@@ -292,30 +290,15 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
     }
 
     /**
-     * 获取事故编号
-     * @param s
-     */
-    @Override
-    public void setNo(OANO s) {
-        if (s.isSuccess()) {
-            tvNo.setText(s.getNumber());
-        }
-    }
-
-    @Override
-    public void setNoMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
      * 获取关联数据
+     *
      * @param s
      */
     @Override
     public void setAboutData(AboutData s) {
-        if (s.isSuccess()){
-            etDriverCode.setText(s.getData().getJsy().toString());
-            etLineNo.setText(s.getData().getXlbh().toString());
+        if (s.isSuccess()) {
+            tvDriverCode.setText(s.getData().getJsy().toString());
+            tvLineNo.setText(s.getData().getXlbh().toString());
         }
     }
 
@@ -326,11 +309,12 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
 
     /**
      * 数据提交
+     *
      * @param s
      */
     @Override
     public void setUpData(UpData s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -341,21 +325,29 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03})
+    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03,R.id.tvLineNo, R.id.tvDriverCode})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tvLineNo:
+                intent = new Intent(this, LineCodeActivity.class);
+                startActivityForResult(intent, Constant.TAG_TWO);
+                break;
+            case R.id.tvDriverCode:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, Constant.TAG_THERE);
+                break;
             case R.id.tvDate:
                 customDatePicker.show(tvDate.getText().toString());
                 break;
             case R.id.tvCarNo:
                 intent = new Intent(this, CarCodeActivity.class);
                 intent.putExtra("tag", "carNo");
-                startActivityForResult(intent, Constant.TAG_ONE);
+                startActivityForResult(intent, TAG_ONE);
                 break;
             case R.id.ll2:
-                if (ll3.getVisibility()==View.VISIBLE){
+                if (ll3.getVisibility() == View.VISIBLE) {
                     ll3.setVisibility(View.GONE);
-                }else if (ll3.getVisibility()==View.GONE){
+                } else if (ll3.getVisibility() == View.GONE) {
                     ll3.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -364,14 +356,14 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                         .getConstantState();
                 Drawable.ConstantState resourceConstantState = getResources().getDrawable(
                         R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState.equals(resourceConstantState)){
+                if (buttonConstantState.equals(resourceConstantState)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                         ActivityCompat.requestPermissions(this,
                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_MY_UP_IMAGE);
-                    }  else {
+                    } else {
                         openCamera(this);
                     }
                 }
@@ -381,14 +373,14 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                         .getConstantState();
                 Drawable.ConstantState resourceConstantState1 = getResources().getDrawable(
                         R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState1.equals(resourceConstantState1)){
+                if (buttonConstantState1.equals(resourceConstantState1)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                         ActivityCompat.requestPermissions(this,
                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_MY_UP_IMAGE);
-                    }  else {
+                    } else {
                         openCamera(this);
                     }
                 }
@@ -398,14 +390,14 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                         .getConstantState();
                 Drawable.ConstantState resourceConstantState2 = getResources().getDrawable(
                         R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState2.equals(resourceConstantState2)){
+                if (buttonConstantState2.equals(resourceConstantState2)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                         ActivityCompat.requestPermissions(this,
                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_MY_UP_IMAGE);
-                    }  else {
+                    } else {
                         openCamera(this);
                     }
                 }
@@ -429,7 +421,7 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
 
     public void openCamera(Activity activity) {
         //获取系統版本
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        int currentapiVersion = Build.VERSION.SDK_INT;
         // 激活相机
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // 判断存储卡是否可以用，可用进行存储
@@ -451,7 +443,7 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请开启存储权限", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -474,18 +466,31 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case Constant.TAG_ONE:
+            case TAG_ONE:
                 if (resultCode == Constant.TAG_TWO) {
                     CarCodeData carCodeData = (CarCodeData) data.getSerializableExtra("carCode");
                     tvCarNo.setText(carCodeData.getCarNo());
                     busCode = carCodeData.getBusCode();
                     depName = carCodeData.getDepName();
                     depNameId = carCodeData.getDepId();
-                    Log.e("XXX",busCode+"");
+                    Log.e("XXX", busCode + "");
                     String date = tvDate.getText().toString();
                     String rq = date.split(" ")[0];
                     String sj = date.split(" ")[1];
-                    abboutDataPresenter.getAboutData(busCode,rq,sj);
+                    abboutDataPresenter.getAboutData(busCode, rq, sj);
+                }
+                break;
+            case Constant.TAG_TWO:
+                if (resultCode == TAG_ONE) {
+                    LineCodeData lineCodeData = (LineCodeData) data.getSerializableExtra("lineCode");
+                    tvLineNo.setText(lineCodeData.getLineCode());
+                }
+                break;
+            case Constant.TAG_THERE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvDriverCode.setText(data.getStringExtra("ecard"));
+                    }
                 }
                 break;
             case TAG_FOUR:
@@ -496,19 +501,19 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                if (imageNum==2){
+                if (imageNum == 2) {
                     imAdd03.setImageBitmap(bitmap);
-                    imageNum+=1;
+                    imageNum += 1;
                 }
-                if (imageNum==1){
+                if (imageNum == 1) {
                     imAdd02.setImageBitmap(bitmap);
                     imAdd03.setVisibility(View.VISIBLE);
-                    imageNum+=1;
+                    imageNum += 1;
                 }
-                if (imageNum==0){
+                if (imageNum == 0) {
                     imAdd01.setImageBitmap(bitmap);
                     imAdd02.setVisibility(View.VISIBLE);
-                    imageNum+=1;
+                    imageNum += 1;
                 }
                 upImage();
                 break;
@@ -538,18 +543,18 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(arg1.toString());
-                    if (imageNum==1){
+                    if (imageNum == 1) {
                         fileName1 = jsonObject.getString("msg");
-                    }else if (imageNum==2){
+                    } else if (imageNum == 2) {
                         fileName2 = jsonObject.getString("msg");
-                    }else if (imageNum==3){
+                    } else if (imageNum == 3) {
                         fileName3 = jsonObject.getString("msg");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Message message = new Message();
-                message.what = Constant.TAG_ONE;
+                message.what = TAG_ONE;
                 handler.sendMessage(message);
             }
 
@@ -563,12 +568,13 @@ public class FaultUpActivity extends BaseActivity implements NoContract.View
             }
         });
     }
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case Constant.TAG_ONE:
+                case TAG_ONE:
                     Toast.makeText(FaultUpActivity.this, "图片上传成功", Toast.LENGTH_SHORT).show();
                     ProgressDialogUtil.stopLoad();
                     break;
