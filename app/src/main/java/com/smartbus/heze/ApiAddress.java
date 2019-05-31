@@ -143,4 +143,11 @@ public class ApiAddress {
 
     //广告数据上传
     public static final String  adverup = "helpmgr/savePhoneAdvertiserMsg.do";
+
+    //失物图片上传
+    public static final String  lostimageup = "staffzone/upLoadImageLostArticle.do";
+    //失物数据上传
+    public static final String  lostup = "staffzone/saveNewLostArticle.do";
+
+
 }

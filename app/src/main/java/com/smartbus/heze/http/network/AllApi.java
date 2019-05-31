@@ -618,4 +618,18 @@ public interface AllApi {
     Observable<UpData> getAdverUpData(@Field("company")String company,@Field("contacts") String contacts
             ,@Field("number") String number,@Field("address") String address
             ,@Field("memo") String memo);
+
+    /**
+     * 失物数据提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.lostup)
+    Observable<UpData> getLostUpData(@Field("userName")String userName, @Field("createDate")String createDate
+            , @Field("createTime")String createTime, @Field("lineCode")String lineCode
+            , @Field("driverName")String driverName, @Field("receiveDate")String receiveDate
+            , @Field("receiveTime")String receiveTime, @Field("ownerName")String ownerName
+            , @Field("ownerPhone")String ownerPhone, @Field("returnMode")String returnMode
+            , @Field("ownerCertificates")String ownerCertificates, @Field("returnStatus")String returnStatus
+            , @Field("situation")String situation, @Field("remarks")String remarks
+            , @Field("photo")String photo);
 }
