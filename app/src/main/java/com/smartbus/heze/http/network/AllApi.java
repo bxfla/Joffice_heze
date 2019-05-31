@@ -600,4 +600,13 @@ public interface AllApi {
             ,@Field("cardId") String cardId,@Field("cardType") String cardType
             ,@Field("money") String money,@Field("reasons") String reasons
            ,@Field("date") String date,@Field("memo") String memo);
+
+    /**
+     * 安保数据提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.saferup)
+    Observable<UpData> getSaferUpData(@Field("useName")String userName,@Field("apPlace") String apPlace
+            ,@Field("apType") String apType,@Field("apDate") String apDate
+            ,@Field("apReason") String apReason,@Field("apPhoto") String apPhoto);
 }

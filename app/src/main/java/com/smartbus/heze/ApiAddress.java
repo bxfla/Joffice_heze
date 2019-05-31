@@ -135,4 +135,9 @@ public class ApiAddress {
     public static final String  cartype = "system/getIcTypeDictionary.do";
     //Ic卡没收提交
     public static final String  upcardata = "helpmgr/saveIcPhoneIcCardConfiscate.do";
+
+    //安保图片上传
+    public static final String  saferimageup = "helpmgr/upLoadImageSecurityMgr.do";
+    //安保数据上传
+    public static final String  saferup = "helpmgr/savePhoneSecurityMgr.do";
 }

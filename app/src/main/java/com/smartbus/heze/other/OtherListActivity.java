@@ -9,6 +9,7 @@ import com.smartbus.heze.R;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.other.activity.ICMSActivity;
+import com.smartbus.heze.other.activity.SaferActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +61,8 @@ public class OtherListActivity extends BaseActivity {
             case R.id.rb2:
                 break;
             case R.id.rb3:
+                intent = new Intent(this,SaferActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rb4:
                 break;

@@ -214,7 +214,10 @@
         <activity
             android:name=".other.OtherListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".other.activity.ICMSActivity"></activity>
+        <activity android:name=".other.activity.ICMSActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".other.activity.SaferActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
     </application>
 
 </manifest>
