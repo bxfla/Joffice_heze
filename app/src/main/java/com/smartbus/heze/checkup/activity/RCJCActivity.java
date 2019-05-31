@@ -76,8 +76,6 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     EditText etRummager;
     @BindView(R.id.imRummager)
     ImageView imRummager;
-    @BindView(R.id.etCarType)
-    EditText etCarType;
     @BindView(R.id.tvClassTime)
     TextView tvClassTime;
     @BindView(R.id.tvTime)
@@ -192,31 +190,37 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
                 customDatePicker.show(tvTime.getText().toString());
                 break;
             case R.id.btnUp:
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setStackFromEnd(true);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                adapter.setOnInnerItemOnClickListener(this);
-                //包装数据
-                JSONArray jsonArrayData = new JSONArray();
-                JSONArray jsonArrayfkData = new JSONArray();
-                try {
-                    for (int i = 0; i < beanList.size(); i++) {
-                        JSONObject jsonObjectType = new JSONObject();
-                        JSONObject jsonObjectMoney = new JSONObject();
-                        jsonObjectType.put(beanList.get(i).getProjectName(),beanList.get(i).getState());
-                        jsonObjectMoney.put(beanList.get(i).getProjectName(),beanList.get(i).getFkje());
-                        jsonArrayData.put(jsonObjectType);
-                        jsonArrayfkData.put(jsonObjectMoney);
+                if (etLine.getText().toString().equals("")||etCarCode.getText().toString().equals("")
+                        ||etCarNo.getText().toString().equals("")||etPersonCode.getText().toString().equals("")
+                        ||etPersonName.getText().toString().equals("")|etRummager.getText().toString().equals("")){
+                    Toast.makeText(this, "请填写完整数据", Toast.LENGTH_SHORT).show();
+                }else {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                    linearLayoutManager.setStackFromEnd(true);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    adapter.setOnInnerItemOnClickListener(this);
+                    //包装数据
+                    JSONArray jsonArrayData = new JSONArray();
+                    JSONArray jsonArrayfkData = new JSONArray();
+                    try {
+                        for (int i = 0; i < beanList.size(); i++) {
+                            JSONObject jsonObjectType = new JSONObject();
+                            JSONObject jsonObjectMoney = new JSONObject();
+                            jsonObjectType.put(beanList.get(i).getProjectName(),beanList.get(i).getState());
+                            jsonObjectMoney.put(beanList.get(i).getProjectName(),beanList.get(i).getFkje());
+                            jsonArrayData.put(jsonObjectType);
+                            jsonArrayfkData.put(jsonObjectMoney);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "数据拼接错误", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "数据拼接错误", Toast.LENGTH_SHORT).show();
+                    upDataPresenter.getUpData(jsonArrayData.toString(),jsonArrayfkData.toString(),
+                            tvTime.getText().toString(),etLine.getText().toString(),etCarNo.getText().toString()
+                            ,etCarCode.getText().toString(),depId,depName,etPersonName.getText().toString()
+                            ,etPersonCode.getText().toString(),etRummager.getText().toString(),etRemarks.getText().toString()
+                            ,"",tvClassTime.getText().toString());
                 }
-                upDataPresenter.getUpData(jsonArrayData.toString(),jsonArrayfkData.toString(),
-                        tvTime.getText().toString(),etLine.getText().toString(),etCarNo.getText().toString()
-                        ,etCarCode.getText().toString(),depId,depName,etPersonName.getText().toString()
-                        ,etPersonCode.getText().toString(),etRummager.getText().toString(),etRemarks.getText().toString()
-                        ,etCarType.getText().toString(),tvClassTime.getText().toString());
                 break;
             case R.id.ll1:
                 if (ll3.getVisibility() == View.VISIBLE) {
@@ -264,7 +268,6 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
                     etPersonCode.setText(userCodeData.getECard());
                     etPersonName.setText(userCodeData.getFullname());
                     positionDate = userCodeData.getPositionDate();
-                    etCarType.setText(userCodeData.getVehicleClass());
                     tvClassTime.setText(userCodeData.getPositionDate());
                 }
             case Constant.TAG_FOUR:
