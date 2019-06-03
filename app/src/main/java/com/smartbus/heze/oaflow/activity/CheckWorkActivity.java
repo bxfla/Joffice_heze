@@ -223,6 +223,10 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                if (etReason.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写调休说明", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 setDataFirst();
                 checkWorkPresenter.getCheckWork(firstmap);
                 break;
@@ -242,7 +246,11 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
                     namelist1.clear();
                     dataList.clear();
                     if (etReason.getText().toString().equals("")) {
-                        Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "请填写调休说明", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvPerson.getText().toString().equals("")) {
+                        Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);

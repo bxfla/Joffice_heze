@@ -222,6 +222,10 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                if (etReason.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写值班说明", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 setDataFirst();
                 atWorkPresenter.getAtWork(firstmap);
                 break;
@@ -240,8 +244,12 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
                     selectList.clear();
                     namelist1.clear();
                     dataList.clear();
+                    if (tvPerson.getText().toString().equals("")) {
+                        Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     if (etReason.getText().toString().equals("")) {
-                        Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "请填写值班说明", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);

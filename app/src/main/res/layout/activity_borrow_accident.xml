@@ -120,10 +120,10 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etLuBie"
+                <TextView
+                    android:id="@+id/tvLuBie"
                     style="@style/oaEditText"
-                    android:hint="请填写路别" />
+                    android:hint="请选择路别" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -142,10 +142,10 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etCarNo"
+                <TextView
+                    android:id="@+id/tvCarNo"
                     style="@style/oaEditText"
-                    android:hint="请填写车牌号" />
+                    android:hint="请选择车牌号" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -164,8 +164,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etDriver"
+                <TextView
+                    android:id="@+id/tvDriver"
                     style="@style/oaEditText"
                     android:hint="请填写驾驶员" />
             </LinearLayout>
@@ -255,8 +255,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etName"
+                <TextView
+                    android:id="@+id/tvName"
                     style="@style/oaEditText"
                     android:hint="请填写借款人" />
             </LinearLayout>

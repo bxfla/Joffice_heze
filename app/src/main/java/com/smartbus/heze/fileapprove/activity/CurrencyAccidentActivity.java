@@ -1,5 +1,6 @@
 package com.smartbus.heze.fileapprove.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.smartbus.heze.http.base.Constant.TAG_ONE;
+
 /**
  * 通用借款单
  */
@@ -47,8 +50,8 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     TextView tvTime;
     @BindView(R.id.etSmallMoney)
     EditText etSmallMoney;
-    @BindView(R.id.etName)
-    EditText etName;
+    @BindView(R.id.tvName)
+    TextView tvName;
     @BindView(R.id.etReason)
     EditText etReason;
     @BindView(R.id.tvLeader)
@@ -140,7 +143,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
         map.put("jiekuanDate", tvTime.getText().toString());
         map.put("jiekuansy", etReason.getText().toString());
         map.put("jiekuanje", etSmallMoney.getText().toString());
-        map.put("jiekuanren", etName.getText().toString());
+        map.put("jiekuanren", tvName.getText().toString());
     }
 
     @Override
@@ -285,9 +288,13 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     }
 
 
-    @OnClick({R.id.tvTime, R.id.btnUp})
+    @OnClick({R.id.tvTime, R.id.btnUp, R.id.tvName})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tvName:
+                Intent intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, TAG_ONE);
+                break;
             case R.id.tvTime:
                 customDatePicker1.show(tvTime.getText().toString());
                 break;
@@ -306,7 +313,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                     Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etName.getText().toString().equals("")) {
+                if (tvName.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -314,6 +321,20 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                 onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
                 twoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this, this);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAG_ONE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvName.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
                 break;
         }
     }

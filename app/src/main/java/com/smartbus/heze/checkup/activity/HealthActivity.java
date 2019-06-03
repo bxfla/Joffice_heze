@@ -76,8 +76,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     EditText etRummager;
     @BindView(R.id.imRummager)
     ImageView imRummager;
-    @BindView(R.id.etCarType)
-    EditText etCarType;
     @BindView(R.id.tvClassTime)
     TextView tvClassTime;
     @BindView(R.id.tvTime)
@@ -102,8 +100,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     HealthAdapter adapter;
     HealthItemPresenter healthItemPresenter;
     HealthUpDataPresenter healthUpDataPresenter;
-    @BindView(R.id.llType)
-    LinearLayout llType;
     private CustomDatePickerDay customDatePicker;
     List<HealthItem.ResultBean> beanList = new ArrayList<>();
 
@@ -112,7 +108,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         header.setTvTitle(getResources().getString(R.string.first_dianjian));
-        llType.setVisibility(View.GONE);
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -268,7 +263,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
                     etPersonCode.setText(userCodeData.getECard());
                     etPersonName.setText(userCodeData.getFullname());
                     positionDate = userCodeData.getPositionDate();
-                    etCarType.setText(userCodeData.getVehicleClass());
                     tvClassTime.setText(userCodeData.getPositionDate());
                 }
             case Constant.TAG_FOUR:

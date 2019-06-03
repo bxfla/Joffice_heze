@@ -1,14 +1,17 @@
 package com.smartbus.heze.fileapprove.activity;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +37,6 @@ import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
-import com.smartbus.heze.fileapprove.util.FileUtils;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -48,7 +50,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,14 +60,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.R.attr.permission;
+import static com.smartbus.heze.http.base.Constant.TAG_FIVE;
+import static com.smartbus.heze.http.base.Constant.TAG_FOUR;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
+import static com.smartbus.heze.http.base.Constant.TAG_SIX;
+import static com.smartbus.heze.http.base.Constant.TAG_THERE;
 import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
  * 会签发文
  */
 public class HuiQianActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View{
+        , TwoContract.View, UPYSDContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.etTitle)
@@ -85,14 +90,14 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
     EditText et3;
     @BindView(R.id.et4)
     EditText et4;
-    @BindView(R.id.etQianFa)
-    EditText etQianFa;
-    @BindView(R.id.etHuiQian)
-    EditText etHuiQian;
-    @BindView(R.id.etZhuSong)
-    EditText etZhuSong;
-    @BindView(R.id.etCaoSong)
-    EditText etCaoSong;
+    @BindView(R.id.tvQianFa)
+    TextView tvQianFa;
+    @BindView(R.id.tvHuiQian)
+    TextView tvHuiQian;
+    @BindView(R.id.tvZhuSong)
+    TextView tvZhuSong;
+    @BindView(R.id.tvCaoSong)
+    TextView tvCaoSong;
     @BindView(R.id.tvDepartment)
     TextView tvDepartment;
     @BindView(R.id.etNiGao)
@@ -113,6 +118,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
     String userDepart = "";
     String userCode = "";
     String userName = "";
+    Intent intent;
     String[] nametemp = null;
     String[] codetemp = null;
     String depId = "", depName = "";
@@ -129,7 +135,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE" };
+            "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,20 +158,20 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
 
     }
 
-    @OnClick({R.id.tvData, R.id.btnUp, R.id.tvDepartment})
+    @OnClick({R.id.tvData, R.id.btnUp, R.id.tvDepartment,R.id.tvQianFa, R.id.tvHuiQian, R.id.tvZhuSong, R.id.tvCaoSong})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvDepartment:
-                Intent intent = new Intent(this, DepartmentActivity.class);
+                intent = new Intent(this, DepartmentActivity.class);
                 startActivityForResult(intent, TAG_ONE);
                 break;
             case R.id.tvData:
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     // 没有写的权限，去申请写的权限，会弹出对话框
-                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
-                }else {
+                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+                } else {
                     File file = new File(Environment.getExternalStorageDirectory().getPath());
-                    if(null==file || !file.exists()){
+                    if (null == file || !file.exists()) {
                         return;
                     }
                     Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
@@ -174,7 +180,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                     intentD.setDataAndType(Uri.fromFile(file), "file/*");
                     try {
                         startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
-                    } catch (android.content.ActivityNotFoundException ex) {
+                    } catch (ActivityNotFoundException ex) {
                         // Potentially direct the user to the Market with a Dialog
                         Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                     }
@@ -196,11 +202,11 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请填写标题，主题词和内容", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etQianFa.getText().toString().equals("") || etHuiQian.getText().toString().equals("")) {
+                if (tvQianFa.getText().toString().equals("") || tvHuiQian.getText().toString().equals("")) {
                     Toast.makeText(this, "签发人，会签人不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etZhuSong.getText().toString().equals("") || etCaoSong.getText().toString().equals("")) {
+                if (tvZhuSong.getText().toString().equals("") || tvCaoSong.getText().toString().equals("")) {
                     Toast.makeText(this, "主送人，抄送人不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -218,6 +224,22 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                 ysdTwoPersenter = new TwoPresenter(this, this);
                 upYsdPersenter = new UPYSDPresenter(this, this);
                 break;
+            case R.id.tvQianFa:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, TAG_THERE);
+                break;
+            case R.id.tvHuiQian:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, TAG_FOUR);
+                break;
+            case R.id.tvZhuSong:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, TAG_FIVE);
+                break;
+            case R.id.tvCaoSong:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, TAG_SIX);
+                break;
         }
     }
 
@@ -230,7 +252,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
                     startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), Constant.TAG_TWO);
-                } catch (android.content.ActivityNotFoundException ex) {
+                } catch (ActivityNotFoundException ex) {
                     // Potentially direct the user to the Market with a Dialog
                     Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
                 }
@@ -248,10 +270,10 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
         map.put("hao2", et2.getText().toString());
         map.put("urgency", et3.getText().toString());
         map.put("secret", et4.getText().toString());
-        map.put("Issue", etQianFa.getText().toString());
+        map.put("Issue", tvQianFa.getText().toString());
         map.put("sign", "");
-        map.put("delivery", etZhuSong.getText().toString());
-        map.put("copy", etCaoSong.getText().toString());
+        map.put("delivery", tvZhuSong.getText().toString());
+        map.put("copy", tvCaoSong.getText().toString());
         map.put("draftingDep", tvDepartment.getText().toString());
         map.put("draft", etNiGao.getText().toString());
         map.put("nuclear", etHeGao.getText().toString());
@@ -282,30 +304,30 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
                     File file = null;
-                    try {
-                        if (FileUtils.getPath(HuiQianActivity.this,uri)!=null){
-                            file = FileUtils.getPath(HuiQianActivity.this,uri);
-                        }
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-//                    String[] proj = {MediaStore.Images.Media.DATA};
-//                    Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-//                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                    actualimagecursor.moveToFirst();
-//                    String img_path = actualimagecursor.getString(actual_image_column_index);
-//                    File file1 = new File(path);
-                    Log.e("XXX",file.toString());
+                    String[] proj = { MediaStore.Images.Media.DATA };
+                    Cursor actualimagecursor = this.managedQuery(uri,proj,null,null,null);
+                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    actualimagecursor.moveToFirst();
+                    String img_path = actualimagecursor.getString(actual_image_column_index);
+                    file = new File(img_path);
+//                    try {
+//                        if (FileUtils.getPath(HuiQianActivity.this, uri) != null) {
+//                            file = FileUtils.getPath(HuiQianActivity.this, uri);
+//                        }
+//                    } catch (URISyntaxException e) {
+//                        e.printStackTrace();
+//                    }
+                    Log.e("XXX", file.toString());
                     final AsyncHttpClient client = new AsyncHttpClient();
                     final String url = ApiAddress.mainApi + ApiAddress.dataup;
-                    String userId = new SharedPreferencesHelper(MyApplication.getContext(),"login").
+                    String userId = new SharedPreferencesHelper(MyApplication.getContext(), "login").
                             getData(MyApplication.getContext(), "userId", "");
                     final RequestParams params = new RequestParams();
                     try {
                         params.put("upload", file);
                         params.put("fullname", file.getName());
                         params.put("userId", userId);
-                    }catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     ProgressDialogUtil.startLoad(this, MainUtil.upData);
@@ -335,6 +357,34 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                             handler.sendMessage(message);
                         }
                     });
+                }
+                break;
+            case TAG_THERE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvQianFa.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case TAG_FOUR:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvHuiQian.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case TAG_FIVE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvZhuSong.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case TAG_SIX:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvCaoSong.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
                 }
                 break;
         }
@@ -511,11 +561,11 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case Constant.TAG_ONE:
                     Toast.makeText(HuiQianActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
                     tvData.setText(fileName);
@@ -528,5 +578,4 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
             }
         }
     };
-
 }

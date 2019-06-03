@@ -325,10 +325,11 @@ public interface AllApi {
     /**
      * 日常稽查检查记录
      */
-    @GET(ApiAddress.rcjchistory)
-    Observable<RCJCHistory> getRCJCHistory(@Query("startDate")String startDate
-            , @Query("endDate")String endDate
-            , @Query("carNo")String carNo);
+    @FormUrlEncoded
+    @POST(ApiAddress.rcjchistory)
+    Observable<RCJCHistory> getRCJCHistory(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo);
 
     /**
      * 车辆巡检检查记录检查项
@@ -364,10 +365,11 @@ public interface AllApi {
     /**
      * 车辆巡检检查记录
      */
-    @GET(ApiAddress.saferhistory)
-    Observable<SaferHistory> getSaferHistory(@Query("startDate")String startDate
-            , @Query("endDate")String endDate
-            , @Query("carNo")String carNo);
+    @FormUrlEncoded
+    @POST(ApiAddress.saferhistory)
+    Observable<SaferHistory> getSaferHistory(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo);
     /**
      * 车辆巡检检查记录检查项
      */
@@ -400,10 +402,11 @@ public interface AllApi {
     /**
      * 车辆巡检检查记录
      */
-    @GET(ApiAddress.carcheckhistory)
-    Observable<CarCheckHistory> getCarCheckHistory(@Query("startDate")String startDate
-            , @Query("endDate")String endDate
-            , @Query("carNo")String carNo);
+    @FormUrlEncoded
+    @POST(ApiAddress.carcheckhistory)
+    Observable<CarCheckHistory> getCarCheckHistory(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo);
     /**
      * 车辆巡检检查记录检查项
      */
@@ -436,10 +439,11 @@ public interface AllApi {
     /**
      * 稽查卫生检查记录
      */
-    @GET(ApiAddress.healthhistory)
-    Observable<HealthHistory> getHealthHistory(@Query("startDate")String startDate
-            , @Query("endDate")String endDate
-            , @Query("carNo")String carNo);
+    @FormUrlEncoded
+    @POST(ApiAddress.healthhistory)
+    Observable<HealthHistory> getHealthHistory(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo);
 
     /**
      * 车辆巡检检查记录检查项

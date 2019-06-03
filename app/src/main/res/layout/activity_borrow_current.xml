@@ -79,8 +79,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/shouye" />
 
-                <EditText
-                    android:id="@+id/etName"
+                <TextView
+                    android:id="@+id/tvName"
                     style="@style/oaEditText"
                     android:hint="请填写借款人" />
             </LinearLayout>

@@ -457,7 +457,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             checkedItems[i] = false;
         }
         new AlertDialog.Builder(this)
-                .setTitle("选择时间")//标题栏
+                .setTitle("选择审核人")//标题栏
                 .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {

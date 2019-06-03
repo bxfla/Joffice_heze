@@ -292,7 +292,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                     break;
                 }
                 if (etDays.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写请假天数", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请填写加班天数", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (etReason.getText().toString().equals("") || etAddress.getText().toString().equals("")) {

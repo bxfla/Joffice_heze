@@ -56,8 +56,8 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     TextView tvTime;
     @BindView(R.id.etSmallMoney)
     EditText etSmallMoney;
-    @BindView(R.id.etName)
-    EditText etName;
+    @BindView(R.id.tvName)
+    TextView tvName;
     @BindView(R.id.etReason)
     EditText etReason;
     @BindView(R.id.tvLeader)
@@ -216,7 +216,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         map.put("jiekuanDate", tvTime.getText().toString());
         map.put("jiekuansy", etReason.getText().toString());
         map.put("jiekuanje", etSmallMoney.getText().toString());
-        map.put("jiekuanren", etName.getText().toString());
+        map.put("jiekuanren", tvName.getText().toString());
         map.put("mainId", mainId);
         map.put("taskId", taskId);
         map.put("signalName", signaName);
@@ -260,7 +260,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         if (s != null) {
             tvTime.setText(s.getMainform().get(0).getJiekuanDate().toString());
             etSmallMoney.setText(s.getMainform().get(0).getJiekuanje().toString());
-            etName.setText(s.getMainform().get(0).getJiekuanren().toString());
+            tvName.setText(s.getMainform().get(0).getJiekuanren().toString());
             etReason.setText(s.getMainform().get(0).getJiekuansy().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String leader = s.getMainform().get(0).getKezhang();
@@ -413,7 +413,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
             checkedItems[i] = false;
         }
         new AlertDialog.Builder(this)
-                .setTitle("选择时间")//标题栏
+                .setTitle("选择审核人")//标题栏
                 .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {

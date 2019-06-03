@@ -9,6 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
+import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
+import com.smartbus.heze.checkup.bean.CarCodeData;
+import com.smartbus.heze.checkup.bean.LineCodeData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
@@ -38,6 +42,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.smartbus.heze.http.base.Constant.TAG_FOUR;
+import static com.smartbus.heze.http.base.Constant.TAG_ONE;
+import static com.smartbus.heze.http.base.Constant.TAG_TWO;
+
 /**
  * 事故科的事故借款单
  */
@@ -51,22 +59,22 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     TextView tvTime1;
     @BindView(R.id.etAddress)
     EditText etAddress;
-    @BindView(R.id.etLuBie)
-    EditText etLuBie;
+    @BindView(R.id.tvLuBie)
+    TextView tvLuBie;
     @BindView(R.id.tvDepartment)
     TextView tvDepartment;
-    @BindView(R.id.etCarNo)
-    EditText etCarNo;
-    @BindView(R.id.etDriver)
-    EditText etDriver;
+    @BindView(R.id.tvCarNo)
+    TextView tvCarNo;
+    @BindView(R.id.tvDriver)
+    TextView tvDriver;
     @BindView(R.id.etBlame)
     EditText etBlame;
     @BindView(R.id.etReason)
     EditText etReason;
     @BindView(R.id.etSmallMoney)
     EditText etSmallMoney;
-    @BindView(R.id.etName)
-    EditText etName;
+    @BindView(R.id.tvName)
+    TextView tvName;
     @BindView(R.id.etNum)
     EditText etNum;
     @BindView(R.id.tvLeader)
@@ -89,6 +97,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     Button btnUp;
 
     String uId = "";
+    Intent intent;
     String isShow = "true";
     String userDepart = "";
     String userCode = "";
@@ -174,14 +183,14 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
         map.put("jiekuanDate", tvTime.getText().toString());
         map.put("atDate", tvTime1.getText().toString());
         map.put("atPlace", etAddress.getText().toString());
-        map.put("lineCode", etLuBie.getText().toString());
-        map.put("carNo", etCarNo.getText().toString());
-        map.put("driverName", etDriver.getText().toString());
+        map.put("lineCode", tvLuBie.getText().toString());
+        map.put("carNo", tvCarNo.getText().toString());
+        map.put("driverName", tvDriver.getText().toString());
         map.put("acDuty", etBlame.getText().toString());
         map.put("atAfter", etReason.getText().toString());
         map.put("atje", etSmallMoney.getText().toString());
         map.put("acNumber", etNum.getText().toString());
-        map.put("jiekuanren", etName.getText().toString());
+        map.put("jiekuanren", tvName.getText().toString());
         map.put("kezhang","");
         map.put("fenguanjingli", "");
         map.put("caiwujingli", "");
@@ -191,13 +200,43 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.TAG_ONE && requestCode == Constant.TAG_ONE) {
-            if (data != null) {
-                DepartmentDataBean departmentDataBean = (DepartmentDataBean) data.getSerializableExtra("department");
-                depId = departmentDataBean.getDepId();
-                depName = departmentDataBean.getDepName();
-                tvDepartment.setText(depName);
-            }
+        switch (requestCode){
+            case TAG_ONE:
+                if (requestCode == TAG_ONE) {
+                    if (data != null) {
+                        DepartmentDataBean departmentDataBean = (DepartmentDataBean) data.getSerializableExtra("department");
+                        depId = departmentDataBean.getDepId();
+                        depName = departmentDataBean.getDepName();
+                        tvDepartment.setText(depName);
+                    }
+                }
+                break;
+            case TAG_TWO:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvName.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case Constant.TAG_THERE:
+                if (resultCode == Constant.TAG_ONE) {
+                    LineCodeData lineCodeData = (LineCodeData) data.getSerializableExtra("lineCode");
+                    tvLuBie.setText(lineCodeData.getLineCode());
+                }
+                break;
+            case TAG_FOUR:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvDriver.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case Constant.TAG_FIVE:
+                if (resultCode == Constant.TAG_TWO) {
+                    CarCodeData carCodeData = (CarCodeData) data.getSerializableExtra("carCode");
+                    tvCarNo.setText(carCodeData.getCarNo());
+                }
+                break;
         }
     }
 
@@ -342,7 +381,8 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.tvTime, R.id.tvTime1, R.id.tvDepartment, R.id.btnUp})
+    @OnClick({R.id.tvTime, R.id.tvTime1, R.id.tvDepartment, R.id.btnUp, R.id.tvName
+            ,R.id.tvLuBie, R.id.tvDriver, R.id.tvCarNo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvTime:
@@ -352,8 +392,25 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                 customDatePicker2.show(tvTime.getText().toString());
                 break;
             case R.id.tvDepartment:
-                Intent intent = new Intent(this, DepartmentActivity.class);
-                startActivityForResult(intent, Constant.TAG_ONE);
+                intent = new Intent(this, DepartmentActivity.class);
+                startActivityForResult(intent, TAG_ONE);
+                break;
+            case R.id.tvName:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, Constant.TAG_TWO);
+                break;
+            case R.id.tvLuBie:
+                intent = new Intent(this, LineCodeActivity.class);
+                startActivityForResult(intent, Constant.TAG_THERE);
+                break;
+            case R.id.tvDriver:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, Constant.TAG_FOUR);
+                break;
+            case R.id.tvCarNo:
+                intent = new Intent(this, CarCodeActivity.class);
+                intent.putExtra("tag", "carNo");
+                startActivityForResult(intent, Constant.TAG_FIVE);
                 break;
             case R.id.btnUp:
                 namelist.clear();
@@ -370,15 +427,15 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                     Toast.makeText(this, "请填写地点", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etLuBie.getText().toString().equals("")) {
+                if (tvLuBie.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写路别", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etCarNo.getText().toString().equals("")) {
+                if (tvCarNo.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写车牌号", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etDriver.getText().toString().equals("")) {
+                if (tvDriver.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写驾驶员", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -394,7 +451,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                     Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etName.getText().toString().equals("")) {
+                if (tvName.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
                     break;
                 }

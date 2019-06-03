@@ -239,6 +239,10 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请时间不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                if (etReason.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写补勤说明", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 setDataFirst();
                 oldWorkPresenter.getOldWork(firstmap);
                 break;
@@ -262,6 +266,10 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
                     dataList.clear();
                     if (etReason.getText().toString().equals("")) {
                         Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etReason.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写补勤说明", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);

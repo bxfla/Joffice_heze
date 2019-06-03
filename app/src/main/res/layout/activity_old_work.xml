@@ -48,7 +48,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="部门: *" />
+                    android:text="部门: " />
 
                 <View
                     android:layout_width="1dp"
@@ -148,7 +148,7 @@
                 <EditText
                     android:id="@+id/etReason"
                     style="@style/textWrite"
-                    android:hint="请填写补勤说明" />
+                    android:hint="请填写说明" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 

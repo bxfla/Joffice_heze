@@ -102,7 +102,7 @@
                 <EditText
                     android:id="@+id/etDays"
                     style="@style/oaEditText"
-                    android:hint="请填写请假天数"
+                    android:hint="请填写天数"
                     android:inputType="number|numberDecimal" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
@@ -127,7 +127,7 @@
                 <EditText
                     android:id="@+id/etReason"
                     style="@style/textWrite"
-                    android:hint="请填写加班内容" />
+                    android:hint="请填写内容" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
@@ -175,7 +175,7 @@
                 <EditText
                     android:id="@+id/etAddress"
                     style="@style/textWrite"
-                    android:hint="请填写加班地点" />
+                    android:hint="请填写地点" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 
