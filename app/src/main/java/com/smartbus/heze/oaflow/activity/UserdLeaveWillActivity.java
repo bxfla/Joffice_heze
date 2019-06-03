@@ -298,7 +298,7 @@ public class UserdLeaveWillActivity extends BaseActivity implements UserdLeaveWi
             tvEndTime.setText(s.getMainform().get(0).getEndDate().toString());
             tvPM.setText(s.getMainform().get(0).getJsdayType().toString());
             tvDays.setText(s.getMainform().get(0).getVocationDays());
-//            tvReason.setText(s.getMainform().get(0).getShiyou().toString());
+            tvReason.setText(s.getMainform().get(0).getShiyou().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String dataUrl_save = s.getMainform().get(0).getDataUrl_save().toString();
             String[] strarray = dataUrl_save.split("[=]");

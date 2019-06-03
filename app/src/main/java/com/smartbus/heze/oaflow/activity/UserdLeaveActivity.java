@@ -348,6 +348,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         map.put("defId", Constant.USERDLEAVE_DEFID);
         map.put("startFlow", "true");
         map.put("formDefId", Constant.USERDLEAVE_FORMDEFIS);
+        map.put("shiyou", etReason.getText().toString());
         map.put("vocationType", spinner.getSelectedItem().toString());
         map.put("depName", tvDepartment.getText().toString());
         map.put("fullname", tvPerson.getText().toString());
