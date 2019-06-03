@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 值班待办
+ * 调休待办
  */
 public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillContract.View
         , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
@@ -115,7 +115,7 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
         atWorkWillPresenter = new AtWorkWillPresenter(this, this);
-        atWorkWillPresenter.getAtWorkWill(activityName, taskId, Constant.ATWORK_DEFID);
+        atWorkWillPresenter.getAtWorkWill(activityName, taskId, Constant.CHECKWORK_DEFID);
     }
 
     @Override
@@ -211,9 +211,9 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
     }
 
     private void setData() {
-        map.put("defId", Constant.ATWORK_DEFID);
+        map.put("defId", Constant.CHECKWORK_DEFID);
         map.put("startFlow", "true");
-        map.put("formDefId", Constant.ATWORK_FORMDEFIS);
+        map.put("formDefId", Constant.CHECKWORK_FORMDEFIS);
         map.put("userName", tvPerson.getText().toString());
         map.put("fillDate", tvEndTime.getText().toString());
         map.put("dayType", tvType.getText().toString());
