@@ -79,8 +79,6 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     EditText etRummager;
     @BindView(R.id.imRummager)
     ImageView imRummager;
-    @BindView(R.id.etCarType)
-    EditText etCarType;
     @BindView(R.id.tvClassTime)
     TextView tvClassTime;
     @BindView(R.id.tvTime)
@@ -99,8 +97,6 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     LinearLayout ll3;
     @BindView(R.id.ll4)
     LinearLayout ll4;
-    @BindView(R.id.llType)
-    LinearLayout llType;
     @BindView(R.id.llTime)
     LinearLayout llTime;
 
@@ -118,7 +114,6 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
         ButterKnife.bind(this);
         initDatePicker();
         llTime.setVisibility(View.GONE);
-        llType.setVisibility(View.GONE);
         header.setTvTitle(getResources().getString(R.string.first_anquan));
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -202,30 +197,36 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
                 customDatePicker.show(tvTime.getText().toString());
                 break;
             case R.id.btnUp:
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setStackFromEnd(true);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                adapter.setOnInnerItemOnClickListener(this);
-                //包装数据
-                JSONArray jsonArrayData = new JSONArray();
-                JSONArray jsonArrayfkData = new JSONArray();
-                try {
-                    for (int i = 0; i < beanList.size(); i++) {
-                        JSONObject jsonObjectType = new JSONObject();
-                        JSONObject jsonObjectMoney = new JSONObject();
-                        jsonObjectType.put(beanList.get(i).getProjectName(), beanList.get(i).getState());
-                        jsonObjectMoney.put(beanList.get(i).getProjectName(), beanList.get(i).getScore());
-                        jsonArrayData.put(jsonObjectType);
-                        jsonArrayfkData.put(jsonObjectMoney);
+                if (etLine.getText().toString().equals("")||etCarCode.getText().toString().equals("")
+                        ||etCarNo.getText().toString().equals("")||etPersonCode.getText().toString().equals("")
+                        ||etPersonName.getText().toString().equals("")|etRummager.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写完整数据", Toast.LENGTH_SHORT).show();
+                }else {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                    linearLayoutManager.setStackFromEnd(true);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    adapter.setOnInnerItemOnClickListener(this);
+                    //包装数据
+                    JSONArray jsonArrayData = new JSONArray();
+                    JSONArray jsonArrayfkData = new JSONArray();
+                    try {
+                        for (int i = 0; i < beanList.size(); i++) {
+                            JSONObject jsonObjectType = new JSONObject();
+                            JSONObject jsonObjectMoney = new JSONObject();
+                            jsonObjectType.put(beanList.get(i).getProjectName(), beanList.get(i).getState());
+                            jsonObjectMoney.put(beanList.get(i).getProjectName(), beanList.get(i).getScore());
+                            jsonArrayData.put(jsonObjectType);
+                            jsonArrayfkData.put(jsonObjectMoney);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "数据拼接错误", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "数据拼接错误", Toast.LENGTH_SHORT).show();
+                    safeUpDataPresenter.getUpData(jsonArrayData.toString(), jsonArrayfkData.toString(),
+                            tvTime.getText().toString(), etLine.getText().toString(), etCarNo.getText().toString()
+                            , etCarCode.getText().toString(), depId, depName, etPersonName.getText().toString()
+                            , etPersonCode.getText().toString(), etRummager.getText().toString(), etRemarks.getText().toString());
                 }
-                safeUpDataPresenter.getUpData(jsonArrayData.toString(), jsonArrayfkData.toString(),
-                        tvTime.getText().toString(), etLine.getText().toString(), etCarNo.getText().toString()
-                        , etCarCode.getText().toString(), depId, depName, etPersonName.getText().toString()
-                        , etPersonCode.getText().toString(), etRummager.getText().toString(), etRemarks.getText().toString());
                 break;
             case R.id.ll1:
                 if (ll3.getVisibility() == View.VISIBLE) {
@@ -273,7 +274,6 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
                     etPersonCode.setText(userCodeData.getECard());
                     etPersonName.setText(userCodeData.getFullname());
                     positionDate = userCodeData.getPositionDate();
-                    etCarType.setText(userCodeData.getVehicleClass());
                     tvClassTime.setText(userCodeData.getPositionDate());
                 }
             case Constant.TAG_FOUR:
@@ -325,7 +325,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
         SafeHistoryItem.ResultBean bean = new SafeHistoryItem.ResultBean();
         bean.setProjectId(beanList.get(position).getProjectId());
         bean.setProjectName(beanList.get(position).getProjectName());
-        bean.setScore(Double.parseDouble(money));
+        bean.setScore(money);
         if (tag.equals("rb1")) {
             bean.setState(1);
         } else if (tag.equals("rb2")) {

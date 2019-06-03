@@ -54,7 +54,7 @@ public class CarCheckItem implements Serializable {
 
         private int projectId;
         private String projectName;
-        private double fkje;
+        private String fkje;
         private int state;
         private String projectKey;
 
@@ -74,11 +74,11 @@ public class CarCheckItem implements Serializable {
             this.projectName = projectName;
         }
 
-        public double getFkje() {
+        public String getFkje() {
             return fkje;
         }
 
-        public void setFkje(double fkje) {
+        public void setFkje(String fkje) {
             this.fkje = fkje;
         }
 

@@ -57,7 +57,7 @@ public class SafeHistoryItem implements Serializable {
         private String projectName;
         private double scoreNums;
         private int state;
-        private double score;
+        private String score;
         private String projectKey;
 
         public int getProjectId() {
@@ -92,11 +92,11 @@ public class SafeHistoryItem implements Serializable {
             this.state = state;
         }
 
-        public double getScore() {
+        public String getScore() {
             return score;
         }
 
-        public void setScore(double score) {
+        public void setScore(String score) {
             this.score = score;
         }
 
