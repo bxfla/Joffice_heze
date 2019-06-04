@@ -37,6 +37,7 @@ import com.smartbus.heze.fileapprove.module.UPYSDContract;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
+import com.smartbus.heze.fileapprove.util.FileUtils;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
@@ -50,6 +51,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -309,14 +311,17 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                     int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     actualimagecursor.moveToFirst();
                     String img_path = actualimagecursor.getString(actual_image_column_index);
-                    file = new File(img_path);
-//                    try {
-//                        if (FileUtils.getPath(HuiQianActivity.this, uri) != null) {
-//                            file = FileUtils.getPath(HuiQianActivity.this, uri);
-//                        }
-//                    } catch (URISyntaxException e) {
-//                        e.printStackTrace();
-//                    }
+                    if (img_path == null){
+                        try {
+                            if (FileUtils.getPath(HuiQianActivity.this, uri) != null) {
+                                file = FileUtils.getPath(HuiQianActivity.this, uri);
+                            }
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        file = new File(img_path);
+                    }
                     Log.e("XXX", file.toString());
                     final AsyncHttpClient client = new AsyncHttpClient();
                     final String url = ApiAddress.mainApi + ApiAddress.dataup;

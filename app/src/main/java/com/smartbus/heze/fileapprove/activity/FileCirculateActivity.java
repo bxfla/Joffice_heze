@@ -2,11 +2,13 @@ package com.smartbus.heze.fileapprove.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -387,19 +389,22 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
                     File file = null;
-                    try {
-                        if (FileUtils.getPath(FileCirculateActivity.this,uri)!=null){
-                            file = FileUtils.getPath(FileCirculateActivity.this,uri);
+                    String[] proj = { MediaStore.Images.Media.DATA };
+                    Cursor actualimagecursor = this.managedQuery(uri,proj,null,null,null);
+                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    actualimagecursor.moveToFirst();
+                    String img_path = actualimagecursor.getString(actual_image_column_index);
+                    if (img_path == null){
+                        try {
+                            if (FileUtils.getPath(FileCirculateActivity.this, uri) != null) {
+                                file = FileUtils.getPath(FileCirculateActivity.this, uri);
+                            }
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
                         }
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
+                    }else {
+                        file = new File(img_path);
                     }
-//                    String[] proj = {MediaStore.Images.Media.DATA};
-//                    Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-//                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                    actualimagecursor.moveToFirst();
-//                    String img_path = actualimagecursor.getString(actual_image_column_index);
-//                    File file1 = new File(path);
                     Log.e("XXX",file.toString());
                     final AsyncHttpClient client = new AsyncHttpClient();
                     final String url = ApiAddress.mainApi + ApiAddress.dataup;
