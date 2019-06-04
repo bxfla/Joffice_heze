@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.refreshview.CustomRefreshView;
 import com.smartbus.heze.R;
+import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.main.bean.OaWillDo;
@@ -41,6 +42,7 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     int limit = 25;
     String type = "0";
     String type1 = "0";
+    String userName = "";
     Unbinder unbinder;
     BaseRecyclerAdapter baseAdapter;
     OaWillListPresenter oaWillListPresenter;
@@ -74,7 +76,8 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
         };
         recyclerView.setAdapter(baseAdapter);
         oaWillListPresenter = new OaWillListPresenter(getActivity(), this);
-        oaWillListPresenter.getOaWillList(type,type1, start, limit);
+        userName = new SharedPreferencesHelper(getActivity(),"login").getData(getActivity(),"userName","");
+        oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
         setClient();
     }
 
@@ -88,14 +91,14 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                 beanList.clear();
                 start = 0;
                 limit = 20;
-                oaWillListPresenter.getOaWillList(type,type1, start, limit);
+                oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
             }
 
             @Override
             public void onLoadMore() {
                 start = limit;
                 limit += 25;
-                oaWillListPresenter.getOaWillList(type,type1, start, limit);
+                oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
             }
         });
     }

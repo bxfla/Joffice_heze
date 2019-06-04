@@ -490,7 +490,8 @@ public interface AllApi {
      * 获取OA未审核列表
      */
     @GET(ApiAddress.willlist)
-    Observable<OaWillDo> getOaWillDo(@Query("Q_status_S_EQ")String Q_status_S_EQ
+    Observable<OaWillDo> getOaWillDo(@Query("userName")String userName
+            ,@Query("Q_status_S_EQ")String Q_status_S_EQ
             ,@Query("Q_shStatus_S_EQ")String Q_shStatus_S_EQ
             ,@Query("start")int start,@Query("limit")int limit);
 

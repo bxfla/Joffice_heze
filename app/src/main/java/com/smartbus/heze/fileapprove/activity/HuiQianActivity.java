@@ -179,7 +179,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                     Intent intentD = new Intent(Intent.ACTION_GET_CONTENT);
                     intentD.addCategory(Intent.CATEGORY_OPENABLE);
                     intentD.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intentD.setDataAndType(Uri.fromFile(file), "file/*");
+                    intentD.setDataAndType(Uri.fromFile(file), "application/pdf");
                     try {
                         startActivityForResult(Intent.createChooser(intentD, "Select a File to Upload"), Constant.TAG_TWO);
                     } catch (ActivityNotFoundException ex) {

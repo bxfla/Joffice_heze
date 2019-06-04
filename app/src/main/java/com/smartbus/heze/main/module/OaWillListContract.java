@@ -17,6 +17,6 @@ public interface OaWillListContract {
 
     interface presenter extends BasePresenter {
         //banner回调
-        void getOaWillList(String type,String type1,int start,int limit);
+        void getOaWillList(String userName,String type,String type1,int start,int limit);
     }
 }
