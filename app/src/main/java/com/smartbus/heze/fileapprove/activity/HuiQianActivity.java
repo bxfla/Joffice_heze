@@ -218,7 +218,7 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                 }
                 if (tvDepartment.getText().toString().equals("") || etYinShua.getText().toString().equals("")
                         || etJiaoDui.getText().toString().equals("") || etFenShu.getText().toString().equals("")) {
-                    Toast.makeText(this, "部门，印刷，校对，分数不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "部门，印刷，校对，份数不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 ysdOnePersenter = new OnePresenter(this, this);

@@ -197,7 +197,8 @@
 
                 <EditText
                     android:id="@+id/etDays"
-                    style="@style/oaEditText" />
+                    style="@style/oaEditText"
+                    android:inputType="number|numberDecimal"/>
             </LinearLayout>
             <View style="@style/HourLine"></View>
 

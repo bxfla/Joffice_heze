@@ -166,6 +166,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
                     }
                 }).start();
             } else {
+                namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
                     namelist.add(destTypeList.get(i).getDestination());
                 }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -48,7 +49,13 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
     LinearLayout llNoContent;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.ll)
+    LinearLayout ll;
 
+    float mPosY = 0;
+    float mPosX = 0;
+    float mCurPosY = 0;
+    float mCurPosX = 0;
     BaseRecyclerAdapter adapter;
     List<WillDoList.ResultBean> beanList = new ArrayList<>();
     WillDoListPresenter willDoListPresenter;
@@ -62,88 +69,131 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
         willDoListPresenter = new WillDoListPresenter(getActivity(), this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
+        setGestureListener();
         return view;
+    }
+
+
+    /**
+     * 设置上下滑动作监听器
+     *
+     * @author jczmdeveloper
+     */
+    private void setGestureListener() {
+        ll.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        mPosX = event.getX();
+                        mPosY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mCurPosX = event.getX();
+                        mCurPosY = event.getY();
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mCurPosY - mPosY > 0
+                                && (Math.abs(mCurPosY - mPosY) > 25)) {
+                            beanList.clear();
+                            willDoListPresenter.getWillDoList();
+
+                        } else if (mCurPosY - mPosY < 0
+                                && (Math.abs(mCurPosY - mPosY) > 25)) {
+                            //向上滑动
+                        }
+
+                        break;
+                }
+                return true;
+            }
+
+        });
     }
 
     @Override
     public void setWillDoList(WillDoList willDoList) {
-        if (willDoList.getResult().size()==0){
+        if (willDoList.getResult().size() == 0) {
             recyclerView.setVisibility(View.GONE);
             llNoContent.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             recyclerView.setVisibility(View.VISIBLE);
             llNoContent.setVisibility(View.GONE);
-            for (int i = 0;i<willDoList.getResult().size();i++){
+            for (int i = 0; i < willDoList.getResult().size(); i++) {
                 beanList.add(willDoList.getResult().get(i));
             }
-            adapter = new BaseRecyclerAdapter<WillDoList.ResultBean>(getActivity(),R.layout.adapter_easy_item,beanList) {
+            adapter = new BaseRecyclerAdapter<WillDoList.ResultBean>(getActivity(), R.layout.adapter_easy_item, beanList) {
                 @Override
                 public void convert(BaseViewHolder holder, final WillDoList.ResultBean o) {
-                    holder.setText(R.id.textView,o.getTaskName());
+                    holder.setText(R.id.textView, o.getTaskName());
                     holder.setOnClickListener(R.id.textView, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (o.getFormDefId().equals(Constant.YSD_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.YSD_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), DepartBudgetWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.BORROWACCIDENT_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.BORROWACCIDENT_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), BorrowAccidentWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.CURRENCYACCIDENT_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.CURRENCYACCIDENT_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), CurrencyAccidentWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.HUIQIAN_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.HUIQIAN_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), HuiQianWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.FILECIR_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.FILECIR_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), FileCirculateWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.DOCUMENTLZ_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.DOCUMENTLZ_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), DocumentLZWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.USERDLEAVE_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.USERDLEAVE_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), UserdLeaveWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.ADDWORK_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.ADDWORK_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), AddWorkWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.OLDWORK_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.OLDWORK_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), OldWorkWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.ATWORK_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.ATWORK_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), AtWorkWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());
                                 startActivity(intent);
                             }
-                            if (o.getFormDefId().equals(Constant.CHECKWORK_FORMDEFIS)){
+                            if (o.getFormDefId().equals(Constant.CHECKWORK_FORMDEFIS)) {
                                 Intent intent = new Intent(getActivity(), CheckWorkWillActivity.class);
                                 intent.putExtra("activityName", o.getActivityName());
                                 intent.putExtra("taskId", o.getTaskId());

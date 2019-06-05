@@ -167,6 +167,7 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
                     }
                 }).start();
             } else {
+                namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
                     namelist.add(destTypeList.get(i).getDestination());
                 }

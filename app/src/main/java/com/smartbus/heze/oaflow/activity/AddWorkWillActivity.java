@@ -184,6 +184,7 @@ public class AddWorkWillActivity extends BaseActivity implements AddWorkWillCont
                     }
                 }).start();
             } else {
+                namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
                     namelist.add(destTypeList.get(i).getDestination());
                 }

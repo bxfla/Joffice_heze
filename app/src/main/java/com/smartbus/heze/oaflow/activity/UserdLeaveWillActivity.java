@@ -199,6 +199,7 @@ public class UserdLeaveWillActivity extends BaseActivity implements UserdLeaveWi
                     }
                 }).start();
             } else {
+                namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
                     namelist.add(destTypeList.get(i).getDestination());
                 }
