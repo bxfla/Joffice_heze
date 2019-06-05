@@ -491,8 +491,8 @@ public interface AllApi {
      */
     @GET(ApiAddress.willlist)
     Observable<OaWillDo> getOaWillDo(@Query("userName")String userName
-            ,@Query("Q_status_S_EQ")String Q_status_S_EQ
-            ,@Query("Q_shStatus_S_EQ")String Q_shStatus_S_EQ
+            ,@Query("status")String status
+            ,@Query("shStatus")String shStatus
             ,@Query("start")int start,@Query("limit")int limit);
 
     /**
@@ -501,7 +501,8 @@ public interface AllApi {
     @FormUrlEncoded
     @POST(ApiAddress.oaup)
     Observable<UpData> getUpOaDetail(@Field("flag") String flag,@Field("status")String status
-            ,@Field("clResult")String clResult,@Field("clPhoto")String clPhoto,@Field("workId")String workId);
+            ,@Field("clResult")String clResult,@Field("clPhoto")String clPhoto
+            ,@Field("workId")String workId,@Field("shStatus")String shStatus,@Field("shResult")String shResult);
 
     /**
      * 事故关联数据

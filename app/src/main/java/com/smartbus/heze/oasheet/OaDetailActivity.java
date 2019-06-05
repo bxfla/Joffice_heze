@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,12 +43,17 @@ import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.main.bean.OaWillDo;
 import com.smartbus.heze.oasheet.module.UpOaDetailContract;
 import com.smartbus.heze.oasheet.presenter.UpOaDetailPresenter;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,6 +110,7 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
 
     String workId = "";
     String fileName = "";
+    String dirPath = "temp";
     @BindView(R.id.imageViewAdd3)
     ImageView imageViewAdd3;
     private Uri imageUri;
@@ -217,13 +224,24 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                 break;
             case R.id.imageViewAdd2:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                     ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                    , Manifest.permission.CAMERA
+                                    , Manifest.permission.READ_EXTERNAL_STORAGE},
                             MY_PERMISSIONS_MY_UP_IMAGE);
                 } else {
-                    openCamera(this);
+                    Matisse.from(OaDetailActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(1)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.smartbus.heze.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.5f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
                 }
                 break;
             case R.id.tvLeader:
@@ -247,10 +265,29 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                 }else if (statue.equals("驳回处理中")){
                     statue = "3";
                 }
+
+                String statue1 = spinner2.getSelectedItem().toString();
+                if (statue1.equals("未审核")){
+                    statue1 = "0";
+                }else if (statue1.equals("拒绝")){
+                    statue1 = "1";
+                }else if (statue1.equals("通过")){
+                    statue1 = "2";
+                }else if (statue1.equals("驳回")){
+                    statue1 = "3";
+                }
                 if (!etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
-                    upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId);
+                    if (spinner2.getSelectedItem().toString().equals("未审核")){
+                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                    }else {
+                        upOaDetailPresenter.getUpOaDetail("2",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                    }
                 }else if (!etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
-//                    upOaDetailPresenter.getUpOaDetail("2");
+                    if (spinner2.getSelectedItem().toString().equals("未审核")){
+                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                    }else {
+                        upOaDetailPresenter.getUpOaDetail("2",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                    }
                 }
                 break;
         }
@@ -260,9 +297,19 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_MY_UP_IMAGE:
-                if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera(this);
+                if (grantResults.length == 3 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+//                    openCamera(this);
+                    Matisse.from(OaDetailActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(1)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.smartbus.heze.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.5f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
                 } else {
                     Toast.makeText(this, "权限被拒绝，请手动开启", Toast.LENGTH_SHORT).show();
                 }
@@ -310,30 +357,75 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case TAG_FOUR:
-                Bitmap bitmap = null;
-                try {
-                    bitmap = BitmapFactory.decodeStream(getContentResolver()
-                            .openInputStream(imageUri));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                if (resultCode == RESULT_OK) {
+                    List<Uri> result1 = new ArrayList<>();
+                    result1 = Matisse.obtainResult(data);
+                    BitmapFactory.Options opts = new BitmapFactory.Options();//获取缩略图显示到屏幕上
+                    opts.inSampleSize = 2;
+                    Bitmap cbitmap01 = null;
+                    try {
+                        cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result1.get(0));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Matrix matrix = new Matrix();
+                    matrix.setScale(0.2f, 0.2f);
+                    Bitmap bm = Bitmap.createBitmap(cbitmap01, 0, 0, cbitmap01.getWidth(),
+                            cbitmap01.getHeight(), matrix, true);
+                    imageViewAdd2.setImageBitmap(bm);
+                    saveImageToSD(bm, "temp");
                 }
-                imageViewAdd01.setImageBitmap(bitmap);
-                upImage();
                 break;
         }
     }
 
     /**
+     * 图片保存到本地
+     *
+     * @param cbitmap01
+     * @param dirPath
+     */
+    private void saveImageToSD(Bitmap cbitmap01, String dirPath) {
+        //新建文件夹用于存放裁剪后的图片
+        tempFile = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
+        if (!tempFile.exists()) {
+            tempFile.mkdir();
+        }
+
+        //新建文件存储裁剪后的图片
+        File img = new File(tempFile.getAbsolutePath() + "/" + "signin" + ".png");
+        try {
+            //打开文件输出流
+            FileOutputStream fos = new FileOutputStream(img);
+            //将bitmap压缩后写入输出流(参数依次为图片格式、图片质量和输出流)
+            cbitmap01.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            //刷新输出流
+            fos.flush();
+            //关闭输出流
+            fos.close();
+            //返回File类型的Uri
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        upImage();
+    }
+
+
+    /**
      * 上传图片
      */
     private void upImage() {
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "signin" + ".png");
+        String filepath = "signin" + ".png";
         final AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(60000);
         final String url = ApiAddress.mainApi + ApiAddress.upimageold;
         final RequestParams params = new RequestParams();
         try {
-            params.put("upload", tempFile);
-            params.put("fullname", tempFile.getName());
+            params.put("upload", file);
+            params.put("fullname", filepath);
         } catch (IOException e) {
             e.printStackTrace();
         }

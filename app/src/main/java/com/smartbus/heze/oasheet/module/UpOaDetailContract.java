@@ -16,6 +16,6 @@ public interface UpOaDetailContract {
     }
 
     interface presenter extends BasePresenter {
-        void getUpOaDetail(String flag, String status, String clResult, String clPhoto, String workId);
+        void getUpOaDetail(String flag, String status, String clResult, String clPhoto, String workId, String shStatus, String shResult);
     }
 }

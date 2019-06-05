@@ -28,8 +28,8 @@ public class UpOaDetailPresenter implements UpOaDetailContract.presenter {
 
 
     @Override
-    public void getUpOaDetail(String flag, String status, String clResult, String clPhoto, String workId) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getUpOaDetail(flag,status,clResult,clPhoto,workId)
+    public void getUpOaDetail(String flag, String status, String clResult, String clPhoto, String workId, String shStatus, String shResult) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getUpOaDetail(flag,status,clResult,clPhoto,workId,shStatus,shResult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<UpData>(context, MainUtil.upData) {
