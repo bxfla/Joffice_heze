@@ -296,7 +296,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                     break;
                 }
                 if (etReason.getText().toString().equals("") || etAddress.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写地点和内容", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请填写地点", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (tvStartTime.getText().toString().equals("") || tvEndTime.getText().toString().equals("")) {

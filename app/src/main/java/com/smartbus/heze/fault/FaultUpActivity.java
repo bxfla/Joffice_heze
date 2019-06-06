@@ -240,8 +240,8 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
 
     @Override
     protected void rightClient() {
-        if (tvCarNo.getText().toString().equals("")) {
-            Toast.makeText(this, "请选择车牌号", Toast.LENGTH_SHORT).show();
+        if (tvCarNo.getText().toString().equals("")||tvLineNo.getText().toString().equals("")||tvDriverCode.getText().toString().equals("")) {
+            Toast.makeText(this, "车牌号,线路编号和驾驶员编号不能为空", Toast.LENGTH_SHORT).show();
         } else {
             if (!fileName1.equals("") && fileName2.equals("") && fileName3.equals("")) {
                 atPhoto = fileName1;

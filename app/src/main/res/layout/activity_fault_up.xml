@@ -324,7 +324,7 @@
                     android:orientation="horizontal">
                     <TextView
                         style="@style/oaTextView"
-                        android:text="受伤人数:*" />
+                        android:text="受伤人数:" />
                     <View style="@style/VerticalLine"/>
                     <EditText
                         android:id="@+id/etSWRS"
@@ -339,7 +339,7 @@
                     android:orientation="horizontal">
                     <TextView
                         style="@style/oaTextView"
-                        android:text="死亡人数:*" />
+                        android:text="死亡人数:" />
                     <View style="@style/VerticalLine"/>
                     <EditText
                         android:id="@+id/etSIWRS"

@@ -301,7 +301,7 @@ public class FileCirculateActivity extends BaseActivity implements OneContract.V
     @Override
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "操作成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

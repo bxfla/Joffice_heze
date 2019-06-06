@@ -509,7 +509,7 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
     @Override
     public void setCheckType(CheckType s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
