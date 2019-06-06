@@ -529,11 +529,10 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
                     Intent intent2 = new Intent();
                     // 跳转到下载记录的界面
                     intent2.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
-                    startActivity(intent2);
+                    startActivityForResult(intent2,Constant.TAG_ONE);
                 }
             }
         }
-
     }
 
     @Override

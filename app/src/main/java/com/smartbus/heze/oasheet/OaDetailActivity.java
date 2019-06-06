@@ -180,6 +180,7 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
         tvStartTime.setText(resultBean.getFqDate() + " " + resultBean.getFqsj());
         tvEndTime.setText(resultBean.getJzDate());
         tvTitle.setText(resultBean.getTitle());
+        etLeader2.setText(resultBean.getClResult());
         String type = resultBean.getType();
         if (type.equals("0")) {
             tvType.setText("A");
@@ -193,7 +194,7 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
         tvContent.setText(resultBean.getContent());
         String imagePath = resultBean.getJlPhoto();
         if (imagePath != null) {
-            Glide.with(this).load(imagePath).error(R.drawable.ic_image_erray).into(imageViewAdd01);
+            Glide.with(this).load(ApiAddress.downloadfile+imagePath).error(R.drawable.ic_image_erray).into(imageViewAdd01);
             imageViewAdd2.setVisibility(View.VISIBLE);
         } else {
             imageViewAdd01.setVisibility(View.GONE);
@@ -280,13 +281,13 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                     if (spinner2.getSelectedItem().toString().equals("未审核")){
                         upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
                     }else {
-                        upOaDetailPresenter.getUpOaDetail("2",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
                     }
                 }else if (!etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
                     if (spinner2.getSelectedItem().toString().equals("未审核")){
                         upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
                     }else {
-                        upOaDetailPresenter.getUpOaDetail("2",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
                     }
                 }
                 break;

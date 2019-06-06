@@ -314,7 +314,7 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
         HealthItem.ResultBean bean = new HealthItem.ResultBean();
         bean.setProjectId(beanList.get(position).getProjectId());
         bean.setProjectName(beanList.get(position).getProjectName());
-        bean.setScore(Double.parseDouble(money));
+        bean.setScore(money);
         if (tag.equals("rb1")) {
             bean.setState(1);
         } else if (tag.equals("rb2")) {
