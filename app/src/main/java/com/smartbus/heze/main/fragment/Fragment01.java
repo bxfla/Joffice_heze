@@ -141,7 +141,6 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
         mAdapter = new BaseRecyclerAdapter<Notice.ResultBean>(getActivity(), R.layout.notice_item_layout, beanList) {
             @Override
             public void convert(BaseViewHolder holder, final Notice.ResultBean noticeBean) {
-                num+=1;
                 if (num<=2){
                     holder.setText(R.id.tv_title,"\t" +noticeBean.getSubject());
                     holder.setText1(R.id.tv_content, noticeBean.getContent());
@@ -154,6 +153,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
                         }
                     });
                 }
+                num+=1;
             }
         };
         recyclerView.setAdapter(mAdapter);

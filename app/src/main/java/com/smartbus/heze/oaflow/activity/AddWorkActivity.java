@@ -283,7 +283,7 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                 break;
             case R.id.btnFirst:
                 if (tvPerson.getText().toString().equals("")) {
-                    Toast.makeText(this, "请选择加班人", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (tvEndTime.getText().toString().equals("")

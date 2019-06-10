@@ -119,8 +119,8 @@ public class LostActivity extends BaseActivity implements LostUpContract.View {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         initDatePicker();
-        typeList.add("一般事件");
-        typeList.add("重大事件");
+        typeList.add("未归还");
+        typeList.add("归还");
         typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, typeList);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(typeAdapter);
@@ -228,18 +228,16 @@ public class LostActivity extends BaseActivity implements LostUpContract.View {
                 }
                 break;
             case R.id.btnUp:
-                if (tvLine.getText().toString().equals("")||tvPerson.getText().toString().equals("")
-                        ||etLQPerson.getText().toString().equals("")||etLQPhone.getText().toString().equals("")
-                        ||etGHFS.getText().toString().equals("")){
+                if (tvLine.getText().toString().equals("")||tvPerson.getText().toString().equals("")){
                     Toast.makeText(this, "请填写完整数据", Toast.LENGTH_SHORT).show();
                 }else {
                     String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
                     String startTime = tvStartTime.getText().toString();
                     String endTime = tvEndTime.getText().toString();
                     lostUpPresenter.getLostUp(userName,startTime.split(" ")[0],startTime.split(" ")[1]
-                        ,tvLine.getText().toString(),tvPerson.getText().toString(),endTime.split(" ")[0]
-                        ,endTime.split(" ")[1],etLQPerson.getText().toString(),etLQPhone.getText().toString()
-                        ,etGHFS.getText().toString(),spinnerIC.getSelectedItem().toString()
+                        ,tvLine.getText().toString(),tvPerson.getText().toString(),"",""
+                        ,etLQPerson.getText().toString(),etLQPhone.getText().toString()
+                        ,etGHFS.getText().toString(),""
                         ,spinnerType.getSelectedItem().toString(),etReason.getText().toString()
                         ,etMemo.getText().toString(),fileName);
                 }

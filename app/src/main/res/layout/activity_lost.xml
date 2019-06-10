@@ -8,7 +8,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
-        app:header_title="@string/ab_shijian">
+        app:header_title="@string/sw_shangbao">
     </com.smartbus.heze.http.views.Header>
 
     <ScrollView
@@ -84,6 +84,7 @@
             <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -102,9 +103,9 @@
                     android:id="@+id/tvEndTime"
                     style="@style/oaEditText" />
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -124,9 +125,9 @@
                     style="@style/oaEditText"
                     android:hint="请填写领取人姓名"/>
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -147,9 +148,9 @@
                     android:hint="请填写领取人电话"
                     android:inputType="number|numberDecimal"/>
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -169,9 +170,9 @@
                     style="@style/oaEditText"
                     android:hint="请填写归还方式"/>
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -191,9 +192,9 @@
                     style="@style/oaEditText"
                     android:hint="请填写领取人证件"/>
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -222,7 +223,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="失物情况: *" />
+                    android:text="失物情况: " />
 
                 <View
                     android:layout_width="1dp"
@@ -244,7 +245,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="备注: *" />
+                    android:text="备注: " />
 
                 <View
                     android:layout_width="1dp"
