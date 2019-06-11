@@ -116,7 +116,7 @@
                     style="@style/oaTextView"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:text="类型: *" />
+                    android:text="类型: " />
 
                 <View
                     android:layout_width="1dp"

@@ -249,12 +249,13 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                 customDatePicker1.show(tvStartTime.getText().toString());
                 break;
             case R.id.btnUp:
-                if (etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
-                    Toast.makeText(this, "请填写解决结果", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+//                if (etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
+//                    Toast.makeText(this, "请填写解决结果", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
                 if (etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
                     Toast.makeText(this, "解决完才能审核", Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 String statue = spinner1.getSelectedItem().toString();
                 if (statue.equals("未处理")){
@@ -277,19 +278,20 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                 }else if (statue1.equals("驳回")){
                     statue1 = "3";
                 }
-                if (!etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
-                    if (spinner2.getSelectedItem().toString().equals("未审核")){
-                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
-                    }else {
-                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
-                    }
-                }else if (!etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
-                    if (spinner2.getSelectedItem().toString().equals("未审核")){
-                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
-                    }else {
-                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
-                    }
-                }
+                upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+//                if (!etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
+//                    if (spinner2.getSelectedItem().toString().equals("未审核")){
+//                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+//                    }else {
+//                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+//                    }
+//                }else if (!etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
+//                    if (spinner2.getSelectedItem().toString().equals("未审核")){
+//                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+//                    }else {
+//                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+//                    }
+//                }
                 break;
         }
     }
