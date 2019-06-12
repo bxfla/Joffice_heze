@@ -32,8 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10.0dip"
             android:gravity="left|center"
-            android:paddingLeft="20.0dip"
-            android:paddingRight="20.0dip"
+            android:padding="20.0dip"
             android:textColor="@color/xiaohei"
             android:textSize="16dip" />
 

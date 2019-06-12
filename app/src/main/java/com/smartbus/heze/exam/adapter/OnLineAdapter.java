@@ -17,7 +17,6 @@ import com.smartbus.heze.exam.activity.OnLineActivity;
 import com.smartbus.heze.exam.bean.ExaminationData;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.smartbus.heze.R.id.rbA;
@@ -36,7 +35,6 @@ public class OnLineAdapter extends PagerAdapter {
     View convertView;
     List<ExaminationData.DataBean> dataItems;
     List<ExaminationData.DataBean> upList;
-    HashMap<String,ExaminationData.DataBean> hasMap = new HashMap<>();
     List<String> beanList = new ArrayList<>();
     String answer;
 
@@ -182,7 +180,11 @@ public class OnLineAdapter extends PagerAdapter {
                 Toast.makeText(mContext, "已经是第一题", Toast.LENGTH_SHORT).show();
             } else if (mPosition == viewItems.size()) {
                 addAnswerToList(viewHolder, mPosition1, mPosition);
-                upData();
+                if (answer==null){
+                    Toast.makeText(mContext, "请先选择选项", Toast.LENGTH_SHORT).show();
+                }else {
+                    upData();
+                }
             } else {
                 addAnswerToList(viewHolder, mPosition1, mPosition);
             }
