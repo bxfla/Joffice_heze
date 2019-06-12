@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/tv_title"
             android:textSize="18sp"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="这是一个标题"
             android:textColor="@color/black"
             android:layout_width="match_parent"

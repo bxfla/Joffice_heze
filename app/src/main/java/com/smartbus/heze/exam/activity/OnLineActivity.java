@@ -213,7 +213,7 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
         if (backtype.equals("0")) {
             content.setText("您的答题时间结束,是否提交试卷?");
         } else if (backtype.equals("1")) {
-            content.setText("您要结束本次模拟答题吗？");
+            content.setText("您要结束本次答题吗？");
         } else {
             //content.setText(errorMsg+"");
         }

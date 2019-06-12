@@ -99,10 +99,10 @@ public class OnLineAdapter extends PagerAdapter {
             if (dataItems.get(position).getContent3().equals("D:")) {
                 holder.rbD.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent4().equals("E:")) {
+            if (dataItems.get(position).getContent4()==null||dataItems.get(position).getContent4().equals("E:")) {
                 holder.rbE.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent5().equals("F:")) {
+            if (dataItems.get(position).getContent5()==null||dataItems.get(position).getContent5().equals("F:")) {
                 holder.rbF.setVisibility(View.GONE);
             }
         }
@@ -116,10 +116,10 @@ public class OnLineAdapter extends PagerAdapter {
             if (dataItems.get(position).getContent3().equals("D:")) {
                 holder.cbD.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent4().equals("E:")) {
+            if (dataItems.get(position).getContent4()==null||dataItems.get(position).getContent4().equals("E:")) {
                 holder.cbE.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent5().equals("F:")) {
+            if (dataItems.get(position).getContent5()==null||dataItems.get(position).getContent5().equals("F:")) {
                 holder.cbF.setVisibility(View.GONE);
             }
         }
@@ -182,7 +182,7 @@ public class OnLineAdapter extends PagerAdapter {
                 Toast.makeText(mContext, "已经是第一题", Toast.LENGTH_SHORT).show();
             } else if (mPosition == viewItems.size()) {
                 addAnswerToList(viewHolder, mPosition1, mPosition);
-//                upData();
+                upData();
             } else {
                 addAnswerToList(viewHolder, mPosition1, mPosition);
             }
