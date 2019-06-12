@@ -81,6 +81,7 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
         examinationName = intent.getStringExtra("title");
         title.setText(examinationName);
         minute = Integer.valueOf(examinationTime);
+//        minute = Integer.valueOf("3");
         right.setText(String.valueOf(minute));
         String userName = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         onLineUpPresenter = new OnLineUpPresenter(this,this);

@@ -93,10 +93,10 @@ public class OnLineAdapter extends PagerAdapter {
     private void setData(ViewHolder holder, int position) {
         //单选
         if (dataItems.get(position).getTypeName().equals("单选题")) {
-            if (dataItems.get(position).getContent2().equals("C:")) {
+            if (dataItems.get(position).getContent2()==null||dataItems.get(position).getContent2().equals("C:")) {
                 holder.rbC.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent3().equals("D:")) {
+            if (dataItems.get(position).getContent3()==null||dataItems.get(position).getContent3().equals("D:")) {
                 holder.rbD.setVisibility(View.GONE);
             }
             if (dataItems.get(position).getContent4()==null||dataItems.get(position).getContent4().equals("E:")) {
@@ -110,10 +110,10 @@ public class OnLineAdapter extends PagerAdapter {
         if (dataItems.get(position).getTypeName().equals("多选题")) {
             holder.rg.setVisibility(View.GONE);
             holder.llType.setVisibility(View.VISIBLE);
-            if (dataItems.get(position).getContent2().equals("C:")) {
+            if (dataItems.get(position).getContent2()==null||dataItems.get(position).getContent2().equals("C:")) {
                 holder.cbC.setVisibility(View.GONE);
             }
-            if (dataItems.get(position).getContent3().equals("D:")) {
+            if (dataItems.get(position).getContent3()==null||dataItems.get(position).getContent3().equals("D:")) {
                 holder.cbD.setVisibility(View.GONE);
             }
             if (dataItems.get(position).getContent4()==null||dataItems.get(position).getContent4().equals("E:")) {
@@ -145,7 +145,7 @@ public class OnLineAdapter extends PagerAdapter {
         holder.cbE.setText(dataItems.get(position).getContent4());
         holder.cbF.setText(dataItems.get(position).getContent5());
         holder.tvNo.setText(String.valueOf(position+1));
-        holder.tvQuestion.setText(dataItems.get(position).getTitle().toString());
+        holder.tvQuestion.setText("("+dataItems.get(position).getTypeName()+")"+dataItems.get(position).getTitle().toString());
         holder.tvNum.setText((position + 1) + "/" + dataItems.size());
 //        holder.question.setText(dataItems.get(position).getQuContent());
         // 最后一页修改"下一步"按钮文字
