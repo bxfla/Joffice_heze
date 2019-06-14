@@ -3,6 +3,7 @@ package com.smartbus.heze.checkup.activity_history;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,14 @@ public class CarCheckHistoryDetActivity extends BaseActivity implements CarCehck
     BaseRecyclerAdapter baseRecyclerAdapter;
     List<CarCheckHistoryItem.ResultBean> beanList = new ArrayList<>();
     CarCheckHistoryItemPresenter carCheckHistoryItemPresenter;
+    @BindView(R.id.tvRemarks)
+    TextView tvRemarks;
+    @BindView(R.id.ll3)
+    LinearLayout ll3;
+    @BindView(R.id.ll2)
+    LinearLayout ll2;
+    @BindView(R.id.ll4)
+    LinearLayout ll4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,7 @@ public class CarCheckHistoryDetActivity extends BaseActivity implements CarCehck
         tvPersonCode.setText(bean.getDriverId());
         tvPersonName.setText(bean.getDriverName());
         tvRummager.setText(bean.getExaminer());
+        tvRemarks.setText(bean.getNote());
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         carCheckHistoryItemPresenter = new CarCheckHistoryItemPresenter(this, this);
@@ -90,10 +100,10 @@ public class CarCheckHistoryDetActivity extends BaseActivity implements CarCehck
                 holder.setText(R.id.textView, resultBean.getProjectName());
                 holder.setText(R.id.editText, resultBean.getScoreNums());
                 String statue = String.valueOf(resultBean.getState());
-                if (statue.equals("1")){
+                if (statue.equals("1")) {
                     holder.setCheck(R.id.rb1);
                 }
-                if (statue.equals("0")){
+                if (statue.equals("0")) {
                     holder.setCheck(R.id.rb2);
                 }
             }

@@ -74,7 +74,16 @@ public class SaferHistory implements Serializable {
         private String shry;
         private String shsj;
         private String shzt;
+        private String note;
         private int score;
+
+        public String getNote() {
+            return note;
+        }
+
+        public void setNote(String note) {
+            this.note = note;
+        }
 
         public int getId() {
             return id;

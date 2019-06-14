@@ -49,8 +49,12 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.user_code));
         tag = getIntent().getStringExtra("tag");
+        if (tag.equals("userCode")){
+            header.setTvTitle(getResources().getString(R.string.user_code));
+        }else if (tag.equals("userName")){
+            header.setTvTitle(getResources().getString(R.string.user_name));
+        }
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         userCodePresenter = new UserCodePresenter(this, this);

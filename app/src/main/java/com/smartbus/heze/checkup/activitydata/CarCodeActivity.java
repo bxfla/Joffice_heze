@@ -49,7 +49,7 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.car_code));
+        header.setTvTitle(getResources().getString(R.string.car_no));
         tag = getIntent().getStringExtra("tag");
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

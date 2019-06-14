@@ -211,18 +211,20 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
         builder.setContentView(R.layout.my_dialog);
         TextView title = (TextView) builder.findViewById(R.id.dialog_title);
         TextView content = (TextView) builder.findViewById(R.id.dialog_content);
-        if (backtype.equals("0")) {
-            content.setText("您的答题时间结束");
-        } else if (backtype.equals("1")) {
-            content.setText("您要结束本次答题吗？");
-        } else {
-            //content.setText(errorMsg+"");
-        }
         final Button confirm_btn = (Button) builder
                 .findViewById(R.id.dialog_sure);
         Button cancel_btn = (Button) builder.findViewById(R.id.dialog_cancle);
-        cancel_btn.setVisibility(View.GONE);
-        confirm_btn.setVisibility(View.GONE);
+        if (backtype.equals("0")) {
+            content.setText("您的答题时间已经结束,数据已上传");
+            cancel_btn.setVisibility(View.GONE);
+            confirm_btn.setVisibility(View.GONE);
+        } else if (backtype.equals("1")) {
+            content.setText("您要结束本次答题吗？");
+            cancel_btn.setVisibility(View.VISIBLE);
+            confirm_btn.setVisibility(View.VISIBLE);
+        } else {
+            //content.setText(errorMsg+"");
+        }
         if (backtype.equals("0")) {
             confirm_btn.setText("提交");
             Handler handler = new Handler();
@@ -247,35 +249,35 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
             confirm_btn.setText("确定");
             cancel_btn.setVisibility(View.GONE);
         }
-//        confirm_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (backtype.equals("0")) {
-//                    builder.dismiss();
-//                    //uploadExamination(pagerAdapter.errorTopicNum());
-//                    onLineAdapter.upData();
-//                } else {
-//                    builder.dismiss();
-//                    onLineAdapter.upData();
-//                }
-//            }
-//        });
-//
-//        cancel_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (backtype.equals("0")) {
-//                    finish();
-//                    builder.dismiss();
-//                } else {
-//                    isPause = false;
-//                    builder.dismiss();
-//                    Message msg = new Message();
-//                    msg.what = 1;
-//                    handlerStopTime.sendMessage(msg);
-//                }
-//            }
-//        });
+        confirm_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (backtype.equals("0")) {
+                    builder.dismiss();
+                    //uploadExamination(pagerAdapter.errorTopicNum());
+                    onLineAdapter.upData();
+                } else {
+                    builder.dismiss();
+                    onLineAdapter.upData();
+                }
+            }
+        });
+
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (backtype.equals("0")) {
+                    finish();
+                    builder.dismiss();
+                } else {
+                    isPause = false;
+                    builder.dismiss();
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handlerStopTime.sendMessage(msg);
+                }
+            }
+        });
         builder.setCanceledOnTouchOutside(false);// 设置点击Dialog外部任意区域关闭Dialog
         builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
 

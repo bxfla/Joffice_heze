@@ -107,10 +107,15 @@
                     android:orientation="horizontal">
                     <TextView
                         style="@style/oaTextView"
-                        android:text="驾驶员编号:*" />
+                        android:text="驾驶员:*" />
                     <View style="@style/VerticalLine"/>
                     <TextView
                         android:id="@+id/tvDriverCode"
+                        android:visibility="gone"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                    <TextView
+                        android:id="@+id/tvDriverCode1"
                         style="@style/oaEditText"
                         android:layout_marginRight="10dp" />
                 </LinearLayout>
@@ -219,7 +224,7 @@
                     android:background="@color/shouye"
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
-                    android:text="基本数据"
+                    android:text="详细数据"
                     android:textSize="17dp"
                     android:textColor="@color/black"/>
                 <ImageView

@@ -141,6 +141,8 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
 
     Intent intent;
     int imageNum = 0;
+    @BindView(R.id.tvDriverCode1)
+    TextView tvDriverCode1;
     private Uri imageUri;
     String atPhoto = "";
     String fileName1 = "";
@@ -240,8 +242,12 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
 
     @Override
     protected void rightClient() {
-        if (tvCarNo.getText().toString().equals("")||tvLineNo.getText().toString().equals("")||tvDriverCode.getText().toString().equals("")) {
-            Toast.makeText(this, "车牌号,线路编号和驾驶员编号不能为空", Toast.LENGTH_SHORT).show();
+        if (tvCarNo.getText().toString().equals("")) {
+            Toast.makeText(this, "车牌号不能为空", Toast.LENGTH_SHORT).show();
+        } else if (tvLineNo.getText().toString().equals("")) {
+            Toast.makeText(this, "线路编号不能为空", Toast.LENGTH_SHORT).show();
+        } else if (tvDriverCode.getText().toString().equals("")) {
+            Toast.makeText(this, "驾驶员不能为空", Toast.LENGTH_SHORT).show();
         } else {
             if (!fileName1.equals("") && fileName2.equals("") && fileName3.equals("")) {
                 atPhoto = fileName1;
@@ -297,6 +303,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
     @Override
     public void setAboutData(AboutData s) {
         if (s.isSuccess()) {
+            tvDriverCode1.setText(s.getData().getJsy().toString());
             tvDriverCode.setText(s.getData().getJsy().toString());
             tvLineNo.setText(s.getData().getXlbh().toString());
         }
@@ -325,14 +332,14 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03,R.id.tvLineNo, R.id.tvDriverCode})
+    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03, R.id.tvLineNo, R.id.tvDriverCode1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvLineNo:
                 intent = new Intent(this, LineCodeActivity.class);
                 startActivityForResult(intent, Constant.TAG_TWO);
                 break;
-            case R.id.tvDriverCode:
+            case R.id.tvDriverCode1:
                 intent = new Intent(this, WorkOnePersonActivity.class);
                 startActivityForResult(intent, Constant.TAG_THERE);
                 break;
@@ -490,6 +497,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 if (resultCode == TAG_ONE) {
                     if (data != null) {
                         tvDriverCode.setText(data.getStringExtra("ecard"));
+                        tvDriverCode1.setText(data.getStringArrayListExtra("beanId").get(0));
                     }
                 }
                 break;

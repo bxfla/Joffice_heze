@@ -75,8 +75,10 @@
     <!--稽查-->
     <string name="line_code">线路编号</string>
     <string name="user_code">员工编号</string>
+    <string name="user_name">员工姓名</string>
     <string name="car_code">车辆编号</string>
     <string name="check_person">检查人员</string>
+    <string name="car_no">车牌号</string>
 
 
     <!--oa传递单-->
