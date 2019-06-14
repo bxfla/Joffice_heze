@@ -303,7 +303,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
     @Override
     public void setAboutData(AboutData s) {
         if (s.isSuccess()) {
-            tvDriverCode1.setText(s.getData().getJsy().toString());
+            tvDriverCode1.setText(s.getData().getFullname().toString());
             tvDriverCode.setText(s.getData().getJsy().toString());
             tvLineNo.setText(s.getData().getXlbh().toString());
         }

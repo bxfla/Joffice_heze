@@ -598,10 +598,6 @@ public class DepartBudgetActivity extends BaseActivity implements OneContract.Vi
                     Toast.makeText(this, "请填写数量", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etUse.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写理由", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 ysdOnePersenter = new OnePresenter(this, this);
                 ysdOnePersenter.getOnePerson(Constant.YSD_DEFID);
                 ysdTwoPersenter = new TwoPresenter(this, this);

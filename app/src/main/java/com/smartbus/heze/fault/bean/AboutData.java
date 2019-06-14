@@ -8,9 +8,10 @@ import java.io.Serializable;
 
 public class AboutData implements Serializable {
 
+
     /**
      * success : true
-     * data : {"xlbh":"609","ch":"16817","jsy":"103939","carNo":"鲁R06817D","carType":"大型普通客车","bus_maker":"中通客车控股股份有限公司","bus_supplier":"","lc":24351.07}
+     * data : {"xlbh":"609","ch":"16817","jsy":"103939","fullname":"周升江","carNo":"鲁R06817D","carType":"大型普通客车","bus_maker":"中通客车控股股份有限公司","bus_supplier":"","lc":26405.07}
      */
 
     private boolean success;
@@ -37,16 +38,18 @@ public class AboutData implements Serializable {
          * xlbh : 609
          * ch : 16817
          * jsy : 103939
+         * fullname : 周升江
          * carNo : 鲁R06817D
          * carType : 大型普通客车
          * bus_maker : 中通客车控股股份有限公司
          * bus_supplier :
-         * lc : 24351.07
+         * lc : 26405.07
          */
 
         private String xlbh;
         private String ch;
         private String jsy;
+        private String fullname;
         private String carNo;
         private String carType;
         private String bus_maker;
@@ -75,6 +78,14 @@ public class AboutData implements Serializable {
 
         public void setJsy(String jsy) {
             this.jsy = jsy;
+        }
+
+        public String getFullname() {
+            return fullname;
+        }
+
+        public void setFullname(String fullname) {
+            this.fullname = fullname;
         }
 
         public String getCarNo() {

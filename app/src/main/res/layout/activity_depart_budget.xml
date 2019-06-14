@@ -403,7 +403,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="合计: *"
+                    android:text="合计: "
                     android:textColor="@color/black" />
 
                 <View
@@ -462,7 +462,7 @@
                     style="@style/oaTextView"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
-                    android:text="预算理由: *" />
+                    android:text="预算理由: " />
 
                 <View
                     android:layout_width="1dp"
