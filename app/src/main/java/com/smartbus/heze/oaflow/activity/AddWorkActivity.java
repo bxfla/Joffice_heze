@@ -295,7 +295,11 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请填写加班天数", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etReason.getText().toString().equals("") || etAddress.getText().toString().equals("")) {
+                if (etReason.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写内容", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (etAddress.getText().toString().equals("") ) {
                     Toast.makeText(this, "请填写地点", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -345,8 +349,29 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
                     selectList.clear();
                     namelist1.clear();
                     dataList.clear();
+                    if (tvPerson.getText().toString().equals("")) {
+                        Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvEndTime.getText().toString().equals("")
+                            || tvStartTime.getText().toString().equals("")) {
+                        Toast.makeText(this, "请选择时间", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etDays.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写加班天数", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     if (etReason.getText().toString().equals("")) {
-                        Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "请填写内容", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etAddress.getText().toString().equals("") ) {
+                        Toast.makeText(this, "请填写地点", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvStartTime.getText().toString().equals("") || tvEndTime.getText().toString().equals("")) {
+                        Toast.makeText(this, "请时间不能为空", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     onePersenter = new OnePresenter(this, this);
