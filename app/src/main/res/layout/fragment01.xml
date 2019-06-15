@@ -1,161 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/shouye">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/shouye"
-            android:orientation="vertical">
-            <!--//banner-->
-            <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                app:image_scale_type="fit_xy"
-                app:title_height="20dp"
-                app:title_textcolor="@color/white"
-                app:title_textsize="15dp" />
-            <!--//今日关注-->
+            android:background="@color/shouye">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="1dp"
-                android:orientation="horizontal"
-                android:background="@color/white">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_marginLeft="5dp"
-                    android:padding="2dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_notice"/>
-                <com.smartbus.heze.http.views.ScrollForeverTextView
-                    android:id="@+id/tvSeeItNow"
-                    style="@style/EditText"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true"
-                    android:textColor="@color/xiaohei"
-                    android:textSize="13dp" />
-            </LinearLayout>
-            <!--列表-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
+                android:layout_height="match_parent"
+                android:background="@color/shouye"
                 android:orientation="vertical">
-
+                <!--//banner-->
+                <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    app:image_scale_type="fit_xy"
+                    app:title_height="20dp"
+                    app:title_textcolor="@color/white"
+                    app:title_textsize="15dp" />
+                <!--//今日关注-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb1"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb1"
-                        android:text="@string/first_notice" />
-
-                    <RadioButton
-                        android:id="@+id/rb2"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb2"
-                        android:text="@string/first_process" />
-
-                    <RadioButton
-                        android:id="@+id/rb3"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb3"
-                        android:text="@string/first_oa" />
-
-                    <RadioButton
-                        android:id="@+id/rb4"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb4"
-                        android:text="@string/first_xunjian" />
-
-                    <RadioButton
-                        android:id="@+id/rb5"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb5"
-                        android:text="@string/first_anquan" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="85dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb6"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb7"
-                        android:text="@string/first_richang" />
-
-                    <RadioButton
-                        android:id="@+id/rb7"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb9"
-                        android:text="@string/first_dianjian" />
-
-                    <RadioButton
-                        android:id="@+id/rb8"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb6"
-                        android:text="@string/first_shigu" />
-
-                    <RadioButton
-                        android:id="@+id/rb9"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb8"
-                        android:text="@string/first_yuangong" />
-
-                    <RadioButton
-                        android:id="@+id/rb10"
-                        style="@style/RadionButton"
-                        android:drawableTop="@drawable/rb10"
-                        android:text="@string/first_qita" />
-                </LinearLayout>
-            </LinearLayout>
-            <!--//最新公告-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="1dp"
-                android:orientation="horizontal"
-                android:background="@color/white">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_marginLeft="5dp"
-                    android:padding="2dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_notice1"/>
-                <TextView
-                    style="@style/EditText"
                     android:layout_height="30dp"
-                    android:text="@string/new_notice"
-                    android:textColor="@color/black"/>
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_notice" />
+
+                    <com.smartbus.heze.http.views.ScrollForeverTextView
+                        android:id="@+id/tvSeeItNow"
+                        style="@style/EditText"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:textColor="@color/xiaohei"
+                        android:textSize="13dp" />
+                </LinearLayout>
+                <!--列表-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb1"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb1"
+                            android:text="@string/first_notice" />
+
+                        <RadioButton
+                            android:id="@+id/rb2"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb2"
+                            android:text="@string/first_process" />
+
+                        <RadioButton
+                            android:id="@+id/rb3"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb3"
+                            android:text="@string/first_oa" />
+
+                        <RadioButton
+                            android:id="@+id/rb4"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb4"
+                            android:text="@string/first_xunjian" />
+
+                        <RadioButton
+                            android:id="@+id/rb5"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb5"
+                            android:text="@string/first_anquan" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb6"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb7"
+                            android:text="@string/first_richang" />
+
+                        <RadioButton
+                            android:id="@+id/rb7"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb9"
+                            android:text="@string/first_dianjian" />
+
+                        <RadioButton
+                            android:id="@+id/rb8"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb6"
+                            android:text="@string/first_shigu" />
+
+                        <RadioButton
+                            android:id="@+id/rb9"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb8"
+                            android:text="@string/first_yuangong" />
+
+                        <RadioButton
+                            android:id="@+id/rb10"
+                            style="@style/RadionButton"
+                            android:drawableTop="@drawable/rb10"
+                            android:text="@string/first_qita" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!--//最新公告-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_notice1" />
+
+                    <TextView
+                        style="@style/EditText"
+                        android:layout_height="30dp"
+                        android:text="@string/new_notice"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <!--最新公告列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"></android.support.v7.widget.RecyclerView>
+
+                <View style="@style/HourLine" />
             </LinearLayout>
-            <!--最新公告列表-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_marginTop="1dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
-            <View style="@style/HourLine"/>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

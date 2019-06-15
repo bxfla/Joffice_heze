@@ -3,6 +3,7 @@ package com.smartbus.heze.main.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -73,6 +74,8 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
     RadioButton rb10;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.ll)
+    SwipeRefreshLayout ll;
     Unbinder unbinder;
 
     int num = 0;
@@ -80,6 +83,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
     BaseRecyclerAdapter mAdapter;
     private WelcomePresenter presenter;
     List<Integer> imageList = new ArrayList<>();
+    List<Notice.ResultBean> beanList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,6 +96,13 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
         setBanner();
         presenter = new WelcomePresenter(getActivity(),this);
         presenter.getNoticeList();
+
+        ll.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getNoticeList();
+            }
+        });
         return view;
     }
 
@@ -120,7 +131,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
 
     @Override
     public void setNoticeList(Notice bean) {
-        List<Notice.ResultBean> beanList = new ArrayList<>();
+        beanList.clear();
         for (int i = 0; i < bean.getResult().size(); i++) {
             beanList.add(bean.getResult().get(i));
         }
@@ -141,6 +152,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
         mAdapter = new BaseRecyclerAdapter<Notice.ResultBean>(getActivity(), R.layout.notice_item_layout, beanList) {
             @Override
             public void convert(BaseViewHolder holder, final Notice.ResultBean noticeBean) {
+                num = 0;
                 if (num<=2){
                     holder.setText(R.id.tv_title,"\t" +noticeBean.getSubject());
                     holder.setText1(R.id.tv_content, noticeBean.getContent());
@@ -158,6 +170,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View{
         };
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+        ll.setRefreshing(false);
     }
 
     //获取错误信息
