@@ -284,10 +284,6 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                     selectList.clear();
                     namelist1.clear();
                     dataList.clear();
-                    if (etReason.getText().toString().equals("")) {
-                        Toast.makeText(this, "请填写原因", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
                     onePersenter = new OnePresenter(this, this);
                     onePersenter.getOnePerson(Constant.USERDLEAVE_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
