@@ -285,17 +285,17 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     public void setBorrowAccidentWill(BorrowAccidentWill s) {
         if (s != null) {
             tvTime.setText(s.getMainform().get(0).getAtDate().toString());
-            tvTime1.setText(s.getMainform().get(0).getAtDate().toString());
+            tvTime1.setText(s.getMainform().get(0).getJiekuanDate().toString());
             tvDepartment.setText(s.getMainform().get(0).getDepName().toString());
             tvAddress.setText(s.getMainform().get(0).getAtPlace().toString());
             tvLuBie.setText(s.getMainform().get(0).getLineCode().toString());
             tvCarNo.setText(s.getMainform().get(0).getCarNo());
-            tvDriver.setText(s.getMainform().get(0).getDepName().toString());
+            tvDriver.setText(s.getMainform().get(0).getDriverName().toString());
             tvBlame.setText(s.getMainform().get(0).getAcDuty().toString());
             tvReason.setText(s.getMainform().get(0).getAtAfter());
             tvSmallMoney.setText(s.getMainform().get(0).getAtje().toString());
             tvName.setText(s.getMainform().get(0).getJiekuanren());
-            tvNum.setText(s.getMainform().get(0).getAcDuty());
+            tvNum.setText(s.getMainform().get(0).getAcNumber());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String leader = s.getMainform().get(0).getKezhang();
             String leader1 = s.getMainform().get(0).getFenguanjingli();

@@ -284,6 +284,10 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                     selectList.clear();
                     namelist1.clear();
                     dataList.clear();
+                    if (etReason.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写事由", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     onePersenter = new OnePresenter(this, this);
                     onePersenter.getOnePerson(Constant.USERDLEAVE_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
@@ -308,6 +312,10 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                 }
                 if (etDays.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写请假天数", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (etReason.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写事由", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 setDataFirst();
@@ -626,7 +634,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     @Override
     public void setCheckType(CheckType s) {
         if (s.isSuccess()){
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

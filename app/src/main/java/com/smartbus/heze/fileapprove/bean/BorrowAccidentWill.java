@@ -128,6 +128,7 @@ public class BorrowAccidentWill implements Serializable {
          * kezhang :
          * carNo : 车牌号
          * atDate : 2019-05-13
+         * jiekuanDate : 2019-05-13
          * pishi :
          * mainId : 11
          * acNumber : 2
@@ -154,6 +155,15 @@ public class BorrowAccidentWill implements Serializable {
         private String atAfter;
         private String driverName;
         private String atPlace;
+        private String jiekuanDate;
+
+        public String getJiekuanDate() {
+            return jiekuanDate;
+        }
+
+        public void setJiekuanDate(String jiekuanDate) {
+            this.jiekuanDate = jiekuanDate;
+        }
 
         public String getAtje() {
             return atje;
