@@ -9,6 +9,7 @@ import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.FoundActivity;
 import com.smartbus.heze.exam.activity.LearningLeftActivity;
 import com.smartbus.heze.exam.activity.OnLineListActivity;
+import com.smartbus.heze.exam.activity.SimulateListActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 
@@ -26,6 +27,8 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb2;
     @BindView(R.id.rb3)
     RadioButton rb3;
+    @BindView(R.id.rb4)
+    RadioButton rb4;
 
     Intent intent;
 
@@ -50,7 +53,7 @@ public class ExamListActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3})
+    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3,R.id.rb4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -63,6 +66,10 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb3:
                 intent = new Intent(this, FoundActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb4:
+                intent = new Intent(this, SimulateListActivity.class);
                 startActivity(intent);
                 break;
         }

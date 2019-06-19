@@ -44,6 +44,30 @@
                 android:text="@string/found_exam" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb4"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb4"
+                android:text="@string/simulate_exam" />
+
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/rb2"
+                android:text="@string/online_exam" />
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/rb3"
+                android:text="@string/found_exam" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

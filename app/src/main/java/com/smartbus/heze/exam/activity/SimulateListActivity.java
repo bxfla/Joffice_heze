@@ -12,7 +12,6 @@ import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.module.OnLineListContract;
 import com.smartbus.heze.exam.presenter.OnLineListPresenter;
-import com.smartbus.heze.http.base.AlertDialogUtil;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -27,7 +26,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OnLineListActivity extends BaseActivity implements OnLineListContract.View{
+/**
+ * 模拟考试列表
+ */
+public class SimulateListActivity extends BaseActivity implements OnLineListContract.View{
 
     @BindView(R.id.header)
     Header header;
@@ -46,7 +48,7 @@ public class OnLineListActivity extends BaseActivity implements OnLineListContra
         recyclerView.setLayoutManager(manager);
         onLineListPresenter = new OnLineListPresenter(this,this);
         String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
-        onLineListPresenter.getOnLineList("0","0",userName);
+        onLineListPresenter.getOnLineList("1","0",userName);
     }
 
     @Override
@@ -85,17 +87,18 @@ public class OnLineListActivity extends BaseActivity implements OnLineListContra
                         Date date = new Date(System.currentTimeMillis());
                         String currentTime = simpleDateFormat.format(date);
                         int timeType = compare_date(currentTime,o.getBeginDate());
-                        if (timeType==-1){
-                            new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("未到考试时间");
-                        }else if (timeType==1){
-                            new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("考试时间已结束");
-                        }else {
-                            Intent intent = new Intent(OnLineListActivity.this,OnLineActivity.class);
+//                        if (timeType==-1){
+//                            new AlertDialogUtil(SimulateListActivity.this).showSmallDialog("未到考试时间");
+//                        }else if (timeType==1){
+//                            new AlertDialogUtil(SimulateListActivity.this).showSmallDialog("考试时间已结束");
+//                        }else {
+                            Intent intent = new Intent(SimulateListActivity.this,SimulateActivity.class);
                             intent.putExtra("time",String.valueOf(o.getExaminationTime()));
                             intent.putExtra("id",String.valueOf(o.getExaminationId()));
                             intent.putExtra("title",String.valueOf(o.getExaminationName()));
+                            intent.putExtra("allmonth",String.valueOf(o.getExaminationSum()));
                             startActivity(intent);
-                        }
+//                        }
                     }
                 });
             }

@@ -212,6 +212,12 @@
             android:name=".exam.activity.OnLineActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
+            android:name=".exam.activity.SimulateListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".exam.activity.SimulateActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
             android:name=".other.OtherListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
@@ -220,10 +226,13 @@
         <activity
             android:name=".other.activity.SaferActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".other.activity.AdvertActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".other.activity.LostActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity
+            android:name=".other.activity.AdvertActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".other.activity.LostActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".exam.activity.SimulateResultActivity"></activity>
     </application>
 
 </manifest>
