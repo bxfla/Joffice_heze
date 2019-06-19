@@ -41,6 +41,7 @@ import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.utils.MainUtil;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
+import com.smartbus.heze.http.utils.time_select.CustomDatePickerMonth;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 import com.smartbus.heze.oaflow.bean.CheckType;
@@ -129,7 +130,8 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
     List<String> selectList = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1, customDatePicker2;
+    private CustomDatePickerDay customDatePicker2;
+    private CustomDatePickerMonth customDatePicker1;
     List<String> listTime = new ArrayList<String>();
     String fileName = "";
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -173,18 +175,21 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
     private void initDatePicker() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
-        tvStartTime.setText(now.split(" ")[0]);
+        String s = now.split(" ")[0];
+        tvStartTime.setText(s.split("-")[0]+"-"+s.split("-")[1]);
         tvEndTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
+        customDatePicker1 = new CustomDatePickerMonth(this, new CustomDatePickerMonth.ResultHandler() {
             @Override
             public void handle(String time) {
                 // 回调接口，获得选中的时间
-                tvStartTime.setText(time.split(" ")[0]);
+                String s1 = time.split(" ")[0];
+                tvStartTime.setText(s1.split("-")[0]+"-"+s1.split("-")[1]);
             }
             // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         }, "2000-01-01 00:00", "2030-01-01 00:00");
         // 不显示时和分
         customDatePicker1.showSpecificTime(false);
+        customDatePicker1.showSpecificDay(false);
         // 不允许循环滚动
         customDatePicker1.setIsLoop(false);
         customDatePicker2 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
@@ -220,7 +225,7 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         firstmap.put("fillMonth", tvStartTime.getText().toString());
         firstmap.put("fillDate", tvEndTime.getText().toString());
         firstmap.put("dayType", spinner.getSelectedItem().toString());
-        firstmap.put("memo ", etReason.getText().toString());
+        firstmap.put("memo", etReason.getText().toString());
     }
 
     @OnClick({R.id.tvPerson, R.id.tvDepartment, R.id.tvStartTime, R.id.tvEndTime, R.id.btnFirst, R.id.btnUp})

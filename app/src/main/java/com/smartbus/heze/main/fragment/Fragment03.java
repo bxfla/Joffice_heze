@@ -1,5 +1,7 @@
 package com.smartbus.heze.main.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.refreshview.CustomRefreshView;
@@ -44,16 +47,55 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     String type1 = "0";
     String userName = "";
     Unbinder unbinder;
+    TextView tvRight;
     BaseRecyclerAdapter baseAdapter;
     OaWillListPresenter oaWillListPresenter;
     List<OaWillDo.ResultBean> beanList = new ArrayList<>();
+    final String[] strArray = new String[]{"未处理","未审核"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment03, container, false);
         unbinder = ButterKnife.bind(this, view);
+        tvRight = getActivity().findViewById(R.id.tv_right);
+        tvRight.setText("未处理");
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
         return view;
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());//实例化builder
+        builder.setTitle("状态列表");//设置标题
+        //设置列表
+        builder.setItems(strArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (strArray[which].equals("未处理")){
+                    tvRight.setText("未处理");
+                    beanList.clear();
+                    start = 0;
+                    limit = 25;
+                    type = "0";
+                    type1 = "0";
+                    oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+                }else if (strArray[which].equals("未审核")){
+                    tvRight.setText("未审核");
+                    beanList.clear();
+                    start = 0;
+                    limit = 25;
+                    type = "2";
+                    type1 = "0";
+                    oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+                }
+            }
+        });
+        builder.create().show();//创建并显示对话框
     }
 
     @Override
@@ -69,6 +111,7 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), OaDetailActivity.class);
                         intent.putExtra("bean",resultBean);
+                        intent.putExtra("tag",tvRight.getText().toString());
                         startActivity(intent);
                     }
                 });
@@ -122,6 +165,8 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
             }
         } else if (oaWillList.getResult().size() == 0 && beanList.size() != 0) {
             if (recyclerView != null) {
+                recyclerView.setVisibility(View.VISIBLE);
+                llNoContent.setVisibility(View.GONE);
                 recyclerView.complete();
                 recyclerView.onNoMore();
             }
@@ -129,12 +174,16 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
         if (oaWillList.getResult().size() < 20) {
             if (recyclerView != null) {
                 baseAdapter.notifyDataSetChanged();
+                recyclerView.setVisibility(View.VISIBLE);
+                llNoContent.setVisibility(View.GONE);
                 recyclerView.complete();
                 recyclerView.onNoMore();
             }
         } else {
             if (recyclerView != null) {
                 baseAdapter.notifyDataSetChanged();
+                recyclerView.setVisibility(View.VISIBLE);
+                llNoContent.setVisibility(View.GONE);
                 recyclerView.complete();
             }
         }

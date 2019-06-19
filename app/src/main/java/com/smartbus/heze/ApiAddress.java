@@ -10,7 +10,7 @@ public class ApiAddress {
     //川川
 //    public final static String mainApi = "http://192.168.2.126:8082/joffice21/" ;
     //孙琦
-//    public final static String mainApi = "http://192.168.2.154:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.116:8080/joffice21/" ;
     //正式库
     public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
 //    public final static String mainApi = "http://192.168.2.117:8080/joffice21/" ;

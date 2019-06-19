@@ -316,14 +316,18 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
             tvData.setText(s.getMainform().get(0).getFile());
             tv1.setText(s.getMainform().get(0).getHao1());
             tv2.setText(s.getMainform().get(0).getHao2());
-            tv3.setText(s.getMainform().get(0).getSecret());
-            tv4.setText(s.getMainform().get(0).getUrgency());
+            tv3.setText(s.getMainform().get(0).getUrgency());
+            tv4.setText(s.getMainform().get(0).getSecret());
             tvQianFa.setText(s.getMainform().get(0).getIssue());
             tvZhuSong.setText(s.getMainform().get(0).getDelivery());
             tvCaoSong.setText(s.getMainform().get(0).getCopy());
             tvDepartment.setText(s.getMainform().get(0).getDraftingDep());
             tvNiGao.setText(s.getMainform().get(0).getDraft());
-            tvHeGao.setText(s.getMainform().get(0).getNuclear() + "");
+            if (s.getMainform().get(0).getNuclear()==null){
+                tvHeGao.setText("");
+            }else {
+                tvHeGao.setText(s.getMainform().get(0).getNuclear() + "");
+            }
             tvYinShua.setText(s.getMainform().get(0).getPrinting());
             tvJiaoDui.setText(s.getMainform().get(0).getProofreading());
             tvFenShu.setText(s.getMainform().get(0).getNums());

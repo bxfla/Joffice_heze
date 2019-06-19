@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -359,11 +358,12 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 }
                 break;
             case R.id.imAdd01:
-                Drawable.ConstantState buttonConstantState = imAdd01.getDrawable()
-                        .getConstantState();
-                Drawable.ConstantState resourceConstantState = getResources().getDrawable(
-                        R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState.equals(resourceConstantState)) {
+//                Drawable.ConstantState buttonConstantState = imAdd01.getDrawable()
+//                        .getConstantState();
+//                Drawable.ConstantState resourceConstantState = getResources().getDrawable(
+//                        R.drawable.add_myphoto).getConstantState();
+//                if (buttonConstantState.equals(resourceConstantState)) {
+//                    Toast.makeText(this, "222", Toast.LENGTH_SHORT).show();
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -371,16 +371,16 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_MY_UP_IMAGE);
                     } else {
-                        openCamera(this);
+                       openCamera(this);
                     }
-                }
+//                }
                 break;
             case R.id.imAdd02:
-                Drawable.ConstantState buttonConstantState1 = imAdd02.getDrawable()
-                        .getConstantState();
-                Drawable.ConstantState resourceConstantState1 = getResources().getDrawable(
-                        R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState1.equals(resourceConstantState1)) {
+//                Drawable.ConstantState buttonConstantState1 = imAdd02.getDrawable()
+//                        .getConstantState();
+//                Drawable.ConstantState resourceConstantState1 = getResources().getDrawable(
+//                        R.drawable.add_myphoto).getConstantState();
+//                if (buttonConstantState1.equals(resourceConstantState1)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -390,14 +390,14 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                     } else {
                         openCamera(this);
                     }
-                }
+//                }
                 break;
             case R.id.imAdd03:
-                Drawable.ConstantState buttonConstantState2 = imAdd03.getDrawable()
-                        .getConstantState();
-                Drawable.ConstantState resourceConstantState2 = getResources().getDrawable(
-                        R.drawable.add_myphoto).getConstantState();
-                if (buttonConstantState2.equals(resourceConstantState2)) {
+//                Drawable.ConstantState buttonConstantState2 = imAdd03.getDrawable()
+//                        .getConstantState();
+//                Drawable.ConstantState resourceConstantState2 = getResources().getDrawable(
+//                        R.drawable.add_myphoto).getConstantState();
+//                if (buttonConstantState2.equals(resourceConstantState2)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -407,7 +407,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                     } else {
                         openCamera(this);
                     }
-                }
+//                }
                 break;
         }
     }

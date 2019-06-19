@@ -69,7 +69,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_FOUR;
 import static com.smartbus.heze.oasheet.OAPublishActivity.hasSdcard;
 import static com.smartbus.heze.oasheet.OAPublishActivity.tempFile;
 
-public class OaDetailActivity extends BaseActivity implements UpOaDetailContract.View{
+public class OaDetailActivity extends BaseActivity implements UpOaDetailContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -113,7 +113,10 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
     String dirPath = "temp";
     @BindView(R.id.imageViewAdd3)
     ImageView imageViewAdd3;
+    @BindView(R.id.tv1)
+    TextView tv1;
     private Uri imageUri;
+    String tag = "";
     ArrayAdapter<String> CLAdapter;
     ArrayAdapter<String> SHAdapter;
     List<String> listCL = new ArrayList<String>();
@@ -127,9 +130,10 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        upOaDetailPresenter = new UpOaDetailPresenter(this,this);
+        upOaDetailPresenter = new UpOaDetailPresenter(this, this);
         initDatePicker();
         Intent intent = getIntent();
+        tag = intent.getStringExtra("tag");
         resultBean = (OaWillDo.ResultBean) intent.getSerializableExtra("bean");
 
         listCL.add("未处理");
@@ -181,6 +185,11 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
         tvEndTime.setText(resultBean.getJzDate());
         tvTitle.setText(resultBean.getTitle());
         etLeader2.setText(resultBean.getClResult());
+        if (resultBean.getStatus().equals("2")) {
+            spinner1.setVisibility(View.GONE);
+            tv1.setVisibility(View.VISIBLE);
+            tv1.setText("处理完成");
+        }
         String type = resultBean.getType();
         if (type.equals("0")) {
             tvType.setText("A");
@@ -194,7 +203,7 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
         tvContent.setText(resultBean.getContent());
         String imagePath = resultBean.getJlPhoto();
         if (imagePath != null) {
-            Glide.with(this).load(ApiAddress.downloadfile+imagePath).error(R.drawable.ic_image_erray).into(imageViewAdd01);
+            Glide.with(this).load(ApiAddress.downloadfile + imagePath).error(R.drawable.ic_image_erray).into(imageViewAdd01);
             imageViewAdd2.setVisibility(View.VISIBLE);
         } else {
             imageViewAdd01.setVisibility(View.GONE);
@@ -253,32 +262,36 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
 //                    Toast.makeText(this, "请填写解决结果", Toast.LENGTH_SHORT).show();
 //                    break;
 //                }
-                if (etLeader2.getText().toString().equals("")&&!etLeader4.getText().toString().equals("")){
+                if (etLeader2.getText().toString().equals("") && !etLeader4.getText().toString().equals("")) {
                     Toast.makeText(this, "解决完才能审核", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 String statue = spinner1.getSelectedItem().toString();
-                if (statue.equals("未处理")){
+                if (statue.equals("未处理")) {
                     statue = "0";
-                }else if (statue.equals("处理中")){
+                } else if (statue.equals("处理中")) {
                     statue = "1";
-                }else if (statue.equals("处理完成")){
+                } else if (statue.equals("处理完成")) {
                     statue = "2";
-                }else if (statue.equals("驳回处理中")){
+                } else if (statue.equals("驳回处理中")) {
                     statue = "3";
                 }
 
                 String statue1 = spinner2.getSelectedItem().toString();
-                if (statue1.equals("未审核")){
+                if (statue1.equals("未审核")) {
                     statue1 = "0";
-                }else if (statue1.equals("拒绝")){
+                } else if (statue1.equals("拒绝")) {
                     statue1 = "1";
-                }else if (statue1.equals("通过")){
+                } else if (statue1.equals("通过")) {
                     statue1 = "2";
-                }else if (statue1.equals("驳回")){
+                } else if (statue1.equals("驳回")) {
                     statue1 = "3";
                 }
-                upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
+                if (tag.equals("未处理")) {
+                    upOaDetailPresenter.getUpOaDetail("1", statue, etLeader2.getText().toString(), fileName, workId, statue1, etLeader4.getText().toString());
+                } else if (tag.equals("未审核")) {
+                    upOaDetailPresenter.getUpOaDetail("2", statue, etLeader2.getText().toString(), fileName, workId, statue1, etLeader4.getText().toString());
+                }
 //                if (!etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
 //                    if (spinner2.getSelectedItem().toString().equals("未审核")){
 //                        upOaDetailPresenter.getUpOaDetail("1",statue,etLeader2.getText().toString(),fileName,workId,statue1,etLeader4.getText().toString());
@@ -463,11 +476,12 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
 
     /**
      * 解决提交
+     *
      * @param s
      */
     @Override
     public void setUpOaDetail(UpData s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "提交数据成功", Toast.LENGTH_SHORT).show();
             finish();
         }

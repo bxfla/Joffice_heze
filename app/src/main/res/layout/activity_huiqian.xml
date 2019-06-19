@@ -65,6 +65,7 @@
             <View style="@style/HourLine"></View>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -84,7 +85,6 @@
                     style="@style/oaEditText"
                     android:hint="请填写内容" />
             </LinearLayout>
-            <View style="@style/HourLine"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -251,7 +251,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="会签:* " />
+                    android:text="会签: " />
 
                 <View
                     android:layout_width="1dp"

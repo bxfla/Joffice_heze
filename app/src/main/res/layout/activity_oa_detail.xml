@@ -316,6 +316,11 @@
                     android:id="@+id/spinner1"
                     style="@style/oaEditText"
                     android:hint="请填写解决状态" />
+                <TextView
+                    android:id="@+id/tv1"
+                    android:visibility="gone"
+                    style="@style/oaEditText"
+                    android:hint="请填写解决状态" />
             </LinearLayout>
             <View style="@style/HourLine"></View>
 

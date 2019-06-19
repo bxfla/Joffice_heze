@@ -518,6 +518,29 @@ public class CustomDatePickerDay {
     }
 
     /**
+     * 设置日期控件是否显示时和分
+     */
+    public void showSpecificDay(boolean show) {
+        if (canAccess) {
+            if (show) {
+                disScrollUnit();
+                hour_pv.setVisibility(View.VISIBLE);
+                hour_text.setVisibility(View.VISIBLE);
+                minute_pv.setVisibility(View.VISIBLE);
+                minute_text.setVisibility(View.VISIBLE);
+                day_pv.setVisibility(View.VISIBLE);
+            } else {
+                disScrollUnit(SCROLL_TYPE.HOUR, SCROLL_TYPE.MINUTE);
+                hour_pv.setVisibility(View.GONE);
+                hour_text.setVisibility(View.GONE);
+                minute_pv.setVisibility(View.GONE);
+                minute_text.setVisibility(View.GONE);
+                day_pv.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
      * 设置日期控件是否可以循环滚动
      */
     public void setIsLoop(boolean isLoop) {

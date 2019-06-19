@@ -208,7 +208,7 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
         firstmap.put("userName", tvPerson.getText().toString());
         firstmap.put("fillDate", tvEndTime.getText().toString());
         firstmap.put("dayType", spinner.getSelectedItem().toString());
-        firstmap.put("memo ", etReason.getText().toString());
+        firstmap.put("memo", etReason.getText().toString());
     }
 
     @OnClick({R.id.tvPerson, R.id.tvDepartment, R.id.tvEndTime, R.id.btnFirst, R.id.btnUp})

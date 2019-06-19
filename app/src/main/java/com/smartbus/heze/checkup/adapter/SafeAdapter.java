@@ -47,6 +47,8 @@ public class SafeAdapter extends RecyclerView.Adapter<SafeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.textView.setText(beanList.get(position).getProjectName());
+        holder.tvName.setText("分数");
+        holder.editText.setText(beanList.get(position).getScore());
         holder.position = position;
         holder.rb2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,7 @@ public class SafeAdapter extends RecyclerView.Adapter<SafeAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView textView,tvName;
         public EditText editText;
         public RadioButton rb1, rb2;
         int position;
@@ -81,6 +83,7 @@ public class SafeAdapter extends RecyclerView.Adapter<SafeAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textView);
+            tvName = (TextView) itemView.findViewById(R.id.tvName);
             editText = (EditText) itemView.findViewById(R.id.editText);
             rb1 = (RadioButton) itemView.findViewById(R.id.rb1);
             rb2 = (RadioButton) itemView.findViewById(R.id.rb2);

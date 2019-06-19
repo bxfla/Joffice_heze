@@ -199,13 +199,12 @@ public class HuiQianActivity extends BaseActivity implements OneContract.View
                     Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (etTitle.getText().toString().equals("") || etTheme.getText().toString().equals("")
-                        || etContent.getText().toString().equals("")) {
-                    Toast.makeText(this, "请填写标题，主题词和内容", Toast.LENGTH_SHORT).show();
+                if (etTitle.getText().toString().equals("") || etTheme.getText().toString().equals("")) {
+                    Toast.makeText(this, "请填写标题，主题词", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (tvQianFa.getText().toString().equals("") || tvHuiQian.getText().toString().equals("")) {
-                    Toast.makeText(this, "签发人，会签人不能为空", Toast.LENGTH_SHORT).show();
+                if (tvQianFa.getText().toString().equals("") ) {
+                    Toast.makeText(this, "签发人不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (tvZhuSong.getText().toString().equals("") || tvCaoSong.getText().toString().equals("")) {
