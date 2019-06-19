@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        app:header_is_left_iv_visiable="false"
+        style="@style/Header"
+        app:header_title="@string/app_name">
+    </com.smartbus.heze.http.views.Header>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

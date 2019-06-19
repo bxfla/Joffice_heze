@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -47,19 +48,21 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     String type1 = "0";
     String userName = "";
     Unbinder unbinder;
-    TextView tvRight;
     BaseRecyclerAdapter baseAdapter;
     OaWillListPresenter oaWillListPresenter;
     List<OaWillDo.ResultBean> beanList = new ArrayList<>();
-    final String[] strArray = new String[]{"未处理","未审核"};
+    final String[] strArray = new String[]{"未处理", "未审核"};
+    @BindView(R.id.tv_tittle)
+    TextView tvTittle;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment03, container, false);
         unbinder = ButterKnife.bind(this, view);
-        tvRight = getActivity().findViewById(R.id.tv_right);
-        tvRight.setText("未处理");
+        tvTittle.setText(getResources().getString(R.string.app_name));
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,22 +79,22 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
         builder.setItems(strArray, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (strArray[which].equals("未处理")){
+                if (strArray[which].equals("未处理")) {
                     tvRight.setText("未处理");
                     beanList.clear();
                     start = 0;
                     limit = 25;
                     type = "0";
                     type1 = "0";
-                    oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
-                }else if (strArray[which].equals("未审核")){
+                    oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
+                } else if (strArray[which].equals("未审核")) {
                     tvRight.setText("未审核");
                     beanList.clear();
                     start = 0;
                     limit = 25;
                     type = "2";
                     type1 = "0";
-                    oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+                    oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
                 }
             }
         });
@@ -110,8 +113,8 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), OaDetailActivity.class);
-                        intent.putExtra("bean",resultBean);
-                        intent.putExtra("tag",tvRight.getText().toString());
+                        intent.putExtra("bean", resultBean);
+                        intent.putExtra("tag", tvRight.getText().toString());
                         startActivity(intent);
                     }
                 });
@@ -119,8 +122,8 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
         };
         recyclerView.setAdapter(baseAdapter);
         oaWillListPresenter = new OaWillListPresenter(getActivity(), this);
-        userName = new SharedPreferencesHelper(getActivity(),"login").getData(getActivity(),"userName","");
-        oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+        userName = new SharedPreferencesHelper(getActivity(), "login").getData(getActivity(), "userName", "");
+        oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
         setClient();
     }
 
@@ -134,14 +137,14 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                 beanList.clear();
                 start = 0;
                 limit = 20;
-                oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+                oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
             }
 
             @Override
             public void onLoadMore() {
                 start = limit;
                 limit += 25;
-                oaWillListPresenter.getOaWillList(userName,type,type1, start, limit);
+                oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
             }
         });
     }
@@ -192,5 +195,9 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     @Override
     public void setOaWillListMessage(String s) {
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.tv_right)
+    public void onViewClicked() {
     }
 }

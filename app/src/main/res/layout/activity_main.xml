@@ -10,6 +10,7 @@
     <com.smartbus.heze.http.views.Header
         android:id="@+id/header"
         style="@style/Header"
+        android:visibility="gone"
         app:header_is_left_iv_visiable="false"
         app:header_title="@string/app_name">
     </com.smartbus.heze.http.views.Header>
