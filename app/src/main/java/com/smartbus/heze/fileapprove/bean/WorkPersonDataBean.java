@@ -11,11 +11,6 @@ import java.io.Serializable;
 public class WorkPersonDataBean extends DataSupport implements Serializable{
 
 
-    /**
-     * depId : 479
-     * depName : 小车班
-     */
-
     private String username;
     private String fullname;
     private String letters;

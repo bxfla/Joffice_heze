@@ -98,6 +98,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     DocumentLZWillPresenter documentLZWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> selectList1 = new ArrayList<>();
+    List<String> selectNList1 = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     List<String> typelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
@@ -307,6 +308,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                 if (resultCode == TAG_ONE) {
                     if (data != null) {
                         selectList1 = data.getStringArrayListExtra("bean");
+                        selectNList1 = data.getStringArrayListExtra("bean1");
                     }
                 }
                 break;
@@ -457,8 +459,16 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         for (int i = 0; i < bigNametemp.length; i++) {
             checkedItems[i] = false;
         }
+        String s = "";
+        for (int i = 0;i<selectNList1.size();i++){
+            if (i==0){
+                s = selectNList1.get(i);
+            }else {
+                s = s+","+selectNList1.get(i);
+            }
+        }
         new AlertDialog.Builder(this)
-                .setTitle("选择审核人")//标题栏
+                .setTitle("已选:"+s)//标题栏
                 .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {

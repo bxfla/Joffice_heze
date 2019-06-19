@@ -52,6 +52,7 @@ public class WorkPersonActivity extends BaseActivity implements WorkPersonContra
     WorkPersonAdapter departmentAdapter;
     List<WorkPersonDataBean> workpersonList = new ArrayList<>();
     List<String> backList = new ArrayList<>();
+    List<String> backIdList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,8 +127,10 @@ public class WorkPersonActivity extends BaseActivity implements WorkPersonContra
             public void myTextViewClient(WorkPersonDataBean bean,String s) {
                 if (s.equals("add")){
                     backList.add(bean.getUsername());
+                    backIdList.add(bean.getFullname());
                 }else if (s.equals("remove")){
                     backList.remove(bean.getUsername());
+                    backIdList.remove(bean.getFullname());
                 }
             }
         });
@@ -170,6 +173,7 @@ public class WorkPersonActivity extends BaseActivity implements WorkPersonContra
     protected void rightClient() {
         Intent intent = new Intent();
         intent.putStringArrayListExtra("bean", (ArrayList<String>) backList);
+        intent.putStringArrayListExtra("bean1", (ArrayList<String>) backIdList);
         setResult(Constant.TAG_ONE, intent);
         finish(); //结束当前的activity的生命周期
     }

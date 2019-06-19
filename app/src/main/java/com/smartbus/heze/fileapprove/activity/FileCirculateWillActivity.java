@@ -93,6 +93,7 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
     FileCirculateWillPresenter fileCirculateWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> selectList1 = new ArrayList<>();
+    List<String> selectNList1 = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     List<String> typelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
@@ -292,6 +293,7 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
                 if (resultCode == TAG_ONE) {
                     if (data != null) {
                         selectList1 = data.getStringArrayListExtra("bean");
+                        selectNList1 = data.getStringArrayListExtra("bean1");
                     }
                 }
                 break;
@@ -376,17 +378,21 @@ public class FileCirculateWillActivity extends BaseActivity implements FileCircu
     private void setDialog() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog3 = alertDialogBuilder.create();
-//                alertDialogBuilder.setTitle("java EE 常用框架");
-        // 参数介绍
-        // 第一个参数：弹出框的信息集合，一般为字符串集合
-        // 第二个参数：被默认选中的，一个布尔类型的数组
-        // 第三个参数：勾选事件监听
         final boolean[] checkedItems = new boolean[bigNametemp.length + 1];
         for (int i = 0; i < bigNametemp.length; i++) {
             checkedItems[i] = false;
         }
+        String s = "";
+        for (int i = 0;i<selectNList1.size();i++){
+            if (i==0){
+                s = selectNList1.get(i);
+            }else {
+                s = s+","+selectNList1.get(i);
+            }
+        }
         new AlertDialog.Builder(this)
-                .setTitle("选择审核人")//标题栏
+                .setTitle("已选:"+s)
+//                .setMessage(s)
                 .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
