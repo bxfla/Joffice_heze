@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,21 +49,30 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.utils.MainUtil;
+import com.smartbus.heze.http.utils.UriTrytoPath;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.oasheet.presenter.NoPresenter;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,6 +178,14 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
     List<String> listSglb = new ArrayList<String>();
     private CustomDatePickerDay customDatePicker;
     private static final int MY_PERMISSIONS_MY_UP_IMAGE = 1;
+
+    File tmpDir;
+    boolean tag = false;
+    String dirPath = "temp";
+    //图片list
+    private ArrayList<String> mResults = new ArrayList<>();
+    //图片地址
+    private ArrayList<String> photoPath = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -358,56 +376,61 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 }
                 break;
             case R.id.imAdd01:
-//                Drawable.ConstantState buttonConstantState = imAdd01.getDrawable()
-//                        .getConstantState();
-//                Drawable.ConstantState resourceConstantState = getResources().getDrawable(
-//                        R.drawable.add_myphoto).getConstantState();
-//                if (buttonConstantState.equals(resourceConstantState)) {
-//                    Toast.makeText(this, "222", Toast.LENGTH_SHORT).show();
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                                MY_PERMISSIONS_MY_UP_IMAGE);
-                    } else {
-                       openCamera(this);
-                    }
-//                }
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            MY_PERMISSIONS_MY_UP_IMAGE);
+                } else {
+                    Matisse.from(FaultUpActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(3)//可选的最大数
+                            .capture(false)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.hy.powerplatform.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.7f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
+                }
                 break;
             case R.id.imAdd02:
-//                Drawable.ConstantState buttonConstantState1 = imAdd02.getDrawable()
-//                        .getConstantState();
-//                Drawable.ConstantState resourceConstantState1 = getResources().getDrawable(
-//                        R.drawable.add_myphoto).getConstantState();
-//                if (buttonConstantState1.equals(resourceConstantState1)) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                                MY_PERMISSIONS_MY_UP_IMAGE);
-                    } else {
-                        openCamera(this);
-                    }
-//                }
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            MY_PERMISSIONS_MY_UP_IMAGE);
+                } else {
+                    Matisse.from(FaultUpActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(3)//可选的最大数
+                            .capture(false)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.hy.powerplatform.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.7f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
+                }
                 break;
             case R.id.imAdd03:
-//                Drawable.ConstantState buttonConstantState2 = imAdd03.getDrawable()
-//                        .getConstantState();
-//                Drawable.ConstantState resourceConstantState2 = getResources().getDrawable(
-//                        R.drawable.add_myphoto).getConstantState();
-//                if (buttonConstantState2.equals(resourceConstantState2)) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                                MY_PERMISSIONS_MY_UP_IMAGE);
-                    } else {
-                        openCamera(this);
-                    }
-//                }
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            MY_PERMISSIONS_MY_UP_IMAGE);
+                } else {
+                    Matisse.from(FaultUpActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(3)//可选的最大数
+                            .capture(false)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.hy.powerplatform.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.7f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
+                }
                 break;
         }
     }
@@ -418,7 +441,15 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
             case MY_PERMISSIONS_MY_UP_IMAGE:
                 if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera(this);
+                    Matisse.from(FaultUpActivity.this)
+                            .choose(MimeType.allOf())//图片类型
+                            .countable(true)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(8)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(true, "com.hy.powerplatform.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .thumbnailScale(0.7f)  //图片缩放比例
+                            .imageEngine(new GlideEngine())//图片加载引擎
+                            .forResult(TAG_FOUR);//
                 } else {
                     Toast.makeText(this, "权限被拒绝，请手动开启", Toast.LENGTH_SHORT).show();
                 }
@@ -502,68 +533,181 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 }
                 break;
             case TAG_FOUR:
-                Bitmap bitmap = null;
-                try {
-                    bitmap = BitmapFactory.decodeStream(getContentResolver()
-                            .openInputStream(imageUri));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                List<Uri> result = new ArrayList<>();
+                /** 调用原生文件管理器，根据返回选择的文件，来进行操作 **/
+                if (resultCode == Activity.RESULT_OK) {
+                    result = Matisse.obtainResult(data);
                 }
-                if (imageNum == 2) {
-                    imAdd03.setImageBitmap(bitmap);
-                    imageNum += 1;
+                for (int i = 0; i < result.size(); i++) {
+//                    if (result.size() != 1) {
+                    String path = UriTrytoPath.getImageAbsolutePath(this, result.get(i));
+                    mResults.add(path);
+//                    } else {
+//                        BitmapFactory.Options opts = new BitmapFactory.Options();//获取缩略图显示到屏幕上
+//                        opts.inSampleSize = 4;
+//                        Bitmap cbitmap01 = null;
+//                        try {
+//                            cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(0));
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Matrix matrix = new Matrix();
+//                        matrix.setScale(0.1f, 0.1f);
+//                        Bitmap bm = Bitmap.createBitmap(cbitmap01, 0, 0, cbitmap01.getWidth(),
+//                                cbitmap01.getHeight(), matrix, true);
+//                        imAdd01.setImageBitmap(cbitmap01);
+//                        wssaveImageToSD(bm, "temp");
+//                        tag = true;
+//                    }
                 }
-                if (imageNum == 1) {
-                    imAdd02.setImageBitmap(bitmap);
-                    imAdd03.setVisibility(View.VISIBLE);
-                    imageNum += 1;
+                if (resultCode == RESULT_OK) {
+                    Bitmap cbitmap01 = null;
+                    Bitmap cbitmap02 = null;
+                    Bitmap cbitmap03 = null;
+                    if (result.size() == 1) {
+                        try {
+                            cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(0));
+                            imAdd01.setImageBitmap(cbitmap01);
+                            //图片存储到本地
+                            saveImageToSD(mResults, "temp");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (result.size() == 2) {
+                        try {
+                            cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(0));
+                            cbitmap02 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(1));
+                            imAdd01.setVisibility(View.VISIBLE);
+                            imAdd02.setVisibility(View.VISIBLE);
+                            imAdd03.setVisibility(View.VISIBLE);
+                            imAdd01.setImageBitmap(cbitmap01);
+                            imAdd02.setImageBitmap(cbitmap02);
+                            imAdd03.setVisibility(View.VISIBLE);
+                            //图片存储到本地
+                            saveImageToSD(mResults, "temp");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (mResults.size() == 3) {
+                        try {
+                            cbitmap01 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(0));
+                            cbitmap02 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(1));
+                            cbitmap03 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.get(2));
+                            imAdd01.setVisibility(View.VISIBLE);
+                            imAdd02.setVisibility(View.VISIBLE);
+                            imAdd03.setVisibility(View.VISIBLE);
+                            imAdd01.setImageBitmap(cbitmap01);
+                            imAdd02.setImageBitmap(cbitmap02);
+                            imAdd03.setImageBitmap(cbitmap03);
+                            //图片存储到本地
+                            saveImageToSD(mResults, "temp");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
                 }
-                if (imageNum == 0) {
-                    imAdd01.setImageBitmap(bitmap);
-                    imAdd02.setVisibility(View.VISIBLE);
-                    imageNum += 1;
-                }
-                upImage();
-                break;
         }
     }
 
     /**
-     * 上传图片
+     * 图片保存到本地
+     *
+     * @param dirPath
      */
-    private void upImage() {
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(60000);
-        final String url = ApiAddress.mainApi + ApiAddress.faultupimage;
-        final RequestParams params = new RequestParams();
+    private void saveImageToSD(ArrayList<String> mResults, String dirPath) {
+        //新建文件夹用于存放裁剪后的图片
+        tmpDir = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
+        if (!tmpDir.exists()) {
+            tmpDir.mkdir();
+        }
+        for (int i = 0; i < mResults.size(); i++) {
+            Bitmap cbitmap = BitmapFactory.decodeFile(mResults.get(i));
+            Matrix matrix = new Matrix();
+            matrix.setScale(0.1f, 0.1f);
+            Bitmap bm = Bitmap.createBitmap(cbitmap, 0, 0, cbitmap.getWidth(),
+                    cbitmap.getHeight(), matrix, true);
+            //新建文件存储裁剪后的图片
+            File img = new File(tmpDir.getAbsolutePath() + "/" + "shigu" + String.valueOf(i) + ".png");
+            try {
+                //打开文件输出流
+                FileOutputStream fos = new FileOutputStream(img);
+                //将bitmap压缩后写入输出流(参数依次为图片格式、图片质量和输出流)
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                //刷新输出流
+                fos.flush();
+                //关闭输出流
+                fos.close();
+                //返回File类型的Uri
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            photoPath.add(String.valueOf(img));
+        }
+        upImage();
+    }
+
+    private void wssaveImageToSD(Bitmap cbitmap01, String dirPath) {
+        //新建文件夹用于存放裁剪后的图片
+        tmpDir = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
+        if (!tmpDir.exists()) {
+            tmpDir.mkdir();
+        }
+
+        Random random = new Random();
+        //新建文件存储裁剪后的图片
+        File img = new File(tmpDir.getAbsolutePath() + "/" + "shigu0" + ".png");
         try {
-            params.put("upload", tempFile);
-            params.put("fullname", tempFile.getName());
+            //打开文件输出流
+            FileOutputStream fos = new FileOutputStream(img);
+            //将bitmap压缩后写入输出流(参数依次为图片格式、图片质量和输出流)
+            cbitmap01.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            //刷新输出流
+            fos.flush();
+            //关闭输出流
+            fos.close();
+            //返回File类型的Uri
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ProgressDialogUtil.startLoad(this, MainUtil.upData);
+        //getImageFromSD(dirPath);
+        Map<String, String> map = new HashMap<>();
+        final RequestParams params = new RequestParams();
+        ProgressDialogUtil.startLoad(FaultUpActivity.this, "图片上传中");
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu0" + ".png");
+        String filepath = "shigu0" + ".png";
+        try {
+            params.put("upload", file);
+            params.put("fullname", filepath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 执行post请求
+        // 异步的客户端对象
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(30000);
+        String url = ApiAddress.mainApi + ApiAddress.faultupimage;
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int arg0, String arg1) {
                 super.onSuccess(arg0, arg1);
-                Log.i("XXX", arg1);
-                JSONObject jsonObject = null;
                 try {
-                    jsonObject = new JSONObject(arg1.toString());
-                    if (imageNum == 1) {
-                        fileName1 = jsonObject.getString("msg");
-                    } else if (imageNum == 2) {
-                        fileName2 = jsonObject.getString("msg");
-                    } else if (imageNum == 3) {
-                        fileName3 = jsonObject.getString("msg");
-                    }
+                    Log.i("XXX", "XXX");
+                    JSONObject jsonObject = new JSONObject(arg1);
+                    fileName1 = jsonObject.getString("msg");
+                    Message message = new Message();
+                    message.what = TAG_ONE;
+                    handler.sendMessage(message);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Message message = new Message();
-                message.what = TAG_ONE;
-                handler.sendMessage(message);
             }
 
             @Override
@@ -575,6 +719,311 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 handler.sendMessage(message);
             }
         });
+    }
+
+    /**
+     * 上传图片
+     */
+    private void upImage() {
+        ProgressDialogUtil.startLoad(this, MainUtil.upData);
+        if (mResults.size() == 1) {
+            if (imAdd01.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu0" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu0" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName1 = jsonObject.getString("msg");
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        }else  if (mResults.size() == 2) {
+            if (imAdd01.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu0" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu0" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName1 = jsonObject.getString("msg");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+            if (imAdd02.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu1" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu1" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName2 = jsonObject.getString("msg");
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        } else if (mResults.size() == 3) {
+            if (imAdd01.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu0" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu0" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName1 = jsonObject.getString("msg");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+            if (imAdd02.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu1" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu1" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName2 = jsonObject.getString("msg");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+            if (imAdd03.getDrawable() != null) {
+                RequestParams params = new RequestParams();
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu2" + ".png");
+                String sdpath = Environment.getExternalStorageDirectory()
+                        + "/" + dirPath;// 获取sdcard的根路径
+                String filepath = "shigu2" + ".png";
+                try {
+                    params.put("upload", file);
+                    params.put("fullname", filepath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 执行post请求
+                // 异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.setTimeout(30000);
+                String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+                client.post(url, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int arg0, String arg1) {
+                        super.onSuccess(arg0, arg1);
+                        try {
+                            Log.i("XXX", "XXX");
+                            JSONObject jsonObject = new JSONObject(arg1);
+                            fileName3 = jsonObject.getString("msg");
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                        super.onFailure(statusCode, headers, responseBody, error);
+                        Log.i("XXX", "XXXXX");
+                        Message message = new Message();
+                        message.what = Constant.TAG_TWO;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        }
+//        final AsyncHttpClient client = new AsyncHttpClient();
+//        client.setTimeout(60000);
+//        final String url = ApiAddress.mainApi + ApiAddress.faultupimage;
+//        final RequestParams params = new RequestParams();
+//        try {
+//            params.put("upload", tempFile);
+//            params.put("fullname", tempFile.getName());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        ProgressDialogUtil.startLoad(this, MainUtil.upData);
+//        client.post(url, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int arg0, String arg1) {
+//                super.onSuccess(arg0, arg1);
+//                Log.i("XXX", arg1);
+//                JSONObject jsonObject = null;
+//                try {
+//                    jsonObject = new JSONObject(arg1.toString());
+//                    if (imageNum == 1) {
+//                        fileName1 = jsonObject.getString("msg");
+//                    } else if (imageNum == 2) {
+//                        fileName2 = jsonObject.getString("msg");
+//                    } else if (imageNum == 3) {
+//                        fileName3 = jsonObject.getString("msg");
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                Message message = new Message();
+//                message.what = TAG_ONE;
+//                handler.sendMessage(message);
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+//                super.onFailure(statusCode, headers, responseBody, error);
+//                Log.i("XXX", "XXXXX");
+//                Message message = new Message();
+//                message.what = Constant.TAG_TWO;
+//                handler.sendMessage(message);
+//            }
+//        });
     }
 
     private Handler handler = new Handler() {
