@@ -52,7 +52,7 @@
                     style="@style/oaEditText"
                     android:layout_height="match_parent"
                     android:inputType="number|numberDecimal"
-                    android:hint="罚款金额"
+                    android:hint="请录入"
                     android:textSize="12dp" />
 
                 <View style="@style/VerticalLine" />

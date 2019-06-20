@@ -48,10 +48,10 @@ import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 import com.smartbus.heze.oaflow.bean.CheckType;
-import com.smartbus.heze.oaflow.module.AddWorkContract;
 import com.smartbus.heze.oaflow.module.AddCheckTypeContract;
-import com.smartbus.heze.oaflow.presenter.AddWorkPresenter;
+import com.smartbus.heze.oaflow.module.AddWorkContract;
 import com.smartbus.heze.oaflow.presenter.AddWorkCheckTypePresenter;
+import com.smartbus.heze.oaflow.presenter.AddWorkPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -493,6 +493,8 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
             vocationId = s.getVocationId();
             selectTag = "2";
             btnUp.setEnabled(true);
+            btnFirst.setEnabled(false);
+            btnFirst.setBackgroundColor(getResources().getColor(R.color.shouye));
             Toast.makeText(this, "录入成功请提交数据", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "录入失败", Toast.LENGTH_SHORT).show();
@@ -648,7 +650,9 @@ public class AddWorkActivity extends BaseActivity implements OneContract.View
     @Override
     public void setCheckType(CheckType s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "发布成功",Toast.LENGTH_SHORT).show();
+            btnUp.setEnabled(false);
+            btnUp.setBackgroundColor(getResources().getColor(R.color.shouye));
             finish();
         }
     }

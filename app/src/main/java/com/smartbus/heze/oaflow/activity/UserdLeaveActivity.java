@@ -81,7 +81,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_TWO;
  * 通用请假单
  */
 public class UserdLeaveActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View, UserdLeaveContract.View,CheckTypeContract.View {
+        , TwoContract.View, UPYSDContract.View, UserdLeaveContract.View, CheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
@@ -151,7 +151,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         userdLeavePresenter = new UserdLeavePresenter(this, this);
-        checkTypePresenter = new CheckTypePresenter(this,this);
+        checkTypePresenter = new CheckTypePresenter(this, this);
         initDatePicker();
         String uaserName = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         listTime.add("上午");
@@ -277,7 +277,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                 }
                 break;
             case R.id.btnUp:
-                if (selectTag.equals("2")){
+                if (selectTag.equals("2")) {
                     namelist.clear();
                     codeList.clear();
                     nameList.clear();
@@ -292,7 +292,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
                     onePersenter.getOnePerson(Constant.USERDLEAVE_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
                     upYsdPersenter = new UPYSDPresenter(this, this);
-                }else {
+                } else {
                     Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -479,6 +479,8 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
             vocationId = s.getVocationId();
             selectTag = "2";
             btnUp.setEnabled(true);
+            btnFirst.setEnabled(false);
+            btnFirst.setBackgroundColor(getResources().getColor(R.color.shouye));
             Toast.makeText(this, "录入成功请提交数据", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "录入失败", Toast.LENGTH_SHORT).show();
@@ -622,7 +624,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
             String s1 = String.valueOf(s.getRunId());
-            checkTypePresenter.getCheckType(String.valueOf(s.getRunId()),vocationId);
+            checkTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId);
         }
     }
 
@@ -633,8 +635,10 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
 
     @Override
     public void setCheckType(CheckType s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            btnUp.setEnabled(false);
+            btnUp.setBackgroundColor(getResources().getColor(R.color.shouye));
             finish();
         }
     }

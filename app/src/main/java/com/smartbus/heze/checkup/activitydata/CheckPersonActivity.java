@@ -99,6 +99,8 @@ public class CheckPersonActivity extends BaseActivity implements CheckPersonCont
                 }
             }
             setAdapter(mSortList);
+            beanListData.clear();
+            beanListData = mSortList;
         }
     }
 

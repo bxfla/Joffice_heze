@@ -355,6 +355,8 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
             vocationId = s.getVocationId();
             selectTag = "2";
             btnUp.setEnabled(true);
+            btnFirst.setEnabled(false);
+            btnFirst.setBackgroundColor(getResources().getColor(R.color.shouye));
             Toast.makeText(this, "录入成功请提交数据", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "录入失败", Toast.LENGTH_SHORT).show();
@@ -511,6 +513,8 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
     public void setCheckType(CheckType s) {
         if (s.isSuccess()) {
             Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            btnUp.setEnabled(false);
+            btnUp.setBackgroundColor(getResources().getColor(R.color.shouye));
             finish();
         }
     }

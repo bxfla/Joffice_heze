@@ -97,6 +97,8 @@ public class LineCodeActivity extends BaseActivity implements LineCodeContract.V
                 }
             }
             setAdapter(mSortList);
+            beanListData.clear();
+            beanListData = mSortList;
         }
     }
 

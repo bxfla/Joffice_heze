@@ -189,6 +189,10 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
             spinner1.setVisibility(View.GONE);
             tv1.setVisibility(View.VISIBLE);
             tv1.setText("处理完成");
+        }else if (resultBean.getStatus().equals("1")) {
+            spinner1.setVisibility(View.GONE);
+            tv1.setVisibility(View.VISIBLE);
+            tv1.setText("处理中");
         }
         String type = resultBean.getType();
         if (type.equals("0")) {
@@ -227,9 +231,14 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
 
     }
 
-    @OnClick({R.id.imageViewAdd01, R.id.imageViewAdd2, R.id.tvLeader, R.id.btnUp})
+    @OnClick({R.id.imageViewAdd01, R.id.imageViewAdd2, R.id.tvLeader, R.id.btnUp,R.id.tv1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv1:
+                tv1.setVisibility(View.GONE);
+                spinner1.setVisibility(View.VISIBLE);
+                spinner1.performClick();
+                break;
             case R.id.imageViewAdd01:
                 break;
             case R.id.imageViewAdd2:
@@ -291,6 +300,8 @@ public class OaDetailActivity extends BaseActivity implements UpOaDetailContract
                     upOaDetailPresenter.getUpOaDetail("1", statue, etLeader2.getText().toString(), fileName, workId, statue1, etLeader4.getText().toString());
                 } else if (tag.equals("未审核")) {
                     upOaDetailPresenter.getUpOaDetail("2", statue, etLeader2.getText().toString(), fileName, workId, statue1, etLeader4.getText().toString());
+                }else if (tag.equals("处理中")) {
+                    upOaDetailPresenter.getUpOaDetail("1", statue, etLeader2.getText().toString(), fileName, workId, statue1, etLeader4.getText().toString());
                 }
 //                if (!etLeader2.getText().toString().equals("")&&etLeader4.getText().toString().equals("")){
 //                    if (spinner2.getSelectedItem().toString().equals("未审核")){

@@ -99,6 +99,8 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
                 }
             }
             setAdapter(mSortList);
+            beanListData.clear();
+            beanListData = mSortList;
         }
     }
 

@@ -51,7 +51,7 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
     BaseRecyclerAdapter baseAdapter;
     OaWillListPresenter oaWillListPresenter;
     List<OaWillDo.ResultBean> beanList = new ArrayList<>();
-    final String[] strArray = new String[]{"未处理", "未审核"};
+    final String[] strArray = new String[]{"未处理","处理中", "未审核"};
     @BindView(R.id.tv_tittle)
     TextView tvTittle;
     @BindView(R.id.tv_right)
@@ -92,7 +92,15 @@ public class Fragment03 extends Fragment implements OaWillListContract.View {
                     beanList.clear();
                     start = 0;
                     limit = 25;
-                    type = "2";
+                    type = "";
+                    type1 = "0";
+                    oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
+                }else if (strArray[which].equals("处理中")) {
+                    tvRight.setText("处理中");
+                    beanList.clear();
+                    start = 0;
+                    limit = 25;
+                    type = "1";
                     type1 = "0";
                     oaWillListPresenter.getOaWillList(userName, type, type1, start, limit);
                 }

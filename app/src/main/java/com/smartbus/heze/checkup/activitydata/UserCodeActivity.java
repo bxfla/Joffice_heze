@@ -75,12 +75,12 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                filterData(s.toString());
             }
         });
     }
@@ -97,12 +97,14 @@ public class UserCodeActivity extends BaseActivity implements UserCodeContract.V
         } else {
             mSortList.clear();
             for (UserCodeData sortModel : beanListData) {
-                String name = sortModel.getUserCode();
+                String name = sortModel.getFullname();
                 if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
                     mSortList.add(sortModel);
                 }
             }
             setAdapter(mSortList);
+            beanListData.clear();
+            beanListData = mSortList;
         }
     }
 

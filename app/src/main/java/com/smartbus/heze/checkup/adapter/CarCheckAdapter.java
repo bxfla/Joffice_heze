@@ -47,6 +47,7 @@ public class CarCheckAdapter extends RecyclerView.Adapter<CarCheckAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.textView.setText(beanList.get(position).getProjectName());
+        holder.editText.setText(beanList.get(position).getFkje());
         holder.tvName.setText("分数");
         holder.position = position;
         holder.rb2.setOnClickListener(new View.OnClickListener() {

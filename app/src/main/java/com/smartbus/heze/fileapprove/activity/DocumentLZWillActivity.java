@@ -257,45 +257,65 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     }
 
     private String getListData() {
+        if (selectList.size() == 0) {
+            if (selectList1.size() == 1) {
+                uId = selectList1.get(0);
+            }
+            if (selectList1.size() > 1) {
+                for (int i = 1; i < selectList.size(); i++) {
+                    if (i==1){
+                        uId = selectList.get(i);
+                    }
+                    if (i < selectList.size() - 1&&i!=1) {
+                        uId = uId +","+ selectList.get(i) + ",";
+                    } else {
+                        uId = uId +","+ selectList.get(i);
+                    }
+                }
+            }
+        }
         if (selectList.size() == 1) {
-            //uName = backlist.get(0).getActivityName();
             uId = selectList.get(0);
+            if (selectList1.size() == 1) {
+                uId = uId + "," + selectList1.get(0);
+            }
+            if (selectList1.size() > 1) {
+                for (int i = 1; i < selectList.size(); i++) {
+                    if (i==1){
+                        uId = uId + "," +selectList.get(i);
+                    }
+                    if (i < selectList.size() - 1&&i!=1) {
+                        uId = uId +","+ selectList.get(i) + ",";
+                    } else {
+                        uId = uId +","+ selectList.get(i);
+                    }
+                }
+            }
         }
         if (selectList.size() > 1) {
             for (int i = 1; i < selectList.size(); i++) {
-                if (i < selectList.size() - 1) {
-                    uId = uId + selectList.get(i) + ",";
+                if (i==1){
+                    uId = selectList.get(i);
+                }
+                if (i < selectList.size() - 1&&i!=1) {
+                    uId = uId +","+ selectList.get(i) + ",";
                 } else {
-                    uId = uId + selectList.get(i);
+                    uId = uId +","+ selectList.get(i);
                 }
             }
-            uId = selectList.get(0) + "," + uId;
-        }
-
-        if (selectList1.size() == 1) {
-            //uName = backlist.get(0).getActivityName();
-            if (selectList.size()==0){
-                uId = uId + selectList1.get(0);
-            }else {
-                uId = uId +","+ selectList1.get(0);
-            }
-        }
-        if (selectList1.size() > 1) {
-            for (int i = 0; i < selectList1.size(); i++) {
-                if (i < selectList1.size()-1) {
-                    if (uId==null||uId.equals("")){
-                        uId = selectList1.get(i);
-                    }else {
-                        uId = uId + ","+ selectList1.get(i);
+            if (selectList1.size() > 1) {
+                for (int i = 1; i < selectList.size(); i++) {
+                    if (i==1){
+                        uId = uId + "," +selectList.get(i);
                     }
-                } else {
-                    if (uId==null||uId.equals("")){
-                        uId = uId + ","+ selectList1.get(i);
-                    }else {
-                        uId = uId + ","+ selectList1.get(i);
+                    if (i < selectList.size() - 1&&i!=1) {
+                        uId = uId +","+ selectList.get(i) + ",";
+                    } else {
+                        uId = uId +","+ selectList.get(i);
                     }
                 }
             }
+//            uId = selectList.get(0) + "," + uId;
         }
         return uId;
     }
