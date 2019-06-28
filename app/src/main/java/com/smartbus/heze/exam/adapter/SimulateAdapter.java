@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.SimulateActivity;
 import com.smartbus.heze.exam.bean.ExaminationData;
@@ -63,6 +65,7 @@ public class SimulateAdapter extends PagerAdapter {
         holder.tvNext = (TextView) convertView.findViewById(R.id.tvNext);
         holder.imNext = (ImageView) convertView.findViewById(R.id.imNext);
         holder.tvNum = (TextView) convertView.findViewById(R.id.tvNum);
+        holder.imageView = convertView.findViewById(R.id.imageView);
 
         holder.rbA = (RadioButton) convertView.findViewById(rbA);
         holder.rbB = (RadioButton) convertView.findViewById(rbB);
@@ -145,6 +148,15 @@ public class SimulateAdapter extends PagerAdapter {
         holder.tvNo.setText(String.valueOf(position+1));
         holder.tvQuestion.setText("("+dataItems.get(position).getTypeName()+")"+dataItems.get(position).getTitle().toString());
         holder.tvNum.setText((position + 1) + "/" + dataItems.size());
+        if (!dataItems.get(position).getPic().equals("")){
+            holder.imageView.setVisibility(View.VISIBLE);
+            Glide.with(mContext)
+                    .load(ApiAddress.downloadfile+dataItems.get(position).getPic())
+                    .placeholder(R.drawable.loading)
+                    .into(holder.imageView);
+        }else {
+            holder.imageView.setVisibility(View.GONE);
+        }
 //        holder.question.setText(dataItems.get(position).getQuContent());
         // 最后一页修改"下一步"按钮文字
         if (position == viewItems.size() - 1) {
@@ -429,7 +441,7 @@ public class SimulateAdapter extends PagerAdapter {
 
     public class ViewHolder {
         TextView tvNo, tvQuestion, tvNum, tvNext;
-        ImageView imNext;
+        ImageView imNext,imageView;
         LinearLayout llUp, llNext, llType;
         RadioButton rbA, rbB, rbC, rbD, rbE, rbF;
         CheckBox cbA, cbB, cbC, cbD, cbE, cbF;

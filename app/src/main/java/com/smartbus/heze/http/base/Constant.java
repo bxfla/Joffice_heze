@@ -53,6 +53,6 @@ public class Constant {
 
     //公用值班
     public final static String CHECKWORK_DEFID = "75" ;
-    public final static String CHECKWORK_FORMDEFIS = "24" ;
+    public final static String CHECKWORK_FORMDEFIS = "39" ;
 
 }

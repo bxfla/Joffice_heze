@@ -75,6 +75,7 @@ public class SimulateActivity extends BaseActivity implements SimulateAdapter.Ge
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvTitle(getResources().getString(R.string.simulate_exam));
         Intent intent = getIntent();
         examinationId = intent.getStringExtra("id");
         examinationTime = intent.getStringExtra("time");

@@ -444,7 +444,6 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
                 upYsdPersenter.getUPYSD(map);
             } else {
                 MyAlertDialog.MyListAlertDialog(isShow, codeList, nameList, namelist1, this, new AlertDialogCallBackP() {
-
                     @Override
                     public void select(List<String> data) {
                         selectList = data;

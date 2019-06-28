@@ -115,6 +115,16 @@
                     android:textColor="@color/xiaohei"
                     android:textSize="16sp" />
             </LinearLayout>
+            
+            <ImageView
+                android:id="@+id/imageView"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="120dp"
+                android:scaleType="centerInside"/>
+            
             <!--题目选项-->
             <LinearLayout
                 android:id="@+id/activity_prepare_test_radioBtnLayout"

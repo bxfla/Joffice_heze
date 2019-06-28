@@ -249,13 +249,13 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
         if (namelist.size() != 0) {
             if (namelist.size() == 1) {
                 userDepart = namelist.get(0);
-                twoPersenter.getTwoPerson(Constant.YSD_DEFID, namelist.get(0));
+                twoPersenter.getTwoPerson(Constant.BORROWACCIDENT_DEFID, namelist.get(0));
             } else {
                 MyAlertDialog.MyListAlertDialog(this, namelist, new AlertDialogCallBackP() {
                     @Override
                     public void oneselect(final String data) {
                         userDepart = data;
-                        twoPersenter.getTwoPerson(Constant.YSD_DEFID, data);
+                        twoPersenter.getTwoPerson(Constant.BORROWACCIDENT_DEFID, data);
                     }
 
                     @Override
