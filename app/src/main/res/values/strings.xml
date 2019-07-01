@@ -90,6 +90,7 @@
     <string name="online_exam">在线考试</string>
     <string name="found_exam">成绩查询</string>
     <string name="simulate_exam">模拟考试</string>
+    <string name="income_rank">收入排名</string>
 
     <!--其他-->
     <string name="other_list">功能列表</string>

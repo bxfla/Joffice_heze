@@ -57,10 +57,10 @@
                 android:text="@string/simulate_exam" />
 
             <RadioButton
+                android:id="@+id/rb5"
                 style="@style/RadionButton"
-                android:visibility="invisible"
-                android:drawableTop="@drawable/rb2"
-                android:text="@string/online_exam" />
+                android:drawableTop="@drawable/rb5"
+                android:text="@string/income_rank" />
             <RadioButton
                 style="@style/RadionButton"
                 android:visibility="invisible"

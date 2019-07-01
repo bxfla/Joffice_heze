@@ -10,12 +10,11 @@ public class ApiAddress {
     //川川
 //    public final static String mainApi = "http://192.168.2.126:8082/joffice21/" ;
     //孙琦
-//    public final static String mainApi = "http://192.168.2.161:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.120:8080/joffice21/" ;
     //正式库
     public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
-//    public final static String mainApi = "http://192.168.2.117:8080/joffice21/" ;
 
     /***********************首页*******************************/
     //登录
@@ -156,6 +155,9 @@ public class ApiAddress {
     public static final String  lostimageup = "staffzone/upLoadImageLostArticle.do";
     //失物数据上传
     public static final String  lostup = "staffzone/saveNewLostArticle.do";
+
+    //收入排名
+    public static final String  incomerank = "starkh/IncomeRankingNewAppImportYYData.do";
 
 
 }

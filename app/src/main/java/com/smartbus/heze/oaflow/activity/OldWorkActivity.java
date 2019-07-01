@@ -215,7 +215,7 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         map.put("createTime", tvEndTime.getText().toString());
         map.put("fillDate", tvStartTime.getText().toString());
         map.put("userName", tvPerson.getText().toString());
-        map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
+        map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 
     private void setDataFirst() {

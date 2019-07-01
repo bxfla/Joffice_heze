@@ -198,7 +198,7 @@ public class AtWorkActivity extends BaseActivity implements OneContract.View
         Date curDate =  new Date(System.currentTimeMillis());
         String str = formatter.format(curDate);
         map.put("fillDate", str);
-        map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
+        map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 
     private void setDataFirst() {

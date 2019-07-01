@@ -232,7 +232,8 @@
         <activity
             android:name=".other.activity.LostActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".exam.activity.SimulateResultActivity"></activity>
+        <activity android:name=".exam.activity.SimulateResultActivity" />
+        <activity android:name=".exam.activity.InComeRankActivity"></activity>
     </application>
 
 </manifest>

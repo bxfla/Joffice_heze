@@ -19,6 +19,7 @@ import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.exam.bean.ExaminationData;
+import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
 import com.smartbus.heze.exam.bean.OnLineList;
@@ -638,4 +639,11 @@ public interface AllApi {
             , @Field("ownerCertificates")String ownerCertificates, @Field("returnStatus")String returnStatus
             , @Field("situation")String situation, @Field("remarks")String remarks
             , @Field("photo")String photo);
+
+
+    /**
+     * 收入排名
+     */
+    @GET(ApiAddress.incomerank)
+    Observable<InComeRank> getInComeRank(@Query("ksDate")String ksDate,@Query("jsDate")String jsDate);
 }

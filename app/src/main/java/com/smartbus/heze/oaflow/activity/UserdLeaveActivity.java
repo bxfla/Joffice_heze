@@ -367,7 +367,7 @@ public class UserdLeaveActivity extends BaseActivity implements OneContract.View
         map.put("endDate", tvEndTime.getText().toString());
         map.put("jsdayType", spinnerPM.getSelectedItem().toString());
         map.put("vocationDays", etDays.getText().toString());
-        map.put("dataUrl_save", "/joffice21/hrm/updateLeaveDays.do?vocationId=" + vocationId);
+        map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
         map.put("bumenjingli", "");
         map.put("fenguanjingli", "");
         map.put("zongjingli", "");

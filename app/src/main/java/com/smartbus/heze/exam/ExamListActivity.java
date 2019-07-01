@@ -7,6 +7,7 @@ import android.widget.RadioButton;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.FoundActivity;
+import com.smartbus.heze.exam.activity.InComeRankActivity;
 import com.smartbus.heze.exam.activity.LearningLeftActivity;
 import com.smartbus.heze.exam.activity.OnLineListActivity;
 import com.smartbus.heze.exam.activity.SimulateListActivity;
@@ -29,6 +30,8 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb3;
     @BindView(R.id.rb4)
     RadioButton rb4;
+    @BindView(R.id.rb5)
+    RadioButton rb5;
 
     Intent intent;
 
@@ -53,7 +56,7 @@ public class ExamListActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3,R.id.rb4})
+    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -70,6 +73,10 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb4:
                 intent = new Intent(this, SimulateListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb5:
+                intent = new Intent(this, InComeRankActivity.class);
                 startActivity(intent);
                 break;
         }
