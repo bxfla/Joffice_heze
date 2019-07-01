@@ -235,6 +235,7 @@
         <activity android:name=".exam.activity.SimulateResultActivity" />
         <activity android:name=".exam.activity.InComeRankActivity"/>
         <activity android:name=".exam.activity.ClassMileageActivity"/>
+        <activity android:name=".exam.activity.RewardsPenaltiesActivity"/>
     </application>
 
 </manifest>

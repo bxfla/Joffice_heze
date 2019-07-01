@@ -25,6 +25,7 @@ import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.bean.OnLineUp;
+import com.smartbus.heze.exam.bean.RewardPenalties;
 import com.smartbus.heze.exam.bean.Score;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
@@ -653,4 +654,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.classmileage)
     Observable<ClassMileage> getclassmileage(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
+
+    /**
+     * 获取奖罚情况
+     */
+    @GET(ApiAddress.rewardspenalties)
+    Observable<RewardPenalties> getrewardspenalties(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
 }

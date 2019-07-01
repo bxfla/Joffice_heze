@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="vertical">
@@ -66,7 +66,29 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb6"
                 android:text="@string/class_mileage" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/rb7"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb7"
+                android:text="@string/rewards_penalties" />
+
+            <RadioButton
+                android:id="@+id/rb8"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb8"
+                android:text="@string/income_rank" />
+            <RadioButton
+                android:id="@+id/rb9"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb9"
+                android:text="@string/class_mileage" />
         </LinearLayout>
     </LinearLayout>
 
