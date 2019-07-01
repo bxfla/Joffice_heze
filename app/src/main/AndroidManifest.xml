@@ -236,6 +236,7 @@
         <activity android:name=".exam.activity.InComeRankActivity"/>
         <activity android:name=".exam.activity.ClassMileageActivity"/>
         <activity android:name=".exam.activity.RewardsPenaltiesActivity"/>
+        <activity android:name=".exam.activity.OilConsumptionActivity"/>
     </application>
 
 </manifest>

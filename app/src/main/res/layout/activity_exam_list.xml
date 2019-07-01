@@ -83,7 +83,7 @@
                 android:id="@+id/rb8"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb8"
-                android:text="@string/income_rank" />
+                android:text="@string/oil_consumption" />
             <RadioButton
                 android:id="@+id/rb9"
                 style="@style/RadionButton"

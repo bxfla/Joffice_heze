@@ -162,6 +162,8 @@ public class ApiAddress {
     public static final String  classmileage = "starkh/classAndMileTJAppImportYYData.do";
     //奖罚情况
     public static final String  rewardspenalties = "product/listAppLineRewardPunishment.do";
+    //油耗情况
+    public static final String  oilconsumption = "product/listAppDriverOilRank.do";
 
 
 }

@@ -23,6 +23,7 @@ import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
+import com.smartbus.heze.exam.bean.OilConsumption;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.bean.OnLineUp;
 import com.smartbus.heze.exam.bean.RewardPenalties;
@@ -660,4 +661,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.rewardspenalties)
     Observable<RewardPenalties> getrewardspenalties(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
+
+    /**
+     * 获取油耗情况
+     */
+    @GET(ApiAddress.oilconsumption)
+    Observable<OilConsumption> getoilconsumption(@Query("Q_createDate_S_GE")String Q_createDate_S_GE, @Query("Q_createDate_S_LE")String Q_createDate_S_LE);
 }
