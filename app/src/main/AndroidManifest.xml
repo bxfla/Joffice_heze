@@ -233,7 +233,8 @@
             android:name=".other.activity.LostActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".exam.activity.SimulateResultActivity" />
-        <activity android:name=".exam.activity.InComeRankActivity"></activity>
+        <activity android:name=".exam.activity.InComeRankActivity"/>
+        <activity android:name=".exam.activity.ClassMileageActivity"/>
     </application>
 
 </manifest>

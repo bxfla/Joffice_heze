@@ -9,9 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.exam.bean.InComeRank;
-import com.smartbus.heze.exam.module.InComeRankContract;
-import com.smartbus.heze.exam.presenter.InComeRankPresenter;
+import com.smartbus.heze.exam.bean.ClassMileage;
+import com.smartbus.heze.exam.module.ClassMileageContract;
+import com.smartbus.heze.exam.presenter.ClassMileagePresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -30,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InComeRankActivity extends BaseActivity implements InComeRankContract.View {
+public class ClassMileageActivity extends BaseActivity implements ClassMileageContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -44,19 +44,20 @@ public class InComeRankActivity extends BaseActivity implements InComeRankContra
     LinearLayout llNoContent;
 
     BaseRecyclerAdapter baseRecyclerAdapter;
-    InComeRankPresenter inComeRankPresenter;
-    List<InComeRank.ResultBean> beanList = new ArrayList<>();
+    ClassMileagePresenter classMileagePresenter;
+    List<ClassMileage.ResultBean> beanList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvRight(getResources().getString(R.string.class_mileage));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        inComeRankPresenter = new InComeRankPresenter(this, this);
-        inComeRankPresenter.getInComeRank(tvStartTime.getText().toString()
+        classMileagePresenter = new ClassMileagePresenter(this, this);
+        classMileagePresenter.getClassMileage(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -73,7 +74,7 @@ public class InComeRankActivity extends BaseActivity implements InComeRankContra
     @Override
     protected void rightClient() {
         beanList.clear();
-        inComeRankPresenter.getInComeRank(tvStartTime.getText().toString()
+        classMileagePresenter.getClassMileage(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -85,7 +86,7 @@ public class InComeRankActivity extends BaseActivity implements InComeRankContra
         Calendar c = Calendar.getInstance();
         //过去七天
         c.setTime(new Date());
-        c.add(Calendar.DATE, -7);
+        c.add(Calendar.DATE, -1);
         Date d = c.getTime();
         String day = format.format(d);
         tvStartTime.setText(day);
@@ -144,22 +145,27 @@ public class InComeRankActivity extends BaseActivity implements InComeRankContra
         }
     }
 
-
     @Override
-    public void setInComeRank(InComeRank s) {
+    public void setClassMileage(ClassMileage s) {
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
         if (beanList.size() == 0) {
             llNoContent.setVisibility(View.VISIBLE);
         }
-        baseRecyclerAdapter = new BaseRecyclerAdapter<InComeRank.ResultBean>(this, R.layout.adapter_check_item1, beanList) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<ClassMileage.ResultBean>(this, R.layout.adapter_classmileage_item, beanList) {
             @Override
-            public void convert(BaseViewHolder holder, final InComeRank.ResultBean resultBean) {
-                holder.setText(R.id.tvDriver, resultBean.getDriverName());
-                holder.setText(R.id.tvCarNo, resultBean.getRanking());
-                holder.setText(R.id.tvDate, resultBean.getLine());
-                holder.setText(R.id.tvJCR, resultBean.getDBSR());
+            public void convert(BaseViewHolder holder, final ClassMileage.ResultBean resultBean) {
+                holder.setText(R.id.tvDate, resultBean.getLSYYCLXX_RQ());
+                holder.setText(R.id.tvLD, resultBean.getLSYYCLXX_LDMC());
+                holder.setText(R.id.tvLine, resultBean.getLsyyclxx_xlbh());
+                holder.setText(R.id.tvCarNo, resultBean.getLSYYCLXX_CH());
+                holder.setText(R.id.tvCarCode, resultBean.getLSYYCLXX_CPH());
+                holder.setText(R.id.tvMileage, String.valueOf(resultBean.getLSYYCLXX_SJYXLC()));
+
+                holder.setText(R.id.tvPlayNum, String.valueOf(resultBean.getLSYYCLXX_JHBS()));
+                holder.setText(R.id.tvNum, String.valueOf(resultBean.getLSYYCLXX_SJBS()));
+                holder.setText(R.id.tvLv, String.valueOf(resultBean.getOP_ZDL()));
             }
         };
         recyclerView.setAdapter(baseRecyclerAdapter);
@@ -167,7 +173,7 @@ public class InComeRankActivity extends BaseActivity implements InComeRankContra
     }
 
     @Override
-    public void setInComeRankMessage(String s) {
+    public void setClassMileageMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

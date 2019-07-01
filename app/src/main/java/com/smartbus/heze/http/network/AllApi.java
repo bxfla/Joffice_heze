@@ -18,6 +18,7 @@ import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.exam.bean.ClassMileage;
 import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
@@ -646,4 +647,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.incomerank)
     Observable<InComeRank> getInComeRank(@Query("ksDate")String ksDate,@Query("jsDate")String jsDate);
+
+    /**
+     * 获取班次历程
+     */
+    @GET(ApiAddress.classmileage)
+    Observable<ClassMileage> getclassmileage(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
 }

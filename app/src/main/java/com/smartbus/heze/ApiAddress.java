@@ -158,6 +158,8 @@ public class ApiAddress {
 
     //收入排名
     public static final String  incomerank = "starkh/IncomeRankingNewAppImportYYData.do";
+    //班次历程
+    public static final String  classmileage = "starkh/classAndMileTJAppImportYYData.do";
 
 
 }

@@ -62,10 +62,10 @@
                 android:drawableTop="@drawable/rb5"
                 android:text="@string/income_rank" />
             <RadioButton
+                android:id="@+id/rb6"
                 style="@style/RadionButton"
-                android:visibility="invisible"
-                android:drawableTop="@drawable/rb3"
-                android:text="@string/found_exam" />
+                android:drawableTop="@drawable/rb6"
+                android:text="@string/class_mileage" />
 
         </LinearLayout>
     </LinearLayout>

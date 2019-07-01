@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="122dp"
+    android:layout_height="100dp"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="99dp"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
@@ -25,6 +25,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:text="驾驶员："
+                    android:textColor="@color/black"
                     android:textSize="16dp"/>
                 <TextView
                     android:id="@+id/tvDriver"
@@ -33,6 +34,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
                     android:textSize="16dp"/>
             </LinearLayout>
             <LinearLayout
@@ -44,7 +46,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
                     android:layout_height="match_parent"
-                    android:text="名次:"
+                    android:text="名\t\t次:"
+                    android:textColor="@color/black"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:textSize="16dp"/>
@@ -55,6 +58,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
                     android:textSize="16dp"/>
                 <TextView
                     android:layout_width="0dp"
@@ -76,30 +80,41 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
                     android:layout_height="match_parent"
-                    android:text="线路:"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:textSize="16dp"/>
+                    android:gravity="center_vertical"
+                    android:text="线\t\t路:"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
                 <TextView
                     android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
                     android:textSize="16dp"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
                     android:layout_height="match_parent"
                     android:text="单班收入:"
+                    android:textColor="@color/red"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="60dp"
                     android:textSize="16dp"/>
                 <TextView
                     android:id="@+id/tvJCR"
-                    android:layout_width="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
