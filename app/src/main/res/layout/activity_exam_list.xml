@@ -88,7 +88,7 @@
                 android:id="@+id/rb9"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb9"
-                android:text="@string/class_mileage" />
+                android:text="@string/maintain" />
         </LinearLayout>
     </LinearLayout>
 

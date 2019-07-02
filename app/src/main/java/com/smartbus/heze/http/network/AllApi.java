@@ -23,6 +23,7 @@ import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
+import com.smartbus.heze.exam.bean.Maintain;
 import com.smartbus.heze.exam.bean.OilConsumption;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.bean.OnLineUp;
@@ -666,5 +667,12 @@ public interface AllApi {
      * 获取油耗情况
      */
     @GET(ApiAddress.oilconsumption)
-    Observable<OilConsumption> getoilconsumption(@Query("Q_createDate_S_GE")String Q_createDate_S_GE, @Query("Q_createDate_S_LE")String Q_createDate_S_LE);
+    Observable<OilConsumption> getoilconsumption(@Query("Q_createDate_S_GE")String Q_createDate_S_GE
+            , @Query("Q_createDate_S_LE")String Q_createDate_S_LE);
+
+    /**
+     * 获取维修情况
+     */
+    @GET(ApiAddress.maintain)
+    Observable<Maintain> getmaintain(@Query("Q_createDate_D_GE")String Q_createDate_S_GE, @Query("endDate")String endDate);
 }

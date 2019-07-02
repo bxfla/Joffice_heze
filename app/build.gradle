@@ -36,7 +36,7 @@ dependencies {
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/httpclient-4.0.1.jar')
     //图片选择
-    
+
 
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'

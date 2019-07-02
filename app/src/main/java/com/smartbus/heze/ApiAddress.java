@@ -164,6 +164,8 @@ public class ApiAddress {
     public static final String  rewardspenalties = "product/listAppLineRewardPunishment.do";
     //油耗情况
     public static final String  oilconsumption = "product/listAppDriverOilRank.do";
+    //维修情况
+    public static final String  maintain = "repair/listAppMeasureBus.do";
 
 
 }
