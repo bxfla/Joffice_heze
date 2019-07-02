@@ -16,6 +16,7 @@ import com.smartbus.heze.exam.activity.OilConsumptionActivity;
 import com.smartbus.heze.exam.activity.OnLineListActivity;
 import com.smartbus.heze.exam.activity.RewardsPenaltiesActivity;
 import com.smartbus.heze.exam.activity.SafeMileageActivity;
+import com.smartbus.heze.exam.activity.SendNumActivity;
 import com.smartbus.heze.exam.activity.SimulateListActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
@@ -50,6 +51,8 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb10;
     @BindView(R.id.rb11)
     RadioButton rb11;
+    @BindView(R.id.rb12)
+    RadioButton rb12;
 
     Intent intent;
 
@@ -75,7 +78,7 @@ public class ExamListActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8
-                , R.id.rb9, R.id.rb10, R.id.rb11})
+                , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -120,6 +123,10 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb11:
                 intent = new Intent(this, ComplaintFinesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb12:
+                intent = new Intent(this, SendNumActivity.class);
                 startActivity(intent);
                 break;
         }

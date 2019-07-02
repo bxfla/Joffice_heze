@@ -31,6 +31,7 @@ import com.smartbus.heze.exam.bean.OnLineUp;
 import com.smartbus.heze.exam.bean.RewardPenalties;
 import com.smartbus.heze.exam.bean.SafeMileage;
 import com.smartbus.heze.exam.bean.Score;
+import com.smartbus.heze.exam.bean.SendNum;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -689,4 +690,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.complaintfines)
     Observable<ComplaintFines> getcomplaintfines(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
+
+    /**
+     * 发送量
+     */
+    @GET(ApiAddress.sendnum)
+    Observable<SendNum> getsendnum(@Query("Q_createDate_S_GE")String ksDate, @Query("Q_createDate_S_LE")String jsDate);
 }

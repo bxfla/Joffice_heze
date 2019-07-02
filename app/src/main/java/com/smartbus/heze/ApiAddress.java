@@ -170,6 +170,8 @@ public class ApiAddress {
     public static final String  safemileage = "starkh/listAppSecureSmileRecord.do";
     //投诉罚款
     public static final String  complaintfines = "system/listComplaintFineReportAppTousugl.do";
+    //发送量
+    public static final String  sendnum = "product/listAppDriverFslRank.do";
 
 
 }

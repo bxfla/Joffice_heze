@@ -110,7 +110,8 @@
             <RadioButton
                 android:id="@+id/rb12"
                 style="@style/RadionButton"
-                android:text="@string/maintain" />
+                android:drawableTop="@drawable/flow_item2"
+                android:text="@string/send_num" />
         </LinearLayout>
     </LinearLayout>
 
