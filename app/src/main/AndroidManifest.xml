@@ -238,7 +238,9 @@
         <activity android:name=".exam.activity.RewardsPenaltiesActivity" />
         <activity android:name=".exam.activity.OilConsumptionActivity" />
         <activity android:name=".exam.activity.MaintainActivity" />
-        <activity android:name=".exam.activity.MaintainDetailActivity"></activity>
+        <activity android:name=".exam.activity.MaintainDetailActivity"/>
+        <activity android:name=".exam.activity.SafeMileageActivity"/>
+        <activity android:name=".exam.activity.ComplaintFinesActivity"/>
     </application>
 
 </manifest>

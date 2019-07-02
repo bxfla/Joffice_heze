@@ -31,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 维修情况
+ */
 public class MaintainActivity extends BaseActivity implements MaintainContract.View {
 
     @BindView(R.id.header)
@@ -53,7 +56,7 @@ public class MaintainActivity extends BaseActivity implements MaintainContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvRight(getResources().getString(R.string.maintain));
+        header.setTvTitle(getResources().getString(R.string.maintain));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

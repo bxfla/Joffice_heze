@@ -95,6 +95,8 @@
     <string name="rewards_penalties">奖罚情况</string>
     <string name="oil_consumption">油耗排名</string>
     <string name="maintain">维修情况</string>
+    <string name="safe_mileage">安全里程</string>
+    <string name="complaint_fines">投诉罚款</string>
 
     <!--其他-->
     <string name="other_list">功能列表</string>

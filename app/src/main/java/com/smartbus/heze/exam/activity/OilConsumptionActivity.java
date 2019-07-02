@@ -30,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 油耗排名
+ */
 public class OilConsumptionActivity extends BaseActivity implements OilConsumptionContract.View {
 
     @BindView(R.id.header)
@@ -52,7 +55,7 @@ public class OilConsumptionActivity extends BaseActivity implements OilConsumpti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvRight(getResources().getString(R.string.class_mileage));
+        header.setTvRight(getResources().getString(R.string.oil_consumption));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

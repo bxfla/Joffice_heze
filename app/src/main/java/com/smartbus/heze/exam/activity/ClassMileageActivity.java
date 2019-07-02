@@ -30,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 班次里程
+ */
 public class ClassMileageActivity extends BaseActivity implements ClassMileageContract.View {
 
     @BindView(R.id.header)
@@ -52,7 +55,7 @@ public class ClassMileageActivity extends BaseActivity implements ClassMileageCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvRight(getResources().getString(R.string.class_mileage));
+        header.setTvTitle(getResources().getString(R.string.class_mileage));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

@@ -7,6 +7,7 @@ import android.widget.RadioButton;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.ClassMileageActivity;
+import com.smartbus.heze.exam.activity.ComplaintFinesActivity;
 import com.smartbus.heze.exam.activity.FoundActivity;
 import com.smartbus.heze.exam.activity.InComeRankActivity;
 import com.smartbus.heze.exam.activity.LearningLeftActivity;
@@ -14,6 +15,7 @@ import com.smartbus.heze.exam.activity.MaintainActivity;
 import com.smartbus.heze.exam.activity.OilConsumptionActivity;
 import com.smartbus.heze.exam.activity.OnLineListActivity;
 import com.smartbus.heze.exam.activity.RewardsPenaltiesActivity;
+import com.smartbus.heze.exam.activity.SafeMileageActivity;
 import com.smartbus.heze.exam.activity.SimulateListActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
@@ -44,6 +46,10 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb8;
     @BindView(R.id.rb9)
     RadioButton rb9;
+    @BindView(R.id.rb10)
+    RadioButton rb10;
+    @BindView(R.id.rb11)
+    RadioButton rb11;
 
     Intent intent;
 
@@ -69,7 +75,7 @@ public class ExamListActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8
-                , R.id.rb9})
+                , R.id.rb9, R.id.rb10, R.id.rb11})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -106,6 +112,14 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb9:
                 intent = new Intent(this, MaintainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb10:
+                intent = new Intent(this, SafeMileageActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb11:
+                intent = new Intent(this, ComplaintFinesActivity.class);
                 startActivity(intent);
                 break;
         }

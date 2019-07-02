@@ -9,9 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.exam.bean.RewardPenalties;
-import com.smartbus.heze.exam.module.RewardPenaltiesContract;
-import com.smartbus.heze.exam.presenter.RewardPenaltiesPresenter;
+import com.smartbus.heze.exam.bean.ComplaintFines;
+import com.smartbus.heze.exam.module.ComplaintFinesContract;
+import com.smartbus.heze.exam.presenter.ComplaintFinesPresenter;
+import com.smartbus.heze.http.base.AlertDialogCallBack;
+import com.smartbus.heze.http.base.AlertDialogUtil;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -31,10 +33,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 奖罚情况
+ * 投诉罚款
  */
-
-public class RewardsPenaltiesActivity extends BaseActivity implements RewardPenaltiesContract.View {
+public class ComplaintFinesActivity extends BaseActivity implements ComplaintFinesContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -48,20 +49,20 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     LinearLayout llNoContent;
 
     BaseRecyclerAdapter baseRecyclerAdapter;
-    RewardPenaltiesPresenter rewardPenaltiesPresenter;
-    List<RewardPenalties.ResultBean> beanList = new ArrayList<>();
+    ComplaintFinesPresenter complaintFinesPresenter;
+    List<ComplaintFines.ResultBean> beanList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.rewards_penalties));
+        header.setTvTitle(getResources().getString(R.string.complaint_fines));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        rewardPenaltiesPresenter = new RewardPenaltiesPresenter(this, this);
-        rewardPenaltiesPresenter.getRewardPenalties(tvStartTime.getText().toString()
+        complaintFinesPresenter = new ComplaintFinesPresenter(this, this);
+        complaintFinesPresenter.getComplaintFines(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -78,7 +79,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     @Override
     protected void rightClient() {
         beanList.clear();
-        rewardPenaltiesPresenter.getRewardPenalties(tvStartTime.getText().toString()
+        complaintFinesPresenter.getComplaintFines(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -94,7 +95,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
         Date d = c.getTime();
         String day = format.format(d);
         tvStartTime.setText(day);
-        System.out.println("过去30天：" + day);
+        System.out.println("过去七天：" + day);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String now = sdf.format(new Date());
         tvEndTime.setText(now.split(" ")[0]);
@@ -150,24 +151,44 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     }
 
     @Override
-    public void setRewardPenalties(RewardPenalties s) {
+    public void setComplaintFines(ComplaintFines s) {
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
         if (beanList.size() == 0) {
             llNoContent.setVisibility(View.VISIBLE);
         }
-        baseRecyclerAdapter = new BaseRecyclerAdapter<RewardPenalties.ResultBean>(this, R.layout.adapter_rewardpena_item, beanList) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<ComplaintFines.ResultBean>(this, R.layout.adapter_complationfines_item, beanList) {
             @Override
-            public void convert(BaseViewHolder holder, final RewardPenalties.ResultBean resultBean) {
-                holder.setText(R.id.tvDate, resultBean.getOpenTime().split(" ",0)[0]);
-                holder.setText(R.id.tvLD, resultBean.getLineCode());
-                holder.setText(R.id.tvLine, resultBean.getLineName());
-                holder.setText(R.id.tvCarNo, resultBean.getCarNum());
-                holder.setText(R.id.tvType, resultBean.getType());
+            public void convert(BaseViewHolder holder, final ComplaintFines.ResultBean resultBean) {
+                holder.setText(R.id.tvDate, resultBean.getTousuDate());
+                holder.setText(R.id.tvCarCode, resultBean.getCarNo());
+                holder.setText(R.id.tvType, resultBean.getTousuType());
+                holder.setText(R.id.tvAddress, resultBean.getTousuPlace());
+                holder.setText(R.id.tvFanYNR, resultBean.getContent());
+                holder.setText(R.id.tvYX, String.valueOf(resultBean.getHfbz()));
+                final AlertDialogUtil alertDialogUtil = new AlertDialogUtil(ComplaintFinesActivity.this);
+                holder.setOnClickListener(R.id.tvCL, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialogUtil.showDialog(resultBean.getClNeirong(), new AlertDialogCallBack() {
+                            @Override
+                            public int getData(int s) {
+                                return 0;
+                            }
 
-                holder.setText(R.id.tvMoney, String.valueOf(resultBean.getMoneys()));
-                holder.setText(R.id.tvReason, resultBean.getReason());
+                            @Override
+                            public void confirm() {
+
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+                    }
+                });
             }
         };
         recyclerView.setAdapter(baseRecyclerAdapter);
@@ -175,7 +196,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     }
 
     @Override
-    public void setRewardPenaltiesMessage(String s) {
+    public void setComplaintFinesMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

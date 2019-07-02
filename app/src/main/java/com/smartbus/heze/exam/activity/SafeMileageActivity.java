@@ -9,9 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.exam.bean.RewardPenalties;
-import com.smartbus.heze.exam.module.RewardPenaltiesContract;
-import com.smartbus.heze.exam.presenter.RewardPenaltiesPresenter;
+import com.smartbus.heze.exam.bean.SafeMileage;
+import com.smartbus.heze.exam.module.SafeMileageContract;
+import com.smartbus.heze.exam.presenter.SafeMileagePresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
 import com.smartbus.heze.http.utils.BaseViewHolder;
@@ -31,10 +31,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 奖罚情况
+ * 安全里程
  */
-
-public class RewardsPenaltiesActivity extends BaseActivity implements RewardPenaltiesContract.View {
+public class SafeMileageActivity extends BaseActivity implements SafeMileageContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -48,20 +47,20 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     LinearLayout llNoContent;
 
     BaseRecyclerAdapter baseRecyclerAdapter;
-    RewardPenaltiesPresenter rewardPenaltiesPresenter;
-    List<RewardPenalties.ResultBean> beanList = new ArrayList<>();
+    SafeMileagePresenter safeMileagePresenter;
+    List<SafeMileage.ResultBean> beanList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.rewards_penalties));
+        header.setTvTitle(getResources().getString(R.string.safe_mileage));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        rewardPenaltiesPresenter = new RewardPenaltiesPresenter(this, this);
-        rewardPenaltiesPresenter.getRewardPenalties(tvStartTime.getText().toString()
+        safeMileagePresenter = new SafeMileagePresenter(this, this);
+        safeMileagePresenter.getSafeMileage(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -78,7 +77,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     @Override
     protected void rightClient() {
         beanList.clear();
-        rewardPenaltiesPresenter.getRewardPenalties(tvStartTime.getText().toString()
+        safeMileagePresenter.getSafeMileage(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString());
     }
 
@@ -94,7 +93,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
         Date d = c.getTime();
         String day = format.format(d);
         tvStartTime.setText(day);
-        System.out.println("过去30天：" + day);
+        System.out.println("过去七天：" + day);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String now = sdf.format(new Date());
         tvEndTime.setText(now.split(" ")[0]);
@@ -150,24 +149,22 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     }
 
     @Override
-    public void setRewardPenalties(RewardPenalties s) {
+    public void setSafeMileage(SafeMileage s) {
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
         if (beanList.size() == 0) {
             llNoContent.setVisibility(View.VISIBLE);
         }
-        baseRecyclerAdapter = new BaseRecyclerAdapter<RewardPenalties.ResultBean>(this, R.layout.adapter_rewardpena_item, beanList) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<SafeMileage.ResultBean>(this, R.layout.adapter_safemile_item, beanList) {
             @Override
-            public void convert(BaseViewHolder holder, final RewardPenalties.ResultBean resultBean) {
-                holder.setText(R.id.tvDate, resultBean.getOpenTime().split(" ",0)[0]);
-                holder.setText(R.id.tvLD, resultBean.getLineCode());
-                holder.setText(R.id.tvLine, resultBean.getLineName());
-                holder.setText(R.id.tvCarNo, resultBean.getCarNum());
-                holder.setText(R.id.tvType, resultBean.getType());
-
-                holder.setText(R.id.tvMoney, String.valueOf(resultBean.getMoneys()));
-                holder.setText(R.id.tvReason, resultBean.getReason());
+            public void convert(BaseViewHolder holder, final SafeMileage.ResultBean resultBean) {
+                holder.setText(R.id.tvName, resultBean.getDriverName());
+                holder.setText(R.id.tvGH, resultBean.getDriverCode());
+                holder.setText(R.id.tvDate, resultBean.getMonth());
+                holder.setText(R.id.tvSZ, String.valueOf(resultBean.getValue()));
+                holder.setText(R.id.tvTime, resultBean.getDatetime().split(" ")[1]);
+                holder.setText(R.id.tvReason, resultBean.getMemo());
             }
         };
         recyclerView.setAdapter(baseRecyclerAdapter);
@@ -175,7 +172,7 @@ public class RewardsPenaltiesActivity extends BaseActivity implements RewardPena
     }
 
     @Override
-    public void setRewardPenaltiesMessage(String s) {
+    public void setSafeMileageMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

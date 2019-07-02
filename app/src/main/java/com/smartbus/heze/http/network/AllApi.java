@@ -19,6 +19,7 @@ import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.exam.bean.ClassMileage;
+import com.smartbus.heze.exam.bean.ComplaintFines;
 import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
@@ -28,6 +29,7 @@ import com.smartbus.heze.exam.bean.OilConsumption;
 import com.smartbus.heze.exam.bean.OnLineList;
 import com.smartbus.heze.exam.bean.OnLineUp;
 import com.smartbus.heze.exam.bean.RewardPenalties;
+import com.smartbus.heze.exam.bean.SafeMileage;
 import com.smartbus.heze.exam.bean.Score;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
@@ -675,4 +677,16 @@ public interface AllApi {
      */
     @GET(ApiAddress.maintain)
     Observable<Maintain> getmaintain(@Query("Q_createDate_D_GE")String Q_createDate_S_GE, @Query("endDate")String endDate);
+
+    /**
+     * 安全里程
+     */
+    @GET(ApiAddress.safemileage)
+    Observable<SafeMileage> getsafemileage(@Query("Q_month_S_GE")String Q_month_S_GE, @Query("Q_month_S_LE")String Q_month_S_LE);
+
+    /**
+     * 投诉罚款
+     */
+    @GET(ApiAddress.complaintfines)
+    Observable<ComplaintFines> getcomplaintfines(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
 }

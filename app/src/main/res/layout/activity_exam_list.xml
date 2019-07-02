@@ -90,6 +90,28 @@
                 android:drawableTop="@drawable/rb9"
                 android:text="@string/maintain" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb10"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb10"
+                android:text="@string/safe_mileage" />
+
+            <RadioButton
+                android:id="@+id/rb11"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/flow_item1"
+                android:text="@string/oil_consumption" />
+            <RadioButton
+                android:id="@+id/rb12"
+                style="@style/RadionButton"
+                android:text="@string/maintain" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
