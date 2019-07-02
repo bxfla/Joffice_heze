@@ -243,6 +243,7 @@
         <activity android:name=".exam.activity.ComplaintFinesActivity"/>
         <activity android:name=".exam.activity.SendNumActivity"/>
         <activity android:name=".exam.activity.StartContentActivity"/>
+        <activity android:name=".exam.activity.StartDriverActivity"/>
     </application>
 
 </manifest>

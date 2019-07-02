@@ -33,6 +33,7 @@ import com.smartbus.heze.exam.bean.SafeMileage;
 import com.smartbus.heze.exam.bean.Score;
 import com.smartbus.heze.exam.bean.SendNum;
 import com.smartbus.heze.exam.bean.StartContent;
+import com.smartbus.heze.exam.bean.StartDriver;
 import com.smartbus.heze.fault.bean.AboutData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
@@ -703,4 +704,10 @@ public interface AllApi {
      */
     @GET(ApiAddress.startcontent)
     Observable<StartContent> getstartcontent(@Query("Q_driverMonth_S_GE")String ksDate, @Query("Q_driverMonth_S_LE")String jsDate);
+
+    /**
+     * 星级驾驶员
+     */
+    @GET(ApiAddress.startdriver)
+    Observable<StartDriver> getstartdriver(@Query("date")String date);
 }

@@ -174,6 +174,8 @@ public class ApiAddress {
     public static final String  sendnum = "product/listAppDriverFslRank.do";
     //星级动态
     public static final String  startcontent = "starkh/listStarDriverAppStarKHSet.do";
+    //星级驾驶员
+    public static final String  startdriver = "starkh/listHZStarDriverAppStarKHSet.do";
 
 
 }
