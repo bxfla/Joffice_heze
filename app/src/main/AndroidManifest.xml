@@ -242,6 +242,7 @@
         <activity android:name=".exam.activity.SafeMileageActivity"/>
         <activity android:name=".exam.activity.ComplaintFinesActivity"/>
         <activity android:name=".exam.activity.SendNumActivity"/>
+        <activity android:name=".exam.activity.StartContentActivity"/>
     </application>
 
 </manifest>

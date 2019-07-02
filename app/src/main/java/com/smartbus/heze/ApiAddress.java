@@ -172,6 +172,8 @@ public class ApiAddress {
     public static final String  complaintfines = "system/listComplaintFineReportAppTousugl.do";
     //发送量
     public static final String  sendnum = "product/listAppDriverFslRank.do";
+    //星级动态
+    public static final String  startcontent = "starkh/listStarDriverAppStarKHSet.do";
 
 
 }

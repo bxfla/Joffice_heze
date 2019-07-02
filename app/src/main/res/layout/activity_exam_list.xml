@@ -113,6 +113,30 @@
                 android:drawableTop="@drawable/flow_item2"
                 android:text="@string/send_num" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb13"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/flow_item3"
+                android:text="@string/start_content" />
+
+            <RadioButton
+                android:id="@+id/rb14"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/flow_item1"
+                android:text="@string/oil_consumption" />
+            <RadioButton
+                android:id="@+id/rb15"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/flow_item2"
+                android:text="@string/send_num" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
