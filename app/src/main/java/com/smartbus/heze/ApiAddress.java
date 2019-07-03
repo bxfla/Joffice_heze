@@ -176,6 +176,10 @@ public class ApiAddress {
     public static final String  startcontent = "starkh/listStarDriverAppStarKHSet.do";
     //星级驾驶员
     public static final String  startdriver = "starkh/listHZStarDriverAppStarKHSet.do";
+    //gps里程
+    public static final String  gpsmileage = "starkh/listGPSAppSecureSmileRecord.do";
+    //行驶违规
+    public static final String  carvehicle = "busmanager/runListAppViolationRecord.do";
 
 
 }

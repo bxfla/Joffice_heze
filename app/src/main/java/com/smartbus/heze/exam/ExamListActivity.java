@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.exam.activity.CarVehicleActivity;
 import com.smartbus.heze.exam.activity.ClassMileageActivity;
 import com.smartbus.heze.exam.activity.ComplaintFinesActivity;
 import com.smartbus.heze.exam.activity.FoundActivity;
+import com.smartbus.heze.exam.activity.GpsMileageActivity;
 import com.smartbus.heze.exam.activity.InComeRankActivity;
 import com.smartbus.heze.exam.activity.LearningLeftActivity;
 import com.smartbus.heze.exam.activity.MaintainActivity;
@@ -59,6 +61,10 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb13;
     @BindView(R.id.rb14)
     RadioButton rb14;
+    @BindView(R.id.rb15)
+    RadioButton rb15;
+    @BindView(R.id.rb16)
+    RadioButton rb16;
 
     Intent intent;
 
@@ -84,7 +90,8 @@ public class ExamListActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8
-                , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12, R.id.rb13, R.id.rb14})
+                , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12, R.id.rb13, R.id.rb14, R.id.rb15
+                , R.id.rb16})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -141,6 +148,14 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb14:
                 intent = new Intent(this, StartDriverActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb15:
+                intent = new Intent(this, GpsMileageActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb16:
+                intent = new Intent(this, CarVehicleActivity.class);
                 startActivity(intent);
                 break;
         }

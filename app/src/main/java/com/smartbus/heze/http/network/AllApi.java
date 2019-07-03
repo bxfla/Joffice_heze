@@ -18,9 +18,11 @@ import com.smartbus.heze.checkup.bean.SafeHistoryItem;
 import com.smartbus.heze.checkup.bean.SaferHistory;
 import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
+import com.smartbus.heze.exam.bean.CarVehicle;
 import com.smartbus.heze.exam.bean.ClassMileage;
 import com.smartbus.heze.exam.bean.ComplaintFines;
 import com.smartbus.heze.exam.bean.ExaminationData;
+import com.smartbus.heze.exam.bean.GPSMileage;
 import com.smartbus.heze.exam.bean.InComeRank;
 import com.smartbus.heze.exam.bean.LearnLeft;
 import com.smartbus.heze.exam.bean.LearnRight;
@@ -710,4 +712,16 @@ public interface AllApi {
      */
     @GET(ApiAddress.startdriver)
     Observable<StartDriver> getstartdriver(@Query("date")String date);
+
+    /**
+     * GPS里程
+     */
+    @GET(ApiAddress.gpsmileage)
+    Observable<GPSMileage> getstartdriver(@Query("ksdate")String ksdate, @Query("jsdate")String jsdate);
+
+    /**
+     * 行驶违规
+     */
+    @GET(ApiAddress.carvehicle)
+    Observable<CarVehicle> getcarvehicle(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
 }

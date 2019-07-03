@@ -113,7 +113,6 @@
                 android:drawableTop="@drawable/flow_item2"
                 android:text="@string/send_num" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -134,8 +133,31 @@
             <RadioButton
                 android:id="@+id/rb15"
                 style="@style/RadionButton"
-                android:drawableTop="@drawable/flow_item2"
-                android:text="@string/send_num" />
+                android:drawableTop="@drawable/flow_item5"
+                android:text="@string/gps_mileage" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb16"
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/flow_item6"
+                android:text="@string/start_content" />
+
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/flow_item4"
+                android:text="@string/start_driver" />
+            <RadioButton
+                style="@style/RadionButton"
+                android:visibility="invisible"
+                android:drawableTop="@drawable/flow_item5"
+                android:text="@string/gps_mileage" />
         </LinearLayout>
     </LinearLayout>
 

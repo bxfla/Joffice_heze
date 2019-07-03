@@ -244,6 +244,8 @@
         <activity android:name=".exam.activity.SendNumActivity"/>
         <activity android:name=".exam.activity.StartContentActivity"/>
         <activity android:name=".exam.activity.StartDriverActivity"/>
+        <activity android:name=".exam.activity.GpsMileageActivity"/>
+        <activity android:name=".exam.activity.CarVehicleActivity"/>
     </application>
 
 </manifest>

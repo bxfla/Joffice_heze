@@ -100,6 +100,7 @@
     <string name="send_num">发送量</string>
     <string name="start_content">星级动态</string>
     <string name="start_driver">星级驾驶员</string>
+    <string name="gps_mileage">GPS里程</string>
 
     <!--其他-->
     <string name="other_list">功能列表</string>
