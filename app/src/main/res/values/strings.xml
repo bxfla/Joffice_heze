@@ -91,7 +91,7 @@
     <string name="found_exam">成绩查询</string>
     <string name="simulate_exam">模拟考试</string>
     <string name="income_rank">收入排名</string>
-    <string name="class_mileage">班次历程</string>
+    <string name="class_mileage">班次里程</string>
     <string name="rewards_penalties">奖罚情况</string>
     <string name="oil_consumption">油耗排名</string>
     <string name="maintain">维修情况</string>
@@ -101,6 +101,7 @@
     <string name="start_content">星级动态</string>
     <string name="start_driver">星级驾驶员</string>
     <string name="gps_mileage">GPS里程</string>
+    <string name="carvehicle">行驶违规</string>
 
     <!--其他-->
     <string name="other_list">功能列表</string>

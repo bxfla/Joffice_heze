@@ -57,7 +57,7 @@ public class CarVehicleActivity extends BaseActivity implements CarVehicleContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.class_mileage));
+        header.setTvTitle(getResources().getString(R.string.carvehicle));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

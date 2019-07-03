@@ -55,7 +55,7 @@ public class OilConsumptionActivity extends BaseActivity implements OilConsumpti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvRight(getResources().getString(R.string.oil_consumption));
+        header.setTvTitle(getResources().getString(R.string.oil_consumption));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

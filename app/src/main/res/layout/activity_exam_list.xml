@@ -146,7 +146,7 @@
                 android:id="@+id/rb16"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/flow_item6"
-                android:text="@string/start_content" />
+                android:text="@string/carvehicle" />
 
             <RadioButton
                 style="@style/RadionButton"
