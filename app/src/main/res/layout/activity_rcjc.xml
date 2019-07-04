@@ -399,6 +399,29 @@
                     android:layout_height="800dp">
                 </android.support.v7.widget.RecyclerView>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="50dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btnAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/linearlayout_colore_radius"
+                        android:gravity="center"
+                        android:text="合计"
+                        android:textColor="@color/whith" />
+                    <EditText
+                        android:id="@+id/etAll"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/linearlayout_radius"
+                        android:gravity="center"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btnUp"
                     android:layout_width="match_parent"

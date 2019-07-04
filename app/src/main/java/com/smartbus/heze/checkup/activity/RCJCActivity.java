@@ -94,8 +94,13 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     LinearLayout ll3;
     @BindView(R.id.ll4)
     LinearLayout ll4;
+    @BindView(R.id.btnAll)
+    Button btnAll;
+    @BindView(R.id.etAll)
+    EditText etAll;
 
     Intent intent;
+    int num = 0;
     String depName, depId, positionDate;
     RCJCAdapter adapter;
     CheckItemPresenter checkItemPresenter;
@@ -107,6 +112,8 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        btnAll.setVisibility(View.GONE);
+        etAll.setVisibility(View.GONE);
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -153,7 +160,7 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,
-            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2})
+            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2,R.id.btnAll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imLine:

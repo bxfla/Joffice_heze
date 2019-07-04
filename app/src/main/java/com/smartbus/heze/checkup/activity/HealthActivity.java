@@ -94,8 +94,13 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     LinearLayout ll3;
     @BindView(R.id.ll4)
     LinearLayout ll4;
+    @BindView(R.id.btnAll)
+    Button btnAll;
+    @BindView(R.id.etAll)
+    EditText etAll;
 
     Intent intent;
+    int num = 100;
     String depName, depId, positionDate;
     HealthAdapter adapter;
     HealthItemPresenter healthItemPresenter;
@@ -154,9 +159,20 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,
-            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2})
+            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2,R.id.btnAll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btnAll:
+                num = 100;
+                for (int i = 0;i<beanList.size();i++){
+                    if (beanList.get(i).getState()==0){
+                        if (!beanList.get(i).getScore().equals("0")||!beanList.get(i).getScore().equals("0.00")){
+                            num = num-Integer.valueOf(beanList.get(i).getScore());
+                        }
+                    }
+                }
+                etAll.setText(num+"");
+                break;
             case R.id.imLine:
                 intent = new Intent(this, LineCodeActivity.class);
                 startActivityForResult(intent, Constant.TAG_ONE);

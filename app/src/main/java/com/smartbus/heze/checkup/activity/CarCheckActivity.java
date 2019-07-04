@@ -99,9 +99,14 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
     LinearLayout ll4;
     @BindView(R.id.llTime)
     LinearLayout llTime;
+    @BindView(R.id.btnAll)
+    Button btnAll;
+    @BindView(R.id.etAll)
+    EditText etAll;
 
     Intent intent;
-    String depName, depId, positionDate,categoryCode;
+    int num = 100;
+    String depName, depId, positionDate, categoryCode;
     CarCheckAdapter adapter;
     CarCheckItemPresenter carCheckItemPresenter;
     CarCheckUpDataPresenter carCheckUpDataPresenter;
@@ -159,9 +164,20 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,
-            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2})
+            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2,R.id.btnAll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btnAll:
+                num = 100;
+                for (int i = 0;i<beanList.size();i++){
+                    if (beanList.get(i).getState()==0){
+                        if (!beanList.get(i).getFkje().equals("0")||!beanList.get(i).getFkje().equals("0.00")){
+                            num = num-Integer.valueOf(beanList.get(i).getFkje());
+                        }
+                    }
+                }
+                etAll.setText(num+"");
+                break;
             case R.id.imLine:
                 intent = new Intent(this, LineCodeActivity.class);
                 startActivityForResult(intent, Constant.TAG_ONE);
@@ -196,11 +212,11 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                 customDatePicker.show(tvTime.getText().toString());
                 break;
             case R.id.btnUp:
-                if (etLine.getText().toString().equals("")||etCarCode.getText().toString().equals("")
-                        ||etCarNo.getText().toString().equals("")||etPersonCode.getText().toString().equals("")
-                        ||etPersonName.getText().toString().equals("")|etRummager.getText().toString().equals("")) {
+                if (etLine.getText().toString().equals("") || etCarCode.getText().toString().equals("")
+                        || etCarNo.getText().toString().equals("") || etPersonCode.getText().toString().equals("")
+                        || etPersonName.getText().toString().equals("") | etRummager.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写完整数据", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                     linearLayoutManager.setStackFromEnd(true);
                     recyclerView.setLayoutManager(linearLayoutManager);
@@ -224,7 +240,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                     carCheckUpDataPresenter.getUpData(jsonArrayData.toString(), jsonArrayfkData.toString(),
                             tvTime.getText().toString(), etLine.getText().toString(), etCarNo.getText().toString()
                             , etCarCode.getText().toString(), depId, depName, etPersonName.getText().toString()
-                            , etPersonCode.getText().toString(), etRummager.getText().toString(), etRemarks.getText().toString(),categoryCode);
+                            , etPersonCode.getText().toString(), etRummager.getText().toString(), etRemarks.getText().toString(), categoryCode);
                 }
                 break;
             case R.id.ll1:
@@ -237,9 +253,9 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                 }
                 break;
             case R.id.ll2:
-                if (categoryCode==null||categoryCode.equals("")){
+                if (categoryCode == null || categoryCode.equals("")) {
                     Toast.makeText(this, "请选择车辆", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     if (ll4.getVisibility() == View.VISIBLE) {
                         ll4.setVisibility(View.GONE);
                         ll3.setVisibility(View.VISIBLE);
@@ -270,12 +286,12 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                     depName = carCodeData.getDepName();
                     depId = carCodeData.getDepId();
                     String materialType = carCodeData.getMaterialType();
-                    if (materialType.equals("电耗")){
+                    if (materialType.equals("电耗")) {
                         categoryCode = "4776";
-                    }else if (materialType.equals("燃油")){
+                    } else if (materialType.equals("燃油")) {
                         categoryCode = "4775";
                     }
-                    carCheckItemPresenter.getCarCheckItem(categoryCode,"2");
+                    carCheckItemPresenter.getCarCheckItem(categoryCode, "2");
                 }
                 break;
             case Constant.TAG_THERE:
@@ -314,6 +330,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
 
     /**
      * 数据提交
+     *
      * @param s
      */
     @Override
