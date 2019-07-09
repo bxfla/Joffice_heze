@@ -101,6 +101,8 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     List<String> namelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
     List<OldWorkWill.TransBean> destTypeList = new ArrayList<>();
+    @BindView(R.id.tvMonth)
+    TextView tvMonth;
 
 
     @Override
@@ -249,13 +251,19 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
         if (s != null) {
             tvPerson.setText(s.getMainform().get(0).getUserName().toString());
             tvStartTime.setText(s.getMainform().get(0).getCreateTime().toString());
-            if (s.getMainform().get(0).getFillDate()!=null){
+            if (s.getMainform().get(0).getFillDate() != null) {
                 tvEndTime.setText(s.getMainform().get(0).getFillDate().toString());
             }
-            if (s.getMainform().get(0).getDayType()!=null){
+            if (s.getMainform().get(0).getDayType() != null) {
+//                if (s.getMainform().get(0).getDayType().equals("1")){
                 tvType.setText(s.getMainform().get(0).getDayType());
+//                }else if (s.getMainform().get(0).getDayType().equals("2")){
+//                    tvType.setText("下午");
+//                }else if (s.getMainform().get(0).getDayType().equals("2")){
+//                    tvType.setText("全天");
+//                }
             }
-            if (s.getMainform().get(0).getMemo().toString()!=null){
+            if (s.getMainform().get(0).getMemo().toString() != null) {
                 etReason.setText(s.getMainform().get(0).getMemo().toString());
             }
             mainId = String.valueOf(s.getMainform().get(0).getMainId());

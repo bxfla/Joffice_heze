@@ -102,6 +102,8 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
     Button btnFirst;
     @BindView(R.id.btnUp)
     Button btnUp;
+    @BindView(R.id.tvMonth)
+    TextView tvMonth;
 
     Intent intent;
     String ecard = "";
@@ -131,7 +133,8 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
     private CustomDatePickerDay customDatePicker2;
-    private CustomDatePickerMonth customDatePicker1;
+    private CustomDatePickerDay customDatePicker1;
+    private CustomDatePickerMonth customDatePicker3;
     List<String> listTime = new ArrayList<String>();
     String fileName = "";
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -144,8 +147,8 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         initDatePicker();
-        oldWorkPresenter = new OldWorkPresenter(this,this);
-        oldWorkCheckTypePresenter = new OldWorkCheckTypePresenter(this,this);
+        oldWorkPresenter = new OldWorkPresenter(this, this);
+        oldWorkCheckTypePresenter = new OldWorkCheckTypePresenter(this, this);
         listTime.add("上午");
         listTime.add("下午");
         listTime.add("全天");
@@ -176,20 +179,20 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
         String s = now.split(" ")[0];
-        tvStartTime.setText(s.split("-")[0]+"-"+s.split("-")[1]);
+        tvStartTime.setText(now.split(" ")[0]);
         tvEndTime.setText(now.split(" ")[0]);
-        customDatePicker1 = new CustomDatePickerMonth(this, new CustomDatePickerMonth.ResultHandler() {
+        tvMonth.setText(s.split("-")[0]+"-"+s.split("-")[1]);
+        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
             @Override
             public void handle(String time) {
                 // 回调接口，获得选中的时间
                 String s1 = time.split(" ")[0];
-                tvStartTime.setText(s1.split("-")[0]+"-"+s1.split("-")[1]);
+                tvStartTime.setText(time.split(" ")[0]);
             }
             // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         }, "2000-01-01 00:00", "2030-01-01 00:00");
         // 不显示时和分
         customDatePicker1.showSpecificTime(false);
-        customDatePicker1.showSpecificDay(false);
         // 不允许循环滚动
         customDatePicker1.setIsLoop(false);
         customDatePicker2 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
@@ -204,6 +207,21 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         customDatePicker2.showSpecificTime(false);
         // 不允许循环滚动
         customDatePicker2.setIsLoop(false);
+
+        customDatePicker3 = new CustomDatePickerMonth(this, new CustomDatePickerMonth.ResultHandler() {
+            @Override
+            public void handle(String time) {
+                // 回调接口，获得选中的时间
+                String s1 = time.split(" ")[0];
+                tvMonth.setText(s1.split("-")[0]+"-"+s1.split("-")[1]);
+            }
+            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
+        }, "2000-01-01 00:00", "2030-01-01 00:00");
+        // 不显示时和分
+        customDatePicker3.showSpecificTime(false);
+        customDatePicker3.showSpecificDay(false);
+        // 不允许循环滚动
+        customDatePicker3.setIsLoop(false);
     }
 
     private void setData() {
@@ -212,8 +230,14 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         map.put("formDefId", Constant.OLDWORK_FORMDEFIS);
         map.put("memo", etReason.getText().toString());
         map.put("dayType", spinner.getSelectedItem().toString());
-        map.put("createTime", tvEndTime.getText().toString());
-        map.put("fillDate", tvStartTime.getText().toString());
+//        }else if (spinner.getSelectedItem().toString().equals("下午")){
+//            map.put("dayType", "2");
+//        }else if (spinner.getSelectedItem().toString().equals("全天")){
+//            map.put("dayType", "0");
+//        }
+        map.put("fillMonth", tvMonth.getText().toString());
+        map.put("fillDate", tvEndTime.getText().toString());
+        map.put("createTime", tvStartTime.getText().toString());
         map.put("userName", tvPerson.getText().toString());
         map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
@@ -222,19 +246,32 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         firstmap.put("userCode", ecard);
         firstmap.put("depId", depId);
         firstmap.put("userName", tvPerson.getText().toString());
-        firstmap.put("fillMonth", tvStartTime.getText().toString());
+        firstmap.put("fillMonth", tvMonth.getText().toString());
         firstmap.put("fillDate", tvEndTime.getText().toString());
+//        if (spinner.getSelectedItem().toString().equals("上午")){
         firstmap.put("dayType", spinner.getSelectedItem().toString());
+//        }else if (spinner.getSelectedItem().toString().equals("下午")){
+//            firstmap.put("dayType", "2");
+//        }else if (spinner.getSelectedItem().toString().equals("全天")){
+//            firstmap.put("dayType", "0");
+//        }
+        map.put("fillDate", tvEndTime.getText().toString());
+        map.put("createTime", tvStartTime.getText().toString());
+//        firstmap.put("dayType", spinner.getSelectedItem().toString());
         firstmap.put("memo", etReason.getText().toString());
     }
 
-    @OnClick({R.id.tvPerson, R.id.tvDepartment, R.id.tvStartTime, R.id.tvEndTime, R.id.btnFirst, R.id.btnUp})
+    @OnClick({R.id.tvPerson, R.id.tvDepartment, R.id.tvStartTime, R.id.tvEndTime, R.id.btnFirst
+            , R.id.btnUp,R.id.tvMonth})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tvMonth:
+                customDatePicker3.show(tvMonth.getText().toString());
+                break;
             case R.id.tvPerson:
                 intent = new Intent(this, WorkOnePersonActivity.class);
                 startActivityForResult(intent, TAG_THERE);
-            break;
+                break;
             case R.id.btnFirst:
                 if (tvPerson.getText().toString().equals("")) {
                     Toast.makeText(this, "请选择申请人", Toast.LENGTH_SHORT).show();
@@ -262,7 +299,7 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
                 startActivityForResult(intent, TAG_ONE);
                 break;
             case R.id.btnUp:
-                if (selectTag.equals("2")){
+                if (selectTag.equals("2")) {
                     namelist.clear();
                     codeList.clear();
                     nameList.clear();
@@ -281,7 +318,7 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
                     onePersenter.getOnePerson(Constant.ATWORK_DEFID);
                     twoPersenter = new TwoPresenter(this, this);
                     upYsdPersenter = new UPYSDPresenter(this, this);
-                }else {
+                } else {
                     Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
                 }
                 break;

@@ -78,6 +78,28 @@
                     android:background="@color/shouye" />
 
                 <TextView
+                    android:id="@+id/tvMonth"
+                    style="@style/oaEditText" />
+
+            </LinearLayout>
+            <View style="@style/HourLine"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/oaTextView"
+                    android:text="申请日期: *" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/shouye" />
+
+                <TextView
                     android:id="@+id/tvStartTime"
                     style="@style/oaEditText" />
 
@@ -91,7 +113,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="日期: *" />
+                    android:text="补勤日期: *" />
 
                 <View
                     android:layout_width="1dp"
@@ -113,7 +135,7 @@
 
                 <TextView
                     style="@style/oaTextView"
-                    android:text="类型: *" />
+                    android:text="补勤时间: *" />
 
                 <View
                     android:layout_width="1dp"

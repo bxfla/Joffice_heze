@@ -148,7 +148,7 @@ public class SimulateAdapter extends PagerAdapter {
         holder.tvNo.setText(String.valueOf(position+1));
         holder.tvQuestion.setText("("+dataItems.get(position).getTypeName()+")"+dataItems.get(position).getTitle().toString());
         holder.tvNum.setText((position + 1) + "/" + dataItems.size());
-        if (!dataItems.get(position).getPic().equals("")){
+        if (dataItems.get(position).getPic()!=null&&dataItems.get(position).getPic().equals("")){
             holder.imageView.setVisibility(View.VISIBLE);
             Glide.with(mContext)
                     .load(ApiAddress.downloadfile+dataItems.get(position).getPic())
