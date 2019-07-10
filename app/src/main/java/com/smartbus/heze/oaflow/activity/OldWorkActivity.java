@@ -199,7 +199,9 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
             @Override
             public void handle(String time) {
                 // 回调接口，获得选中的时间
+                String s1 = time.split(" ")[0];
                 tvEndTime.setText(time.split(" ")[0]);
+                tvMonth.setText(s1.split("-")[0]+"-"+s1.split("-")[1]);
             }
             // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         }, "2000-01-01 00:00", "2030-01-01 00:00");
@@ -248,13 +250,13 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
         firstmap.put("userName", tvPerson.getText().toString());
         firstmap.put("fillMonth", tvMonth.getText().toString());
         firstmap.put("fillDate", tvEndTime.getText().toString());
-//        if (spinner.getSelectedItem().toString().equals("上午")){
-        firstmap.put("dayType", spinner.getSelectedItem().toString());
-//        }else if (spinner.getSelectedItem().toString().equals("下午")){
-//            firstmap.put("dayType", "2");
-//        }else if (spinner.getSelectedItem().toString().equals("全天")){
-//            firstmap.put("dayType", "0");
-//        }
+        if (spinner.getSelectedItem().toString().equals("上午")){
+            firstmap.put("dayType", "1");
+        } else if (spinner.getSelectedItem().toString().equals("下午")) {
+            firstmap.put("dayType", "2");
+        } else if (spinner.getSelectedItem().toString().equals("全天")) {
+            firstmap.put("dayType", "0");
+        }
         map.put("fillDate", tvEndTime.getText().toString());
         map.put("createTime", tvStartTime.getText().toString());
 //        firstmap.put("dayType", spinner.getSelectedItem().toString());

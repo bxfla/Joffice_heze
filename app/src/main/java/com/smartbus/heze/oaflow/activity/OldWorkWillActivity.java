@@ -155,9 +155,9 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
     public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
                         destType = destTypeList.get(0).getDestType();
                         destName = destTypeList.get(0).getDestination();
                         if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
@@ -168,8 +168,8 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
                             noHandlerPresenter.getNoHandlerPerson(taskId);
                         }
                         signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+//                    }
+//                }).start();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {

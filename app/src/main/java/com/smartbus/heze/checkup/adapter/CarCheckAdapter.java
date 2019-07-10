@@ -2,6 +2,8 @@ package com.smartbus.heze.checkup.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +52,23 @@ public class CarCheckAdapter extends RecyclerView.Adapter<CarCheckAdapter.ViewHo
         holder.editText.setText(beanList.get(position).getFkje());
         holder.tvName.setText("分数");
         holder.position = position;
+
+        holder.editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getItemPosition.getPosition(position, holder.editText.getText().toString(), "rb2");
+            }
+        });
         holder.rb2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

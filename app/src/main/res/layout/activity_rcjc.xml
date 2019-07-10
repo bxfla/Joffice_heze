@@ -412,8 +412,8 @@
                         android:gravity="center"
                         android:text="合计"
                         android:textColor="@color/whith" />
-                    <EditText
-                        android:id="@+id/etAll"
+                    <TextView
+                        android:id="@+id/tvAll"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"

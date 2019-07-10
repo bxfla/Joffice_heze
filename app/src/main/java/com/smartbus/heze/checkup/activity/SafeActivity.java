@@ -101,8 +101,8 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     LinearLayout llTime;
     @BindView(R.id.btnAll)
     Button btnAll;
-    @BindView(R.id.etAll)
-    EditText etAll;
+    @BindView(R.id.tvAll)
+    TextView tvAll;
 
     Intent intent;
     int num = 100;
@@ -172,12 +172,12 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
                 num = 100;
                 for (int i = 0;i<beanList.size();i++){
                     if (beanList.get(i).getState()==0){
-                        if (!beanList.get(i).getScore().equals("0")||!beanList.get(i).getScore().equals("0.00")){
+                        if (!beanList.get(i).getScore().equals("0")&&!beanList.get(i).getScore().equals("0.00")){
                             num = num-Integer.valueOf(beanList.get(i).getScore());
                         }
                     }
                 }
-                etAll.setText(num+"");
+                tvAll.setText(num+"");
                 break;
             case R.id.imLine:
                 intent = new Intent(this, LineCodeActivity.class);

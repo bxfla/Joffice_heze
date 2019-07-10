@@ -96,8 +96,8 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     LinearLayout ll4;
     @BindView(R.id.btnAll)
     Button btnAll;
-    @BindView(R.id.etAll)
-    EditText etAll;
+    @BindView(R.id.tvAll)
+    TextView tvAll;
 
     Intent intent;
     int num = 0;
@@ -113,7 +113,7 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         btnAll.setVisibility(View.GONE);
-        etAll.setVisibility(View.GONE);
+        tvAll.setVisibility(View.GONE);
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
