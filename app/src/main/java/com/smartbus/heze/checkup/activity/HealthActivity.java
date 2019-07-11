@@ -2,13 +2,14 @@ package com.smartbus.heze.checkup.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
-import com.smartbus.heze.checkup.adapter.HealthAdapter;
+import com.smartbus.heze.checkup.adapter.HealthAdapter1;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.HealthItem;
 import com.smartbus.heze.checkup.bean.LineCodeData;
@@ -48,7 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HealthActivity extends BaseActivity implements HealthItemContract.View,
-        HealthAdapter.GetItemPosition, HealthUpDataContract.View {
+        HealthAdapter1.GetItemPosition, HealthUpDataContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -85,7 +86,7 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     @BindView(R.id.btnUp)
     Button btnUp;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    ListView recyclerView;
     @BindView(R.id.ll1)
     LinearLayout ll1;
     @BindView(R.id.ll2)
@@ -102,7 +103,7 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
     Intent intent;
     int num = 100;
     String depName, depId, positionDate;
-    HealthAdapter adapter;
+    HealthAdapter1 adapter;
     HealthItemPresenter healthItemPresenter;
     HealthUpDataPresenter healthUpDataPresenter;
     private CustomDatePickerDay customDatePicker;
@@ -114,8 +115,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
         ButterKnife.bind(this);
         header.setTvTitle(getResources().getString(R.string.first_dianjian));
         initDatePicker();
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
         healthItemPresenter = new HealthItemPresenter(this, this);
         healthItemPresenter.getHealthItem();
         healthUpDataPresenter = new HealthUpDataPresenter(this, this);
@@ -167,7 +166,8 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
                 for (int i = 0;i<beanList.size();i++){
                     if (beanList.get(i).getState()==0){
                         if (!beanList.get(i).getScore().equals("0")&&!beanList.get(i).getScore().equals("0.00")){
-                            num = num-Integer.valueOf(beanList.get(i).getScore());
+                            int n = (int)Double.parseDouble(beanList.get(i).getScore());
+                            num = num-n;
                         }
                     }
                 }
@@ -207,9 +207,6 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
                 customDatePicker.show(tvTime.getText().toString());
                 break;
             case R.id.btnUp:
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setStackFromEnd(true);
-                recyclerView.setLayoutManager(linearLayoutManager);
                 adapter.setOnInnerItemOnClickListener(this);
                 //包装数据
                 JSONArray jsonArrayData = new JSONArray();
@@ -295,11 +292,35 @@ public class HealthActivity extends BaseActivity implements HealthItemContract.V
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
-        adapter = new HealthAdapter(this, beanList);
-        adapter.setHasStableIds(true);
+        adapter = new HealthAdapter1(this, beanList);
         recyclerView.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(recyclerView);
         adapter.setOnInnerItemOnClickListener(this);
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 动态设置ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     @Override

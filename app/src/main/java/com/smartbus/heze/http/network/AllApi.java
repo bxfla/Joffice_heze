@@ -175,6 +175,12 @@ public interface AllApi {
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
     /**
+     * 公文流转录入
+     */
+    @POST(ApiAddress.documentlr)
+    Observable<InitBackData> getdocumentlr(@QueryMap Map<String,String> params);
+
+    /**
      * 获取通用借款单待办详情
      */
     @GET(ApiAddress.willdodetail)
@@ -249,6 +255,12 @@ public interface AllApi {
      */
     @GET(ApiAddress.checktype)
     Observable<CheckType> getCheckType(@Query("runId")String runId, @Query("vocationId")String vocationId);
+
+    /**
+     * 修改公文流转发布状态
+     */
+    @GET(ApiAddress.checktypelz)
+    Observable<CheckType> getCheckTypelz(@Query("lvid")String vocationId);
 
     /**
      * 修改加班发布状态

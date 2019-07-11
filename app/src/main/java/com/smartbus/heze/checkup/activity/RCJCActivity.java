@@ -3,12 +3,14 @@ package com.smartbus.heze.checkup.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,7 @@ import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
-import com.smartbus.heze.checkup.adapter.RCJCAdapter;
+import com.smartbus.heze.checkup.adapter.RCJCAdapter1;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.CheckItem;
 import com.smartbus.heze.checkup.bean.LineCodeData;
@@ -48,7 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RCJCActivity extends BaseActivity implements CheckItemContract.View,
-                RCJCAdapter.GetItemPosition,UpDataContract.View {
+                RCJCAdapter1.GetItemPosition,UpDataContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -85,7 +87,7 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     @BindView(R.id.btnUp)
     Button btnUp;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    ListView recyclerView;
     @BindView(R.id.ll1)
     LinearLayout ll1;
     @BindView(R.id.ll2)
@@ -102,7 +104,7 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
     Intent intent;
     int num = 0;
     String depName, depId, positionDate;
-    RCJCAdapter adapter;
+    RCJCAdapter1 adapter;
     CheckItemPresenter checkItemPresenter;
     UpDataPresenter upDataPresenter;
     private CustomDatePickerDay customDatePicker;
@@ -115,8 +117,6 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
         btnAll.setVisibility(View.GONE);
         tvAll.setVisibility(View.GONE);
         initDatePicker();
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
         checkItemPresenter = new CheckItemPresenter(this, this);
         checkItemPresenter.getCheckItem();
         upDataPresenter = new UpDataPresenter(this,this);
@@ -204,7 +204,6 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
                 }else {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                     linearLayoutManager.setStackFromEnd(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
                     adapter.setOnInnerItemOnClickListener(this);
                     //包装数据
                     JSONArray jsonArrayData = new JSONArray();
@@ -291,11 +290,36 @@ public class RCJCActivity extends BaseActivity implements CheckItemContract.View
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
-        adapter = new RCJCAdapter(this, beanList);
-        adapter.setHasStableIds(true);
+        adapter = new RCJCAdapter1(this, beanList);
         recyclerView.setAdapter(adapter);
+        //动态设置ListView的高度
+        setListViewHeightBasedOnChildren(recyclerView);
         adapter.setOnInnerItemOnClickListener(this);
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 动态设置ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     @Override

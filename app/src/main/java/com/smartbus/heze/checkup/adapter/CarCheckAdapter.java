@@ -66,13 +66,15 @@ public class CarCheckAdapter extends RecyclerView.Adapter<CarCheckAdapter.ViewHo
 
             @Override
             public void afterTextChanged(Editable s) {
-                getItemPosition.getPosition(position, holder.editText.getText().toString(), "rb2");
+                getItemPosition.getPosition(position, holder.editText.getText().toString(), "rb3");
+                holder.rb2.setChecked(true);
             }
         });
         holder.rb2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getItemPosition.getPosition(position, holder.editText.getText().toString(), "rb2");
+
             }
         });
         holder.rb1.setOnClickListener(new View.OnClickListener() {

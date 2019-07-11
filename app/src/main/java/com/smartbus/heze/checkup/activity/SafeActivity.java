@@ -3,12 +3,14 @@ package com.smartbus.heze.checkup.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,7 @@ import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
-import com.smartbus.heze.checkup.adapter.SafeAdapter;
+import com.smartbus.heze.checkup.adapter.SafeAdapter1;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
 import com.smartbus.heze.checkup.bean.SafeHistoryItem;
@@ -51,7 +53,7 @@ import butterknife.OnClick;
  * 安全检查
  */
 public class SafeActivity extends BaseActivity implements SafeItemContract.View,
-        SafeAdapter.GetItemPosition, SafeUpDataContract.View {
+        SafeAdapter1.GetItemPosition, SafeUpDataContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -88,7 +90,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     @BindView(R.id.btnUp)
     Button btnUp;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    ListView recyclerView;
     @BindView(R.id.ll1)
     LinearLayout ll1;
     @BindView(R.id.ll2)
@@ -107,7 +109,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
     Intent intent;
     int num = 100;
     String depName, depId, positionDate;
-    SafeAdapter adapter;
+    SafeAdapter1 adapter;
     SafeItemPresenter safeItemPresenter;
     SafeUpDataPresenter safeUpDataPresenter;
     private CustomDatePickerDay customDatePicker;
@@ -120,11 +122,35 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
         initDatePicker();
         llTime.setVisibility(View.GONE);
         header.setTvTitle(getResources().getString(R.string.first_anquan));
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
+//        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(manager);
         safeItemPresenter = new SafeItemPresenter(this, this);
         safeItemPresenter.getSafeItem();
         safeUpDataPresenter = new SafeUpDataPresenter(this, this);
+    }
+
+    /**
+     * 动态设置ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     /**
@@ -172,8 +198,10 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
                 num = 100;
                 for (int i = 0;i<beanList.size();i++){
                     if (beanList.get(i).getState()==0){
-                        if (!beanList.get(i).getScore().equals("0")&&!beanList.get(i).getScore().equals("0.00")){
-                            num = num-Integer.valueOf(beanList.get(i).getScore());
+                        if (!beanList.get(i).getScore().equals("0")&&!beanList.get(i).getScore().equals("0.00")
+                                &&!beanList.get(i).getScore().equals("0.0")){
+                            int n = (int)Double.parseDouble(beanList.get(i).getScore());
+                            num = num-n;
                         }
                     }
                 }
@@ -220,7 +248,7 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
                 }else {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                     linearLayoutManager.setStackFromEnd(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
+//                    recyclerView.setLayoutManager(linearLayoutManager);
                     adapter.setOnInnerItemOnClickListener(this);
                     //包装数据
                     JSONArray jsonArrayData = new JSONArray();
@@ -306,9 +334,10 @@ public class SafeActivity extends BaseActivity implements SafeItemContract.View,
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
-        adapter = new SafeAdapter(this, beanList);
-        adapter.setHasStableIds(true);
+        adapter = new SafeAdapter1(this, beanList);
         recyclerView.setAdapter(adapter);
+        //动态设置ListView的高度
+        setListViewHeightBasedOnChildren(recyclerView);
         adapter.setOnInnerItemOnClickListener(this);
         adapter.notifyDataSetChanged();
     }

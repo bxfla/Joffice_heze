@@ -6,7 +6,7 @@ package com.smartbus.heze;
 
 public class ApiAddress {
     //李志浩
-//    public final static String mainApi = "http://192.168.2.114:80/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //川川
 //    public final static String mainApi = "http://192.168.2.126:8082/joffice21/" ;
     //孙琦
@@ -61,8 +61,12 @@ public class ApiAddress {
     public static final String  userdleave = "hrm/mobileSaveLeaveDays.do";
     //加班录入
     public static final String  addwork = "hrm/mobileSaveAddClassInfo.do";
+    //公文流转录入
+    public static final String  documentlr = "archive/saveAppLettersVisits.do";
     //修改发布状态
     public static final String  checktype = "hrm/updateLeaveDays.do";
+    //修改公文流转发布状态
+    public static final String  checktypelz = "archive/updateLettersVisits.do";
     //修改加班发布状态
     public static final String  addworkchecktype = "hrm/updateAddClassInfo.do";
     //修改补勤发布状态

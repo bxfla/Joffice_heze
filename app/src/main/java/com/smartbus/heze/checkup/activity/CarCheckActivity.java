@@ -3,12 +3,14 @@ package com.smartbus.heze.checkup.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,7 @@ import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.CheckPersonActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.activitydata.UserCodeActivity;
-import com.smartbus.heze.checkup.adapter.CarCheckAdapter;
+import com.smartbus.heze.checkup.adapter.CarCheckAdapter1;
 import com.smartbus.heze.checkup.bean.CarCheckItem;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
@@ -51,7 +53,7 @@ import butterknife.OnClick;
  * 车辆巡检
  */
 public class CarCheckActivity extends BaseActivity implements CarCheckItemContract.View,
-        CarCheckAdapter.GetItemPosition, CarCehckUpDataContract.View {
+        CarCheckAdapter1.GetItemPosition, CarCehckUpDataContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -88,7 +90,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
     @BindView(R.id.btnUp)
     Button btnUp;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    ListView recyclerView;
     @BindView(R.id.ll1)
     LinearLayout ll1;
     @BindView(R.id.ll2)
@@ -107,10 +109,11 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
     Intent intent;
     int num = 100;
     String depName, depId, positionDate, categoryCode;
-    CarCheckAdapter adapter;
+    CarCheckAdapter1 adapter;
     CarCheckItemPresenter carCheckItemPresenter;
     CarCheckUpDataPresenter carCheckUpDataPresenter;
     private CustomDatePickerDay customDatePicker;
+    private static final int MAXIMUM_FLING_VELOCITY = 2000;
     List<CarCheckItem.ResultBean> beanList = new ArrayList<>();
 
     @Override
@@ -120,10 +123,32 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
         initDatePicker();
         llTime.setVisibility(View.GONE);
         header.setTvTitle(getResources().getString(R.string.first_xunjian));
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
         carCheckItemPresenter = new CarCheckItemPresenter(this, this);
         carCheckUpDataPresenter = new CarCheckUpDataPresenter(this, this);
+    }
+
+    /**
+     * 动态设置ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     /**
@@ -219,7 +244,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                 } else {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                     linearLayoutManager.setStackFromEnd(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
+//                    recyclerView.setLayoutManager(linearLayoutManager);
                     adapter.setOnInnerItemOnClickListener(this);
                     //包装数据
                     JSONArray jsonArrayData = new JSONArray();
@@ -240,7 +265,8 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                     carCheckUpDataPresenter.getUpData(jsonArrayData.toString(), jsonArrayfkData.toString(),
                             tvTime.getText().toString(), etLine.getText().toString(), etCarNo.getText().toString()
                             , etCarCode.getText().toString(), depId, depName, etPersonName.getText().toString()
-                            , etPersonCode.getText().toString(), etRummager.getText().toString(), etRemarks.getText().toString(), categoryCode);
+                            , etPersonCode.getText().toString(), etRummager.getText().toString()
+                            , etRemarks.getText().toString(), categoryCode);
                 }
                 break;
             case R.id.ll1:
@@ -316,9 +342,11 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
-        adapter = new CarCheckAdapter(this, beanList);
-        adapter.setHasStableIds(true);
+        adapter = new CarCheckAdapter1(this, beanList);
+//        adapter.setHasStableIds(true);
         recyclerView.setAdapter(adapter);
+        //动态设置ListView的高度
+        setListViewHeightBasedOnChildren(recyclerView);
         adapter.setOnInnerItemOnClickListener(this);
         adapter.notifyDataSetChanged();
     }
@@ -355,6 +383,8 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
         if (tag.equals("rb1")) {
             bean.setState(1);
         } else if (tag.equals("rb2")) {
+            bean.setState(0);
+        }else if (tag.equals("rb3")) {
             bean.setState(0);
         }
         bean.setProjectKey(beanList.get(position).getProjectKey());
