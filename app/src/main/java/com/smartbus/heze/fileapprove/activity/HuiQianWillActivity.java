@@ -342,13 +342,13 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
                     tvHuiQian.setVisibility(View.GONE);
                     etHuiQian.setVisibility(View.VISIBLE);
                     if (huiqian != null && huiqian.length() != 0) {
-                        etHuiQian.setText(new SplitData().getStringData(huiqian));
+                        etHuiQian.setText(huiqian);
                     }
                 } else {
                     tvHuiQian.setVisibility(View.VISIBLE);
                     etHuiQian.setVisibility(View.GONE);
                     if (huiqian != null && huiqian.length() != 0) {
-                        tvHuiQian.setText(new SplitData().getStringData(huiqian));
+                        tvHuiQian.setText(huiqian);
                     }
                 }
                 for (int i = 0; i < s.getTrans().size(); i++) {
@@ -546,9 +546,11 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
         if (tvHuiQian.getVisibility() == View.VISIBLE) {
             if (!tvHuiQian.getText().toString().equals("")){
                 map.put("sign", new SplitData().SplitUpData(tvHuiQian.getText().toString()));
+                map.put("sign", tvHuiQian.getText().toString());
             }
         } else {
-            map.put("sign", new SplitData().SplitUpData1(etHuiQian.getText().toString(),huiqian));
+            map.put("sign", etHuiQian.getText().toString());
+//            map.put("sign", etHuiQian.getText().toString(),huiqian);
             map.put("comments", etHuiQian.getText().toString());
         }
     }

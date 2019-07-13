@@ -88,13 +88,16 @@ public class OnLineListActivity extends BaseActivity implements OnLineListContra
                         if (timeType==-1){
                             new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("未到考试时间");
                         }else if (timeType==1){
-                            new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("考试时间已结束");
-                        }else {
-                            Intent intent = new Intent(OnLineListActivity.this,OnLineActivity.class);
-                            intent.putExtra("time",String.valueOf(o.getExaminationTime()));
-                            intent.putExtra("id",String.valueOf(o.getExaminationId()));
-                            intent.putExtra("title",String.valueOf(o.getExaminationName()));
-                            startActivity(intent);
+                            int timeType1 = compare_date(currentTime,o.getEndDate());
+                            if (timeType1==-1){
+                                Intent intent = new Intent(OnLineListActivity.this,OnLineActivity.class);
+                                intent.putExtra("time",String.valueOf(o.getExaminationTime()));
+                                intent.putExtra("id",String.valueOf(o.getExaminationId()));
+                                intent.putExtra("title",String.valueOf(o.getExaminationName()));
+                                startActivity(intent);
+                            }else if (timeType1==1){
+                                new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("考试时间已结束");
+                            }
                         }
                     }
                 });

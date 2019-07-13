@@ -46,6 +46,7 @@ import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
 import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
 import com.smartbus.heze.fileapprove.bean.InitBackData;
+import com.smartbus.heze.fileapprove.bean.LZLR;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
@@ -178,7 +179,7 @@ public interface AllApi {
      * 公文流转录入
      */
     @POST(ApiAddress.documentlr)
-    Observable<InitBackData> getdocumentlr(@QueryMap Map<String,String> params);
+    Observable<LZLR> getdocumentlr(@QueryMap Map<String,String> params);
 
     /**
      * 获取通用借款单待办详情
@@ -260,7 +261,8 @@ public interface AllApi {
      * 修改公文流转发布状态
      */
     @GET(ApiAddress.checktypelz)
-    Observable<CheckType> getCheckTypelz(@Query("lvid")String vocationId);
+    Observable<CheckType> getCheckTypelz(@Query("runId")String runId,@Query("lvid")String vocationId);
+
 
     /**
      * 修改加班发布状态

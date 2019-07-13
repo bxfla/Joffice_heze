@@ -1,18 +1,30 @@
 package com.smartbus.heze.fileapprove.activity;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
+import com.smartbus.heze.fileapprove.bean.FileData;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
@@ -27,10 +39,12 @@ import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
 import com.smartbus.heze.fileapprove.presenter.NormalPresenter;
 import com.smartbus.heze.fileapprove.presenter.WillDoPresenter;
-import com.smartbus.heze.fileapprove.util.SplitData;
+import com.smartbus.heze.fileapprove.util.DBHandler;
+import com.smartbus.heze.fileapprove.util.MyStringSpilt;
 import com.smartbus.heze.http.base.AlertDialogCallBackP;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
+import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
 
@@ -46,7 +60,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.smartbus.heze.http.base.Constant.TAG_NINE;
 import static com.smartbus.heze.http.base.Constant.TAG_ONE;
+import static com.smartbus.heze.http.base.Constant.TAG_TWO;
 
 /**
  * 公文流转
@@ -81,12 +97,19 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     Button btnPerson;
     @BindView(R.id.btnUp)
     Button btnUp;
+    @BindView(R.id.llcb)
+    LinearLayout llcb;
+    @BindView(R.id.tvData)
+    TextView tvData;
+    @BindView(R.id.btnLR)
+    Button btnLR;
 
     String mainId = "";
     String dataRes;
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
+    private long downloadId = 0;
     String destName, uId, signaName;
     String activityName, taskId;
     String[] bigNametemp = null;
@@ -102,13 +125,15 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     List<String> namelist = new ArrayList<>();
     List<String> typelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
+    private DownloadManager downloadManager = null;
+    private DownloadCompleteReceiver receiver = null;
     List<DocumentLZWill.TransBean> destTypeList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        llcb.setVisibility(View.GONE);
         btnPerson.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
@@ -137,9 +162,66 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
 
     }
 
-    @OnClick({R.id.btnPerson, R.id.btnUp})
+    @OnClick({R.id.btnPerson, R.id.btnUp, R.id.tvData})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tvData:
+                List<String> dataList = new ArrayList<>();
+                if (!tvData.getText().toString().equals("")) {
+                    dataList = new MyStringSpilt().stringSpiltList(tvData.getText().toString());
+                    if (dataList.size() == 1) {
+                        String id = new MyStringSpilt().stringSpilt(dataList.get(0));
+                        final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DBHandler dbA = new DBHandler();
+                                dataRes = dbA.OAQingJiaMyDetail(url);
+                                if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                    handler.sendEmptyMessage(TAG_TWO);
+                                } else {
+                                    handler.sendEmptyMessage(TAG_NINE);
+                                }
+                            }
+                        }).start();
+                    } else if (dataList.size() > 1) {
+                        MyAlertDialog.MyListAlertDialog(this, dataList, new AlertDialogCallBackP() {
+                            @Override
+                            public void oneselect(final String data1) {
+                                String id = new MyStringSpilt().stringSpilt(data1);
+                                final String url = ApiAddress.mainApi + ApiAddress.filedata + "?fileId=" + id;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DBHandler dbA = new DBHandler();
+                                        dataRes = dbA.OAQingJiaMyDetail(url);
+                                        if (dataRes.equals("获取数据失败") || dataRes.equals("")) {
+                                            handler.sendEmptyMessage(TAG_TWO);
+                                        } else {
+                                            handler.sendEmptyMessage(TAG_NINE);
+                                        }
+                                    }
+                                }).start();
+                            }
+
+                            @Override
+                            public void select(List<String> list) {
+
+                            }
+
+                            @Override
+                            public void confirm() {
+
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+                    }
+                }
+                break;
             case R.id.btnPerson:
                 Intent intent = new Intent(DocumentLZWillActivity.this, WorkPersonActivity.class);
                 startActivityForResult(intent, TAG_ONE);
@@ -205,9 +287,9 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                         });
                     }
                 } else {
-                    if (selectList1.size()==0){
+                    if (selectList1.size() == 0) {
                         Toast.makeText(this, "请选择传阅人", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         setData();
                         getListData();
                         map.put("flowAssignId", destName + "|" + uId);
@@ -230,25 +312,26 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         map.put("taskId", taskId);
         map.put("signalName", signaName);
         map.put("destName", destName);
+        map.put("fujian", tvData.getText().toString());
         if (tvLeader.getVisibility() == View.VISIBLE) {
-            if (!tvLeader.getText().toString().equals("")){
-                map.put("nibanyj", new SplitData().SplitUpData(tvLeader.getText().toString()));
+            if (!tvLeader.getText().toString().equals("")) {
+                map.put("nibanyj", tvLeader.getText().toString());
             }
         } else {
-            map.put("nibanyj", new SplitData().SplitUpData(etLeader.getText().toString()));
+            map.put("nibanyj", etLeader.getText().toString());
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            if (!tvLeader1.getText().toString().equals("")){
-                map.put("ldyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
+            if (!tvLeader1.getText().toString().equals("")) {
+                map.put("ldyj",tvLeader1.getText().toString());
             }
         } else {
-            map.put("ldyj", new SplitData().SplitUpData(etLeader1.getText().toString()));
+            map.put("ldyj", etLeader1.getText().toString());
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
-            if (!tvLeader2.getText().toString().equals("")){
-                map.put("chengbanjg",tvLeader2.getText().toString());
+            if (!tvLeader2.getText().toString().equals("")) {
+                map.put("chengbanjg", tvLeader2.getText().toString());
             }
         } else {
             map.put("chengbanjg", etLeader2.getText().toString());
@@ -263,13 +346,13 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             }
             if (selectList1.size() > 1) {
                 for (int i = 1; i < selectList.size(); i++) {
-                    if (i==1){
+                    if (i == 1) {
                         uId = selectList.get(i);
                     }
-                    if (i < selectList.size() - 1&&i!=1) {
-                        uId = uId +","+ selectList.get(i) + ",";
+                    if (i < selectList.size() - 1 && i != 1) {
+                        uId = uId + "," + selectList.get(i) + ",";
                     } else {
-                        uId = uId +","+ selectList.get(i);
+                        uId = uId + "," + selectList.get(i);
                     }
                 }
             }
@@ -281,37 +364,37 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             }
             if (selectList1.size() > 1) {
                 for (int i = 1; i < selectList.size(); i++) {
-                    if (i==1){
-                        uId = uId + "," +selectList.get(i);
+                    if (i == 1) {
+                        uId = uId + "," + selectList.get(i);
                     }
-                    if (i < selectList.size() - 1&&i!=1) {
-                        uId = uId +","+ selectList.get(i) + ",";
+                    if (i < selectList.size() - 1 && i != 1) {
+                        uId = uId + "," + selectList.get(i) + ",";
                     } else {
-                        uId = uId +","+ selectList.get(i);
+                        uId = uId + "," + selectList.get(i);
                     }
                 }
             }
         }
         if (selectList.size() > 1) {
             for (int i = 1; i < selectList.size(); i++) {
-                if (i==1){
+                if (i == 1) {
                     uId = selectList.get(i);
                 }
-                if (i < selectList.size() - 1&&i!=1) {
-                    uId = uId +","+ selectList.get(i) + ",";
+                if (i < selectList.size() - 1 && i != 1) {
+                    uId = uId + "," + selectList.get(i) + ",";
                 } else {
-                    uId = uId +","+ selectList.get(i);
+                    uId = uId + "," + selectList.get(i);
                 }
             }
             if (selectList1.size() > 1) {
                 for (int i = 1; i < selectList.size(); i++) {
-                    if (i==1){
-                        uId = uId + "," +selectList.get(i);
+                    if (i == 1) {
+                        uId = uId + "," + selectList.get(i);
                     }
-                    if (i < selectList.size() - 1&&i!=1) {
-                        uId = uId +","+ selectList.get(i) + ",";
+                    if (i < selectList.size() - 1 && i != 1) {
+                        uId = uId + "," + selectList.get(i) + ",";
                     } else {
-                        uId = uId +","+ selectList.get(i);
+                        uId = uId + "," + selectList.get(i);
                     }
                 }
             }
@@ -343,6 +426,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             etBianHao.setText(s.getMainform().get(0).getWenjianNo().toString());
             etNum.setText(s.getMainform().get(0).getFawennum().toString());
             etTitle.setText(s.getMainform().get(0).getTitle().toString());
+            tvData.setText(s.getMainform().get(0).getFujian().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String leader = s.getMainform().get(0).getNibanyj();
             String leader1 = s.getMainform().get(0).getLdyj();
@@ -357,13 +441,13 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                     tvLeader.setVisibility(View.GONE);
                     etLeader.setVisibility(View.VISIBLE);
                     if (leader != null && leader.length() != 0) {
-                        etLeader.setText(new SplitData().getStringData(leader));
+                        etLeader.setText(leader);
                     }
                 } else {
                     tvLeader.setVisibility(View.VISIBLE);
                     etLeader.setVisibility(View.GONE);
                     if (leader != null && leader.length() != 0) {
-                        tvLeader.setText(new SplitData().getStringData(leader));
+                        tvLeader.setText(leader);
                     }
                 }
 
@@ -371,13 +455,13 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                     tvLeader1.setVisibility(View.GONE);
                     etLeader1.setVisibility(View.VISIBLE);
                     if (leader1 != null && leader1.length() != 0) {
-                        etLeader1.setText(new SplitData().getStringData(leader1));
+                        etLeader1.setText(leader1);
                     }
                 } else {
                     tvLeader1.setVisibility(View.VISIBLE);
                     etLeader1.setVisibility(View.GONE);
                     if (leader1 != null && leader1.length() != 0) {
-                        tvLeader1.setText(new SplitData().getStringData(leader1));
+                        tvLeader1.setText(leader1);
                     }
                 }
 
@@ -446,6 +530,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         setData();
         getListData();
 //        map.put("flowAssignId", null);
+        map.put("flowAssignId", destName + "|" + uId);
         willDoPresenter.getWillDo(map);
     }
 
@@ -480,15 +565,15 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             checkedItems[i] = false;
         }
         String s = "";
-        for (int i = 0;i<selectNList1.size();i++){
-            if (i==0){
+        for (int i = 0; i < selectNList1.size(); i++) {
+            if (i == 0) {
                 s = selectNList1.get(i);
-            }else {
-                s = s+","+selectNList1.get(i);
+            } else {
+                s = s + "," + selectNList1.get(i);
             }
         }
         new AlertDialog.Builder(this)
-                .setTitle("已选:"+s)//标题栏
+                .setTitle("已选:" + s)//标题栏
                 .setMultiChoiceItems(bigNametemp, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -531,5 +616,66 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             }
         }).show();
     }
+
+    // 自定义广播内部类
+    class DownloadCompleteReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 获得广播的频道来进行判断是否下载完毕
+            if (intent.getAction().equals(
+                    DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
+                long loadId = intent.getLongExtra(
+                        DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                if (loadId == downloadId) {
+                    ProgressDialogUtil.stopLoad();
+                    // 内容根据需求来写（如：下载完成后跳转到下载的记录）
+                    Intent intent2 = new Intent();
+                    // 跳转到下载记录的界面
+                    intent2.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+                    startActivityForResult(intent2, Constant.TAG_ONE);
+                }
+            }
+        }
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TAG_TWO:
+                    Toast.makeText(DocumentLZWillActivity.this, "操作数据失败", Toast.LENGTH_SHORT).show();
+                    ProgressDialogUtil.stopLoad();
+                    break;
+                case TAG_NINE:
+                    Gson gson2 = new Gson();
+                    FileData file = gson2.fromJson(dataRes, FileData.class);
+                    String filePath = file.getData().getFilePath();
+                    String url = ApiAddress.downloadfile + filePath;
+                    ProgressDialogUtil.startLoad(DocumentLZWillActivity.this, "文件下载中");
+                    downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                    // 动态注册广播接收器
+                    receiver = new DownloadCompleteReceiver();
+                    IntentFilter intentFilter = new IntentFilter(
+                            DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+                    registerReceiver(receiver, intentFilter);
+
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                    request.setTitle("下载文件");
+                    // 保存的文件名
+                    request.setDescription(filePath);
+                    // 存储的位置
+                    request.setDestinationInExternalFilesDir(DocumentLZWillActivity.this,
+                            Environment.DIRECTORY_DOWNLOADS, filePath);
+                    // 默认显示出来
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                    // 下载结束后显示出来
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    downloadId = downloadManager.enqueue(request);
+                    break;
+            }
+        }
+    };
 
 }

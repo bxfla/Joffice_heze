@@ -1,6 +1,6 @@
 package com.smartbus.heze.fileapprove.module;
 
-import com.smartbus.heze.fileapprove.bean.InitBackData;
+import com.smartbus.heze.fileapprove.bean.LZLR;
 import com.smartbus.heze.http.base.BaseDSixView;
 import com.smartbus.heze.http.base.BasePresenter;
 import com.smartbus.heze.oaflow.bean.CheckType;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface DocumentLRContract {
     interface View extends BaseDSixView<presenter> {
-        void setDocumentLR(InitBackData s);
+        void setDocumentLR(LZLR s);
         void setDocumentLRMessage(String s);
 
         void setCheckTypeLR(CheckType s);
@@ -23,6 +23,6 @@ public interface DocumentLRContract {
     interface presenter extends BasePresenter {
         void getDocumentLR(Map<String, String> map);
 
-        void getCheckTypeLR(String vocationId);
+        void getCheckTypeLR(String runId,String vocationId);
     }
 }

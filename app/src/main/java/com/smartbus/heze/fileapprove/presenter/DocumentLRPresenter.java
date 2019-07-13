@@ -2,7 +2,7 @@ package com.smartbus.heze.fileapprove.presenter;
 
 import android.content.Context;
 
-import com.smartbus.heze.fileapprove.bean.InitBackData;
+import com.smartbus.heze.fileapprove.bean.LZLR;
 import com.smartbus.heze.fileapprove.module.DocumentLRContract;
 import com.smartbus.heze.http.base.BaseObserverNoEntry;
 import com.smartbus.heze.http.utils.MainUtil;
@@ -33,9 +33,9 @@ public class DocumentLRPresenter implements DocumentLRContract.presenter {
     public void getDocumentLR(Map<String, String> map) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getdocumentlr(map).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserverNoEntry<InitBackData>(context, MainUtil.upData) {
+                .subscribe(new BaseObserverNoEntry<LZLR>(context, MainUtil.upData) {
                     @Override
-                    protected void onSuccees(InitBackData s) throws Exception {
+                    protected void onSuccees(LZLR s) throws Exception {
                         if (s.isSuccess()){
                             view.setDocumentLR(s);
                         }else {
@@ -51,8 +51,8 @@ public class DocumentLRPresenter implements DocumentLRContract.presenter {
     }
 
     @Override
-    public void getCheckTypeLR(String vocationId) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getCheckTypelz(vocationId).subscribeOn(Schedulers.io())
+    public void getCheckTypeLR(String runId,String vocationId) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getCheckTypelz(runId,vocationId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<CheckType>(context, MainUtil.getData) {
                     @Override

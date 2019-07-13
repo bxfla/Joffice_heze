@@ -27,7 +27,7 @@ import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
-import com.smartbus.heze.fileapprove.bean.InitBackData;
+import com.smartbus.heze.fileapprove.bean.LZLR;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
 import com.smartbus.heze.fileapprove.module.DocumentLRContract;
@@ -111,7 +111,7 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
     Button btnUp;
 
     Intent intent;
-    String uId = "";
+    String uId = "",runId = "";
     String isShow = "true";
     String userDepart = "";
     String userCode = "";
@@ -359,7 +359,8 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
     @Override
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
-            documentLRPresenter.getCheckTypeLR(vocationId);
+            runId = String.valueOf(s.getRunId());
+            documentLRPresenter.getCheckTypeLR(runId,vocationId);
         }
     }
 
@@ -369,9 +370,9 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
     }
 
     @Override
-    public void setDocumentLR(InitBackData s) {
+    public void setDocumentLR(LZLR s) {
         if (s.isSuccess()) {
-            vocationId = s.getVocationId();
+            vocationId = s.getLvId();
             selectTag = "2";
             btnUp.setEnabled(true);
             btnLR.setEnabled(false);
@@ -389,7 +390,10 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
 
     @Override
     public void setCheckTypeLR(CheckType s) {
-
+        if (s.isSuccess()){
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

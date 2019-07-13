@@ -141,6 +141,15 @@ public class DocumentLZWill implements Serializable {
         private String $type$;
         private String shouwenRq;
         private String fawennum;
+        private String fujian;
+
+        public String getFujian() {
+            return fujian;
+        }
+
+        public void setFujian(String fujian) {
+            this.fujian = fujian;
+        }
 
         public String getChengbanjg() {
             return chengbanjg;
