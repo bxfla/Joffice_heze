@@ -197,6 +197,7 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
         map.put("fawennum", etNum.getText().toString());
         map.put("title", etTitle.getText().toString());
         map.put("fujian", tvData.getText().toString()+"");
+        map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
         map.put("nibanyj", "");
         map.put("ldyj", "");
         map.put("chengbanjg", "");
@@ -361,7 +362,7 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
             runId = String.valueOf(s.getRunId());
-            documentLRPresenter.getCheckTypeLR(runId,vocationId);
+            documentLRPresenter.getCheckTypeLR(runId,vocationId,userDepart,"","","","");
         }
     }
 

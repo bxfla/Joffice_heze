@@ -51,8 +51,10 @@ public class DocumentLRPresenter implements DocumentLRContract.presenter {
     }
 
     @Override
-    public void getCheckTypeLR(String runId,String vocationId) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getCheckTypelz(runId,vocationId).subscribeOn(Schedulers.io())
+    public void getCheckTypeLR(String runId,String vocationId,String destName,String mycomments,String nibanyj
+            ,String ldyj,String chengbanjg) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getCheckTypelz(runId,vocationId, destName
+                , mycomments, nibanyj, ldyj, chengbanjg).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<CheckType>(context, MainUtil.getData) {
                     @Override

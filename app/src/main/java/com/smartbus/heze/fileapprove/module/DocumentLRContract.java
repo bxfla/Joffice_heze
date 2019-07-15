@@ -22,7 +22,7 @@ public interface DocumentLRContract {
 
     interface presenter extends BasePresenter {
         void getDocumentLR(Map<String, String> map);
-
-        void getCheckTypeLR(String runId,String vocationId);
+        void getCheckTypeLR(String runId,String vocationId,String destName,String mycomments,String nibanyj
+                ,String ldyj,String chengbanjg);
     }
 }

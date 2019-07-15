@@ -148,14 +148,18 @@ public class OnLineAdapter extends PagerAdapter {
         holder.tvNo.setText(String.valueOf(position+1));
         holder.tvQuestion.setText("("+dataItems.get(position).getTypeName()+")"+dataItems.get(position).getTitle().toString());
         holder.tvNum.setText((position + 1) + "/" + dataItems.size());
-        if (dataItems.get(position).getPic()!=null&&!dataItems.get(position).getPic().equals("")){
-            holder.imageView.setVisibility(View.VISIBLE);
-            Glide.with(mContext)
-                    .load(ApiAddress.downloadfile+dataItems.get(position).getPic())
-                    .placeholder(R.drawable.loading)
-                    .into(holder.imageView);
-        }else {
-            holder.imageView.setVisibility(View.GONE);
+        try{
+            if (dataItems.get(position).getPic()!=null&&!dataItems.get(position).getPic().equals("")){
+                holder.imageView.setVisibility(View.VISIBLE);
+                Glide.with(mContext)
+                        .load(ApiAddress.downloadfile+dataItems.get(position).getPic())
+                        .placeholder(R.drawable.loading)
+                        .into(holder.imageView);
+            }else {
+                holder.imageView.setVisibility(View.GONE);
+            }
+        }catch(Exception e){
+            Log.e("XXX",e.toString());
         }
 //        holder.question.setText(dataItems.get(position).getQuContent());
         // 最后一页修改"下一步"按钮文字

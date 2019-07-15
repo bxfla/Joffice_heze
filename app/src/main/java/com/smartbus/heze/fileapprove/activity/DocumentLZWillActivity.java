@@ -25,15 +25,18 @@ import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
 import com.smartbus.heze.fileapprove.bean.FileData;
+import com.smartbus.heze.fileapprove.bean.LZLR;
 import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
 import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.DocumentLRContract;
 import com.smartbus.heze.fileapprove.module.DocumentLZWillContract;
 import com.smartbus.heze.fileapprove.module.NoEndContract;
 import com.smartbus.heze.fileapprove.module.NoHandlerContract;
 import com.smartbus.heze.fileapprove.module.NormalContract;
 import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.DocumentLRPresenter;
 import com.smartbus.heze.fileapprove.presenter.DocumentLZWillPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
@@ -47,6 +50,7 @@ import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.base.ProgressDialogUtil;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +72,8 @@ import static com.smartbus.heze.http.base.Constant.TAG_TWO;
  * 公文流转
  */
 public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWillContract.View
-        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
+        , DocumentLRContract.View  {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -109,6 +114,8 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
+    String vocationId = "";
+    String nibanyj = "",ldyi = "",chengbanyj = "",comments = "";
     private long downloadId = 0;
     String destName, uId, signaName;
     String activityName, taskId;
@@ -118,6 +125,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     NoEndPresenter noEndPersenter;
     NoHandlerPresenter noHandlerPresenter;
     WillDoPresenter willDoPresenter;
+    DocumentLRPresenter documentLRPresenter;
     DocumentLZWillPresenter documentLZWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> selectList1 = new ArrayList<>();
@@ -143,8 +151,9 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         noHandlerPresenter = new NoHandlerPresenter(this, this);
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
+        documentLRPresenter = new DocumentLRPresenter(this,this);
         documentLZWillPresenter = new DocumentLZWillPresenter(this, this);
-        documentLZWillPresenter.getDocumentLZWill(activityName, taskId, Constant.BORROWACCIDENT_DEFID);
+        documentLZWillPresenter.getDocumentLZWill(activityName, taskId, Constant.DOCUMENTLZ_DEFID);
     }
 
     @Override
@@ -428,6 +437,9 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             etTitle.setText(s.getMainform().get(0).getTitle().toString());
             tvData.setText(s.getMainform().get(0).getFujian().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
+            String dataUrl_save = s.getMainform().get(0).getDataUrl_save().toString();
+            String[] strarray = dataUrl_save.split("[=]");
+            vocationId = strarray[1];
             String leader = s.getMainform().get(0).getNibanyj();
             String leader1 = s.getMainform().get(0).getLdyj();
             String leader2 = s.getMainform().get(0).getChengbanjg();
@@ -542,8 +554,49 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     @Override
     public void setWillDo(WillDoUp s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
-            finish();
+            map.put("destName", destName);
+            map.put("fujian", tvData.getText().toString());
+            if (tvLeader.getVisibility() == View.VISIBLE) {
+                if (!tvLeader.getText().toString().equals("")) {
+                    nibanyj = tvLeader.getText().toString();
+                    map.put("nibanyj", tvLeader.getText().toString());
+                }
+            } else {
+                nibanyj = etLeader.getText().toString();
+                if (!etLeader.getText().toString().equals("")){
+                    comments = etLeader.getText().toString();
+                }
+                map.put("nibanyj", etLeader.getText().toString());
+                map.put("comments", etLeader.getText().toString());
+            }
+            if (tvLeader1.getVisibility() == View.VISIBLE) {
+                if (!tvLeader1.getText().toString().equals("")) {
+                    ldyi = tvLeader1.getText().toString();
+                    map.put("ldyj",tvLeader1.getText().toString());
+                }
+            } else {
+                ldyi = tvLeader1.getText().toString();
+                if (!etLeader.getText().toString().equals("")){
+                    comments = etLeader1.getText().toString();
+                }
+                map.put("ldyj", etLeader1.getText().toString());
+                map.put("comments", etLeader1.getText().toString());
+            }
+            if (tvLeader2.getVisibility() == View.VISIBLE) {
+                if (!tvLeader2.getText().toString().equals("")) {
+                    chengbanyj = tvLeader2.getText().toString();
+                    map.put("chengbanjg", tvLeader2.getText().toString());
+                }
+            } else {
+                chengbanyj = etLeader2.getText().toString();
+                if (!etLeader.getText().toString().equals("")){
+                    comments = etLeader2.getText().toString();
+                }
+                map.put("chengbanjg", etLeader2.getText().toString());
+                map.put("comments", etLeader2.getText().toString());
+            }
+            documentLRPresenter.getCheckTypeLR(String.valueOf(s.getRunId()), vocationId,destName
+                    ,comments,nibanyj,ldyi,chengbanyj);
         }
     }
 
@@ -615,6 +668,29 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                 alertDialog3.dismiss();
             }
         }).show();
+    }
+
+    @Override
+    public void setDocumentLR(LZLR s) {
+
+    }
+
+    @Override
+    public void setDocumentLRMessage(String s) {
+
+    }
+
+    @Override
+    public void setCheckTypeLR(CheckType s) {
+        if (s.isSuccess()) {
+            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void setCheckTypeLRMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     // 自定义广播内部类

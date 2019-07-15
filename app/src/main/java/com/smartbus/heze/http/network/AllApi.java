@@ -262,7 +262,9 @@ public interface AllApi {
      * 修改公文流转发布状态
      */
     @GET(ApiAddress.checktypelz)
-    Observable<CheckType> getCheckTypelz(@Query("runId")String runId,@Query("lvid")String vocationId);
+    Observable<CheckType> getCheckTypelz(@Query("runId")String runId,@Query("lvid")String vocationId
+            ,@Query("destName")String destName,@Query("mycomments")String mycomments
+            ,@Query("nibanyj")String nibanyj,@Query("ldyj")String ldyj,@Query("chengbanjg")String chengbanjg);
 
     /**
      * 公文流转记录

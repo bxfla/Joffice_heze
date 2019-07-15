@@ -142,6 +142,15 @@ public class DocumentLZWill implements Serializable {
         private String shouwenRq;
         private String fawennum;
         private String fujian;
+        private String dataUrl_save;
+
+        public String getDataUrl_save() {
+            return dataUrl_save;
+        }
+
+        public void setDataUrl_save(String dataUrl_save) {
+            this.dataUrl_save = dataUrl_save;
+        }
 
         public String getFujian() {
             return fujian;
