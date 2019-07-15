@@ -42,6 +42,7 @@ import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
 import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
 import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
 import com.smartbus.heze.fileapprove.bean.Department;
+import com.smartbus.heze.fileapprove.bean.DocumentLZList;
 import com.smartbus.heze.fileapprove.bean.DocumentLZWill;
 import com.smartbus.heze.fileapprove.bean.FileCirculateWill;
 import com.smartbus.heze.fileapprove.bean.HuiQianWill;
@@ -262,6 +263,12 @@ public interface AllApi {
      */
     @GET(ApiAddress.checktypelz)
     Observable<CheckType> getCheckTypelz(@Query("runId")String runId,@Query("lvid")String vocationId);
+
+    /**
+     * 公文流转记录
+     */
+    @GET(ApiAddress.documentlzlist)
+    Observable<DocumentLZList> getDocumentLzList(@Query("Q_lvDate_S_GE")String runId, @Query("Q_lvDate_S_LE")String vocationId);
 
 
     /**

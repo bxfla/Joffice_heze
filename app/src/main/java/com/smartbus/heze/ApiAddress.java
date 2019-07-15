@@ -67,6 +67,8 @@ public class ApiAddress {
     public static final String  checktype = "hrm/updateLeaveDays.do";
     //修改公文流转发布状态
     public static final String  checktypelz = "archive/updateLettersVisits.do";
+    //公文流转记录
+    public static final String  documentlzlist = "archive/listLettersVisits.do";
     //修改加班发布状态
     public static final String  addworkchecktype = "hrm/updateAddClassInfo.do";
     //修改补勤发布状态

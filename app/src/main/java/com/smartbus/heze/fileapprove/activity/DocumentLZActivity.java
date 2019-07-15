@@ -161,7 +161,8 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
 
     @Override
     protected void rightClient() {
-
+        Intent intent = new Intent(this,DocumentLZListActivity.class);
+        startActivity(intent);
     }
 
     /**
