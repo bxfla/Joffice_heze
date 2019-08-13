@@ -212,6 +212,7 @@ public class DocumentLZActivity extends BaseActivity implements OneContract.View
         lrMap.put("lvnumber", etNum.getText().toString());
         lrMap.put("lvTitle", etTitle.getText().toString());
         lrMap.put("fileIds", fileId);
+        lrMap.put("zt", "0");
         lrMap.put("lvProposedopinions", "");
         lrMap.put("lvInstructions", "");
         lrMap.put("lvResult", "");

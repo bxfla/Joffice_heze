@@ -73,7 +73,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_TWO;
  */
 public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWillContract.View
         , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
-        , DocumentLRContract.View  {
+        , DocumentLRContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -115,7 +115,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     String leaderCode = "";
     String leaderName = "";
     String vocationId = "";
-    String nibanyj = "",ldyi = "",chengbanyj = "",comments = "";
+    String nibanyj = "", ldyi = "", chengbanyj = "", comments = "";
     private long downloadId = 0;
     String destName, uId, signaName;
     String activityName, taskId;
@@ -151,7 +151,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         noHandlerPresenter = new NoHandlerPresenter(this, this);
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
-        documentLRPresenter = new DocumentLRPresenter(this,this);
+        documentLRPresenter = new DocumentLRPresenter(this, this);
         documentLZWillPresenter = new DocumentLZWillPresenter(this, this);
         documentLZWillPresenter.getDocumentLZWill(activityName, taskId, Constant.DOCUMENTLZ_DEFID);
     }
@@ -238,22 +238,17 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             case R.id.btnUp:
                 if (destTypeList.size() != 0) {
                     if (destTypeList.size() == 1) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                destType = destTypeList.get(0).getDestType();
-                                destName = destTypeList.get(0).getDestination();
-                                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                                    normalPresenter.getNormalPerson(taskId, destName, "false");
-                                } else if (destType.indexOf("end") == -1) {
-                                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                                } else {
-                                    noHandlerPresenter.getNoHandlerPerson(taskId);
-                                }
-                                signaName = destTypeList.get(0).getName();
-                                destName = destTypeList.get(0).getDestination();
-                            }
-                        }).start();
+                        destType = destTypeList.get(0).getDestType();
+                        destName = destTypeList.get(0).getDestination();
+                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                            normalPresenter.getNormalPerson(taskId, destName, "false");
+                        } else if (destType.indexOf("end") == -1) {
+                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                        } else {
+                            noHandlerPresenter.getNoHandlerPerson(taskId);
+                        }
+                        signaName = destTypeList.get(0).getName();
+                        destName = destTypeList.get(0).getDestination();
                     } else {
                         namelist.clear();
                         for (int i = 0; i < destTypeList.size(); i++) {
@@ -332,7 +327,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
             if (!tvLeader1.getText().toString().equals("")) {
-                map.put("ldyj",tvLeader1.getText().toString());
+                map.put("ldyj", tvLeader1.getText().toString());
             }
         } else {
             map.put("ldyj", etLeader1.getText().toString());
@@ -563,7 +558,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                 }
             } else {
                 nibanyj = etLeader.getText().toString();
-                if (!etLeader.getText().toString().equals("")){
+                if (!etLeader.getText().toString().equals("")) {
                     comments = etLeader.getText().toString();
                 }
                 map.put("nibanyj", etLeader.getText().toString());
@@ -572,11 +567,11 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
             if (tvLeader1.getVisibility() == View.VISIBLE) {
                 if (!tvLeader1.getText().toString().equals("")) {
                     ldyi = tvLeader1.getText().toString();
-                    map.put("ldyj",tvLeader1.getText().toString());
+                    map.put("ldyj", tvLeader1.getText().toString());
                 }
             } else {
                 ldyi = tvLeader1.getText().toString();
-                if (!etLeader.getText().toString().equals("")){
+                if (!etLeader.getText().toString().equals("")) {
                     comments = etLeader1.getText().toString();
                 }
                 map.put("ldyj", etLeader1.getText().toString());
@@ -589,14 +584,14 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
                 }
             } else {
                 chengbanyj = etLeader2.getText().toString();
-                if (!etLeader.getText().toString().equals("")){
+                if (!etLeader.getText().toString().equals("")) {
                     comments = etLeader2.getText().toString();
                 }
                 map.put("chengbanjg", etLeader2.getText().toString());
                 map.put("comments", etLeader2.getText().toString());
             }
-            documentLRPresenter.getCheckTypeLR(String.valueOf(s.getRunId()), vocationId,destName
-                    ,comments,nibanyj,ldyi,chengbanyj);
+            documentLRPresenter.getCheckTypeLR(String.valueOf(s.getRunId()), vocationId, destName
+                    , comments, nibanyj, ldyi, chengbanyj);
         }
     }
 
@@ -683,7 +678,7 @@ public class DocumentLZWillActivity extends BaseActivity implements DocumentLZWi
     @Override
     public void setCheckTypeLR(CheckType s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

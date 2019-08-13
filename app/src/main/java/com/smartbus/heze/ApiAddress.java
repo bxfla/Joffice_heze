@@ -6,19 +6,19 @@ package com.smartbus.heze;
 
 public class ApiAddress {
     //李志浩
-    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //川川
-//    public final static String mainApi = "http://192.168.2.126:8082/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.114:8082/joffice21/" ;
     //孙琦
-//    public final static String mainApi = "http://192.168.2.182:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.155:8080/joffice21/" ;
     //正式库
-//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //田胖
-//    public final static String mainApi = "http://192.168.2.117:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.111:8080/joffice21/" ;
     //柱子
-//    public final static String mainApi = "http://192.168.2.95:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.160:8080/joffice/" ;
 
     /***********************首页*******************************/
     //登录
@@ -105,10 +105,16 @@ public class ApiAddress {
     public static final String  updatasafe = "busmanager/savePhoneAnquansheshiJc.do";
     //车辆巡检检查项
     public static final String  carcheckitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4476&&flag=1&_dc=1558487740645";
+    //日常检查检查项
+    public static final String  daycompareitem = "starkh/getProjectRewardPunishmentSurfaceType.do";
     //车辆巡检记录
     public static final String  carcheckhistory = "repair/getListByPhoneDiancherichangJc.do";
+    //日常检查巡检记录详情
+    public static final String  daycomparehistory = "starkh/getListByPhoneDianchedianjianJc.do";
     //安全稽查数据提交
     public static final String  updatacarcheck = "repair/savePhoneDiancherichangJc.do";
+    //日常检查数据提交
+    public static final String  updatadaycompare = "starkh/savePhoneDianchedianjianJc.do";
     //车辆卫生检查项
     public static final String  healthitem = "starkh/getProjectRewardPunishmentSurfaceType.do?categoryCode=4468,4467&_dc=1558495007715";
     //车辆卫生记录

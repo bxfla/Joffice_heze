@@ -183,21 +183,16 @@ public class UserdLeaveWillActivity extends BaseActivity implements UserdLeaveWi
     public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
@@ -412,7 +407,7 @@ public class UserdLeaveWillActivity extends BaseActivity implements UserdLeaveWi
     @Override
     public void setNoHandlerPerson(NoHandlerPerson s) {
         setData();
-        map.put("flowAssignId", role1+":"+role2 + "|" + leaderCode+":"+uId);
+        map.put("flowAssignId", role1 + ":" + role2 + "|" + leaderCode + ":" + uId);
         willDoPresenter.getWillDo(map);
     }
 
@@ -490,7 +485,7 @@ public class UserdLeaveWillActivity extends BaseActivity implements UserdLeaveWi
                 setData();
                 // 关闭提示框
                 alertDialog3.dismiss();
-                map.put("flowAssignId", role1+":"+role2 + "|" + leaderCode+":"+uId);
+                map.put("flowAssignId", role1 + ":" + role2 + "|" + leaderCode + ":" + uId);
 //                map.put("flowAssignId", destName + "|" + uId);
                 willDoPresenter.getWillDo(map);
             }

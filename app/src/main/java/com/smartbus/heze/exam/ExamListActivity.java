@@ -9,6 +9,7 @@ import com.smartbus.heze.R;
 import com.smartbus.heze.exam.activity.CarVehicleActivity;
 import com.smartbus.heze.exam.activity.ClassMileageActivity;
 import com.smartbus.heze.exam.activity.ComplaintFinesActivity;
+import com.smartbus.heze.exam.activity.DayComparActivity;
 import com.smartbus.heze.exam.activity.FoundActivity;
 import com.smartbus.heze.exam.activity.GpsMileageActivity;
 import com.smartbus.heze.exam.activity.InComeRankActivity;
@@ -67,6 +68,8 @@ public class ExamListActivity extends BaseActivity {
     RadioButton rb16;
 
     Intent intent;
+    @BindView(R.id.rb17)
+    RadioButton rb17;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +93,8 @@ public class ExamListActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8
-                , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12, R.id.rb13, R.id.rb14, R.id.rb15
-                , R.id.rb16})
+            , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12, R.id.rb13, R.id.rb14, R.id.rb15
+            , R.id.rb16,R.id.rb17})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -156,6 +159,10 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb16:
                 intent = new Intent(this, CarVehicleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb17:
+                intent = new Intent(this, DayComparActivity.class);
                 startActivity(intent);
                 break;
         }

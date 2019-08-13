@@ -30,10 +30,10 @@ public class UpDataPresenter implements UpDataContract.presenter {
     public void getUpData(String no,String atAtDate, String atTime, String busCode,String carNo, String lineCode, String weather
                     ,String acPlaceCategory, String atType, String atLiability,String acNature, String atCategory, String userCode
                     ,String injuredPeople, String deathPeople, String atPlace,String atReason, String depId, String depName
-                    ,String atPhoto, String mileType) {
+                    ,String atPhoto, String mileType,String jbr,String money,String reason) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getUpData(no,atAtDate,atTime,busCode,carNo,lineCode,weather
                     ,acPlaceCategory,atType,atLiability,acNature,atCategory,userCode,injuredPeople,deathPeople,atPlace
-                    ,atReason,depId,depName,atPhoto,mileType).subscribeOn(Schedulers.io())
+                    ,atReason,depId,depName,atPhoto,mileType,jbr,money,reason).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<UpData>(context, MainUtil.getData) {
                     @Override

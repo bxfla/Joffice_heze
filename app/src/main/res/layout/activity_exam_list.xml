@@ -37,6 +37,7 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb2"
                 android:text="@string/online_exam" />
+
             <RadioButton
                 android:id="@+id/rb3"
                 style="@style/RadionButton"
@@ -44,6 +45,7 @@
                 android:text="@string/found_exam" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -61,12 +63,14 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb5"
                 android:text="@string/income_rank" />
+
             <RadioButton
                 android:id="@+id/rb6"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb6"
                 android:text="@string/class_mileage" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -84,12 +88,14 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb8"
                 android:text="@string/oil_consumption" />
+
             <RadioButton
                 android:id="@+id/rb9"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/rb9"
                 android:text="@string/maintain" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -107,12 +113,14 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/flow_item1"
                 android:text="@string/complaint_fines" />
+
             <RadioButton
                 android:id="@+id/rb12"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/flow_item2"
                 android:text="@string/send_num" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -130,12 +138,14 @@
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/flow_item4"
                 android:text="@string/start_driver" />
+
             <RadioButton
                 android:id="@+id/rb15"
                 style="@style/RadionButton"
                 android:drawableTop="@drawable/flow_item5"
                 android:text="@string/gps_mileage" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -149,15 +159,16 @@
                 android:text="@string/carvehicle" />
 
             <RadioButton
+                android:id="@+id/rb17"
                 style="@style/RadionButton"
-                android:visibility="invisible"
-                android:drawableTop="@drawable/flow_item4"
-                android:text="@string/start_driver" />
+                android:drawableTop="@drawable/flow_item7"
+                android:text="@string/day_compar" />
+
             <RadioButton
                 style="@style/RadionButton"
-                android:visibility="invisible"
                 android:drawableTop="@drawable/flow_item5"
-                android:text="@string/gps_mileage" />
+                android:text="@string/gps_mileage"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 

@@ -120,6 +120,57 @@
                         android:layout_marginRight="10dp" />
                 </LinearLayout>
 
+                <View style="@style/HourLine"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="经办人:*" />
+                    <View style="@style/VerticalLine"/>
+                    <TextView
+                        android:id="@+id/tvJBRName"
+                        android:visibility="gone"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                    <TextView
+                        android:id="@+id/tvJBRName1"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <View style="@style/HourLine"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="赔款金额:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etMoney"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <View style="@style/HourLine"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/oaTextView"
+                        android:layout_height="65dp"
+                        android:text="处理结果:*" />
+                    <View style="@style/VerticalLine"/>
+                    <EditText
+                        android:id="@+id/etReason"
+                        style="@style/oaEditText"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
                 <LinearLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"

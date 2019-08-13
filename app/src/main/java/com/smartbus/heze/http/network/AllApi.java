@@ -21,6 +21,7 @@ import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.exam.bean.CarVehicle;
 import com.smartbus.heze.exam.bean.ClassMileage;
 import com.smartbus.heze.exam.bean.ComplaintFines;
+import com.smartbus.heze.exam.bean.DayCompare;
 import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.GPSMileage;
 import com.smartbus.heze.exam.bean.InComeRank;
@@ -434,6 +435,12 @@ public interface AllApi {
      */
     @GET(ApiAddress.carcheckitem)
     Observable<CarCheckItem> getCarCheckItem(@Query("categoryCode")String categoryCode,@Query("flag")String flag);
+
+    /**
+     * 日常检查检查项
+     */
+    @GET(ApiAddress.daycompareitem)
+    Observable<DayCompare> getDayCompareItem(@Query("categoryCode")String categoryCode, @Query("flag")String flag);
     /**
      * 车辆巡检检查记录
      */
@@ -442,11 +449,26 @@ public interface AllApi {
     Observable<CarCheckHistory> getCarCheckHistory(@Field("startDate") String startDate
             , @Field("endDate")String endDate
             , @Field("carNo")String carNo);
+
+    /**
+     * 日常检查检查记录
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.daycomparehistory)
+    Observable<CarCheckHistory> getDayCompareHistory(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo);
     /**
      * 车辆巡检检查记录检查项
      */
     @GET(ApiAddress.carcheckhistory)
     Observable<CarCheckHistoryItem> getCarCheckHistoryItem(@Query("id")String id);
+
+    /**
+     * 车辆巡检检查记录检查项
+     */
+    @GET(ApiAddress.daycomparehistory)
+    Observable<CarCheckHistoryItem> getDayCompareHistoryItem(@Query("id")String id);
     /**
      * 车辆巡检检查项提交
      */
@@ -463,6 +485,24 @@ public interface AllApi {
             ,@Field("diancherichangJc.driverId")String driverId
             ,@Field("diancherichangJc.examiner")String examiner
             ,@Field("diancherichangJc.note")String note
+            ,@Field("categoryCode")String categoryCode);
+
+    /**
+     * 日常检查检查项提交
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.updatadaycompare)
+    Observable<UpData> getUpDayCamoareData(@Field("data")String data,@Field("scoreData")String scoreData
+            ,@Field("dianchedianjianJc.kaoheDate")String kaoheDate
+            ,@Field("dianchedianjianJc.lineCode")String lineCode
+            ,@Field("dianchedianjianJc.carNo")String carNo
+            ,@Field("dianchedianjianJc.busCode")String busCode
+            ,@Field("dianchedianjianJc.depId")String depId
+            ,@Field("dianchedianjianJc.depName")String depName
+            ,@Field("dianchedianjianJc.driverName")String driVerName
+            ,@Field("dianchedianjianJc.driverId")String driverId
+            ,@Field("dianchedianjianJc.examiner")String examiner
+            ,@Field("dianchedianjianJc.note")String note
             ,@Field("categoryCode")String categoryCode);
 
     /**
@@ -571,7 +611,10 @@ public interface AllApi {
             , @Field("depId")String depId
             , @Field("depName")String depName
             , @Field("atPhoto")String atPhoto
-            , @Field("mileType")String mileType);
+            , @Field("mileType")String mileType
+            ,@Field("atInsurePerson") String atInsurePerson
+            ,@Field("atOtherPay") String atOtherPay
+            ,@Field("atProcessingState") String atProcessingState);
 
 
 

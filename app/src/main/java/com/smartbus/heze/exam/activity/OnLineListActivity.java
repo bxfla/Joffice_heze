@@ -94,6 +94,7 @@ public class OnLineListActivity extends BaseActivity implements OnLineListContra
                                 intent.putExtra("time",String.valueOf(o.getExaminationTime()));
                                 intent.putExtra("id",String.valueOf(o.getExaminationId()));
                                 intent.putExtra("title",String.valueOf(o.getExaminationName()));
+                                intent.putExtra("allmonth",String.valueOf(o.getExaminationSum()));
                                 startActivity(intent);
                             }else if (timeType1==1){
                                 new AlertDialogUtil(OnLineListActivity.this).showSmallDialog("考试时间已结束");

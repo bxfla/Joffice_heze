@@ -2,8 +2,12 @@ package com.smartbus.heze.main.notice.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
@@ -24,6 +28,8 @@ public class NoticeDetailActivity extends BaseActivity {
     TextView tvTime;
     @BindView(R.id.tvContent)
     TextView tvContent;
+    @BindView(R.id.imageView)
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,15 @@ public class NoticeDetailActivity extends BaseActivity {
         tvContent.setText(bean.getContent());
         tvTime.setText(bean.getCreatetime());
         tvDepartment.setText(bean.getAuthor());
-
+        String subjectIcon = bean.getSubjectIcon();
+        if (subjectIcon.equals("")){
+            imageView.setVisibility(View.GONE);
+        }else {
+            Glide.with(this)
+                    .load(ApiAddress.downloadfile+subjectIcon)
+                    .placeholder(R.drawable.loading)
+                    .into(imageView);
+        }
     }
 
     @Override

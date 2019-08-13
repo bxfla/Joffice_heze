@@ -151,21 +151,16 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
     public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
@@ -244,7 +239,7 @@ public class CheckWorkWillActivity extends BaseActivity implements AtWorkWillCon
     @Override
     public void setAtWorkWill(AtWorkWill s) {
         if (s != null) {
-           tvPerson.setText(s.getMainform().get(0).getUserName().toString());
+            tvPerson.setText(s.getMainform().get(0).getUserName().toString());
 //            tvStartTime.setText(s.getMainform().get(0).getCreateTime().toString());
             tvEndTime.setText(s.getMainform().get(0).getFillDate().toString());
             tvType.setText(s.getMainform().get(0).getDayType());

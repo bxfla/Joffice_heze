@@ -53,7 +53,7 @@ import butterknife.OnClick;
  */
 public class AddWorkWillActivity extends BaseActivity implements AddWorkWillContract.View
         , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View
-        , AddCheckTypeContract.View{
+        , AddCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvPerson)
@@ -168,21 +168,16 @@ public class AddWorkWillActivity extends BaseActivity implements AddWorkWillCont
     public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {

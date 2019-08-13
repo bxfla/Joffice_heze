@@ -31,6 +31,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.VoteSubmitViewPager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -144,8 +145,13 @@ public class SimulateActivity extends BaseActivity implements SimulateAdapter.Ge
             }
         }
         Intent intent = new Intent(SimulateActivity.this,SimulateResultActivity.class);
-        intent.putExtra("num",String.valueOf(num));
-        intent.putExtra("name",examinationName);
+        Bundle bundle = new Bundle();
+        bundle.putString("num",String.valueOf(num));
+        bundle.putString("name",examinationName);
+//        intent.putExtra("num",String.valueOf(num));
+//        intent.putExtra("name",examinationName);
+        bundle.putSerializable("list",(Serializable)upList);
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
 //        this.answerList = upList;

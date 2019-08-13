@@ -18,6 +18,7 @@ import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +46,12 @@ public class SafeMileageActivity extends BaseActivity implements SafeMileageCont
     TextView tvEndTime;
     @BindView(R.id.llNoContent)
     LinearLayout llNoContent;
+    @BindView(R.id.line1)
+    View line1;
+    @BindView(R.id.ll)
+    LinearLayout ll;
+    @BindView(R.id.tvAll)
+    TextView tvAll;
 
     BaseRecyclerAdapter baseRecyclerAdapter;
     SafeMileagePresenter safeMileagePresenter;
@@ -55,6 +62,7 @@ public class SafeMileageActivity extends BaseActivity implements SafeMileageCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        tvAll.setVisibility(View.VISIBLE);
         header.setTvTitle(getResources().getString(R.string.safe_mileage));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -150,9 +158,14 @@ public class SafeMileageActivity extends BaseActivity implements SafeMileageCont
 
     @Override
     public void setSafeMileage(SafeMileage s) {
+        double allValue = 0;
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
+            BigDecimal b1 = new BigDecimal(Double.toString(allValue));
+            BigDecimal b2 = new BigDecimal(Double.toString(s.getResult().get(i).getValue()));
+            allValue = b1.add(b2).doubleValue();
         }
+        tvAll.setText("查询总里程："+allValue+"");
         if (beanList.size() == 0) {
             llNoContent.setVisibility(View.VISIBLE);
         }

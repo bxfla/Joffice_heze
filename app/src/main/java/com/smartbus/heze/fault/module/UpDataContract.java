@@ -19,6 +19,6 @@ public interface UpDataContract {
         void getUpData(String no,String atAtDate, String atTime, String busCode,String carNo, String lineCode, String weather
                 ,String acPlaceCategory, String atType, String atLiability,String acNature, String atCategory, String userCode
                 ,String injuredPeople, String deathPeople, String atPlace,String atReason, String depId, String depName
-                ,String atPhoto, String mileType);
+                ,String atPhoto, String mileType,String jbr,String money,String reason);
     }
 }

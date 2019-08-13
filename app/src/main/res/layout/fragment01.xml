@@ -29,7 +29,8 @@
                 android:background="@color/shouye"
                 android:orientation="vertical">
                 <!--//banner-->
-                <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
+                <com.youth.banner.Banner
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
@@ -62,8 +63,17 @@
                         android:textColor="@color/xiaohei"
                         android:textSize="13dp" />
                 </LinearLayout>
+                <View style="@style/HourLine"/>
                 <!--列表-->
+                <com.smartbus.heze.main.view.MaxHeightRecyclerView
+                    android:id="@+id/maxRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:maxHeight="190dp">
+                </com.smartbus.heze.main.view.MaxHeightRecyclerView>
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:layout_marginTop="1dp"
@@ -171,7 +181,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"></android.support.v7.widget.RecyclerView>
-
                 <View style="@style/HourLine" />
             </LinearLayout>
         </ScrollView>

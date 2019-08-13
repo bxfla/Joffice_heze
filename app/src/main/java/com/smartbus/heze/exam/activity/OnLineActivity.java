@@ -31,6 +31,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.VoteSubmitViewPager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -64,7 +65,8 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
     boolean isPause = false;
     int isFirst;
     List<ExaminationData.DataBean> answerList = new ArrayList<>();
-    String examinationId, examinationTime, examinationName;
+    String examinationId, examinationTime, examinationName,examinationSum;
+    int num;
     OnLineAdapter onLineAdapter;
     OnLineUpPresenter onLineUpPresenter;
     ExamationDataPresenter examationDataPresenter;
@@ -79,6 +81,8 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
         examinationId = intent.getStringExtra("id");
         examinationTime = intent.getStringExtra("time");
         examinationName = intent.getStringExtra("title");
+        examinationSum = intent.getStringExtra("allmonth");
+        num = Integer.parseInt(examinationSum);
         title.setText(examinationName);
         minute = Integer.valueOf(examinationTime);
 //        minute = Integer.valueOf("1");
@@ -114,6 +118,9 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
 
             @Override
             public void confirm() {
+
+
+
                 onLineAdapter.upData();
                 String userName = new SharedPreferencesHelper(OnLineActivity.this,"login").getData(OnLineActivity.this,"userName","");
                 Gson gson = new Gson();
@@ -135,6 +142,14 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
     @Override
     public void getPosition(List<ExaminationData.DataBean> upList) {
         this.answerList = upList;
+
+        for (int i = 0;i<upList.size();i++){
+            if (!upList.get(i).getData().equals(upList.get(i).getAnswer())){
+                int score = Integer.parseInt(upList.get(i).getOldScore());
+                num = num-score;
+            }
+        }
+
 //        onLineAdapter.upData();
         String userName = new SharedPreferencesHelper(OnLineActivity.this,"login").getData(OnLineActivity.this,"userName","");
         Gson gson = new Gson();
@@ -166,6 +181,15 @@ public class OnLineActivity extends BaseActivity implements OnLineAdapter.GetIte
     public void setOnLineUp(OnLineUp s) {
         if (s.isSuccess()){
             Toast.makeText(this, "数据上传成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(OnLineActivity.this,SimulateResultActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("num",String.valueOf(num));
+            bundle.putString("name",examinationName);
+//        intent.putExtra("num",String.valueOf(num));
+//        intent.putExtra("name",examinationName);
+            bundle.putSerializable("list",(Serializable)answerList);
+            intent.putExtras(bundle);
+            startActivity(intent);
             finish();
         }
     }

@@ -57,6 +57,15 @@ public class CarCheckItem implements Serializable {
         private String fkje;
         private int state;
         private String projectKey;
+        private String scoreNums;
+
+        public String getScoreNums() {
+            return scoreNums;
+        }
+
+        public void setScoreNums(String scoreNums) {
+            this.scoreNums = scoreNums;
+        }
 
         public int getProjectId() {
             return projectId;

@@ -146,7 +146,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
         normalPresenter = new NormalPresenter(this, this);
         noEndPersenter = new NoEndPresenter(this, this);
         noHandlerPresenter = new NoHandlerPresenter(this, this);
-        willDoPresenter = new WillDoPresenter(this,this);
+        willDoPresenter = new WillDoPresenter(this, this);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
         taskId = intent.getStringExtra("taskId");
@@ -237,31 +237,26 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
                     } else {
                         getSomeData();
                     }
-                }else {
+                } else {
                     getSomeData();
                 }
                 break;
         }
     }
 
-    public void getSomeData(){
+    public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
@@ -323,9 +318,9 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
             tvCaoSong.setText(s.getMainform().get(0).getCopy());
             tvDepartment.setText(s.getMainform().get(0).getDraftingDep());
             tvNiGao.setText(s.getMainform().get(0).getDraft());
-            if (s.getMainform().get(0).getNuclear()==null){
+            if (s.getMainform().get(0).getNuclear() == null) {
                 tvHeGao.setText("");
-            }else {
+            } else {
                 tvHeGao.setText(s.getMainform().get(0).getNuclear() + "");
             }
             tvYinShua.setText(s.getMainform().get(0).getPrinting());
@@ -431,7 +426,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
      */
     @Override
     public void setWillDo(WillDoUp s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -450,7 +445,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
         // 第一个参数：弹出框的信息集合，一般为字符串集合
         // 第二个参数：被默认选中的，一个布尔类型的数组
         // 第三个参数：勾选事件监听
-        final boolean[] checkedItems = new boolean[bigNametemp.length+1];
+        final boolean[] checkedItems = new boolean[bigNametemp.length + 1];
         for (int i = 0; i < bigNametemp.length; i++) {
             checkedItems[i] = false;
         }
@@ -544,7 +539,7 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
         map.put("signalName", signaName);
         map.put("destName", destName);
         if (tvHuiQian.getVisibility() == View.VISIBLE) {
-            if (!tvHuiQian.getText().toString().equals("")){
+            if (!tvHuiQian.getText().toString().equals("")) {
                 map.put("sign", new SplitData().SplitUpData(tvHuiQian.getText().toString()));
                 map.put("sign", tvHuiQian.getText().toString());
             }
@@ -568,8 +563,8 @@ public class HuiQianWillActivity extends BaseActivity implements HuiQianWillCont
                     Gson gson2 = new Gson();
                     FileData file = gson2.fromJson(dataRes, FileData.class);
                     String filePath = file.getData().getFilePath();
-                    String url = ApiAddress.downloadfile+filePath;
-                    ProgressDialogUtil.startLoad(HuiQianWillActivity.this,"文件下载中");
+                    String url = ApiAddress.downloadfile + filePath;
+                    ProgressDialogUtil.startLoad(HuiQianWillActivity.this, "文件下载中");
                     downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
 
                     // 动态注册广播接收器

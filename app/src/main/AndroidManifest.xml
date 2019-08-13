@@ -246,7 +246,15 @@
         <activity android:name=".exam.activity.StartDriverActivity" />
         <activity android:name=".exam.activity.GpsMileageActivity" />
         <activity android:name=".exam.activity.CarVehicleActivity" />
-        <activity android:name=".fileapprove.activity.DocumentLZListActivity"></activity>
+        <activity android:name=".fileapprove.activity.DocumentLZListActivity" />
+        <activity
+            android:name=".exam.activity.DayComparActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".exam.DayCompareHistoryActivity" />
+        <activity
+            android:name=".exam.DayCompareHistoryDetActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".exam.activity.ResultDetailActivity"></activity>
     </application>
 
 </manifest>

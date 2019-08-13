@@ -68,7 +68,7 @@ public class CarCheckAdapter1 extends BaseAdapter {
         final RadioButton rb2 = (RadioButton) view.findViewById(R.id.rb2);
 
         textView.setText(beanList.get(position).getProjectName());
-        editText.setText(beanList.get(position).getFkje());
+        editText.setText(beanList.get(position).getScoreNums());
         tvName.setText("分数");
 
         editText.addTextChangedListener(new TextWatcher() {

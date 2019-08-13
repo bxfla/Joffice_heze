@@ -136,7 +136,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
-    String destName, uId,signaName;
+    String destName, uId, signaName;
     String activityName, taskId;
     String[] bigNametemp = null;
     String[] bigCodetemp = null;
@@ -568,40 +568,35 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         switch (view.getId()) {
             case R.id.btnUp:
                 if (etLeader.getVisibility() == View.VISIBLE
-                        ||etLeader1.getVisibility() == View.VISIBLE
-                        ||etLeader2.getVisibility() == View.VISIBLE) {
+                        || etLeader1.getVisibility() == View.VISIBLE
+                        || etLeader2.getVisibility() == View.VISIBLE) {
                     if (etLeader.getText().toString().equals("")
-                            &&etLeader1.getText().toString().equals("")
-                            &&etLeader2.getText().toString().equals("")) {
+                            && etLeader1.getText().toString().equals("")
+                            && etLeader2.getText().toString().equals("")) {
                         Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
                     } else {
                         getSomeData();
                     }
-                }else {
+                } else {
                     getSomeData();
                 }
                 break;
         }
     }
 
-    public void getSomeData(){
+    public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
@@ -690,7 +685,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
         String zbr = new SharedPreferencesHelper(this, "login").getData(this, "userName", "");
         map.put("zhibiao", zbr);
         if (tvLeader.getVisibility() == View.VISIBLE) {
-            if (!tvLeader.getText().toString().equals("")){
+            if (!tvLeader.getText().toString().equals("")) {
                 map.put("cwk", tvLeader.getText().toString());
             }
         } else {
@@ -698,7 +693,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            if (!tvLeader1.getText().toString().equals("")){
+            if (!tvLeader1.getText().toString().equals("")) {
                 map.put("fgyj", new SplitData().SplitUpData(tvLeader1.getText().toString()));
             }
         } else {
@@ -706,7 +701,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
-            if (!tvLeader2.getText().toString().equals("")){
+            if (!tvLeader2.getText().toString().equals("")) {
                 map.put("jlyj", new SplitData().SplitUpData(tvLeader2.getText().toString()));
             }
         } else {
@@ -863,7 +858,7 @@ public class DepartBudgetWillActivity extends BaseActivity implements DepartBudg
 
     @Override
     public void setWillDo(WillDoUp s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
             finish();
         }

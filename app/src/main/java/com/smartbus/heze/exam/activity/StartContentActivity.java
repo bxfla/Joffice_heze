@@ -55,7 +55,7 @@ public class StartContentActivity extends BaseActivity implements StartContentCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.send_num));
+        header.setTvTitle(getResources().getString(R.string.start_content));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

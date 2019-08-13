@@ -49,7 +49,7 @@ import butterknife.OnClick;
  * 事故科的事故借款单待办
  */
 public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAccidentWillContract.View
-        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View{
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -100,7 +100,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
-    String destName, uId,signaName;
+    String destName, uId, signaName;
     String activityName, taskId;
     String[] bigNametemp = null;
     String[] bigCodetemp = null;
@@ -148,40 +148,35 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     @OnClick(R.id.btnUp)
     public void onViewClicked() {
         if (etLeader.getVisibility() == View.VISIBLE
-                ||etLeader1.getVisibility() == View.VISIBLE
-                ||etLeader2.getVisibility() == View.VISIBLE
-                ||etLeader3.getVisibility() == View.VISIBLE) {
+                || etLeader1.getVisibility() == View.VISIBLE
+                || etLeader2.getVisibility() == View.VISIBLE
+                || etLeader3.getVisibility() == View.VISIBLE) {
             if (etLeader.getText().toString().equals("")
-                    &&etLeader1.getText().toString().equals("")
-                    &&etLeader2.getText().toString().equals("")
-                    &&etLeader3.getText().toString().equals("")) {
+                    && etLeader1.getText().toString().equals("")
+                    && etLeader2.getText().toString().equals("")
+                    && etLeader3.getText().toString().equals("")) {
                 Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
             } else {
                 getSomeData();
             }
-        }else {
+        } else {
             getSomeData();
         }
     }
 
-    public void getSomeData(){
+    public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {
@@ -248,7 +243,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         map.put("signalName", signaName);
         map.put("destName", destName);
         if (tvLeader.getVisibility() == View.VISIBLE) {
-            if (!tvLeader.getText().toString().equals("")){
+            if (!tvLeader.getText().toString().equals("")) {
                 map.put("kezhang", tvLeader.getText().toString());
             }
         } else {
@@ -256,7 +251,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
-            if (!tvLeader1.getText().toString().equals("")){
+            if (!tvLeader1.getText().toString().equals("")) {
                 map.put("fenguanjingli", tvLeader1.getText().toString());
             }
         } else {
@@ -264,15 +259,15 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             map.put("comments", etLeader1.getText().toString());
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
-            if (!tvLeader2.getText().toString().equals("")){
-                map.put("caiwujingli",tvLeader2.getText().toString());
+            if (!tvLeader2.getText().toString().equals("")) {
+                map.put("caiwujingli", tvLeader2.getText().toString());
             }
         } else {
             map.put("caiwujingli", etLeader2.getText().toString());
             map.put("comments", etLeader2.getText().toString());
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
-            if (!tvLeader3.getText().toString().equals("")){
+            if (!tvLeader3.getText().toString().equals("")) {
                 map.put("ldps", tvLeader3.getText().toString());
             }
         } else {
@@ -284,8 +279,8 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     @Override
     public void setBorrowAccidentWill(BorrowAccidentWill s) {
         if (s != null) {
-            tvTime.setText(s.getMainform().get(0).getAtDate().toString());
-            tvTime1.setText(s.getMainform().get(0).getJiekuanDate().toString());
+            tvTime.setText(s.getMainform().get(0).getJiekuanDate().toString());
+            tvTime1.setText(s.getMainform().get(0).getAtDate().toString());
             tvDepartment.setText(s.getMainform().get(0).getDepName().toString());
             tvAddress.setText(s.getMainform().get(0).getAtPlace().toString());
             tvLuBie.setText(s.getMainform().get(0).getLineCode().toString());
@@ -423,7 +418,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
 
     @Override
     public void setWillDo(WillDoUp s) {
-        if (s.isSuccess()){
+        if (s.isSuccess()) {
             Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
             finish();
         }

@@ -34,7 +34,7 @@ public class ExaminationData implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * id : 1
          * examinationId : 45

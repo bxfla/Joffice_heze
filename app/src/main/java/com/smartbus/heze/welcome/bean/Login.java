@@ -21,6 +21,15 @@ public class Login implements Serializable {
     private String userId;
     private String userCode;
     private String depId;
+    private String positionStatus;
+
+    public String getPositionStatus() {
+        return positionStatus;
+    }
+
+    public void setPositionStatus(String positionStatus) {
+        this.positionStatus = positionStatus;
+    }
 
     public boolean isSuccess() {
         return success;

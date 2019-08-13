@@ -67,6 +67,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +153,14 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
     int imageNum = 0;
     @BindView(R.id.tvDriverCode1)
     TextView tvDriverCode1;
+    @BindView(R.id.tvJBRName)
+    TextView tvJBRName;
+    @BindView(R.id.tvJBRName1)
+    TextView tvJBRName1;
+    @BindView(R.id.etMoney)
+    EditText etMoney;
+    @BindView(R.id.etReason)
+    EditText etReason;
     private Uri imageUri;
     String atPhoto = "";
     String fileName1 = "";
@@ -265,6 +274,12 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
             Toast.makeText(this, "线路编号不能为空", Toast.LENGTH_SHORT).show();
         } else if (tvDriverCode.getText().toString().equals("")) {
             Toast.makeText(this, "驾驶员不能为空", Toast.LENGTH_SHORT).show();
+        }else if (tvJBRName.getText().toString().equals("")) {
+            Toast.makeText(this, "经办人不能为空", Toast.LENGTH_SHORT).show();
+        }else if (etMoney.getText().toString().equals("")) {
+            Toast.makeText(this, "赔款金额不能为空", Toast.LENGTH_SHORT).show();
+        }else if (etReason.getText().toString().equals("")) {
+            Toast.makeText(this, "处理结果不能为空", Toast.LENGTH_SHORT).show();
         } else {
             if (!fileName1.equals("") && fileName2.equals("") && fileName3.equals("")) {
                 atPhoto = fileName1;
@@ -282,12 +297,27 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                 mileType = "1";
             }
             String date = tvDate.getText().toString();
-            upDataPresenter.getUpData("", date.split(" ")[0], date.split(" ")[1], busCode, tvCarNo.getText().toString()
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            String second = String.valueOf(c.get(Calendar.SECOND));
+            int week_month = c.get(Calendar.WEEK_OF_MONTH);
+            int week_year = c.get(Calendar.WEEK_OF_YEAR);
+            int week_day = c.get(Calendar.DAY_OF_WEEK);
+            int week_day_month = c.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+            if (Integer.valueOf(second)<10){
+                second = "0"+second;
+            }
+            upDataPresenter.getUpData("", date.split(" ")[0], date.split(" ")[1]+":"+second, busCode, tvCarNo.getText().toString()
                     , tvLineNo.getText().toString(), spinnerWeather.getSelectedItem().toString(), spinnerAddressType.getSelectedItem().toString()
                     , spinnerSGType.getSelectedItem().toString(), spinnerSGZR.getSelectedItem().toString(), spinnerSGXZ.getSelectedItem().toString()
                     , spinnerSGLB.getSelectedItem().toString(), tvDriverCode.getText().toString(), etSWRS.getText().toString()
                     , etSIWRS.getText().toString(), etSGAddress.getText().toString(), etSGReason.getText().toString()
-                    , depNameId, depName, atPhoto, mileType);
+                    , depNameId, depName, atPhoto, mileType,tvJBRName1.getText().toString(),etMoney.getText().toString()
+                    , etReason.getText().toString());
         }
     }
 
@@ -349,7 +379,8 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03, R.id.tvLineNo, R.id.tvDriverCode1})
+    @OnClick({R.id.tvDate, R.id.tvCarNo, R.id.ll2, R.id.imAdd01, R.id.imAdd02, R.id.imAdd03
+            , R.id.tvLineNo, R.id.tvDriverCode1,R.id.tvJBRName1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvLineNo:
@@ -359,6 +390,10 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
             case R.id.tvDriverCode1:
                 intent = new Intent(this, WorkOnePersonActivity.class);
                 startActivityForResult(intent, Constant.TAG_THERE);
+                break;
+            case R.id.tvJBRName1:
+                intent = new Intent(this, WorkOnePersonActivity.class);
+                startActivityForResult(intent, Constant.TAG_FIVE);
                 break;
             case R.id.tvDate:
                 customDatePicker.show(tvDate.getText().toString());
@@ -529,6 +564,14 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                     if (data != null) {
                         tvDriverCode.setText(data.getStringExtra("ecard"));
                         tvDriverCode1.setText(data.getStringArrayListExtra("beanId").get(0));
+                    }
+                }
+                break;
+            case Constant.TAG_FIVE:
+                if (resultCode == TAG_ONE) {
+                    if (data != null) {
+                        tvJBRName.setText(data.getStringExtra("ecard"));
+                        tvJBRName1.setText(data.getStringArrayListExtra("beanId").get(0));
                     }
                 }
                 break;
@@ -770,7 +813,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
                     }
                 });
             }
-        }else  if (mResults.size() == 2) {
+        } else if (mResults.size() == 2) {
             if (imAdd01.getDrawable() != null) {
                 RequestParams params = new RequestParams();
                 File file = new File(Environment.getExternalStorageDirectory() + "/" + dirPath + "/" + "shigu0" + ".png");
@@ -1043,4 +1086,7 @@ public class FaultUpActivity extends BaseActivity implements AboutDataContract.V
         }
     };
 
+    @OnClick(R.id.tvJBRName1)
+    public void onViewClicked() {
+    }
 }

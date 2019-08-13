@@ -131,18 +131,18 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     @OnClick(R.id.btnUp)
     public void onViewClicked() {
         if (etLeader.getVisibility() == View.VISIBLE
-                ||etLeader1.getVisibility() == View.VISIBLE
-                ||etLeader2.getVisibility() == View.VISIBLE
-                ||etLeader3.getVisibility() == View.VISIBLE) {
+                || etLeader1.getVisibility() == View.VISIBLE
+                || etLeader2.getVisibility() == View.VISIBLE
+                || etLeader3.getVisibility() == View.VISIBLE) {
             if (etLeader.getText().toString().equals("")
-                    &&etLeader1.getText().toString().equals("")
-                    &&etLeader2.getText().toString().equals("")
-                    &&etLeader3.getText().toString().equals("")) {
+                    && etLeader1.getText().toString().equals("")
+                    && etLeader2.getText().toString().equals("")
+                    && etLeader3.getText().toString().equals("")) {
                 Toast.makeText(this, "请填写意见", Toast.LENGTH_SHORT).show();
             } else {
                 getSomeData();
             }
-        }else {
+        } else {
             getSomeData();
         }
     }
@@ -150,21 +150,16 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     public void getSomeData() {
         if (destTypeList.size() != 0) {
             if (destTypeList.size() == 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        destType = destTypeList.get(0).getDestType();
-                        destName = destTypeList.get(0).getDestination();
-                        if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
-                            normalPresenter.getNormalPerson(taskId, destName, "false");
-                        } else if (destType.indexOf("end") == -1) {
-                            noEndPersenter.getNoEndPerson(taskId, destName, "false");
-                        } else {
-                            noHandlerPresenter.getNoHandlerPerson(taskId);
-                        }
-                        signaName = destTypeList.get(0).getName();
-                    }
-                }).start();
+                destType = destTypeList.get(0).getDestType();
+                destName = destTypeList.get(0).getDestination();
+                if (destType.equals("decision") || destType.equals("fork") || destType.equals("join")) {
+                    normalPresenter.getNormalPerson(taskId, destName, "false");
+                } else if (destType.indexOf("end") == -1) {
+                    noEndPersenter.getNoEndPerson(taskId, destName, "false");
+                } else {
+                    noHandlerPresenter.getNoHandlerPerson(taskId);
+                }
+                signaName = destTypeList.get(0).getName();
             } else {
                 namelist.clear();
                 for (int i = 0; i < destTypeList.size(); i++) {

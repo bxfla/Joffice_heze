@@ -196,8 +196,9 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                 num = 100;
                 for (int i = 0;i<beanList.size();i++){
                     if (beanList.get(i).getState()==0){
-                        if (!beanList.get(i).getFkje().equals("0")&&!beanList.get(i).getFkje().equals("0.00")){
-                            num = num-Integer.valueOf(beanList.get(i).getFkje());
+                        if (!beanList.get(i).getScoreNums().equals("0")&&!beanList.get(i).getScoreNums().equals("0.00")){
+                            int n = (int)Double.parseDouble(beanList.get(i).getScoreNums());
+                            num = num-n;
                         }
                     }
                 }
@@ -254,7 +255,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                             JSONObject jsonObjectType = new JSONObject();
                             JSONObject jsonObjectMoney = new JSONObject();
                             jsonObjectType.put(beanList.get(i).getProjectName(), beanList.get(i).getState());
-                            jsonObjectMoney.put(beanList.get(i).getProjectName(), beanList.get(i).getFkje());
+                            jsonObjectMoney.put(beanList.get(i).getProjectName(), beanList.get(i).getScoreNums());
                             jsonArrayData.put(jsonObjectType);
                             jsonArrayfkData.put(jsonObjectMoney);
                         }
@@ -314,7 +315,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
                     String materialType = carCodeData.getMaterialType();
                     if (materialType.equals("电耗")) {
                         categoryCode = "4776";
-                    } else if (materialType.equals("燃油")) {
+                    } else if (materialType.equals("燃油")||materialType.equals("燃气")) {
                         categoryCode = "4775";
                     }
                     carCheckItemPresenter.getCarCheckItem(categoryCode, "2");
@@ -379,7 +380,7 @@ public class CarCheckActivity extends BaseActivity implements CarCheckItemContra
         CarCheckItem.ResultBean bean = new CarCheckItem.ResultBean();
         bean.setProjectId(beanList.get(position).getProjectId());
         bean.setProjectName(beanList.get(position).getProjectName());
-        bean.setFkje(money);
+        bean.setScoreNums(money);
         if (tag.equals("rb1")) {
             bean.setState(1);
         } else if (tag.equals("rb2")) {

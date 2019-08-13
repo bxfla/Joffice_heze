@@ -7,11 +7,13 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.http.base.AlertDialogCallBack;
 import com.smartbus.heze.http.base.AlertDialogUtil;
 import com.smartbus.heze.http.base.BaseActivity;
@@ -101,6 +103,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        String positionStatus = new SharedPreferencesHelper(this,"login").getData(this,"positionStatus","");
+        if (positionStatus.equals("1")){
+            rb2.setVisibility(View.GONE);
+            rb3.setVisibility(View.GONE);
+        }
         alertDialogUtil = new AlertDialogUtil(this);
         //默认选中第一个
         RadioButton btn = (RadioButton) radioGroup.getChildAt(0);

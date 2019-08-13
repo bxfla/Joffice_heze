@@ -44,6 +44,7 @@ public class SimulateListActivity extends BaseActivity implements OnLineListCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        header.setTvTitle(getResources().getString(R.string.simulate_exam));
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         onLineListPresenter = new OnLineListPresenter(this,this);

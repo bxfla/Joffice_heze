@@ -18,6 +18,7 @@ import com.smartbus.heze.http.utils.BaseViewHolder;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,12 +50,19 @@ public class GpsMileageActivity extends BaseActivity implements GpsMileageContra
     BaseRecyclerAdapter baseRecyclerAdapter;
     GpsMileagePresenter gpsMileagePresenter;
     List<GPSMileage.ResultBean> beanList = new ArrayList<>();
+    @BindView(R.id.line1)
+    View line1;
+    @BindView(R.id.ll)
+    LinearLayout ll;
+    @BindView(R.id.tvAll)
+    TextView tvAll;
     private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        tvAll.setVisibility(View.VISIBLE);
         header.setTvTitle(getResources().getString(R.string.gps_mileage));
         initDatePicker();
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -150,6 +158,15 @@ public class GpsMileageActivity extends BaseActivity implements GpsMileageContra
 
     @Override
     public void setGpsMileage(GPSMileage s) {
+        double allValue = 0;
+        for (int i = 0; i < s.getResult().size(); i++) {
+            beanList.add(s.getResult().get(i));
+            BigDecimal b1 = new BigDecimal(Double.toString(allValue));
+            BigDecimal b2 = new BigDecimal(Double.toString(Double.valueOf(s.getResult().get(i).getGps_zlc())));
+            allValue = b1.add(b2).doubleValue();
+//            allValue = allValue+Double.valueOf(s.getResult().get(i).getGps_zlc());
+        }
+        tvAll.setText("查询总里程："+allValue+"");
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }

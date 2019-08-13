@@ -27,7 +27,6 @@ public class NoticeListActivity extends BaseActivity implements WelcomeContract.
     Header header;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
     Intent intent;
     BaseRecyclerAdapter mAdapter;
     private WelcomePresenter presenter;
