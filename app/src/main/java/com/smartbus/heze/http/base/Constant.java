@@ -51,7 +51,7 @@ public class Constant {
     public final static String ATWORK_DEFID = "64" ;
     public final static String ATWORK_FORMDEFIS = "28" ;
 
-    //公用值班
+    //调休
     public final static String CHECKWORK_DEFID = "75" ;
     public final static String CHECKWORK_FORMDEFIS = "39" ;
 

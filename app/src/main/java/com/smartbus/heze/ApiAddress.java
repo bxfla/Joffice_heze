@@ -18,7 +18,7 @@ public class ApiAddress {
     //田胖
 //    public final static String mainApi = "http://192.168.2.111:8080/joffice21/" ;
     //柱子
-//    public final static String mainApi = "http://192.168.2.160:8080/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.160:8090/joffice/" ;
 
     /***********************首页*******************************/
     //登录

@@ -15,6 +15,7 @@ import com.smartbus.heze.welcome.bean.Notice;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NoticeDetailActivity extends BaseActivity {
 
@@ -31,6 +32,8 @@ public class NoticeDetailActivity extends BaseActivity {
     @BindView(R.id.imageView)
     ImageView imageView;
 
+    String subjectIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +44,12 @@ public class NoticeDetailActivity extends BaseActivity {
         tvContent.setText(bean.getContent());
         tvTime.setText(bean.getCreatetime());
         tvDepartment.setText(bean.getAuthor());
-        String subjectIcon = bean.getSubjectIcon();
-        if (subjectIcon.equals("")){
+        subjectIcon = bean.getSubjectIcon();
+        if (subjectIcon.equals("")) {
             imageView.setVisibility(View.GONE);
-        }else {
+        } else {
             Glide.with(this)
-                    .load(ApiAddress.downloadfile+subjectIcon)
+                    .load(ApiAddress.downloadfile + subjectIcon)
                     .placeholder(R.drawable.loading)
                     .into(imageView);
         }
@@ -65,5 +68,17 @@ public class NoticeDetailActivity extends BaseActivity {
     @Override
     protected void rightClient() {
 
+    }
+
+
+    @OnClick({R.id.imageView})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imageView:
+                Intent intent = new Intent(this,ImageBigActivity.class);
+                intent.putExtra("url",ApiAddress.downloadfile + subjectIcon);
+                startActivity(intent);
+                break;
+        }
     }
 }

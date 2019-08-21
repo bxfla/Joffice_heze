@@ -254,7 +254,8 @@
         <activity
             android:name=".exam.DayCompareHistoryDetActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".exam.activity.ResultDetailActivity"></activity>
+        <activity android:name=".exam.activity.ResultDetailActivity" />
+        <activity android:name=".main.notice.activity.ImageBigActivity"></activity>
     </application>
 
 </manifest>
