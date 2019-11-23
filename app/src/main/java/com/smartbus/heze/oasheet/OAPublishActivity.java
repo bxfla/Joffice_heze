@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -144,7 +146,7 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View, 
         listTitle.add("日常工作");
         listTitle.add("现场工作");
         listTitle.add("重点工作");
-        listTitle.add("环境监察");
+        listTitle.add("环境检查");
         listTitle.add("其他");
 
         listType.add("A");
@@ -158,6 +160,48 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View, 
         typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listType);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnertype.setAdapter(typeAdapter);
+        spinnertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String startTime = tvStartTime.getText().toString().split(" ")[0];
+                if (listType.get(position).equals("A")){
+                    try {
+                        date = sdf.parse(startTime);
+                        long date1 = date.getTime()+24*60*60*1000;
+                        Date d = new Date(date1);
+                        tvEndTime.setText(sdf.format(d));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }else if (listType.get(position).equals("B")){
+                    try {
+                        date = sdf.parse(startTime);
+                        long date1 = date.getTime()+3*24*60*60*1000;
+                        Date d = new Date(date1);
+                        tvEndTime.setText(sdf.format(d));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }else if (listType.get(position).equals("C")){
+                    try {
+                        date = sdf.parse(startTime);
+                        long date1 = date.getTime()+7*24*60*60*1000;
+                        Date d = new Date(date1);
+                        tvEndTime.setText(sdf.format(d));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        }) ;
+
         noPresenter = new NoPresenter(this, this);
         upOapresenter = new UpOaPresenter(this, this);
         noPresenter.getNo("gongzuochuandidanbia");
@@ -185,7 +229,10 @@ public class OAPublishActivity extends BaseActivity implements NoContract.View, 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
         tvStartTime.setText(now);
-        tvEndTime.setText(now.split(" ")[0]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1); //向前走一天
+        tvEndTime.setText(sdf.format(calendar.getTime()).split(" ")[0]);
+//        tvEndTime.setText(now.split(" ")[0]);
         customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
             @Override
             public void handle(String time) {

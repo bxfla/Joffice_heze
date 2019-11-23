@@ -75,7 +75,8 @@ public class DocumentLZListActivity extends BaseActivity implements DocumentLRLi
 
     @Override
     protected void rightClient() {
-
+        beanList.clear();
+        documentLRListPresenter.getDocumentLRList(tvStartTime.getText().toString(),tvEndTime.getText().toString());
     }
 
     /**
@@ -155,7 +156,7 @@ public class DocumentLZListActivity extends BaseActivity implements DocumentLRLi
             @Override
             public void convert(BaseViewHolder holder, final DocumentLZList.ResultBean resultBean) {
                 holder.setText(R.id.tvDate, resultBean.getLvDate());
-                holder.setText(R.id.tvFWDP, resultBean.getLvDepName());
+                holder.setText(R.id.tvFWDP, resultBean.getLvUndertake());
                 holder.setText(R.id.tvCBDP, resultBean.getLvUndertake());
                 holder.setText(R.id.tvTitle, resultBean.getLvTitle());
                 holder.setText(R.id.tvResult, resultBean.getLvMemo());

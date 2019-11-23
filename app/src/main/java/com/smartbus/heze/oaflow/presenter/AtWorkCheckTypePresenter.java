@@ -28,7 +28,7 @@ public class AtWorkCheckTypePresenter implements AtCheckTypeContract.presenter {
 
     @Override
     public void getCheckType(String runId, String vocationId) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getAtCheckType(runId,vocationId).subscribeOn(Schedulers.io())
+        RetrofitUtil.getInstance().initRetrofitSetSession().getCheckCheckType(runId,vocationId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<CheckType>(context, MainUtil.getData) {
                     @Override

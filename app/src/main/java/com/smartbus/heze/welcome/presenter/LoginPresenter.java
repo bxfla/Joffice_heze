@@ -43,7 +43,7 @@ public class LoginPresenter implements LoginContract.presenter {
                         if (t.isSuccess()){
                             view.setLoginList(t);
                         }else {
-                            view.setLoginMessage("失败了----->" + "请检查账号密码");
+                            view.setLoginMessage("失败了----->" + t.getMsg());
                         }
                     }
                     @Override

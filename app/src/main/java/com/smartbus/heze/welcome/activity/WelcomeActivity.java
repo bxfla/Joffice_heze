@@ -10,8 +10,9 @@ import com.smartbus.heze.http.views.StatusBarUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class WelcomeActivity extends AppCompatActivity{
-    Intent intent;
+public class WelcomeActivity extends AppCompatActivity {
+    String downData = "";
+    String downUrl = "" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,4 +36,11 @@ public class WelcomeActivity extends AppCompatActivity{
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

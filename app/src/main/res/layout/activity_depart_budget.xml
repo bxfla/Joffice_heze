@@ -448,7 +448,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="合计数量"
+                    android:hint="合计金额"
                     android:textColor="@color/black" />
             </LinearLayout>
             <View style="@style/HourLine"></View>

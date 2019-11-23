@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.smartbus.heze.other.activity.JianZhiActivity">
+
+    <com.smartbus.heze.http.views.Header
+        android:id="@+id/header"
+        style="@style/Header"
+        app:header_title="@string/jianzi_yp">
+    </com.smartbus.heze.http.views.Header>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:text="员工姓名: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/oaEditText"
+            android:hint="请选择姓名" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:text="分公司: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etComp"
+            style="@style/oaEditText"
+            android:hint="请填写所在分公司" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:layout_height="45dp"
+            android:text="家庭住址: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etAdress"
+            style="@style/oaEditText"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:hint="请填写家庭住址" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:text="联系电话: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            style="@style/oaEditText"
+            android:hint="请填写联系电话"
+            android:inputType="number" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:text="所在线路: *" />
+
+        <EditText
+            android:id="@+id/etLine"
+            style="@style/oaEditText"
+            android:hint="请填写所在线路" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/oaTextView"
+            android:layout_height="65dp"
+            android:text="备注: *" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/shouye" />
+
+        <EditText
+            android:id="@+id/etBeiZhu"
+            style="@style/oaEditText"
+            android:hint="请填写备注"
+            android:layout_height="wrap_content"
+            android:minHeight="65dp" />
+    </LinearLayout>
+    <View style="@style/HourLine"></View>
+
+    <Button
+        android:id="@+id/btn"
+        style="@style/Button"
+        android:textColor="@color/white"
+        android:text="@string/commit"/>
+
+</LinearLayout>

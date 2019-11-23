@@ -563,7 +563,7 @@ public class OldWorkActivity extends BaseActivity implements OneContract.View
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
             String s1 = String.valueOf(s.getRunId());
-            oldWorkCheckTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId);
+            oldWorkCheckTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId,"","");
         }
     }
 

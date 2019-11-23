@@ -10,6 +10,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.other.activity.AdvertActivity;
 import com.smartbus.heze.other.activity.ICMSActivity;
+import com.smartbus.heze.other.activity.JianZhiActivity;
 import com.smartbus.heze.other.activity.LostActivity;
 import com.smartbus.heze.other.activity.SaferActivity;
 
@@ -31,6 +32,8 @@ public class OtherListActivity extends BaseActivity {
     RadioButton rb4;
 
     Intent intent;
+    @BindView(R.id.rb5)
+    RadioButton rb5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +56,27 @@ public class OtherListActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4})
+    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
-                intent = new Intent(this,ICMSActivity.class);
+                intent = new Intent(this, ICMSActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb2:
-                intent = new Intent(this,LostActivity.class);
+                intent = new Intent(this, LostActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb3:
-                intent = new Intent(this,SaferActivity.class);
+                intent = new Intent(this, SaferActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rb4:
-                intent = new Intent(this,AdvertActivity.class);
+                intent = new Intent(this, AdvertActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb5:
+                intent = new Intent(this, JianZhiActivity.class);
                 startActivity(intent);
                 break;
         }

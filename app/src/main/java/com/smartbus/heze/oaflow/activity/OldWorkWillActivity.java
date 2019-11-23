@@ -362,7 +362,7 @@ public class OldWorkWillActivity extends BaseActivity implements OldWorkWillCont
 
     @Override
     public void setWillDo(WillDoUp s) {
-        checkTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId);
+        checkTypePresenter.getCheckType(String.valueOf(s.getRunId()), vocationId,destName,etLeader1.getText().toString());
     }
 
     @Override

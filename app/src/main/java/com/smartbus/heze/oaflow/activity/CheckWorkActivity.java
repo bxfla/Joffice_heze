@@ -193,12 +193,12 @@ public class CheckWorkActivity extends BaseActivity implements OneContract.View
         map.put("formDefId", Constant.CHECKWORK_FORMDEFIS);
         map.put("memo", etReason.getText().toString());
         map.put("dayType", spinner.getSelectedItem().toString());
-        map.put("createTime", tvEndTime.getText().toString());
         map.put("userName", tvPerson.getText().toString());
         SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
         Date curDate =  new Date(System.currentTimeMillis());
         String str = formatter.format(curDate);
-        map.put("fillDate", str);
+        map.put("fillDate", tvEndTime.getText().toString());
+        map.put("createTime", str);
         map.put("dataUrl_save", "/joffice/hrm/updateLeaveDays.do?vocationId=" + vocationId);
     }
 

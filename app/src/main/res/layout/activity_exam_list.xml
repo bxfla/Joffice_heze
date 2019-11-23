@@ -165,10 +165,10 @@
                 android:text="@string/day_compar" />
 
             <RadioButton
+                android:id="@+id/rb18"
                 style="@style/RadionButton"
-                android:drawableTop="@drawable/flow_item5"
-                android:text="@string/gps_mileage"
-                android:visibility="invisible" />
+                android:drawableTop="@drawable/rb5"
+                android:text="@string/jianzi_yp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -63,6 +63,7 @@ import com.smartbus.heze.main.bean.WillDoList;
 import com.smartbus.heze.oaflow.bean.AddWorkWill;
 import com.smartbus.heze.oaflow.bean.AtWorkWill;
 import com.smartbus.heze.oaflow.bean.CheckType;
+import com.smartbus.heze.oaflow.bean.JianZhi;
 import com.smartbus.heze.oaflow.bean.OldWorkWill;
 import com.smartbus.heze.oaflow.bean.UserdLeaveWill;
 import com.smartbus.heze.oasheet.bean.OANO;
@@ -70,6 +71,7 @@ import com.smartbus.heze.other.bean.CarType;
 import com.smartbus.heze.other.bean.IcAboutLine;
 import com.smartbus.heze.welcome.bean.Login;
 import com.smartbus.heze.welcome.bean.Notice;
+import com.smartbus.heze.welcome.bean.Version;
 
 import java.util.Map;
 
@@ -94,6 +96,13 @@ public interface AllApi {
     @FormUrlEncoded
     @POST(ApiAddress.login)
     Observable<Login> getLogin(@Field("username")String username, @Field("password")String password);
+
+    /**
+     * 获取版本号
+     */
+    @GET(ApiAddress.version)
+    Observable<Version> getVersion();
+
     /**
      * 获取公告列表
      */
@@ -281,7 +290,7 @@ public interface AllApi {
     Observable<CheckType> getAddCheckType(@Query("runId")String runId, @Query("addClassId")String vocationId);
 
     /**
-     * 修改补勤发布状态
+     * 修改调休发布状态
      */
     @GET(ApiAddress.atworkchecktype)
     Observable<CheckType> getAtCheckType(@Query("runId")String runId, @Query("id")String vocationId);
@@ -296,7 +305,8 @@ public interface AllApi {
      * 修改补勤发布状态
      */
     @GET(ApiAddress.oldworkchecktype)
-    Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("id")String vocationId);
+    Observable<CheckType> getOldCheckType(@Query("runId")String runId, @Query("id")String vocationId
+            , @Query("destName")String destName,@Query("mycomments")String mycomments);
 
 
     /**
@@ -790,4 +800,18 @@ public interface AllApi {
      */
     @GET(ApiAddress.carvehicle)
     Observable<CarVehicle> getcarvehicle(@Query("ksDate")String ksDate, @Query("jsDate")String jsDate);
+
+    /**
+     * 提交加班流程录入
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.jianzhi)
+    Observable<JianZhi> getJianZhi(@Field("userName")String userName
+            ,@Field("userCode")String userCode
+            ,@Field("location")String location
+            ,@Field("telephone")String telephone
+            ,@Field("depName")String depName
+            ,@Field("depId")String depId
+            ,@Field("lineCode")String lineCode
+            ,@Field("memo")String Memo);
 }

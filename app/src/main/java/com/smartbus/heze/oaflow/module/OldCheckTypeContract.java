@@ -16,6 +16,6 @@ public interface OldCheckTypeContract {
     }
 
     interface presenter extends BasePresenter {
-        void getCheckType(String runId, String vocationId);
+        void getCheckType(String runId, String vocationId,String destName,String mycomments);
     }
 }

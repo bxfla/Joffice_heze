@@ -121,7 +121,7 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName","");
+        String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName1","");
         String userCode = new SharedPreferencesHelper(this,"login").getData(this,"userId","");
         etPersonCode.setText(userCode);
         etPersonName.setText(userName);

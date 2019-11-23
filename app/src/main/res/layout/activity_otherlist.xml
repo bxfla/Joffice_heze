@@ -59,10 +59,11 @@
                 android:text="@string/gg_kehu" />
 
             <RadioButton
-                style="@style/RadionButton"
+                android:id="@+id/rb5"
                 android:visibility="invisible"
-                android:drawableTop="@drawable/rb9"
-                android:text="@string/first_process" />
+                style="@style/RadionButton"
+                android:drawableTop="@drawable/rb5"
+                android:text="@string/jianzi_yp" />
 
             <RadioButton
                 style="@style/RadionButton"

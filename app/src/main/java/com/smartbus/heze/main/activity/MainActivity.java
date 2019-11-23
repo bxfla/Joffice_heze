@@ -1,5 +1,9 @@
 package com.smartbus.heze.main.activity;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +15,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.smartbus.heze.ApiAddress;
 import com.smartbus.heze.R;
 import com.smartbus.heze.SharedPreferencesHelper;
 import com.smartbus.heze.http.base.AlertDialogCallBack;
@@ -22,11 +28,16 @@ import com.smartbus.heze.main.fragment.Fragment01;
 import com.smartbus.heze.main.fragment.Fragment02;
 import com.smartbus.heze.main.fragment.Fragment03;
 import com.smartbus.heze.main.fragment.Fragment04;
+import com.smartbus.heze.welcome.bean.Version;
+import com.smartbus.heze.welcome.module.VersionContract;
+import com.smartbus.heze.welcome.presenter.VersionPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, VersionContract.View{
 
     @BindView(R.id.header)
     Header header;
@@ -49,9 +60,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private Fragment04 fragment04;
     private FragmentManager manager;
 
+    VersionPresenter versionPresenter;
     AlertDialogUtil alertDialogUtil;
     private static boolean isExit = false;
 
+    String downData = "";
+    String downUrl = "" ;
+    String data = "";
     //推出程序
     Handler mHandler = new Handler() {
 
@@ -114,7 +129,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         btn.setChecked(true);
         initFragment();
         radioGroup.setOnCheckedChangeListener(MainActivity.this);
+        versionPresenter = new VersionPresenter(this,this);
+        versionPresenter.getVersion();
     }
+
     /**
      * 初始化第一个页面
      */
@@ -215,4 +233,53 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             ft.hide(fragment04);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void setVersion(Version bean) {
+        String versionNo = bean.getData().getVersionNo();
+        String versionName = "";
+        try {
+            // ---get the package info---
+            PackageManager pm = MainActivity.this.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(MainActivity.this.getPackageName(), 0);
+            versionName = pi.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!versionNo.equals(versionName)&&Double.valueOf(versionNo)>Double.valueOf(versionName)){
+            downData = bean.getData().getSubstance();
+            downUrl = ApiAddress.mainApi +"attachFiles/" + bean.getData().getDownurl();
+            new AlertDialogUtil(MainActivity.this).showDialog("检测到服务器上有新的版本，是否立即更新。\n"+downData, new AlertDialogCallBack() {
+                @Override
+                public int getData(int s) {
+                    return 0;
+                }
+
+                @Override
+                public void confirm() {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Uri content_url = Uri.parse(downUrl);
+                    intent.setData(content_url);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void cancel() {
+                    finish();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void setVersionMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
 }

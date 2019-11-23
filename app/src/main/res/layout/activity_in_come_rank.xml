@@ -76,7 +76,6 @@
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
-
     <View style="@style/HourLine"></View>
 
     <TextView

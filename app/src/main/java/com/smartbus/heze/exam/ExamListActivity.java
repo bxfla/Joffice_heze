@@ -25,6 +25,7 @@ import com.smartbus.heze.exam.activity.StartContentActivity;
 import com.smartbus.heze.exam.activity.StartDriverActivity;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.views.Header;
+import com.smartbus.heze.other.activity.JianZhiActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,8 @@ public class ExamListActivity extends BaseActivity {
     Intent intent;
     @BindView(R.id.rb17)
     RadioButton rb17;
+    @BindView(R.id.rb18)
+    RadioButton rb18;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +97,7 @@ public class ExamListActivity extends BaseActivity {
 
     @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5, R.id.rb6, R.id.rb7, R.id.rb8
             , R.id.rb9, R.id.rb10, R.id.rb11, R.id.rb12, R.id.rb13, R.id.rb14, R.id.rb15
-            , R.id.rb16,R.id.rb17})
+            , R.id.rb16, R.id.rb17, R.id.rb18})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb1:
@@ -163,6 +166,10 @@ public class ExamListActivity extends BaseActivity {
                 break;
             case R.id.rb17:
                 intent = new Intent(this, DayComparActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rb18:
+                intent = new Intent(this, JianZhiActivity.class);
                 startActivity(intent);
                 break;
         }

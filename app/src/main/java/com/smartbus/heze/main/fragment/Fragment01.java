@@ -247,6 +247,7 @@ public class Fragment01 extends Fragment implements WelcomeContract.View {
     }
 
     private void setBanner() {
+
         //设置banner样式
         banner.setBannerStyle(BannerConfig.NOT_INDICATOR);
         //设置图片加载器

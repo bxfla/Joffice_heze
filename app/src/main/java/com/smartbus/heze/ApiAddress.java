@@ -10,7 +10,7 @@ public class ApiAddress {
     //川川
 //    public final static String mainApi = "http://192.168.2.114:8082/joffice21/" ;
     //孙琦
-//    public final static String mainApi = "http://192.168.2.155:8080/joffice21/" ;
+//    public final static String mainApi = "http://192.168.2.107:8080/joffice/" ;
     //正式库
     public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
     //李志浩
@@ -18,11 +18,13 @@ public class ApiAddress {
     //田胖
 //    public final static String mainApi = "http://192.168.2.111:8080/joffice21/" ;
     //柱子
-//    public final static String mainApi = "http://192.168.2.160:8090/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.115:8090/joffice/" ;
 
     /***********************首页*******************************/
     //登录
     public final static String login = "mobile.do";
+    //获取版本号
+    public final static String version = "system/getVersionMsgAppVersionSetting.do";
     //公告列表
     public final static String notice = "info/newAppNews.do";
     //banner
@@ -77,7 +79,7 @@ public class ApiAddress {
     public static final String  oldwork = "hrm/mobileSaveFillAttendance.do";
     //值班录入
     public static final String  atwork = "hrm/mobileSaveFillOnDuty.do";
-    //修改值班发布状态
+    //修改发布状态
     public static final String  atworkchecktype = "hrm/updateFillOnDuty.do";
     //值班录入
     public static final String  checkwork = "hrm/mobileSaveFillOff.do";
@@ -196,6 +198,8 @@ public class ApiAddress {
     public static final String  gpsmileage = "starkh/listGPSAppSecureSmileRecord.do";
     //行驶违规
     public static final String  carvehicle = "busmanager/runListAppViolationRecord.do";
+    //兼职招聘
+    public static final String  jianzhi = "starkh/AppSaveCustomizedApplication.do";
 
 
 }

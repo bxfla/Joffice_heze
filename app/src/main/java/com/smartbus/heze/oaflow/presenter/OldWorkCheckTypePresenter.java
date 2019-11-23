@@ -27,8 +27,8 @@ public class OldWorkCheckTypePresenter implements OldCheckTypeContract.presenter
     }
 
     @Override
-    public void getCheckType(String runId, String vocationId) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getOldCheckType(runId,vocationId).subscribeOn(Schedulers.io())
+    public void getCheckType(String runId, String vocationId,String destName,String mycomments) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getOldCheckType(runId,vocationId,destName,mycomments).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<CheckType>(context, MainUtil.getData) {
                     @Override
