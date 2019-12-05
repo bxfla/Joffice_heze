@@ -3,39 +3,19 @@ package com.smartbus.heze.main.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.smartbus.heze.R;
-import com.smartbus.heze.fileapprove.activity.BorrowAccidentWillActivity;
-import com.smartbus.heze.fileapprove.activity.CurrencyAccidentWillActivity;
-import com.smartbus.heze.fileapprove.activity.DepartBudgetWillActivity;
-import com.smartbus.heze.fileapprove.activity.DocumentLZWillActivity;
-import com.smartbus.heze.fileapprove.activity.FileCirculateWillActivity;
-import com.smartbus.heze.fileapprove.activity.HuiQianWillActivity;
-import com.smartbus.heze.http.base.Constant;
-import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
-import com.smartbus.heze.http.utils.BaseViewHolder;
-import com.smartbus.heze.main.bean.WillDoList;
-import com.smartbus.heze.main.module.WillDoListContract;
-import com.smartbus.heze.main.presenter.WillDoListPresenter;
-import com.smartbus.heze.oaflow.activity.AddWorkWillActivity;
-import com.smartbus.heze.oaflow.activity.AtWorkWillActivity;
-import com.smartbus.heze.oaflow.activity.CheckWorkWillActivity;
-import com.smartbus.heze.oaflow.activity.OldWorkWillActivity;
-import com.smartbus.heze.oaflow.activity.UserdLeaveWillActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.smartbus.heze.http.views.Header;
+import com.smartbus.heze.oaflow.activity.WillDoListActivity;
+import com.smartbus.heze.oaflow.activity.WillDoListActivity2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -43,174 +23,23 @@ import butterknife.Unbinder;
  * 待办列表
  */
 
-public class Fragment02 extends Fragment implements WillDoListContract.View {
+public class Fragment02 extends Fragment {
     View view;
-    @BindView(R.id.llNoContent)
-    LinearLayout llNoContent;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.ll)
-    LinearLayout ll;
-
-    float mPosY = 0;
-    float mPosX = 0;
-    float mCurPosY = 0;
-    float mCurPosX = 0;
-    BaseRecyclerAdapter adapter;
-    List<WillDoList.ResultBean> beanList = new ArrayList<>();
-    WillDoListPresenter willDoListPresenter;
     Unbinder unbinder;
+    @BindView(R.id.header)
+    Header header;
+    @BindView(R.id.ll1)
+    LinearLayout ll1;
+    @BindView(R.id.ll2)
+    LinearLayout ll2;
+    Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment02, container, false);
         unbinder = ButterKnife.bind(this, view);
-        willDoListPresenter = new WillDoListPresenter(getActivity(), this);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(manager);
-        setGestureListener();
         return view;
-    }
-
-
-    /**
-     * 设置上下滑动作监听器
-     *
-     * @author jczmdeveloper
-     */
-    private void setGestureListener() {
-        ll.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                switch (event.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        mPosX = event.getX();
-                        mPosY = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        mCurPosX = event.getX();
-                        mCurPosY = event.getY();
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mCurPosY - mPosY > 0
-                                && (Math.abs(mCurPosY - mPosY) > 25)) {
-                            beanList.clear();
-                            willDoListPresenter.getWillDoList();
-
-                        } else if (mCurPosY - mPosY < 0
-                                && (Math.abs(mCurPosY - mPosY) > 25)) {
-                            //向上滑动
-                        }
-
-                        break;
-                }
-                return true;
-            }
-
-        });
-    }
-
-    @Override
-    public void setWillDoList(WillDoList willDoList) {
-        if (willDoList.getResult().size() == 0) {
-            recyclerView.setVisibility(View.GONE);
-            llNoContent.setVisibility(View.VISIBLE);
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            llNoContent.setVisibility(View.GONE);
-            for (int i = 0; i < willDoList.getResult().size(); i++) {
-                beanList.add(willDoList.getResult().get(i));
-            }
-            adapter = new BaseRecyclerAdapter<WillDoList.ResultBean>(getActivity(), R.layout.adapter_easy_item, beanList) {
-                @Override
-                public void convert(BaseViewHolder holder, final WillDoList.ResultBean o) {
-                    holder.setText(R.id.textView, o.getTaskName());
-                    holder.setOnClickListener(R.id.textView, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (o.getFormDefId().equals(Constant.YSD_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), DepartBudgetWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.BORROWACCIDENT_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), BorrowAccidentWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.CURRENCYACCIDENT_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), CurrencyAccidentWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.HUIQIAN_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), HuiQianWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.FILECIR_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), FileCirculateWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.DOCUMENTLZ_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), DocumentLZWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.USERDLEAVE_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), UserdLeaveWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.ADDWORK_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), AddWorkWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.OLDWORK_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), OldWorkWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.ATWORK_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), AtWorkWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                            if (o.getFormDefId().equals(Constant.CHECKWORK_FORMDEFIS)) {
-                                Intent intent = new Intent(getActivity(), CheckWorkWillActivity.class);
-                                intent.putExtra("activityName", o.getActivityName());
-                                intent.putExtra("taskId", o.getTaskId());
-                                startActivity(intent);
-                            }
-                        }
-                    });
-                }
-            };
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void setWillDoListMessage(String s) {
-        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -222,7 +51,21 @@ public class Fragment02 extends Fragment implements WillDoListContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        beanList.clear();
-        willDoListPresenter.getWillDoList();
+//        beanList.clear();
+//        willDoListPresenter.getWillDoList();
+    }
+
+    @OnClick({R.id.ll1, R.id.ll2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll1:
+                intent = new Intent(getActivity(), WillDoListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll2:
+                intent = new Intent(getActivity(), WillDoListActivity2.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

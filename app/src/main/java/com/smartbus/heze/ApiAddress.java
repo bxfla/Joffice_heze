@@ -18,7 +18,7 @@ public class ApiAddress {
     //田胖
 //    public final static String mainApi = "http://192.168.2.111:8080/joffice21/" ;
     //柱子
-//    public final static String mainApi = "http://192.168.2.115:8090/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.125:8070/joffice/" ;
 
     /***********************首页*******************************/
     //登录
@@ -45,6 +45,8 @@ public class ApiAddress {
     public final static String dataup = "flow/upLoadImageProcessActivity.do";
     //待办列表
     public final static String willdolist = "flow/listTask.do";
+    //公文待办列表
+    public final static String willdolist2 = "flow/list2Task.do";
     //待办详情
     public final static String willdodetail = "htmobile/moblieGetTask.do";
     //正常一级审核人

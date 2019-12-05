@@ -159,6 +159,12 @@ public interface AllApi {
     Observable<WillDoList> getWillDoList();
 
     /**
+     * 获取公文待办列表
+     */
+    @GET(ApiAddress.willdolist2)
+    Observable<WillDoList> getWillDoList2();
+
+    /**
      * 获取会签待办详情
      */
     @GET(ApiAddress.willdodetail)

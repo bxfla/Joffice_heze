@@ -256,7 +256,9 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".exam.activity.ResultDetailActivity" />
         <activity android:name=".main.notice.activity.ImageBigActivity" />
-        <activity android:name=".other.activity.JianZhiActivity"></activity>
+        <activity android:name=".other.activity.JianZhiActivity" />
+        <activity android:name=".oaflow.activity.WillDoListActivity"/>
+        <activity android:name=".oaflow.activity.WillDoListActivity2"/>
     </application>
 
 </manifest>
