@@ -136,11 +136,20 @@ public class CurrencyAccidentWill implements Serializable {
         private String ldps;
         private String jiekuanje;
         private String caiwujingli;
-        private int runId;
+        private String runId;
         private String $type$;
         private String jiekuanren;
         private String fenguanlingdao;
         private String jiekuanDate;
+        private String dataUrl_save;
+
+        public String getDataUrl_save() {
+            return dataUrl_save;
+        }
+
+        public void setDataUrl_save(String dataUrl_save) {
+            this.dataUrl_save = dataUrl_save;
+        }
 
         public String getJiekuansy() {
             return jiekuansy;
@@ -190,11 +199,11 @@ public class CurrencyAccidentWill implements Serializable {
             this.caiwujingli = caiwujingli;
         }
 
-        public int getRunId() {
+        public String getRunId() {
             return runId;
         }
 
-        public void setRunId(int runId) {
+        public void setRunId(String runId) {
             this.runId = runId;
         }
 

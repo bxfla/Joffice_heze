@@ -17,6 +17,6 @@ public interface DayCompareUpDataContract {
 
     interface presenter extends BasePresenter {
         void getUpData(String data, String scoreData, String kaoheDate, String lineCode, String carNo, String busCode
-                , String depId, String depName, String driVerName, String driverId, String examiner, String note, String categoryCode);
+                , String depId, String depName, String driVerName, String driverId, String examiner, String note, String categoryCode,String time);
     }
 }

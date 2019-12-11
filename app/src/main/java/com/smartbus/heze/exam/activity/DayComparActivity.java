@@ -106,6 +106,10 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
     Button btnAll;
     @BindView(R.id.tvAll)
     TextView tvAll;
+    @BindView(R.id.tvTimeH)
+    TextView tvTimeH;
+    @BindView(R.id.tvTimeH1)
+    TextView tvTimeH1;
 
     Intent intent;
     int num = 100;
@@ -113,7 +117,7 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
     DayCompareAdapter adapter;
     DayCompareItemPresenter dayCompareItemPresenter;
     DayCompareUpDataPresenter dayCompareUpDataPresenter;
-    private CustomDatePickerDay customDatePicker;
+    private CustomDatePickerDay customDatePicker,customDatePicker1;
     private static final int MAXIMUM_FLING_VELOCITY = 2000;
     List<DayCompare.ResultBean> beanList = new ArrayList<>();
 
@@ -121,8 +125,8 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        String userName = new SharedPreferencesHelper(this,"login").getData(this,"userName1","");
-        String userCode = new SharedPreferencesHelper(this,"login").getData(this,"userId","");
+        String userName = new SharedPreferencesHelper(this, "login").getData(this, "userName1", "");
+        String userCode = new SharedPreferencesHelper(this, "login").getData(this, "userId", "");
         etPersonCode.setText(userCode);
         etPersonName.setText(userName);
         etRummager.setText(userName);
@@ -135,10 +139,11 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
 
     /**
      * 动态设置ListView的高度
+     *
      * @param listView
      */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
-        if(listView == null) {
+        if (listView == null) {
             return;
         }
         ListAdapter listAdapter = listView.getAdapter();
@@ -164,6 +169,8 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
         tvTime.setText(now.split(" ")[0]);
+        tvTimeH.setText(now);
+        tvTimeH1.setText(now.split(" ")[1]);
         customDatePicker = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
             @Override
             public void handle(String time) {
@@ -176,6 +183,21 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
         customDatePicker.showSpecificTime(false);
         // 不允许循环滚动
         customDatePicker.setIsLoop(false);
+
+        customDatePicker1 = new CustomDatePickerDay(this, new CustomDatePickerDay.ResultHandler() {
+            @Override
+            public void handle(String time) {
+                // 回调接口，获得选中的时间
+                tvTimeH.setText(time);
+                tvTimeH1.setText(time.split(" ")[1]);
+            }
+            // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
+        }, "2000-01-01 00:00", "2030-01-01 00:00");
+        // 不显示时和分
+        customDatePicker1.showSpecificTime(false);
+        // 不允许循环滚动
+        customDatePicker1.setIsLoop(false);
+        customDatePicker1.showSpecificDay(true);
     }
 
     @Override
@@ -195,20 +217,20 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
     }
 
     @OnClick({R.id.imLine, R.id.imCarCode, R.id.imCarNo, R.id.imPersonCode, R.id.imPersonName,
-            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2,R.id.btnAll})
+            R.id.imRummager, R.id.tvClassTime, R.id.tvTime, R.id.btnUp, R.id.ll1, R.id.ll2, R.id.btnAll,R.id.tvTimeH1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAll:
                 num = 100;
-                for (int i = 0;i<beanList.size();i++){
-                    if (beanList.get(i).getState()==0){
-                        if (!beanList.get(i).getScoreNums().equals("0")&&!beanList.get(i).getScoreNums().equals("0.00")){
-                            int n = (int)Double.parseDouble(beanList.get(i).getScoreNums());
-                            num = num-n;
+                for (int i = 0; i < beanList.size(); i++) {
+                    if (beanList.get(i).getState() == 0) {
+                        if (!beanList.get(i).getScoreNums().equals("0") && !beanList.get(i).getScoreNums().equals("0.00")) {
+                            int n = (int) Double.parseDouble(beanList.get(i).getScoreNums());
+                            num = num - n;
                         }
                     }
                 }
-                tvAll.setText(num+"");
+                tvAll.setText(num + "");
                 break;
             case R.id.imLine:
                 intent = new Intent(this, LineCodeActivity.class);
@@ -243,6 +265,9 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
             case R.id.tvTime:
                 customDatePicker.show(tvTime.getText().toString());
                 break;
+            case R.id.tvTimeH1:
+                customDatePicker1.show(tvTimeH.getText().toString());
+                break;
             case R.id.btnUp:
                 if (etLine.getText().toString().equals("") || etCarCode.getText().toString().equals("")
                         || etCarNo.getText().toString().equals("") || etPersonCode.getText().toString().equals("")
@@ -273,7 +298,7 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
                             tvTime.getText().toString(), etLine.getText().toString(), etCarNo.getText().toString()
                             , etCarCode.getText().toString(), depId, depName, etPersonName.getText().toString()
                             , etPersonCode.getText().toString(), etRummager.getText().toString()
-                            , etRemarks.getText().toString(), categoryCode);
+                            , etRemarks.getText().toString(), categoryCode,tvTimeH1.getText().toString());
                 }
                 break;
             case R.id.ll1:
@@ -321,7 +346,7 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
                     String materialType = carCodeData.getMaterialType();
                     if (materialType.equals("电耗")) {
                         categoryCode = "4477";
-                    } else if (materialType.equals("燃油")||materialType.equals("燃气")) {
+                    } else if (materialType.equals("燃油") || materialType.equals("燃气")) {
                         categoryCode = "4478";
                     }
                     dayCompareItemPresenter.getDayCompareItem(categoryCode, "2");
@@ -391,11 +416,14 @@ public class DayComparActivity extends BaseActivity implements DayCompareItemCon
             bean.setState(1);
         } else if (tag.equals("rb2")) {
             bean.setState(0);
-        }else if (tag.equals("rb3")) {
+        } else if (tag.equals("rb3")) {
             bean.setState(0);
         }
         bean.setProjectKey(beanList.get(position).getProjectKey());
         beanList.set(position, bean);
     }
 
+    @OnClick(R.id.tvTimeH1)
+    public void onViewClicked() {
+    }
 }

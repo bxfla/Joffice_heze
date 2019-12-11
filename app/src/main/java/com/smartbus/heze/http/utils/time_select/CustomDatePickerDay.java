@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+
 /**
  * Created by liuwan on 2016/9/28.
  */
@@ -60,7 +61,7 @@ public class CustomDatePickerDay {
     private int startYear, startMonth, startDay, startHour, startMinute, endYear, endMonth, endDay, endHour, endMinute;
     private boolean spanYear, spanMon, spanDay, spanHour, spanMin;
     private Calendar selectedCalender, startCalendar, endCalendar;
-    private TextView tv_cancle, tv_select, hour_text, minute_text;
+    private TextView tv_cancle, tv_select, hour_text, minute_text,day_text,tv_yue,tv_year;
 
     public CustomDatePickerDay(Context context, ResultHandler resultHandler, String startDate, String endDate) {
         if (isValidDate(startDate, "yyyy-MM-dd HH:mm") && isValidDate(endDate, "yyyy-MM-dd HH:mm")) {
@@ -109,6 +110,9 @@ public class CustomDatePickerDay {
         tv_select = (TextView) datePickerDialog.findViewById(R.id.tv_select);
         hour_text = (TextView) datePickerDialog.findViewById(R.id.hour_text);
         minute_text = (TextView) datePickerDialog.findViewById(R.id.minute_text);
+        day_text = (TextView) datePickerDialog.findViewById(R.id.day_text);
+        tv_yue = (TextView) datePickerDialog.findViewById(R.id.tv_yue);
+        tv_year = (TextView) datePickerDialog.findViewById(R.id.tv_year);
 
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -528,7 +532,12 @@ public class CustomDatePickerDay {
                 hour_text.setVisibility(View.VISIBLE);
                 minute_pv.setVisibility(View.VISIBLE);
                 minute_text.setVisibility(View.VISIBLE);
-                day_pv.setVisibility(View.VISIBLE);
+                day_pv.setVisibility(View.GONE);
+                month_pv.setVisibility(View.GONE);
+                year_pv.setVisibility(View.GONE);
+                day_text.setVisibility(View.GONE);
+                tv_yue.setVisibility(View.GONE);
+                tv_year.setVisibility(View.GONE);
             } else {
                 disScrollUnit(SCROLL_TYPE.HOUR, SCROLL_TYPE.MINUTE);
                 hour_pv.setVisibility(View.GONE);

@@ -30,9 +30,9 @@ public class DayCompareUpDataPresenter implements DayCompareUpDataContract.prese
     @Override
     public void getUpData(String data, String scoreData, String kaoheDate, String lineCode, String carNo
             , String busCode, String depId, String depName, String driVerName, String driverId
-            , String examiner, String note,String categoryCode) {
+            , String examiner, String note,String categoryCode,String time) {
         RetrofitUtil.getInstance().initRetrofitSetSession().getUpDayCamoareData(data,scoreData,kaoheDate,lineCode,carNo
-                ,busCode,depId,depName,driVerName,driverId,examiner,note,categoryCode)
+                ,busCode,depId,depName,driVerName,driverId,examiner,note,categoryCode,time)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<UpData>(context, MainUtil.upData) {

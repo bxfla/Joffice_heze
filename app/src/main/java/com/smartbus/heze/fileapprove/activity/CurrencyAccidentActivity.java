@@ -9,12 +9,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartbus.heze.R;
+import com.smartbus.heze.fileapprove.bean.AccidentLRData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
+import com.smartbus.heze.fileapprove.module.AccidentCheckTypeContract;
+import com.smartbus.heze.fileapprove.module.CurrencyAccidentLRContract;
 import com.smartbus.heze.fileapprove.module.OneContract;
 import com.smartbus.heze.fileapprove.module.TwoContract;
 import com.smartbus.heze.fileapprove.module.UPYSDContract;
+import com.smartbus.heze.fileapprove.presenter.AccidentCheckTypePresenter;
+import com.smartbus.heze.fileapprove.presenter.CurrencyAccidentLRPresenter;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
@@ -24,6 +29,7 @@ import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +49,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_ONE;
  * 通用借款单
  */
 public class CurrencyAccidentActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View {
+        , TwoContract.View, UPYSDContract.View, CurrencyAccidentLRContract.View, AccidentCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -72,18 +78,25 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     EditText etLeader3;
     @BindView(R.id.btnUp)
     Button btnUp;
+    @BindView(R.id.btnLR)
+    Button btnLR;
 
     String uId = "";
+    String eCard = "";
+    String vocationId = "";
     String isShow = "true";
     String userDepart = "";
     String userCode = "";
     String userName = "";
+    String selectTag = "1";
     String[] nametemp = null;
     String[] codetemp = null;
     String depId = "", depName = "";
     OnePresenter onePersenter;
     TwoPresenter twoPersenter;
     UPYSDPresenter upYsdPersenter;
+    AccidentCheckTypePresenter accidentCheckTypePresenter;
+    CurrencyAccidentLRPresenter currencyAccidentLRPresenter;
     Map<String, String> map = new HashMap<>();
     List<String> namelist = new ArrayList<>();
     List<String> codeList = new ArrayList<>();
@@ -91,12 +104,15 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     List<String> selectList = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
+    Map<String, String> firstmap = new HashMap<>();
     private CustomDatePickerDay customDatePicker1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        accidentCheckTypePresenter = new AccidentCheckTypePresenter(this, this);
+        currencyAccidentLRPresenter = new CurrencyAccidentLRPresenter(this, this);
         initDatePicker();
     }
 
@@ -144,6 +160,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
         map.put("jiekuansy", etReason.getText().toString());
         map.put("jiekuanje", etSmallMoney.getText().toString());
         map.put("jiekuanren", tvName.getText().toString());
+        map.put("dataUrl_save", "/joffice/busmanager/updateVersatileLoan.do?versatileLoanId=" + vocationId);
     }
 
     @Override
@@ -277,8 +294,8 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
     @Override
     public void setUPYSD(BackData s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-            finish();
+            String s1 = String.valueOf(s.getRunId());
+            accidentCheckTypePresenter.getAccidentCheckType(String.valueOf(s.getRunId()), vocationId);
         }
     }
 
@@ -287,8 +304,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
         Toast.makeText(this, "提交数据失败", Toast.LENGTH_SHORT).show();
     }
 
-
-    @OnClick({R.id.tvTime, R.id.btnUp, R.id.tvName})
+    @OnClick({R.id.tvTime, R.id.btnUp, R.id.tvName, R.id.btnLR})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvName:
@@ -298,13 +314,7 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
             case R.id.tvTime:
                 customDatePicker1.show(tvTime.getText().toString());
                 break;
-            case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
+            case R.id.btnLR:
                 if (etReason.getText().toString().equals("")) {
                     Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
                     break;
@@ -317,12 +327,46 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                     Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
-                twoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this, this);
+                setDataFirst();
+                currencyAccidentLRPresenter.getCurrencyAccidentLR(firstmap);
+                break;
+            case R.id.btnUp:
+                if (selectTag.equals("2")) {
+                    namelist.clear();
+                    codeList.clear();
+                    nameList.clear();
+                    selectList.clear();
+                    namelist1.clear();
+                    dataList.clear();
+                    if (etReason.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款原因", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etSmallMoney.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvName.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    onePersenter = new OnePresenter(this, this);
+                    onePersenter.getOnePerson(Constant.CURRENCYACCIDENT_DEFID);
+                    twoPersenter = new TwoPresenter(this, this);
+                    upYsdPersenter = new UPYSDPresenter(this, this);
+                } else {
+                    Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
+    }
+
+    private void setDataFirst() {
+        firstmap.put("jkDate", tvTime.getText().toString());
+        firstmap.put("jkMoney", etSmallMoney.getText().toString());
+        firstmap.put("jiekuanren", tvName.getText().toString());
+        firstmap.put("jkreCard", eCard);
+        firstmap.put("jkCause", etReason.getText().toString());
     }
 
     @Override
@@ -333,9 +377,44 @@ public class CurrencyAccidentActivity extends BaseActivity implements OneContrac
                 if (resultCode == TAG_ONE) {
                     if (data != null) {
                         tvName.setText(data.getStringArrayListExtra("beanId").get(0));
+                        eCard = data.getStringArrayListExtra("bean").get(0);
                     }
                 }
                 break;
         }
+    }
+
+    @Override
+    public void setCurrencyAccidentLR(AccidentLRData s) {
+        if (s.isSuccess()) {
+            vocationId = s.getVersatileLoanId();
+            selectTag = "2";
+            btnUp.setEnabled(true);
+            btnLR.setEnabled(false);
+            btnLR.setBackgroundColor(getResources().getColor(R.color.shouye));
+            Toast.makeText(this, "录入成功请提交数据", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "录入失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setCurrencyAccidentLRMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setAccidentCheckType(CheckType s) {
+        if (s.isSuccess()) {
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            btnUp.setEnabled(false);
+            btnUp.setBackgroundColor(getResources().getColor(R.color.shouye));
+            finish();
+        }
+    }
+
+    @Override
+    public void setAccidentCheckTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

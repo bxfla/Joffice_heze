@@ -143,7 +143,7 @@ public class BorrowAccidentWill implements Serializable {
         private String fenguanjingli;
         private String depName;
         private String caiwujingli;
-        private int runId;
+        private String runId;
         private String $type$;
         private String jiekuanren;
         private String kezhang;
@@ -155,7 +155,16 @@ public class BorrowAccidentWill implements Serializable {
         private String atAfter;
         private String driverName;
         private String atPlace;
+        private String dataUrl_save;
         private String jiekuanDate;
+
+        public String getDataUrl_save() {
+            return dataUrl_save;
+        }
+
+        public void setDataUrl_save(String dataUrl_save) {
+            this.dataUrl_save = dataUrl_save;
+        }
 
         public String getJiekuanDate() {
             return jiekuanDate;
@@ -213,11 +222,11 @@ public class BorrowAccidentWill implements Serializable {
             this.caiwujingli = caiwujingli;
         }
 
-        public int getRunId() {
+        public String getRunId() {
             return runId;
         }
 
-        public void setRunId(int runId) {
+        public void setRunId(String runId) {
             this.runId = runId;
         }
 

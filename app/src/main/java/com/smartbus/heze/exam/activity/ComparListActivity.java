@@ -1,4 +1,4 @@
-package com.smartbus.heze.exam;
+package com.smartbus.heze.exam.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,10 @@ import android.widget.Toast;
 
 import com.smartbus.heze.R;
 import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
-import com.smartbus.heze.checkup.bean.CarCheckHistory;
 import com.smartbus.heze.checkup.bean.CarCodeData;
-import com.smartbus.heze.exam.activity.DJDepartmentActivity;
-import com.smartbus.heze.exam.module.DayCompareHistoryContract;
-import com.smartbus.heze.exam.presenter.DayCompareHistoryPresenter;
+import com.smartbus.heze.exam.bean.ComparList;
+import com.smartbus.heze.exam.module.ComparListContract;
+import com.smartbus.heze.exam.presenter.ComparListPresenter;
 import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.BaseRecyclerAdapter;
@@ -35,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DayCompareHistoryActivity extends BaseActivity implements DayCompareHistoryContract.View {
+public class ComparListActivity extends BaseActivity implements ComparListContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -55,8 +54,8 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
     Intent intent;
     String orgName = "",orgId = "";
     BaseRecyclerAdapter baseRecyclerAdapter;
-    List<CarCheckHistory.ResultBean> beanList = new ArrayList<>();
-    DayCompareHistoryPresenter dayCompareHistoryPresenter;
+    List<ComparList.ResultBean> beanList = new ArrayList<>();
+    ComparListPresenter comparListPresenter;
     private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
@@ -66,8 +65,8 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         initDatePicker();
-        dayCompareHistoryPresenter = new DayCompareHistoryPresenter(this, this);
-        dayCompareHistoryPresenter.getCarCehckHistory(tvStartTime.getText().toString()
+        comparListPresenter = new ComparListPresenter(this, this);
+        comparListPresenter.getComparList(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString(), "","");
     }
 
@@ -128,7 +127,7 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_check_history_list;
+        return R.layout.activity_compar_list;
     }
 
     @Override
@@ -139,33 +138,27 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
     @Override
     protected void rightClient() {
         beanList.clear();
-        dayCompareHistoryPresenter.getCarCehckHistory(tvStartTime.getText().toString()
+        comparListPresenter.getComparList(tvStartTime.getText().toString()
                 , tvEndTime.getText().toString(), tvCaoNo.getText().toString(),orgId);
     }
 
     @Override
-    public void setCarCehckHistory(CarCheckHistory s) {
+    public void setComparList(ComparList s) {
         for (int i = 0; i < s.getResult().size(); i++) {
             beanList.add(s.getResult().get(i));
         }
         if (beanList.size() == 0) {
             llNoContent.setVisibility(View.VISIBLE);
         }
-        baseRecyclerAdapter = new BaseRecyclerAdapter<CarCheckHistory.ResultBean>(this, R.layout.adapter_check_item, beanList) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<ComparList.ResultBean>(this, R.layout.adapter_comparlist_item, beanList) {
             @Override
-            public void convert(BaseViewHolder holder, final CarCheckHistory.ResultBean resultBean) {
+            public void convert(BaseViewHolder holder, final ComparList.ResultBean resultBean) {
                 holder.setText(R.id.tvDriver, resultBean.getDriverName());
                 holder.setText(R.id.tvCarNo, resultBean.getCarNo());
                 holder.setText(R.id.tvDate, resultBean.getKaoheDate());
                 holder.setText(R.id.tvJCR, resultBean.getExaminer());
-                holder.setOnClickListener(R.id.ll, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(DayCompareHistoryActivity.this, DayCompareHistoryDetActivity.class);
-                        intent.putExtra("bean", resultBean);
-                        startActivity(intent);
-                    }
-                });
+                holder.setText(R.id.tvDepartment, resultBean.getDepName());
+                holder.setText(R.id.tvLine, resultBean.getLineCode());
             }
         };
         recyclerView.setAdapter(baseRecyclerAdapter);
@@ -173,7 +166,7 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
     }
 
     @Override
-    public void setCarCehckHistoryMessage(String s) {
+    public void setComparListMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 

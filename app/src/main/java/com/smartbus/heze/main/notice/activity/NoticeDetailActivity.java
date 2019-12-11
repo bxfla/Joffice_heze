@@ -2,6 +2,7 @@ package com.smartbus.heze.main.notice.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +42,13 @@ public class NoticeDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         Notice.ResultBean bean = (Notice.ResultBean) intent.getSerializableExtra("bean");
         tvTitle.setText(bean.getSubject());
-        tvContent.setText(bean.getContent());
+        String s = bean.getContent();
+        if (s.contains("&nbsp;")){
+            Log.e("XXX",s);
+            s = s.replace("&nbsp;","");
+            Log.e("XXX",s);
+            tvContent.setText(s);
+        }
         tvTime.setText(bean.getCreatetime());
         tvDepartment.setText(bean.getAuthor());
         subjectIcon = bean.getSubjectIcon();

@@ -8,11 +8,11 @@ public class ApiAddress {
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //川川
-//    public final static String mainApi = "http://192.168.2.114:8082/joffice21/" ;
+    public final static String mainApi = "http://192.168.2.137:8080/joffice/" ;
     //孙琦
 //    public final static String mainApi = "http://192.168.2.107:8080/joffice/" ;
     //正式库
-    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //田胖
@@ -65,6 +65,10 @@ public class ApiAddress {
     public static final String  userdleave = "hrm/mobileSaveLeaveDays.do";
     //加班录入
     public static final String  addwork = "hrm/mobileSaveAddClassInfo.do";
+    //通用借款录入
+    public static final String  accidentlr = "hrm/saveAppVersatileLoan.do";
+    //通用借款录入状态修改
+    public static final String  accidentcheck = "hrm/updateVersatileLoan.do";
     //公文流转录入
     public static final String  documentlr = "archive/saveAppLettersVisits.do";
     //修改发布状态
@@ -141,6 +145,12 @@ public class ApiAddress {
     public final static String faultupdata = "busmanager/savePhoneAccidentBasicInformation.do";
     //事故处理前图片上传
     public static final String  faultupimage = "busmanager/upLoadImageAccidentBasicInformation.do";
+    //事故借款录入
+    public static final String  borrowaccidentlr = "busmanager/mobileSaveAppAccidentLoan.do";
+    //事故借款状态修改
+    public static final String  borrowaccidentchange = "busmanager/updateAccidentLoan.do";
+    //日常点检明细
+    public static final String  comparlist = "starkh/listDcdjAppDianchedianjianJc.do";
 
 
     //考试资料左侧
@@ -202,6 +212,8 @@ public class ApiAddress {
     public static final String  carvehicle = "busmanager/runListAppViolationRecord.do";
     //兼职招聘
     public static final String  jianzhi = "starkh/AppSaveCustomizedApplication.do";
+    //日常点检部门
+    public static final String  djdepartment = "system/getYYDepStoreOrganization.do";
 
 
 }

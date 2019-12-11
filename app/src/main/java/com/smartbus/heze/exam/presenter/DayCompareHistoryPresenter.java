@@ -27,8 +27,8 @@ public class DayCompareHistoryPresenter implements DayCompareHistoryContract.pre
     }
 
     @Override
-    public void getCarCehckHistory(String startTime, String endTime, String carNo) {
-        RetrofitUtil.getInstance().initRetrofitSetSession().getDayCompareHistory(startTime,endTime,carNo).subscribeOn(Schedulers.io())
+    public void getCarCehckHistory(String startTime, String endTime, String carNo,String depId) {
+        RetrofitUtil.getInstance().initRetrofitSetSession().getDayCompareHistory(startTime,endTime,carNo,depId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<CarCheckHistory>(context, MainUtil.getData) {
                     @Override

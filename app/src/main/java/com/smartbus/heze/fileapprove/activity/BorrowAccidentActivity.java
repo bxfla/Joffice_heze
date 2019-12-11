@@ -13,13 +13,18 @@ import com.smartbus.heze.checkup.activitydata.CarCodeActivity;
 import com.smartbus.heze.checkup.activitydata.LineCodeActivity;
 import com.smartbus.heze.checkup.bean.CarCodeData;
 import com.smartbus.heze.checkup.bean.LineCodeData;
+import com.smartbus.heze.fileapprove.bean.BorrowAccidentLRData;
 import com.smartbus.heze.fileapprove.bean.BackData;
 import com.smartbus.heze.fileapprove.bean.DepartmentDataBean;
 import com.smartbus.heze.fileapprove.bean.OnePerson;
 import com.smartbus.heze.fileapprove.bean.TwoPerson;
+import com.smartbus.heze.fileapprove.module.BorrowAccidentCheckTypeContract;
+import com.smartbus.heze.fileapprove.module.BorrowAccidentLRContract;
 import com.smartbus.heze.fileapprove.module.OneContract;
 import com.smartbus.heze.fileapprove.module.TwoContract;
 import com.smartbus.heze.fileapprove.module.UPYSDContract;
+import com.smartbus.heze.fileapprove.presenter.BorrowAccidentCheckTypePresenter;
+import com.smartbus.heze.fileapprove.presenter.BorrowAccidentLRPresenter;
 import com.smartbus.heze.fileapprove.presenter.OnePresenter;
 import com.smartbus.heze.fileapprove.presenter.TwoPresenter;
 import com.smartbus.heze.fileapprove.presenter.UPYSDPresenter;
@@ -29,6 +34,7 @@ import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.utils.time_select.CustomDatePickerDay;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,7 +56,7 @@ import static com.smartbus.heze.http.base.Constant.TAG_TWO;
  * 事故科的事故借款单
  */
 public class BorrowAccidentActivity extends BaseActivity implements OneContract.View
-        , TwoContract.View, UPYSDContract.View {
+        , TwoContract.View, UPYSDContract.View, BorrowAccidentLRContract.View, BorrowAccidentCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -95,32 +101,44 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     EditText etLeader3;
     @BindView(R.id.btnUp)
     Button btnUp;
+    @BindView(R.id.btnLR)
+    Button btnLR;
 
     String uId = "";
     Intent intent;
+    String busCode = "";
+    String vocationId = "";
     String isShow = "true";
     String userDepart = "";
     String userCode = "";
     String userName = "";
+    String driverId = "";
+    String selectTag = "1";
     String[] nametemp = null;
     String[] codetemp = null;
     String depId = "", depName = "";
     OnePresenter onePersenter;
     TwoPresenter twoPersenter;
     UPYSDPresenter upYsdPersenter;
+    BorrowAccidentLRPresenter borrowAccidentLRPresenter;
+    BorrowAccidentCheckTypePresenter borrowAccidentCheckTypePresenter;
     Map<String, String> map = new HashMap<>();
     List<String> namelist = new ArrayList<>();
     List<String> codeList = new ArrayList<>();
     List<String> nameList = new ArrayList<>();
     List<String> selectList = new ArrayList<>();
     List<String> namelist1 = new ArrayList<>();
+    Map<String, String> firstmap = new HashMap<>();
     List<TwoPerson.DataBean> dataList = new ArrayList<>();
-    private CustomDatePickerDay customDatePicker1,customDatePicker2;
+    private CustomDatePickerDay customDatePicker1, customDatePicker2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        btnLR.setVisibility(View.VISIBLE);
+        borrowAccidentLRPresenter = new BorrowAccidentLRPresenter(this, this);
+        borrowAccidentCheckTypePresenter = new BorrowAccidentCheckTypePresenter(this,this);
         initDatePicker();
     }
 
@@ -191,16 +209,17 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
         map.put("atje", etSmallMoney.getText().toString());
         map.put("acNumber", etNum.getText().toString());
         map.put("jiekuanren", tvName.getText().toString());
-        map.put("kezhang","");
+        map.put("kezhang", "");
         map.put("fenguanjingli", "");
         map.put("caiwujingli", "");
         map.put("pishi", "");
+        map.put("dataUrl_save", "/joffice/hrm/updateVersatileLoan.do?accidentLoanId=" + vocationId);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case TAG_ONE:
                 if (requestCode == TAG_ONE) {
                     if (data != null) {
@@ -215,6 +234,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                 if (resultCode == TAG_ONE) {
                     if (data != null) {
                         tvName.setText(data.getStringArrayListExtra("beanId").get(0));
+                        driverId = data.getStringArrayListExtra("bean").get(0);
                     }
                 }
                 break;
@@ -235,6 +255,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                 if (resultCode == Constant.TAG_TWO) {
                     CarCodeData carCodeData = (CarCodeData) data.getSerializableExtra("carCode");
                     tvCarNo.setText(carCodeData.getCarNo());
+                    busCode = carCodeData.getBusCode();
                 }
                 break;
         }
@@ -370,9 +391,11 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
 
     @Override
     public void setUPYSD(BackData s) {
-        if (s.isSuccess()){
-            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-            finish();
+        if (s.isSuccess()) {
+            String s1 = String.valueOf(s.getRunId());
+            borrowAccidentCheckTypePresenter.getBorrowAccidentCheckType(String.valueOf(s.getRunId()), vocationId);
+//            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+//            finish();
         }
     }
 
@@ -382,7 +405,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
     }
 
     @OnClick({R.id.tvTime, R.id.tvTime1, R.id.tvDepartment, R.id.btnUp, R.id.tvName
-            ,R.id.tvLuBie, R.id.tvDriver, R.id.tvCarNo})
+            , R.id.tvLuBie, R.id.tvDriver, R.id.tvCarNo, R.id.btnLR})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvTime:
@@ -412,13 +435,7 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                 intent.putExtra("tag", "carNo");
                 startActivityForResult(intent, Constant.TAG_FIVE);
                 break;
-            case R.id.btnUp:
-                namelist.clear();
-                codeList.clear();
-                nameList.clear();
-                selectList.clear();
-                namelist1.clear();
-                dataList.clear();
+            case R.id.btnLR:
                 if (tvDepartment.getText().toString().equals("")) {
                     Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
                     break;
@@ -459,11 +476,117 @@ public class BorrowAccidentActivity extends BaseActivity implements OneContract.
                     Toast.makeText(this, "请填写同一事故借款次数", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                onePersenter = new OnePresenter(this, this);
-                onePersenter.getOnePerson(Constant.BORROWACCIDENT_DEFID);
-                twoPersenter = new TwoPresenter(this, this);
-                upYsdPersenter = new UPYSDPresenter(this, this);
+                setDataFirst();
+                borrowAccidentLRPresenter.getBorrowAccidentLR(firstmap);
+                break;
+            case R.id.btnUp:
+                if (selectTag.equals("2")) {
+                    namelist.clear();
+                    codeList.clear();
+                    nameList.clear();
+                    selectList.clear();
+                    namelist1.clear();
+                    dataList.clear();
+                    if (tvDepartment.getText().toString().equals("")) {
+                        Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etAddress.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写地点", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvLuBie.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写路别", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvCarNo.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写车牌号", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvDriver.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写驾驶员", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etBlame.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写事故责任", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etReason.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写事故经过", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etSmallMoney.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款金额", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (tvName.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写借款人", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (etNum.getText().toString().equals("")) {
+                        Toast.makeText(this, "请填写同一事故借款次数", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    onePersenter = new OnePresenter(this, this);
+                    onePersenter.getOnePerson(Constant.BORROWACCIDENT_DEFID);
+                    twoPersenter = new TwoPresenter(this, this);
+                    upYsdPersenter = new UPYSDPresenter(this, this);
+                } else {
+                    Toast.makeText(this, "请先录入", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
+    }
+
+    private void setDataFirst() {
+        firstmap.put("acDuty", etBlame.getText().toString());
+        firstmap.put("carNo", tvCarNo.getText().toString());
+        firstmap.put("busCode", busCode);
+        firstmap.put("acNumber", etNum.getText().toString());
+        firstmap.put("atje", etSmallMoney.getText().toString());
+        firstmap.put("atAfter", etReason.getText().toString());
+        firstmap.put("driverName", tvDriver.getText().toString());
+        firstmap.put("driverId", etAddress.getText().toString());
+        firstmap.put("atPlace", etAddress.getText().toString());
+        firstmap.put("atDate", tvTime1.getText().toString());
+        firstmap.put("depName", depName);
+        firstmap.put("depId", depId);
+        firstmap.put("lineCode", tvLuBie.getText().toString());
+        firstmap.put("jiekuanren", tvName.getText().toString());
+        firstmap.put("jiekuanDate", tvTime.getText().toString());
+    }
+
+    @Override
+    public void setBorrowAccidentLR(BorrowAccidentLRData s) {
+        if (s.isSuccess()) {
+            vocationId = s.getAccidentLoanId();
+            selectTag = "2";
+            btnUp.setEnabled(true);
+            btnLR.setEnabled(false);
+            btnLR.setBackgroundColor(getResources().getColor(R.color.shouye));
+            Toast.makeText(this, "录入成功请提交数据", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "录入失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setBorrowAccidentLRMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setBorrowAccidentCheckType(CheckType s) {
+        if (s.isSuccess()) {
+            Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+            btnUp.setEnabled(false);
+            btnUp.setBackgroundColor(getResources().getColor(R.color.shouye));
+            finish();
+        }
+    }
+
+    @Override
+    public void setBorrowAccidentCheckTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

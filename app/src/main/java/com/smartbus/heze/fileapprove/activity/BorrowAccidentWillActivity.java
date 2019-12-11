@@ -17,11 +17,13 @@ import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
 import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.BorrowAccidentWillCheckTypeContract;
 import com.smartbus.heze.fileapprove.module.BorrowAccidentWillContract;
 import com.smartbus.heze.fileapprove.module.NoEndContract;
 import com.smartbus.heze.fileapprove.module.NoHandlerContract;
 import com.smartbus.heze.fileapprove.module.NormalContract;
 import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.BorrowAccidentWillCheckTypePresenter;
 import com.smartbus.heze.fileapprove.presenter.BorrowAccidentWillPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
@@ -32,6 +34,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,7 @@ import butterknife.OnClick;
  * 事故科的事故借款单待办
  */
 public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAccidentWillContract.View
-        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View, BorrowAccidentWillCheckTypeContract.View {
 
     @BindView(R.id.header)
     Header header;
@@ -100,6 +103,8 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
+    String mycomments = "";
+    String runId, accidentLoanId;
     String destName, uId, signaName;
     String activityName, taskId;
     String[] bigNametemp = null;
@@ -109,6 +114,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     NoHandlerPresenter noHandlerPresenter;
     WillDoPresenter willDoPresenter;
     BorrowAccidentWillPresenter borrowAccidentWillPresenter;
+    BorrowAccidentWillCheckTypePresenter borrowAccidentWillCheckTypePresenter;
     List<String> selectList = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
@@ -127,6 +133,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
         borrowAccidentWillPresenter = new BorrowAccidentWillPresenter(this, this);
+        borrowAccidentWillCheckTypePresenter = new BorrowAccidentWillCheckTypePresenter(this,this);
         borrowAccidentWillPresenter.getBorrowAccidentWill(activityName, taskId, Constant.BORROWACCIDENT_DEFID);
     }
 
@@ -249,6 +256,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         } else {
             map.put("kezhang", etLeader.getText().toString());
             map.put("comments", etLeader.getText().toString());
+            mycomments = etLeader.getText().toString();
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
             if (!tvLeader1.getText().toString().equals("")) {
@@ -257,6 +265,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         } else {
             map.put("fenguanjingli", etLeader1.getText().toString());
             map.put("comments", etLeader1.getText().toString());
+            mycomments = etLeader1.getText().toString();
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
             if (!tvLeader2.getText().toString().equals("")) {
@@ -265,6 +274,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         } else {
             map.put("caiwujingli", etLeader2.getText().toString());
             map.put("comments", etLeader2.getText().toString());
+            mycomments = etLeader2.getText().toString();
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
             if (!tvLeader3.getText().toString().equals("")) {
@@ -273,6 +283,7 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
         } else {
             map.put("ldps", etLeader3.getText().toString());
             map.put("comments", etLeader3.getText().toString());
+            mycomments = etLeader3.getText().toString();
         }
     }
 
@@ -291,6 +302,9 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             tvSmallMoney.setText(s.getMainform().get(0).getAtje().toString());
             tvName.setText(s.getMainform().get(0).getJiekuanren());
             tvNum.setText(s.getMainform().get(0).getAcNumber());
+            runId = s.getMainform().get(0).getRunId();
+            String dataUrl_save = s.getMainform().get(0).getDataUrl_save().toString();
+            accidentLoanId = dataUrl_save.split("accidentLoanId=")[1];
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
             String leader = s.getMainform().get(0).getKezhang();
             String leader1 = s.getMainform().get(0).getFenguanjingli();
@@ -419,8 +433,9 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
     @Override
     public void setWillDo(WillDoUp s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
-            finish();
+            borrowAccidentWillCheckTypePresenter.getBorrowAccidentWillCheckType(runId, accidentLoanId, destName, mycomments);
+//            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
+//            finish();
         }
     }
 
@@ -502,5 +517,18 @@ public class BorrowAccidentWillActivity extends BaseActivity implements BorrowAc
             uId = selectList.get(0) + "," + uId;
         }
         return uId;
+    }
+
+    @Override
+    public void setBorrowAccidentWillCheckType(CheckType s) {
+        if (s.isSuccess()) {
+            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void setBorrowAccidentWillCheckTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

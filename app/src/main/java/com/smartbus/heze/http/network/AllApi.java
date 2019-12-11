@@ -20,7 +20,9 @@ import com.smartbus.heze.checkup.bean.UpData;
 import com.smartbus.heze.checkup.bean.UserCode;
 import com.smartbus.heze.exam.bean.CarVehicle;
 import com.smartbus.heze.exam.bean.ClassMileage;
+import com.smartbus.heze.exam.bean.ComparList;
 import com.smartbus.heze.exam.bean.ComplaintFines;
+import com.smartbus.heze.exam.bean.DJDepartment;
 import com.smartbus.heze.exam.bean.DayCompare;
 import com.smartbus.heze.exam.bean.ExaminationData;
 import com.smartbus.heze.exam.bean.GPSMileage;
@@ -38,7 +40,9 @@ import com.smartbus.heze.exam.bean.SendNum;
 import com.smartbus.heze.exam.bean.StartContent;
 import com.smartbus.heze.exam.bean.StartDriver;
 import com.smartbus.heze.fault.bean.AboutData;
+import com.smartbus.heze.fileapprove.bean.AccidentLRData;
 import com.smartbus.heze.fileapprove.bean.BackData;
+import com.smartbus.heze.fileapprove.bean.BorrowAccidentLRData;
 import com.smartbus.heze.fileapprove.bean.BorrowAccidentWill;
 import com.smartbus.heze.fileapprove.bean.CurrencyAccidentWill;
 import com.smartbus.heze.fileapprove.bean.DepartBudgetWill;
@@ -179,6 +183,27 @@ public interface AllApi {
             , @Query("taskId")String taskId, @Query("defId")String defId);
 
     /**
+     * 事故借款单录入
+     */
+    @POST(ApiAddress.borrowaccidentlr)
+    Observable<BorrowAccidentLRData> getBorrowAccidentLR(@QueryMap Map<String,String> params);
+
+    /**
+     * 修改事故借款发布状态
+     */
+    @GET(ApiAddress.borrowaccidentchange)
+    Observable<CheckType> getBorrowAccidentCheckType(@Query("runId")String runId, @Query("accidentLoanId")String vocationId);
+
+    /**
+     * 修改事故借款审核发布状态
+     */
+    @GET(ApiAddress.borrowaccidentchange)
+    Observable<CheckType> getBorrowAccidentWillCheckType(@Query("runId")String runId
+            , @Query("accidentLoanId")String accidentLoanId
+            , @Query("destName")String destName
+            , @Query("mycomments")String mycomments);
+
+    /**
      * 获取事故借款单待办详情
      */
     @GET(ApiAddress.willdodetail)
@@ -204,6 +229,27 @@ public interface AllApi {
     @GET(ApiAddress.willdodetail)
     Observable<CurrencyAccidentWill> getWillCurrencyAccident(@Query("activityName")String activityName
             , @Query("taskId")String taskId, @Query("defId")String defId);
+
+    /**
+     * 通用借款单录入
+     */
+    @POST(ApiAddress.accidentlr)
+    Observable<AccidentLRData> getCurrencyAccidentLR(@QueryMap Map<String,String> params);
+
+    /**
+     * 修改通用借款发布状态
+     */
+    @GET(ApiAddress.accidentcheck)
+    Observable<CheckType> getAccidentCheckType(@Query("runId")String runId, @Query("versatileLoanId")String vocationId);
+
+    /**
+     * 修改通用借款审核发布状态
+     */
+    @GET(ApiAddress.accidentcheck)
+    Observable<CheckType> getAccidentWillCheckType(@Query("runId")String runId
+            , @Query("versatileLoanId")String accidentLoanId
+            , @Query("destName")String destName
+            , @Query("mycomments")String mycomments);
 
     /**
      * 获取部门文件传阅待办详情
@@ -473,7 +519,8 @@ public interface AllApi {
     @POST(ApiAddress.daycomparehistory)
     Observable<CarCheckHistory> getDayCompareHistory(@Field("startDate") String startDate
             , @Field("endDate")String endDate
-            , @Field("carNo")String carNo);
+            , @Field("carNo")String carNo
+            , @Field("depId")String depId);
     /**
      * 车辆巡检检查记录检查项
      */
@@ -519,7 +566,8 @@ public interface AllApi {
             ,@Field("dianchedianjianJc.driverId")String driverId
             ,@Field("dianchedianjianJc.examiner")String examiner
             ,@Field("dianchedianjianJc.note")String note
-            ,@Field("categoryCode")String categoryCode);
+            ,@Field("categoryCode")String categoryCode
+            ,@Field("dianchedianjianJc.kaoheTime")String kaoheTime);
 
     /**
      * 稽查卫生检查项
@@ -820,4 +868,20 @@ public interface AllApi {
             ,@Field("depId")String depId
             ,@Field("lineCode")String lineCode
             ,@Field("memo")String Memo);
+
+    /**
+     * 日常点检获取部门
+     */
+    @GET(ApiAddress.djdepartment)
+    Observable<DJDepartment> getDJDepartment(@Query("depType")String depType, @Query("demId")String demId);
+
+    /**
+     * 日常检查明细
+     */
+    @FormUrlEncoded
+    @POST(ApiAddress.comparlist)
+    Observable<ComparList> getComparList(@Field("startDate") String startDate
+            , @Field("endDate")String endDate
+            , @Field("carNo")String carNo
+            , @Field("depId")String depId);
 }

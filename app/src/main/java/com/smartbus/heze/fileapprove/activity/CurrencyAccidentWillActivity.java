@@ -17,11 +17,13 @@ import com.smartbus.heze.fileapprove.bean.NoEndPerson;
 import com.smartbus.heze.fileapprove.bean.NoHandlerPerson;
 import com.smartbus.heze.fileapprove.bean.NormalPerson;
 import com.smartbus.heze.fileapprove.bean.WillDoUp;
+import com.smartbus.heze.fileapprove.module.AccidentWillCheckTypeContract;
 import com.smartbus.heze.fileapprove.module.CurrencyAccidentWillContract;
 import com.smartbus.heze.fileapprove.module.NoEndContract;
 import com.smartbus.heze.fileapprove.module.NoHandlerContract;
 import com.smartbus.heze.fileapprove.module.NormalContract;
 import com.smartbus.heze.fileapprove.module.WillDoContract;
+import com.smartbus.heze.fileapprove.presenter.AccidentWillCheckTypePresenter;
 import com.smartbus.heze.fileapprove.presenter.CurrencyAccidentWillPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoEndPresenter;
 import com.smartbus.heze.fileapprove.presenter.NoHandlerPresenter;
@@ -32,6 +34,7 @@ import com.smartbus.heze.http.base.BaseActivity;
 import com.smartbus.heze.http.base.Constant;
 import com.smartbus.heze.http.views.Header;
 import com.smartbus.heze.http.views.MyAlertDialog;
+import com.smartbus.heze.oaflow.bean.CheckType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,7 @@ import butterknife.OnClick;
  * 通用借款单
  */
 public class CurrencyAccidentWillActivity extends BaseActivity implements CurrencyAccidentWillContract.View
-        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View {
+        , NormalContract.View, NoEndContract.View, NoHandlerContract.View, WillDoContract.View, AccidentWillCheckTypeContract.View {
     @BindView(R.id.header)
     Header header;
     @BindView(R.id.tvTime)
@@ -78,11 +81,15 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     EditText etLeader3;
     @BindView(R.id.btnUp)
     Button btnUp;
+    @BindView(R.id.btnLR)
+    Button btnLR;
 
+    String runId, accidentLoanId;
     String mainId = "";
     String destType = "";
     String leaderCode = "";
     String leaderName = "";
+    String mycomments = "";
     String destName, uId, signaName;
     String activityName, taskId;
     String[] bigNametemp = null;
@@ -91,6 +98,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     NoEndPresenter noEndPersenter;
     NoHandlerPresenter noHandlerPresenter;
     WillDoPresenter willDoPresenter;
+    AccidentWillCheckTypePresenter accidentWillCheckTypePresenter;
     CurrencyAccidentWillPresenter currencyAccidentWillPresenter;
     List<String> selectList = new ArrayList<>();
     List<String> namelist = new ArrayList<>();
@@ -101,6 +109,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        btnLR.setVisibility(View.GONE);
         Intent intent = getIntent();
         activityName = intent.getStringExtra("activityName");
         taskId = intent.getStringExtra("taskId");
@@ -109,6 +118,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         noHandlerPresenter = new NoHandlerPresenter(this, this);
         willDoPresenter = new WillDoPresenter(this, this);
         Log.e("sessionLogin ", taskId + "-" + activityName);
+        accidentWillCheckTypePresenter = new AccidentWillCheckTypePresenter(this, this);
         currencyAccidentWillPresenter = new CurrencyAccidentWillPresenter(this, this);
         currencyAccidentWillPresenter.getCurrencyAccidentWill(activityName, taskId, Constant.HUIQIAN_DEFID);
     }
@@ -223,6 +233,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
             }
         } else {
             map.put("kezhang", etLeader.getText().toString());
+            mycomments = etLeader.getText().toString();
             map.put("comments", etLeader.getText().toString());
         }
         if (tvLeader1.getVisibility() == View.VISIBLE) {
@@ -232,6 +243,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         } else {
             map.put("fenguanlingdao", etLeader1.getText().toString());
             map.put("comments", etLeader1.getText().toString());
+            mycomments = etLeader1.getText().toString();
         }
         if (tvLeader2.getVisibility() == View.VISIBLE) {
             if (!tvLeader2.getText().toString().equals("")) {
@@ -240,6 +252,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         } else {
             map.put("caiwujingli", etLeader2.getText().toString());
             map.put("comments", etLeader2.getText().toString());
+            mycomments = etLeader2.getText().toString();
         }
         if (tvLeader3.getVisibility() == View.VISIBLE) {
             if (!tvLeader3.getText().toString().equals("")) {
@@ -248,6 +261,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         } else {
             map.put("ldps", etLeader3.getText().toString());
             map.put("comments", etLeader3.getText().toString());
+            mycomments = etLeader3.getText().toString();
         }
     }
 
@@ -259,6 +273,9 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
             tvName.setText(s.getMainform().get(0).getJiekuanren().toString());
             etReason.setText(s.getMainform().get(0).getJiekuansy().toString());
             mainId = String.valueOf(s.getMainform().get(0).getMainId());
+            runId = s.getMainform().get(0).getRunId();
+            String dataUrl_save = s.getMainform().get(0).getDataUrl_save().toString();
+            accidentLoanId = dataUrl_save.split("versatileLoanId=")[1];
             String leader = s.getMainform().get(0).getKezhang();
             String leader1 = s.getMainform().get(0).getFenguanlingdao();
             String leader2 = s.getMainform().get(0).getCaiwujingli();
@@ -386,8 +403,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     @Override
     public void setWillDo(WillDoUp s) {
         if (s.isSuccess()) {
-            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
-            finish();
+            accidentWillCheckTypePresenter.getAccidentWillCheckType(runId, accidentLoanId, destName, mycomments);
         }
     }
 
@@ -471,4 +487,16 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
         return uId;
     }
 
+    @Override
+    public void setAccidentWillCheckType(CheckType s) {
+        if (s.isSuccess()) {
+            Toast.makeText(this, "数据提交成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void setAccidentWillCheckTypeMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -341,6 +341,31 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/oaTextView"
+                        android:text="检查时间: *" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/shouye" />
+
+                    <TextView
+                        android:id="@+id/tvTimeH"
+                        style="@style/oaEditText"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tvTimeH1"
+                        style="@style/oaEditText" />
+                </LinearLayout>
+                <View style="@style/HourLine"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="90dp"
                     android:orientation="horizontal">
 

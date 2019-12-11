@@ -257,8 +257,10 @@
         <activity android:name=".exam.activity.ResultDetailActivity" />
         <activity android:name=".main.notice.activity.ImageBigActivity" />
         <activity android:name=".other.activity.JianZhiActivity" />
-        <activity android:name=".oaflow.activity.WillDoListActivity"/>
-        <activity android:name=".oaflow.activity.WillDoListActivity2"/>
+        <activity android:name=".oaflow.activity.WillDoListActivity" />
+        <activity android:name=".oaflow.activity.WillDoListActivity2" />
+        <activity android:name=".exam.activity.DJDepartmentActivity"/>
+        <activity android:name=".exam.activity.ComparListActivity"/>
     </application>
 
 </manifest>
