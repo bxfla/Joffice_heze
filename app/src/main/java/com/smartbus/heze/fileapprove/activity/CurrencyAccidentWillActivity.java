@@ -58,11 +58,11 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
     @BindView(R.id.tvTime)
     TextView tvTime;
     @BindView(R.id.etSmallMoney)
-    EditText etSmallMoney;
+    TextView etSmallMoney;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.etReason)
-    EditText etReason;
+    TextView etReason;
     @BindView(R.id.tvLeader)
     TextView tvLeader;
     @BindView(R.id.etLeader)
@@ -125,7 +125,7 @@ public class CurrencyAccidentWillActivity extends BaseActivity implements Curren
 
     @Override
     protected int provideContentViewId() {
-        return R.layout.activity_borrow_current;
+        return R.layout.activity_borrow_current1;
     }
 
     @Override

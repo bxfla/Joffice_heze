@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="代办流程"
+                android:text="待办流程"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="17dp"/>
@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="公文代办流程"
+                android:text="公文待办流程"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="17dp"/>

@@ -78,7 +78,7 @@ public class ComparListActivity extends BaseActivity implements ComparListContra
         Calendar c = Calendar.getInstance();
         //过去七天
         c.setTime(new Date());
-        c.add(Calendar.DATE, -7);
+        c.add(Calendar.DATE, -1);
         Date d = c.getTime();
         String day = format.format(d);
         tvStartTime.setText(day);
@@ -159,6 +159,19 @@ public class ComparListActivity extends BaseActivity implements ComparListContra
                 holder.setText(R.id.tvJCR, resultBean.getExaminer());
                 holder.setText(R.id.tvDepartment, resultBean.getDepName());
                 holder.setText(R.id.tvLine, resultBean.getLineCode());
+                if (resultBean.getProjectName()==null||resultBean.getProjectName().equals("")){
+                    holder.setGoneLinner(R.id.llNoItem);
+                }else {
+                    holder.setVisionLinner(R.id.llNoItem);
+                    holder.setText(R.id.tvNoItem, resultBean.getProjectName());
+                }
+
+                if (resultBean.getNote()==null||resultBean.getNote().equals("")){
+                    holder.setGoneLinner(R.id.llMemo);
+                }else {
+                    holder.setVisionLinner(R.id.llMemo);
+                    holder.setText(R.id.tvMemo, resultBean.getNote());
+                }
             }
         };
         recyclerView.setAdapter(baseRecyclerAdapter);

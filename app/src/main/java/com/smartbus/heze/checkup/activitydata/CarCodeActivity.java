@@ -44,17 +44,23 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
     BaseRecyclerAdapter adapter;
     CarCodePresenter carCodePresenter;
     List<CarCodeData> beanListData = new ArrayList<>();
+    List<CarCodeData> beanListData1 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        header.setTvTitle(getResources().getString(R.string.car_no));
         tag = getIntent().getStringExtra("tag");
+        if (tag.equals("carCode")){
+            header.setTvTitle(getResources().getString(R.string.car_code1));
+        }else if (tag.equals("carNo")){
+            header.setTvTitle(getResources().getString(R.string.car_no));
+        }
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         carCodePresenter = new CarCodePresenter(this, this);
         beanListData = DataSupport.findAll(CarCodeData.class);
+        beanListData1 = DataSupport.findAll(CarCodeData.class);
         if (beanListData.size() != 0) {
             setAdapter(beanListData);
         } else {
@@ -70,13 +76,12 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                filterData(s.toString());
             }
         });
     }
@@ -89,18 +94,28 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
     private void filterData(String filterStr) {
         List<CarCodeData> mSortList = new ArrayList<>();
         if (TextUtils.isEmpty(filterStr)) {
-            mSortList = beanListData;
+            mSortList = beanListData1;
+            setAdapter(mSortList);
         } else {
             mSortList.clear();
-            for (CarCodeData sortModel : beanListData) {
-                String name = sortModel.getBusCode();
-                if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
-                    mSortList.add(sortModel);
+            if (tag.equals("carCode")){
+                for (CarCodeData sortModel : beanListData1) {
+                    String name = sortModel.getBusCode();
+                    if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
+                        mSortList.add(sortModel);
+                    }
+                }
+            }else if (tag.equals("carNo")){
+                for (CarCodeData sortModel : beanListData1) {
+                    String name = sortModel.getCarNo();
+                    if (name.toUpperCase().indexOf(filterStr.toString().toUpperCase()) != -1 || PinyinUtils.getPingYin(name).toUpperCase().startsWith(filterStr.toString().toUpperCase())) {
+                        mSortList.add(sortModel);
+                    }
                 }
             }
             setAdapter(mSortList);
-            beanListData.clear();
-            beanListData = mSortList;
+//            beanListData.clear();
+//            beanListData = mSortList;
         }
     }
 
@@ -130,6 +145,7 @@ public class CarCodeActivity extends BaseActivity implements CarCodeContract.Vie
             for (int i = 0; i < s.getData().size(); i++) {
                 CarCodeData bean = new CarCodeData();
                 beanListData.add(bean);
+                beanListData1.add(bean);
                 bean.getCarId(s.getData().get(i).getCarId());
                 bean.setBusCode(s.getData().get(i).getBusCode());
                 bean.setCarNo(s.getData().get(i).getCarNo());

@@ -1,6 +1,8 @@
 package com.smartbus.heze.welcome.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -140,7 +142,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 //                        Toast.makeText(this, "密码应该同时包含字母和数字，请从电脑端修改", Toast.LENGTH_SHORT).show();
 //                        break;
 //                    }
-                    loginPresenter.getLoginList(username,password);
+                    String versionName = "";
+                    try {
+                        // ---get the package info---
+                        PackageManager pm = LoginActivity.this.getPackageManager();
+                        PackageInfo pi = pm.getPackageInfo(LoginActivity.this.getPackageName(), 0);
+                        versionName = pi.versionName;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+//                    loginPresenter.getLoginList(username,password,versionName);
+                    loginPresenter.getLoginList(username,password,"");
                 }else {
                     Toast.makeText(this, "请输入用户名密码", Toast.LENGTH_SHORT).show();
                 }

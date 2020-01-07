@@ -34,8 +34,8 @@ public class LoginPresenter implements LoginContract.presenter {
      */
 
     @Override
-    public void getLoginList(String username,String password) {
-        RetrofitUtil.getInstance().initRetrofitGetSession().getLogin(username,password).subscribeOn(Schedulers.io())
+    public void getLoginList(String username,String password,String versionName) {
+        RetrofitUtil.getInstance().initRetrofitGetSession().getLogin(username,password,versionName).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserverNoEntry<Login>(context, MainUtil.getData) {
                     @Override

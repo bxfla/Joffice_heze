@@ -8,11 +8,11 @@ public class ApiAddress {
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //川川
-    public final static String mainApi = "http://192.168.2.137:8080/joffice/" ;
+//    public final static String mainApi = "http://192.168.2.137:8080/joffice/" ;
     //孙琦
 //    public final static String mainApi = "http://192.168.2.107:8080/joffice/" ;
     //正式库
-//    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
+    public final static String mainApi = "http://120.192.74.58:8080/joffice/" ;
     //李志浩
 //    public final static String mainApi = "http://192.168.2.150:8080/joffice21/" ;
     //田胖
@@ -118,7 +118,7 @@ public class ApiAddress {
     //车辆巡检记录
     public static final String  carcheckhistory = "repair/getListByPhoneDiancherichangJc.do";
     //日常检查巡检记录详情
-    public static final String  daycomparehistory = "starkh/getListByPhoneDianchedianjianJc.do";
+    public static final String  daycomparehistory = "starkh/getListByPhoneDianchedianjianJc.do?start=0&limit=1000";
     //安全稽查数据提交
     public static final String  updatacarcheck = "repair/savePhoneDiancherichangJc.do";
     //日常检查数据提交

@@ -99,7 +99,7 @@ public interface AllApi {
      */
     @FormUrlEncoded
     @POST(ApiAddress.login)
-    Observable<Login> getLogin(@Field("username")String username, @Field("password")String password);
+    Observable<Login> getLogin(@Field("username")String username, @Field("password")String password, @Field("versionName")String versionName);
 
     /**
      * 获取版本号
@@ -880,8 +880,8 @@ public interface AllApi {
      */
     @FormUrlEncoded
     @POST(ApiAddress.comparlist)
-    Observable<ComparList> getComparList(@Field("startDate") String startDate
-            , @Field("endDate")String endDate
+    Observable<ComparList> getComparList(@Field("ksdate") String startDate
+            , @Field("jsdate")String endDate
             , @Field("carNo")String carNo
             , @Field("depId")String depId);
 }

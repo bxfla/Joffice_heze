@@ -79,11 +79,11 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
         Calendar c = Calendar.getInstance();
         //过去七天
         c.setTime(new Date());
-        c.add(Calendar.DATE, -7);
+        c.add(Calendar.DATE, -1);
         Date d = c.getTime();
         String day = format.format(d);
         tvStartTime.setText(day);
-        System.out.println("过去七天：" + day);
+        System.out.println("过去1天：" + day);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String now = sdf.format(new Date());
         tvEndTime.setText(now.split(" ")[0]);
@@ -156,8 +156,13 @@ public class DayCompareHistoryActivity extends BaseActivity implements DayCompar
             public void convert(BaseViewHolder holder, final CarCheckHistory.ResultBean resultBean) {
                 holder.setText(R.id.tvDriver, resultBean.getDriverName());
                 holder.setText(R.id.tvCarNo, resultBean.getCarNo());
-                holder.setText(R.id.tvDate, resultBean.getKaoheDate());
                 holder.setText(R.id.tvJCR, resultBean.getExaminer());
+                String sj = resultBean.getKaoheTime();
+                if (sj!=null){
+                    holder.setText(R.id.tvDate, resultBean.getKaoheDate()+" "+sj);
+                }else {
+                    holder.setText(R.id.tvDate, resultBean.getKaoheDate());
+                }
                 holder.setOnClickListener(R.id.ll, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

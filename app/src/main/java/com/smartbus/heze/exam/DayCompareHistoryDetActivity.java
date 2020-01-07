@@ -54,6 +54,8 @@ public class DayCompareHistoryDetActivity extends BaseActivity implements DayCom
     LinearLayout ll2;
     @BindView(R.id.ll4)
     LinearLayout ll4;
+    @BindView(R.id.tvTime)
+    TextView tvTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,12 @@ public class DayCompareHistoryDetActivity extends BaseActivity implements DayCom
         tvPersonName.setText(bean.getDriverName());
         tvRummager.setText(bean.getExaminer());
         tvRemarks.setText(bean.getNote());
+        String sj = bean.getKaoheTime();
+        if (sj!=null){
+            tvTime.setText(bean.getKaoheDate()+" "+sj);
+        }else {
+            tvTime.setText(bean.getKaoheDate());
+        }
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         dayCompareHistoryItemPresenter = new DayCompareHistoryItemPresenter(this, this);
@@ -92,7 +100,9 @@ public class DayCompareHistoryDetActivity extends BaseActivity implements DayCom
     @Override
     public void setCarCehckHistoryItem(CarCheckHistoryItem s) {
         for (int i = 0; i < s.getResult().size(); i++) {
-            beanList.add(s.getResult().get(i));
+//            if (!beanList.contains(s.getResult().get(i).getProjectName())){
+                beanList.add(s.getResult().get(i));
+//            }
         }
         baseRecyclerAdapter = new BaseRecyclerAdapter<CarCheckHistoryItem.ResultBean>(this, R.layout.adapter_chlid_item, beanList) {
             @Override

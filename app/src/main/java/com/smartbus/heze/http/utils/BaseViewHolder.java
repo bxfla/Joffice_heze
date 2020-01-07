@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -83,6 +84,24 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setGone(int viewId) {
         RadioButton rb = getView(viewId);
         rb.setVisibility(View.GONE);
+        return this;
+    }
+
+    /**
+     * 给LinnerLayout设置隐藏控件方法
+     */
+    public BaseViewHolder setGoneLinner(int viewId) {
+        LinearLayout linerLayout = getView(viewId);
+        linerLayout.setVisibility(View.GONE);
+        return this;
+    }
+
+    /**
+     * 给LinnerLayout设置显示控件方法
+     */
+    public BaseViewHolder setVisionLinner(int viewId) {
+        LinearLayout linerLayout = getView(viewId);
+        linerLayout.setVisibility(View.VISIBLE);
         return this;
     }
 
