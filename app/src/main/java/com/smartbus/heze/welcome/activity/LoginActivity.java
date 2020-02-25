@@ -152,7 +152,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
                         e.printStackTrace();
                     }
 //                    loginPresenter.getLoginList(username,password,versionName);
-                    loginPresenter.getLoginList(username,password,"");
+                    String clientid = sharedPreferencesHelper.getData(this, "cid", "");
+                    loginPresenter.getLoginList(username,password,"",clientid);
                 }else {
                     Toast.makeText(this, "请输入用户名密码", Toast.LENGTH_SHORT).show();
                 }
@@ -181,19 +182,4 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public static boolean isLetterDigit(String str){
-        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
-        boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
-        for(int i=0 ; i<str.length();i++){
-            if(Character.isDigit(str.charAt(i))){     //用char包装类中的判断数字的方法判断每一个字符
-                isDigit = true;
-            }
-            if(Character.isLetter(str.charAt(i))){   //用char包装类中的判断字母的方法判断每一个字符
-                isLetter = true;
-            }
-        }
-        String regex = "^[a-zA-Z0-9]+$";
-        boolean isRight = isDigit && isLetter&&str.matches(regex);
-        return isRight;
-    }
 }

@@ -32,8 +32,8 @@ public class Constant {
     public final static String FILECIR_DEFID = "98" ;
     public final static String FILECIR_FORMDEFIS = "34" ;
     //文件流转
-    public final static String DOCUMENTLZ_DEFID = "110" ;
-    public final static String DOCUMENTLZ_FORMDEFIS = "35" ;
+    public final static String DOCUMENTLZ_DEFID = "128" ;
+    public final static String DOCUMENTLZ_FORMDEFIS = "56" ;
 
     //公用请假
     public final static String USERDLEAVE_DEFID = "74" ;

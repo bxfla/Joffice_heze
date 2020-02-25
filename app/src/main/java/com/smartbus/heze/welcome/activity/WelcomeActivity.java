@@ -42,5 +42,4 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
 }

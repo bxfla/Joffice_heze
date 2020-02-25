@@ -99,7 +99,8 @@ public interface AllApi {
      */
     @FormUrlEncoded
     @POST(ApiAddress.login)
-    Observable<Login> getLogin(@Field("username")String username, @Field("password")String password, @Field("versionName")String versionName);
+    Observable<Login> getLogin(@Field("username")String username, @Field("password")String password
+            , @Field("versionName")String versionName, @Field("clientid")String clientid);
 
     /**
      * 获取版本号

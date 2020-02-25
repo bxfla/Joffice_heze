@@ -1,21 +1,46 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'android.keystore'
+            keyPassword 'newlife'
+            storeFile file('C:/Users/Administrator/Desktop/appkey/android.keystore')
+            storePassword '77lovexx'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.smartbus.heze"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.7"
+        versionCode 3
+        versionName "1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "B0O9oXBBg66K3mUnkI4J19",
+                GETUI_APP_KEY   : "zV2KNaApn78PdHKtfUxZY5",
+                GETUI_APP_SECRET: "djAXc4A43EAbkSJnOrkEA"
+        ]
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            renderscriptDebuggable false
+            minifyEnabled false
+        }
+    }
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
+    productFlavors {
     }
 }
 
@@ -36,8 +61,6 @@ dependencies {
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/httpclient-4.0.1.jar')
     //图片选择
-
-
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.android.support:appcompat-v7:26.+'
@@ -58,9 +81,9 @@ dependencies {
     compile 'com.zt.maven.widget:refreshview:1.0.2'
     compile 'com.zhihu.android:matisse:0.4.3'
     compile 'com.getbase:floatingactionbutton:1.10.1'
-
-//    compile 'com.getui:sdk:2.13.3.0'
-
+    //    compile 'com.getui:sdk:2.13.3.0'
     testCompile 'junit:junit:4.12'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile files('libs/GetuiSDK2.13.3.0.jar')
 }
